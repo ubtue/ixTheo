@@ -1,0 +1,44 @@
+       <?$formats = $this->driver->getFormats(); if (!empty($formats) && ($formats[0] == "Article" || $formats[0] == "Journal" || $formats[0] == "Article")): ?>
+        <tr>
+          <th><?=$this->transEsc('JOP Link')?>: </th>
+          <td><div style="color:grey" id="place_holder">JOP Link</div></td>
+        </tr>
+        <script type="text/javascript" language="javascript">
+          var genre = ("<?=$formats[0]?>" == "Article" ? "article" : "journal");
+          $.ajax({
+            type: "GET",
+            url: "<?=$this->url('home') ?>proxy/load?url=http%3A%2F%2Fservices.dnb.de%2Ffize-service%2Fgvr%2Ffull.xml%3Fsid%3Dbib%3Atueb%26issn%3D<?=$this->escapeHtml($this->driver->getCleanISSN())?>%26genre%3D"+genre,
+            dataType: "xml",
+            success: function(xml) {
+              $(document).ready(function() {
+                var first_reference_tag = $(xml).find('Reference').first();
+                if (!first_reference_tag || 0 == first_reference_tag.length) {
+		  $("#place_holder").each(function() {
+// TODO: I18N
+                    $(this).replaceWith('Nicht lokal vorhanden.');
+                  })
+                } else if (first_reference_tag) {
+                  var sURL = first_reference_tag.find('URL').text();
+                  $("#place_holder").each(function() {
+	            $(this).replaceWith('<a href="' + sURL + '">JOP</a>');
+                  })
+                } else {
+                  $("#place_holder").each(function() {
+                    $(this).replaceWith('Invalid server response. (JOP server down?)');
+                  })
+                  if (window.console && window.console.log) {
+                    console.log("Found no <Reference> tag in reply from server!");
+                  }
+                }
+              }); $("#place_holder").each(function() {
+                    $(this).replaceWith('<a href="' + sURL + '">JOP</a>');
+                  })// end $(document).ready()
+            }, // end success
+            error: function(xhr, ajaxOptions, thrownError) {
+              if (window.console && window.console.log) {
+                console.log("Status: " + xhr.status + ", Error: " + thrownError);
+              }
+            }
+          }); // end ajax
+        </script>
+      <? endif; ?>
