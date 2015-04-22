@@ -24,14 +24,17 @@ class IxTheoQueryBuilder extends QueryBuilder
         if (is_array($bibleReferences) && !empty($bibleReferences)) {
             $bibleQuery = $this->translateToSearchString($bibleReferences);
             $query->setString($bibleQuery);
-            print_r($query->getString());
         }
     }
 
     private function parseBibleReference(AbstractQuery $query) {
-         $args = escapeshellarg($query->getString());
-         exec(self::BIBLE_REFERENCE_COMMAND . ' ' . $args, $output, $return_var);
-         return $output;         
+        $searchQuery = $query->getString();
+        if (!empty($searchQuery)) {
+            $args = escapeshellarg($searchQuery);
+            exec(self::BIBLE_REFERENCE_COMMAND . ' ' . $args, $output, $return_var);
+            return $output;
+        }
+        return array();
     }
 
     private function translateToSearchString($bibleReferences) {
