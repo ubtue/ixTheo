@@ -15,12 +15,14 @@ class IxTheoQueryBuilder extends QueryBuilder
 
     public function build(AbstractQuery $query) {
         $queryString = $query->getString();
-        
-        $newQuery =  $this->getManipulatedQueryString($query);
-        $result =  parent::build($query);
-        $result->set('q', $newQuery);
-        $query->setString($queryString);
-        return $result;
+        if (!empty($queryString)) {
+            $newQuery =  $this->getManipulatedQueryString($query);
+            $result = parent::build($query);
+            $result->set('q', $newQuery);
+            $query->setString($queryString);
+            return $result;
+        }
+        return parent::build($query);
     }
 
     private function getManipulatedQueryString(AbstractQuery $query) {
