@@ -10,3 +10,5 @@ vendor/.git
 # Solr
 solr/biblio/
 solr/authority/
+import/solrmarc.log
+import/solrmarc.log.1
