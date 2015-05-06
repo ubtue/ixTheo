@@ -7,8 +7,6 @@ TAGS
 *~
 vendor/.git
 
-public/.htaccess
-
 # Solr
 solr/biblio/
 solr/authority/
