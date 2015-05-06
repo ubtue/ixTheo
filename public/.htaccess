@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "ixTheo auf ptah"
+AuthUserFile /etc/httpd/.htpasswd
+Require valid-user
