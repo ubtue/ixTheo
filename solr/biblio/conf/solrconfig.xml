@@ -745,6 +745,8 @@
     <int name="xsltCacheLifetimeSeconds">5</int>
   </queryResponseWriter>
 
+  <queryParser class="de.uni_tuebingen.ub.ixTheo.BibleRangeParserPlugin" name="bibleRangeParser" />
+
   <!-- config for the admin interface -->
   <admin>
     <defaultQuery>shakespeare</defaultQuery>
