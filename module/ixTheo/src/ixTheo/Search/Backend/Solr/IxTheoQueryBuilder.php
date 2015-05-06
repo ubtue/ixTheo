@@ -16,19 +16,19 @@ class IxTheoQueryBuilder extends QueryBuilder
     public function build(AbstractQuery $query) {
         $queryString = $query->getString();
         
-        $this->manipulateQuery($query);
+        $newQuery =  $this->getManipulatedQueryString($query);
         $result =  parent::build($query);
-
+        $result->set('q', $newQuery);
         $query->setString($queryString);
         return $result;
     }
 
-    private function manipulateQuery(AbstractQuery $query) {
+    private function getManipulatedQueryString(AbstractQuery $query) {
         $bibleReferences = $this->parseBibleReference($query);
         if ($this->isValidBibleReference($bibleReferences)) {
-            $bibleQuery = $this->translateToSearchString($bibleReferences);
-            $query->setString($bibleQuery);
+            return $this->translateToSearchString($bibleReferences);
         }
+        return $query->getString();
     }
 
     private function parseBibleReference(AbstractQuery $query) {
@@ -42,7 +42,7 @@ class IxTheoQueryBuilder extends QueryBuilder
     }
 
     private function translateToSearchString($bibleReferences) {
-        return implode(' <br> ', $bibleReferences);
+        return "{!bibleRangeParser}" . str_replace(":", "_", implode(',', $bibleReferences));
     }
 
     private function getBibleReferenceCommand($searchQuery) {
