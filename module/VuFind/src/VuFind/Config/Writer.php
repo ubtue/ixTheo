@@ -1,0 +1,266 @@
+<?php
+/**
+ * VF Configuration Writer
+ *
+ * PHP version 5
+ *
+ * Copyright (C) Villanova University 2010.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2,
+ * as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * @category VuFind2
+ * @package  Config
+ * @author   Demian Katz <demian.katz@villanova.edu>
+ * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
+ * @link     http://vufind.org   Main Site
+ */
+namespace VuFind\Config;
+
+/**
+ * Class to update VuFind configuration settings
+ *
+ * @category VuFind2
+ * @package  Config
+ * @author   Demian Katz <demian.katz@villanova.edu>
+ * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
+ * @link     http://vufind.org   Main Site
+ */
+class Writer
+{
+    /**
+     * Configuration file to write
+     *
+     * @var string
+     */
+    protected $filename;
+
+    /**
+     * Content of file
+     *
+     * @var string
+     */
+    protected $content;
+
+    /**
+     * Constructor
+     *
+     * @param string            $filename Configuration file to write
+     * @param string|array|null $content  Content to load into file (set to null to
+     * load contents of existing file specified by $filename; set to array to build
+     * string in combination with $comments; set to string to use raw config string)
+     * @param array             $comments Comments to associate with content (ignored
+     * if $content is not an array).
+     *
+     * @throws \Exception
+     */
+    public function __construct($filename, $content = null, $comments = array())
+    {
+        $this->filename = $filename;
+        if (null === $content) {
+            $this->content = file_get_contents($filename);
+            if (!$this->content) {
+                throw new \Exception('Could not read ' . $filename);
+            }
+        } else if (is_array($content)) {
+            $this->content = $this->buildContent($content, $comments);
+        } else {
+            $this->content = $content;
+        }
+    }
+
+    /**
+     * Change/add a setting
+     *
+     * @param string $section Section to change/add
+     * @param string $setting Setting within section to change/add
+     * @param string $value   Value to set
+     *
+     * @return void
+     */
+    public function set($section, $setting, $value)
+    {
+        // Break the configuration file into lines:
+        $lines = explode("\n", $this->content);
+
+        // Reset some flags and prepare to rewrite the content:
+        $settingSet= false;
+        $currentSection = "";
+        $this->content = "";
+
+        // Process one line at a time...
+        foreach ($lines as $line) {
+            // Separate comments from content:
+            $parts = explode(';', trim($line), 2);
+            $content = trim($parts[0]);
+            $comment = isset($parts[1]) ? $parts[1] : '';
+
+            // Is this a section heading?
+            if (preg_match('/^\[(.+)\]$/', trim($content), $matches)) {
+                // If we just left the target section and didn't find the
+                // desired setting, we should write it to the end.
+                if ($currentSection == $section && !$settingSet) {
+                    $line = $setting . ' = "' . $value . '"' . "\n\n" . $line;
+                    $settingSet = true;
+                }
+                $currentSection = $matches[1];
+            } else if (strstr($content, '=')) {
+                $contentParts = explode('=', $content, 2);
+                $key = reset($contentParts);
+                if ($currentSection == $section && trim($key) == $setting) {
+                    $line = $setting . ' = "' . $value . '"';
+                    if (!empty($comment)) {
+                        $line .= ' ;' . $comment;
+                    }
+                    $settingSet = true;
+                }
+            }
+
+            // Save the current line:
+            $this->content .= $line . "\n";
+        }
+
+        // Did we loop through everything without finding a place to put the setting?
+        if (!$settingSet) {
+            // We never found the target section?
+            if ($currentSection != $section) {
+                $this->content .= '[' . $section . "]\n";
+            }
+            $this->content .= $setting . ' = "' . $value . '"' . "\n";
+        }
+    }
+
+    /**
+     * Get the modified file's contents as a string.
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Save the modified file to disk.  Return true on success, false on error.
+     *
+     * @return bool
+     */
+    public function save()
+    {
+        // Create parent directory structure if necessary:
+        $stack = array();
+        $dirname = dirname($this->filename);
+        while (!empty($dirname) && !is_dir($dirname)) {
+            $stack[] = $dirname;
+            $dirname = dirname($dirname);
+        }
+        foreach (array_reverse($stack) as $dir) {
+            if (!mkdir($dir)) {
+                return false;
+            }
+        }
+
+        // Write the file:
+        return file_put_contents($this->filename, $this->getContent());
+    }
+
+    /**
+     * support method for buildContent -- format a value
+     *
+     * @param mixed $e Value to format
+     *
+     * @return string  Value formatted for output to ini file.
+     */
+    protected function buildContentValue($e)
+    {
+        if ($e === true) {
+            return 'true';
+        } else if ($e === false) {
+            return 'false';
+        } else if ($e == "") {
+            return '';
+        } else {
+            return '"' . $e . '"';
+        }
+    }
+
+    /**
+     * support method for buildContent -- format a line
+     *
+     * @param string $key   Configuration key
+     * @param mixed  $value Configuration value
+     * @param int    $tab   Tab size to help values line up
+     *
+     * @return string       Formatted line
+     */
+    protected function buildContentLine($key, $value, $tab = 17)
+    {
+        // Build a tab string so the equals signs line up attractively:
+        $tabStr = '';
+        for ($i = strlen($key); $i < $tab; $i++) {
+            $tabStr .= ' ';
+        }
+
+        return $key . $tabStr . "= ". $this->buildContentValue($value);
+    }
+
+    /**
+     * write an ini file, adapted from
+     * http://php.net/manual/function.parse-ini-file.php
+     *
+     * @param array $assoc_arr Array to output
+     * @param array $comments  Comments to inject
+     *
+     * @return string
+     */
+    protected function buildContent($assoc_arr, $comments)
+    {
+        $content = "";
+        foreach ($assoc_arr as $key=>$elem) {
+            if (isset($comments['sections'][$key]['before'])) {
+                $content .= $comments['sections'][$key]['before'];
+            }
+            $content .= "[".$key."]";
+            if (!empty($comments['sections'][$key]['inline'])) {
+                $content .= "\t" . $comments['sections'][$key]['inline'];
+            }
+            $content .= "\n";
+            foreach ($elem as $key2=>$elem2) {
+                if (isset($comments['sections'][$key]['settings'][$key2])) {
+                    $settingComments
+                        = $comments['sections'][$key]['settings'][$key2];
+                    $content .= $settingComments['before'];
+                } else {
+                    $settingComments = array();
+                }
+                if (is_array($elem2)) {
+                    for ($i = 0; $i < count($elem2); $i++) {
+                        $content .= $this->buildContentLine(
+                            $key2 . "[]", $elem2[$i]
+                        );
+                        $content .= "\n";
+                    }
+                } else {
+                    $content .= $this->buildContentLine($key2, $elem2);
+                }
+                if (!empty($settingComments['inline'])) {
+                    $content .= "\t" . $settingComments['inline'];
+                }
+                $content .= "\n";
+            }
+        }
+
+        $content .= $comments['after'];
+        return $content;
+    }
+}
