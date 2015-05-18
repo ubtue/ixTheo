@@ -48,6 +48,7 @@ class IxTheoQueryBuilder extends QueryBuilder
     }
 
     private function getBibleReferenceCommand($searchQuery) {
+        setlocale(LC_CTYPE, "de_DE.UTF-8");
         return implode(' ', [
             self::BIBLE_REFERENCE_COMMAND, 
             escapeshellarg($searchQuery), 

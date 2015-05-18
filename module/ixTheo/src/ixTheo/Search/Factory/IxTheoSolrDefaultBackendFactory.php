@@ -41,7 +41,6 @@ class IxTheoSolrDefaultBackendFactory extends SolrDefaultBackendFactory
             $caseSensitiveBooleans, $caseSensitiveRanges
         );
         $builder->setLuceneHelper($helper);
-
         return $builder;
     }
 }
