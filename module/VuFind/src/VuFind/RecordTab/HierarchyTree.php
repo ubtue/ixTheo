@@ -123,7 +123,7 @@ class HierarchyTree extends AbstractBase
             $this->treeList
                 = $this->getRecordDriver()->tryMethod('getHierarchyTrees');
             if (null === $this->treeList) {
-                $this->treeList = array();
+                $this->treeList = [];
             }
         }
         return $this->treeList;
@@ -204,5 +204,16 @@ class HierarchyTree extends AbstractBase
         $config = $this->getConfig();
         return isset($config->Hierarchy->treeSearchLimit)
             ? $config->Hierarchy->treeSearchLimit : -1;
+    }
+
+    /**
+     * Can this tab be loaded via AJAX?
+     *
+     * @return bool
+     */
+    public function supportsAjax()
+    {
+        // No, special width adjustment needed.
+        return false;
     }
 }

@@ -102,11 +102,21 @@ class CombinedController extends AbstractSearch
         ) {
             $html = '';
         } else {
+            $cart = $this->getServiceLocator()->get('VuFind\Cart');
+            $general = $this->getServiceLocator()->get('VuFind\Config')
+                ->get('config');
+            $viewParams = [
+                'searchClassId' => $searchClassId,
+                'currentSearch' => $settings,
+                'showCartControls' => $currentOptions->supportsCart()
+                    && $cart->isActive(),
+                'showBulkOptions' => $currentOptions->supportsCart()
+                    && isset($general->Site->showBulkOptions)
+                    && $general->Site->showBulkOptions
+            ];
             $html = $this->getViewRenderer()->render(
                 'combined/results-list.phtml',
-                array(
-                    'searchClassId' => $searchClassId, 'currentSearch' => $settings
-                )
+                $viewParams
             );
         }
         $response->setContent($html);
@@ -137,19 +147,21 @@ class CombinedController extends AbstractSearch
         $this->getSearchMemory()->disable();
 
         // Gather combined results:
-        $combinedResults = array();
+        $combinedResults = [];
         $options = $this->getServiceLocator()
             ->get('VuFind\SearchOptionsPluginManager');
         $config = $this->getServiceLocator()->get('VuFind\Config')->get('combined')
             ->toArray();
         $supportsCart = false;
+        $supportsCartOptions = [];
         foreach ($config as $current => $settings) {
             // Special case -- ignore recommendation config:
-            if ($current == 'RecommendationModules') {
+            if ($current == 'Layout' || $current == 'RecommendationModules') {
                 continue;
             }
             $this->adjustQueryForSettings($settings);
             $currentOptions = $options->get($current);
+            $supportsCartOptions[] = $currentOptions->supportsCart();
             if ($currentOptions->supportsCart()) {
                 $supportsCart = true;
             }
@@ -159,7 +171,7 @@ class CombinedController extends AbstractSearch
             $combinedResults[$current]['view']
                 = (!isset($settings['ajax']) || !$settings['ajax'])
                 ? $this->forwardTo($controller, $action)
-                : $this->createViewModel(array('results' => $results));
+                : $this->createViewModel(['results' => $results]);
 
             // Special case: include appropriate "powered by" message:
             if (strtolower($current) == 'summon') {
@@ -171,14 +183,34 @@ class CombinedController extends AbstractSearch
         // Run the search to obtain recommendations:
         $results->performAndProcessSearch();
 
+        $columns = isset($config['Layout']['columns'])
+        && intval($config['Layout']['columns']) <= count($combinedResults)
+            ? intval($config['Layout']['columns'])
+            : count($combinedResults);
+        $placement = isset($config['Layout']['stack_placement'])
+            ? $config['Layout']['stack_placement']
+            : 'distributed';
+        if (!in_array($placement, ['distributed', 'left', 'right'])) {
+            $placement = 'distributed';
+        }
+
+        // Get default config for showBulkOptions
+        $settings = $this->getServiceLocator()->get('VuFind\Config')->get('config');
+
         // Build view model:
         return $this->createViewModel(
-            array(
-                'results' => $results,
-                'params' => $params,
+            [
+                'columns' => $columns,
                 'combinedResults' => $combinedResults,
+                'config' => $config,
+                'params' => $params,
+                'placement' => $placement,
+                'results' => $results,
                 'supportsCart' => $supportsCart,
-            )
+                'supportsCartOptions' => $supportsCartOptions,
+                'showBulkOptions' => isset($settings->Site->showBulkOptions)
+                    && $settings->Site->showBulkOptions
+            ]
         );
     }
 
@@ -229,7 +261,8 @@ class CombinedController extends AbstractSearch
         $query = $this->getRequest()->getQuery();
         $query->limit = isset($settings['limit']) ? $settings['limit'] : null;
 
-        // Disable recommendations:
-        $query->noRecommend = 1;
+        // Disable top/side recommendations but leave noresults active:
+        $query->noRecommend = 'top,side';
     }
 }
+
