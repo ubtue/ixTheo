@@ -14,6 +14,9 @@ class IxTheoQueryBuilder extends QueryBuilder
     const BIBLE_REFERENCE_COMMAND_PARAMETERS = _BIB_REF_CMD_PARAMS_;
 
     public function build(AbstractQuery $query) {
+        if (!is_a($query, 'VuFindSearch\Query\QueryGroup')) {
+            return parent::build($query);
+        }
         $queryString = $query->getString();
         if (!empty($queryString)) {
             $newQuery =  $this->getManipulatedQueryString($query);
