@@ -14,6 +14,11 @@ class IxTheoQueryBuilder extends QueryBuilder
     const BIBLE_REFERENCE_COMMAND_PARAMETERS = _BIB_REF_CMD_PARAMS_;
 
     public function build(AbstractQuery $query) {
+        // TODO: Bei Erweiterter Suche wird eine andere Query-Klasse genutzt.
+        // Diese muss anders behandelt werden, da sie aus vielen Sub-Queries
+        // besteht.
+        // Vorerst wird die Bibelstellensuche nur bei der Standartsuche
+        // angewendet.
         if (!is_a($query, 'VuFindSearch\Query\QueryGroup')) {
             return parent::build($query);
         }
