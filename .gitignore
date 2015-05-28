@@ -12,3 +12,5 @@ solr/biblio/
 solr/authority/
 import/solrmarc.log
 import/solrmarc.log.1
+
+local/config/vufind/server.ini
