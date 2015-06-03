@@ -136,6 +136,7 @@ function addSearchJS(group)
   addSearch(groupNum);
   return false;
 }
+<<<<<<< HEAD
 
 $(document).ready(function() {
   $('.clear-btn').click(function() {
@@ -144,3 +145,5 @@ $(document).ready(function() {
     $("#illustrated_-1").click();
   });
 });
+=======
+>>>>>>> Bugfix: Erweiterte Suche (Fehler beim Update von VuFind)
