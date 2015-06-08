@@ -16,11 +16,11 @@ tlog.*
 # Server specific configuration files
 httpd-vufind.conf
 httpd-vufind-vhosts.conf
-server.private.ini
+local_overrides
+start-vufind.sh
 
 # Ignore documentation
 public/doc
-start-vufind.sh
 
 # Eclipse IDE
 .classpath
