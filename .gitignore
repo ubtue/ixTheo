@@ -1,5 +1,3 @@
-# GNU Emacs temporary files
-
 ChangeLog
 \#*
 .\#*
@@ -7,14 +5,22 @@ TAGS
 *~
 vendor/.git
 
-# Solr
-solr/biblio/
-solr/authority/
-import/solrmarc.log
-import/solrmarc.log.1
+# SOLR index files:
+_*
+segments_*
+segments.gen
+write.lock
+alphabetical_browse
+tlog.*
 
-local/config/vufind/server.ini
-/start-vufind.sh
+# Server specific configuration files
+httpd-vufind.conf
+httpd-vufind-vhosts.conf
+server.private.ini
+
+# Ignore documentation
+public/doc
+start-vufind.sh
 
 # Eclipse IDE
 .classpath
