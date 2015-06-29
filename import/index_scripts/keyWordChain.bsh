@@ -5,10 +5,8 @@ import org.marc4j.marc.Subfield;
 import java.util.*;
 
 final static String KEYWORD_DELIMITER = "/";
-final static String KEYWORD_CHAIN_DELIMITER = "\n";
 
-
-public String getKeyWordChain(Record record, String fieldSpec) {
+public Set/*<String>*/ getKeyWordChain(Record record, String fieldSpec) {
 	List/*<DataField>*/ dataFields = record.getDataFields();
 	Map/*<Character, List<String>>*/ keyWordChains = new HashMap/*<Character, List<String>>*/();
 
@@ -17,7 +15,10 @@ public String getKeyWordChain(Record record, String fieldSpec) {
 			processField(dataField, keyWordChains);
 		}
 	}
-	return toString(keyWordChains);
+	if (concatenateKeyWordsToChains(keyWordChains) != null) {
+		System.out.println(concatenateKeyWordsToChains(keyWordChains));
+	}
+	return concatenateKeyWordsToChains(keyWordChains);
 }
 
 /**
@@ -52,21 +53,15 @@ private List/*<String>*/ getKeyWordChain(Map/*<Character, List<String>>*/ keyWor
 	return keyWordChain;
 }
 
-private String toString(Map/*<Character, List<String>>*/ keyWordChains) {
+private Set/*<String>*/ concatenateKeyWordsToChains(Map/*<Character, List<String>>*/ keyWordChains) {
 	List/*<Character>*/ chainIDs = new ArrayList/*<Character>*/(keyWordChains.keySet());
 	Collections.sort(chainIDs);
 	
-	StringBuilder buffer = new StringBuilder();
+	Set/*<String>*/ chainSet = new LinkedHashSet/*<String>*/();
 	for (Character chainID : chainIDs) {
-		buffer.append(KEYWORD_CHAIN_DELIMITER);
-		buffer.append(keyChainToString((List)keyWordChains.get(chainID)));
+		chainSet.add(keyChainToString((List)keyWordChains.get(chainID)));
 	}
-
-	if (buffer.length() == 0) {
-		return null;
-	}
-	// Discard leading chain delimiter.
-	return buffer.toString().substring(1);
+	return chainSet;
 }
 
 private String keyChainToString(List/*<String>*/ keyWordChain) {
