@@ -4,12 +4,16 @@ import org.marc4j.marc.DataField;
 import org.marc4j.marc.Subfield;
 import java.util.*;
 
-public String getKeyWordChain(Record record, String feldSpec) {
+final static String KEYWORD_DELIMITER = "/";
+final static String KEYWORD_CHAIN_DELIMITER = "\n";
+
+
+public String getKeyWordChain(Record record, String fieldSpec) {
 	List/*<DataField>*/ dataFields = record.getDataFields();
 	Map/*<Character, List<String>>*/ keyWordChains = new HashMap/*<Character, List<String>>*/();
 
 	for (DataField dataField : dataFields) {
-		if (dataField.getTag().equals(feldSpec)) {
+		if (dataField.getTag().equals(fieldSpec)) {
 			processField(dataField, keyWordChains);
 		}
 	}
@@ -54,27 +58,27 @@ private String toString(Map/*<Character, List<String>>*/ keyWordChains) {
 	
 	StringBuilder buffer = new StringBuilder();
 	for (Character chainID : chainIDs) {
-		buffer.append('\n');
+		buffer.append(KEYWORD_CHAIN_DELIMITER);
 		buffer.append(keyChainToString((List)keyWordChains.get(chainID)));
 	}
 
 	if (buffer.length() == 0) {
 		return null;
 	}
-	// Discard leading semicolon with substring(1).
+	// Discard leading chain delimiter.
 	return buffer.toString().substring(1);
 }
 
 private String keyChainToString(List/*<String>*/ keyWordChain) {
 	StringBuilder buffer = new StringBuilder();
 	for (String keyWord : keyWordChain) {
-		buffer.append('/');
+		buffer.append(KEYWORD_DELIMITER);
 		buffer.append(keyWord);
 	}
 	
 	if (buffer.length() == 0) {
 		return "";
 	}
-	// Discard leading slash with substring(1).
+	// Discard leading keyword delimiter. 
 	return buffer.toString().substring(1);
 }
