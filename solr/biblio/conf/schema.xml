@@ -230,6 +230,7 @@
 
    <!-- IxTheo -->
    <field name ="bible_ranges" type="string" indexed="true" stored="true" />
+   <field name ="key_word_chains" type="string" indexed="true" stored="true" multiValued="true" />
  </fields>
  <uniqueKey>id</uniqueKey>
  <defaultSearchField>allfields</defaultSearchField>
