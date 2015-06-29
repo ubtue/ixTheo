@@ -15,9 +15,6 @@ public Set/*<String>*/ getKeyWordChain(Record record, String fieldSpec) {
 			processField(dataField, keyWordChains);
 		}
 	}
-	if (concatenateKeyWordsToChains(keyWordChains) != null) {
-		System.out.println(concatenateKeyWordsToChains(keyWordChains));
-	}
 	return concatenateKeyWordsToChains(keyWordChains);
 }
 
