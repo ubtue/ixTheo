@@ -19,6 +19,7 @@ httpd-vufind.conf
 httpd-vufind-vhosts.conf
 local_overrides
 start-vufind.sh
+public/.htaccess
 
 # Ignore documentation
 public/doc
