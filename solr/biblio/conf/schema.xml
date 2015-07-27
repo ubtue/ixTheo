@@ -231,6 +231,7 @@
    <!-- IxTheo -->
    <field name ="bible_ranges" type="string" indexed="true" stored="true" />
    <field name ="key_word_chains" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chain_bag" type="string" indexed="true" stored="true" multiValued="true" />
  </fields>
  <uniqueKey>id</uniqueKey>
  <defaultSearchField>allfields</defaultSearchField>
@@ -265,4 +266,10 @@
  <copyField source="callnumber-raw" dest="callnumber-search"/>
  <!-- Default Boolean Operator -->
  <solrQueryParser defaultOperator="AND"/>
+
+
+<!-- Generate Bag of words from Keyword Chains-->
+<!-- ixTheo-->
+<!-- <copyField source="key_word_chains" dest="key_word_chains_bag"/> -->
+
 </schema>

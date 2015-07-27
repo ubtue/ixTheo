@@ -1,0 +1,150 @@
+import org.marc4j.marc.Record;
+import org.marc4j.marc.ControlField;
+import org.marc4j.marc.DataField;
+import org.marc4j.marc.Subfield;
+import java.util.*;
+
+/**
+ * Creates unordered list consisting of a bag of keywords found in the keyword chains
+ */
+
+
+
+final static String KEYWORD_DELIMITER = "/";
+
+public Set/*<String>*/ getKeyWordChainBag(Record record, String fieldSpec) {
+
+	System.out.println("ENTERING getKeyWordChainBag");
+
+	System.out.println("FieldSpec " + fieldSpec);
+
+	List/*<DataField>*/ dataFields = record.getDataFields();
+	Map/*<Character, List<String>>*/ keyWordChains = new HashMap/*<Character, List<String>>*/();
+
+	for (DataField dataField : dataFields) {
+		if (dataField.getTag().equals(fieldSpec)) {
+			processField(dataField, keyWordChains);
+		}
+	}
+	
+	System.out.println("RETURNING KEYWORDCHAINBAG");
+	
+	Set/*String*/ keyWordBagUnflattened = concatenateKeyWordsToChains(keyWordChains);
+	
+	
+	System.out.println("ChainBagUnflattended is " + keyWordBagUnflattened);
+	
+	Set/*String*/ keyWordBagFlattened = flattenKeyWordChains(keyWordBagUnflattened);
+	
+	
+	System.out.println("keyWordBagFlattened " + keyWordBagFlattened); 
+	
+	return keyWordBagFlattened;
+
+}
+
+/**
+ * Extracts the keyword from data field and inserts it into the right keyword chain.
+ */
+private void processField(DataField dataField, Map/*<Character, List<String>>*/ keyWordChains) {
+	char chainID = dataField.getIndicator1();
+	
+	System.out.println("Indicator " + dataField.getIndicator1());
+	
+	List/*<String>*/ keyWordChain = getKeyWordChain(keyWordChains, chainID);
+	List/*<Subfield>*/ subfields = dataField.getSubfields('a');
+	
+	System.out.println("Subfields: " + subfields);
+
+	for (Subfield subfield : subfields) {
+		if (subfield.getData().length() > 1) {
+			String keyWord = subfield.getData();
+			keyWordChain.add(keyWord);
+			break;
+		}
+	}
+}
+
+/**
+ * Finds the right keyword chain for a given chain id.
+ * @return A map containing the keywords of the chain (id -> keyword), or an empty map.
+ */
+private List/*<String>*/ getKeyWordChain(Map/*<Character, List<String>>*/ keyWordChains, char chainID) {
+	List/*<String>*/ keyWordChain = (List)keyWordChains.get(chainID);
+		
+	if (keyWordChain == null) {
+		keyWordChain = new ArrayList/*<String>*/();
+		keyWordChains.put(chainID, keyWordChain);
+	}
+
+	return keyWordChain;
+}
+
+private Set/*<String>*/ concatenateKeyWordsToChains(Map/*<Character, List<String>>*/ keyWordChains) {
+	List/*<Character>*/ chainIDs = new ArrayList/*<Character>*/(keyWordChains.keySet());
+	Collections.sort(chainIDs);
+	
+	Set/*<String>*/ chainSet = new LinkedHashSet/*<String>*/();
+	for (Character chainID : chainIDs) {
+		chainSet.add(keyChainToString((List)keyWordChains.get(chainID)));
+	}
+	
+	return chainSet;
+}
+
+private String keyChainToString(List/*<String>*/ keyWordChain) {
+	StringBuilder buffer = new StringBuilder();
+	for (String keyWord : keyWordChain) {
+		buffer.append(KEYWORD_DELIMITER);
+		buffer.append(keyWord);
+	}
+	
+	if (buffer.length() == 0) {
+		return "";
+	}
+	// Discard leading keyword delimiter. 
+	return buffer.toString().substring(1);
+}
+
+
+
+private Set/*<String>*/ flattenKeyWordChains(Set/*String*/ keyWordBagUnflattened){
+
+
+	System.out.println("Entering flattenKeyWordChains ");
+	
+
+	Set/*String*/ keyWordBagFlattened = new HashSet/*String*/(20);
+
+
+	for(String entry : keyWordBagUnflattened){
+	
+		System.out.println("Entry: " + entry);
+			
+			String[] phrase = entry.split(",");
+			
+				for(token : phrase){
+			
+					String[] keyWords = token.split(KEYWORD_DELIMITER); 
+					
+					if(keyWords.length != 0){
+						keyWordBagFlattened.addAll(Arrays.asList(keyWords));
+					}
+				}
+			
+				
+				
+	
+	}
+	
+	System.out.println("keyWordBagFlattened [in flattenKeyWordChains] " + keyWordBagFlattened);
+
+	return keyWordBagFlattened;
+
+
+}
+
+
+
+
+
