@@ -14,9 +14,9 @@ final static String KEYWORD_DELIMITER = "/";
 
 public Set/*<String>*/ getKeyWordChainBag(Record record, String fieldSpec) {
 
-	System.out.println("ENTERING getKeyWordChainBag");
+	//System.out.println("ENTERING getKeyWordChainBag");
 
-	System.out.println("FieldSpec " + fieldSpec);
+	//System.out.println("FieldSpec " + fieldSpec);
 
 	List/*<DataField>*/ dataFields = record.getDataFields();
 	Map/*<Character, List<String>>*/ keyWordChains = new HashMap/*<Character, List<String>>*/();
@@ -27,17 +27,17 @@ public Set/*<String>*/ getKeyWordChainBag(Record record, String fieldSpec) {
 		}
 	}
 	
-	System.out.println("RETURNING KEYWORDCHAINBAG");
+	//System.out.println("RETURNING KEYWORDCHAINBAG");
 	
 	Set/*String*/ keyWordBagUnflattened = concatenateKeyWordsToChains(keyWordChains);
 	
 	
-	System.out.println("ChainBagUnflattended is " + keyWordBagUnflattened);
+	//System.out.println("ChainBagUnflattended is " + keyWordBagUnflattened);
 	
 	Set/*String*/ keyWordBagFlattened = flattenKeyWordChains(keyWordBagUnflattened);
 	
 	
-	System.out.println("keyWordBagFlattened " + keyWordBagFlattened); 
+	//System.out.println("keyWordBagFlattened " + keyWordBagFlattened); 
 	
 	return keyWordBagFlattened;
 
@@ -110,34 +110,30 @@ private String keyChainToString(List/*<String>*/ keyWordChain) {
 
 private Set/*<String>*/ flattenKeyWordChains(Set/*String*/ keyWordBagUnflattened){
 
+/*
+keyWordBagUnflattened = ["A/B/C", "A/B/Z"]
 
-	System.out.println("Entering flattenKeyWordChains ");
+*/
+
+
+//	System.out.println("Entering flattenKeyWordChains ");
 	
 
 	Set/*String*/ keyWordBagFlattened = new HashSet/*String*/(20);
 
 
 	for(String entry : keyWordBagUnflattened){
-	
-		System.out.println("Entry: " + entry);
+
 			
-			String[] phrase = entry.split(",");
-			
-				for(token : phrase){
-			
-					String[] keyWords = token.split(KEYWORD_DELIMITER); 
+		String[] keyWords = entry.split(KEYWORD_DELIMITER); 
 					
-					if(keyWords.length != 0){
-						keyWordBagFlattened.addAll(Arrays.asList(keyWords));
-					}
-				}
-			
-				
-				
-	
+		if(keyWords.length != 0){
+				keyWordBagFlattened.addAll(Arrays.asList(keyWords));
+		}
+
 	}
 	
-	System.out.println("keyWordBagFlattened [in flattenKeyWordChains] " + keyWordBagFlattened);
+	//System.out.println("keyWordBagFlattened [in flattenKeyWordChains] " + keyWordBagFlattened);
 
 	return keyWordBagFlattened;
 
