@@ -19,7 +19,7 @@ class IxTheoQueryBuilder extends QueryBuilder
         // besteht.
         // Vorerst wird die Bibelstellensuche nur bei der Standartsuche
         // angewendet.
-        if (!is_a($query, 'VuFindSearch\Query\QueryGroup')) {
+        if (is_a($query, 'VuFindSearch\Query\QueryGroup')) {
             return parent::build($query);
         }
         $queryString = $query->getString();
