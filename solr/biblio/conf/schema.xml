@@ -104,6 +104,25 @@
     <fieldType name="date" class="solr.TrieDateField" sortMissingLast="true" omitNorms="true" precisionStep="6"/>
     <fieldType name="random" class="solr.RandomSortField" indexed="true" />
     <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" omitNorms="true"/>
+
+<!-- Test for flattening keyswordchains -->
+
+    <fieldType name="flattenedKeyWordChain" class="solr.TextField" positionIncrementGap="100" multiValued="true">
+      <analyzer type="index">
+<!--	<charFilter class="solr.PatternReplaceCharFilterFactory" pattern="/" replacement=" "/> -->
+<!--	<tokenizer class="solr.LowerCaseTokenizerFactory" pattern="[/,]"/> -->
+	<tokenizer class="solr.PatternTokenizerFactory" pattern="/"/>
+<!--	<tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="/" replace="\"/> -->
+<!--	<filter class="solr.LowerCaseFilterFactory"/> -->
+      </analyzer>
+      <analyzer type="query">
+	<tokenizer class="solr.WhitespaceTokenizerFactory"/>
+      </analyzer>
+    </fieldType>
+
+<!-- End test for flattening keyword chain -->
+
+
   </types>
  <fields>
    <!-- Required by Solr 4.x -->
@@ -232,6 +251,10 @@
    <field name ="bible_ranges" type="string" indexed="true" stored="true" />
    <field name ="key_word_chains" type="string" indexed="true" stored="true" multiValued="true" />
    <field name ="key_word_chain_bag" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chain_bag_test1" type="flattenedKeyWordChain" indexed="true" stored="false" multiValued="true" /> 
+<!--  <field name ="key_word_chain_bag_test" type="string" indexed="true" stored="true" multiValued="true" /> -->
+
+
  </fields>
  <uniqueKey>id</uniqueKey>
  <defaultSearchField>allfields</defaultSearchField>
@@ -270,6 +293,6 @@
 
 <!-- Generate Bag of words from Keyword Chains-->
 <!-- ixTheo-->
-<!-- <copyField source="key_word_chains" dest="key_word_chains_bag"/> -->
+<copyField source="key_word_chains" dest="key_word_chain_bag_test1"/> 
 
 </schema>
