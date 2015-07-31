@@ -1,4 +1,3 @@
-*.log
 ChangeLog
 \#*
 .\#*
@@ -14,7 +13,11 @@ write.lock
 alphabetical_browse
 tlog.*
 
+# Compiled CSS
+compiled.css
+
 # Server specific configuration files
+local/httpd-vufind.conf
 httpd-vufind.conf
 httpd-vufind-vhosts.conf
 local_overrides
@@ -23,24 +26,6 @@ public/.htaccess
 
 # Ignore documentation
 public/doc
-
-# Eclipse IDE
-.classpath
-.project
-*.pydevproject
-.metadata
-.gradle
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.settings/
-.loadpath
-.buildpath
-.target
 
 KeywordChainParser.jar
 BibleRangeParser.jar
