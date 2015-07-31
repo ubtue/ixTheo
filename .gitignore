@@ -41,3 +41,6 @@ local.properties
 .loadpath
 .buildpath
 .target
+
+KeywordChainParser.jar
+BibleRangeParser.jar
