@@ -52,6 +52,7 @@ class IxTheoQueryBuilder extends QueryBuilder
     }
 
     private function translateToSearchString($bibleReferences) {
+        var_dump("{!bibleRangeParser}" . str_replace(":", "_", implode(',', $bibleReferences)));
         return "{!bibleRangeParser}" . str_replace(":", "_", implode(',', $bibleReferences));
     }
 
