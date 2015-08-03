@@ -26,3 +26,6 @@ public/.htaccess
 
 # Ignore documentation
 public/doc
+
+KeywordChainParser.jar
+BibleRangeParser.jar
