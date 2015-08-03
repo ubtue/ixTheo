@@ -10,7 +10,7 @@ define("_BIB_REF_CMD_PARAMS_", implode(' ', [_BIB_REF_MAPS_PATH_ . 'books_of_the
 
 class IxTheoQueryBuilder extends QueryBuilder
 {
-    const BIBLE_REFERENCE_COMMAND = '/bin/bib_ref_to_codes_tool';
+    const BIBLE_REFERENCE_COMMAND = '/usr/local/bin/bib_ref_to_codes_tool';
     const BIBLE_REFERENCE_COMMAND_PARAMETERS = _BIB_REF_CMD_PARAMS_;
 
     public function build(AbstractQuery $query) {
