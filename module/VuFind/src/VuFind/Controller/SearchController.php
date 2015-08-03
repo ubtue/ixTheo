@@ -505,6 +505,10 @@ class SearchController extends AbstractSearch
             return $this->forwardTo('Tag', 'Home');
         }
 
+        if ($this->params()->fromQuery('type') == 'Keywordchains') {
+            return $this->forwardTo('Keywordchains', 'Home');
+        }
+
         // Default case -- standard behavior.
         return parent::resultsAction();
     }
