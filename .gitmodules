@@ -1,0 +1,3 @@
+[submodule "ub_tools"]
+	path = ub_tools
+	url = git@github.com:ubtue/ub_tools.git
