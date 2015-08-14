@@ -52,6 +52,8 @@ class IxTheoQueryBuilder extends QueryBuilder
     }
 
     private function translateToSearchString($bibleReferences) {
+        $searchString = urlencode("{!bibleRangeParser}" . str_replace(":", "_", implode(',', $bibleReferences)));
+        echo "<a href='http://ptah.ub.uni-tuebingen.de:8080/solr/#/biblio/query?q=" . $searchString . "&fl=bible_ranges,title'>In Solr-Admin-Panel suchen</a>";
         return "{!bibleRangeParser}" . str_replace(":", "_", implode(',', $bibleReferences));
     }
 
