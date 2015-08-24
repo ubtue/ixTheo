@@ -178,6 +178,7 @@
    <field name="series" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="series2" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="topic" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="title_keywords" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_unstemmed" type="textProper" indexed="true" stored="false" multiValued="true"/>
    <field name="topic_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_browse" type="string" indexed="true" stored="false" multiValued="true"/>
