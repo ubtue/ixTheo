@@ -162,7 +162,7 @@ class BrowseController extends AbstractBase
         // Loop through remaining browse options.  All may be individually disabled
         // in config.ini, but if no settings are found, they are assumed to be on.
         $remainingOptions = [
-            'Author', 'Topic', 'Genre', 'Region', 'Era'
+            'Author', 'Topic', 'Genre', 'Region', 'Era', 'Publisher'
         ];
         foreach ($remainingOptions as $current) {
             $option = strToLower($current);
@@ -436,7 +436,7 @@ class BrowseController extends AbstractBase
      *
      * @return \Zend\View\Model\ViewModel
      */
-    public function authorAction()
+    public function publisherAction()
     {
         $categoryList = [
             'alphabetical' => 'By Alphabetical',
@@ -445,6 +445,26 @@ class BrowseController extends AbstractBase
             'genre'        => 'By Genre',
             'region'       => 'By Region',
             'era'          => 'By Era'
+        ];
+
+        return $this->performBrowse('Publisher', $categoryList, false);
+    }
+
+    /**
+     * Browse Author
+     *
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function authorAction()
+    {
+        $categoryList = [
+            'alphabetical' => 'By Alphabetical',
+            'lcc'          => 'By Call Number',
+            'topic'        => 'By Topic',
+            'genre'        => 'By Genre',
+            'region'       => 'By Region',
+            'era'          => 'By Era',
+            'publisher'    => 'By Publisher'
         ];
 
         return $this->performBrowse('Author', $categoryList, false);
@@ -478,7 +498,8 @@ class BrowseController extends AbstractBase
             'alphabetical' => 'By Alphabetical',
             'topic'        => 'By Topic',
             'region'       => 'By Region',
-            'era'          => 'By Era'
+            'era'          => 'By Era',
+            'publisher'    => 'By Publisher'
         ];
 
         return $this->performBrowse('Genre', $categoryList, true);
@@ -495,7 +516,8 @@ class BrowseController extends AbstractBase
             'alphabetical' => 'By Alphabetical',
             'topic'        => 'By Topic',
             'genre'        => 'By Genre',
-            'era'          => 'By Era'
+            'era'          => 'By Era',
+            'publisher'    => 'By Publisher'
         ];
 
         return $this->performBrowse('Region', $categoryList, true);
@@ -567,6 +589,12 @@ class BrowseController extends AbstractBase
                     $this->getFacetList('era_facet', $category)
                 )
             ];
+        case 'publisher':
+            return [
+               'publisher_facet', $this->quoteValues(
+                    $this->getFacetList('publisher_facet', $category)
+                )
+             ];
         }
     }
 
@@ -667,6 +695,8 @@ class BrowseController extends AbstractBase
             return 'geographic_facet';
         case 'era':
             return 'era_facet';
+        case 'publisher':
+            return 'publisher_facet';
         }
         return $action;
     }
