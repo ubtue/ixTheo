@@ -14,6 +14,17 @@ import org.marc4j.marc.*;
  * @return Set             publishers
  */
 public Set getPublishers(Record record) {
+    Set rawPublishers = getRawPublishers(record);
+    Set publishers = new LinkedHashSet();
+
+    for (String publisher : rawPublishers) {
+        publishers.add(publisher.replaceAll("\\[(.*)\\]|,$", ""));
+    }
+
+    return publishers;
+}
+
+public Set getRawPublishers(Record record) {
     Set publishers = new LinkedHashSet();
 
     // First check old-style 260b name:
