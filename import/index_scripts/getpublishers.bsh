@@ -18,7 +18,11 @@ public Set getPublishers(Record record) {
     Set publishers = new LinkedHashSet();
 
     for (String publisher : rawPublishers) {
-        publishers.add(publisher.replaceAll("\\[(.*)\\]|,$", ""));
+        publisher = publisher.trim();
+        publisher = publisher.replaceAll("\\[(.*)\\]|,$", "");
+        publisher = publisher.trim();
+        publisher = publisher.replaceAll("  ", " ");
+        publishers.add(publisher);
     }
 
     return publishers;
