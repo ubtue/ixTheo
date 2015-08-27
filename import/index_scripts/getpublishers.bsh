@@ -22,11 +22,14 @@ public Set getPublishers(Record record) {
         publisher = publisher.replaceAll("\\[(.*)\\]|,$", "");
         publisher = publisher.trim();
         publisher = publisher.replaceAll("  ", " ");
-        publishers.add(publisher);
-    }
 
+        if (!publisher.isEmpty()) {
+           publishers.add(publisher);
+        }
+    }
     return publishers;
 }
+
 
 public Set getRawPublishers(Record record) {
     Set publishers = new LinkedHashSet();
