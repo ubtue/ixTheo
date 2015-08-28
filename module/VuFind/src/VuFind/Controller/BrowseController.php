@@ -162,7 +162,7 @@ class BrowseController extends AbstractBase
         // Loop through remaining browse options.  All may be individually disabled
         // in config.ini, but if no settings are found, they are assumed to be on.
         $remainingOptions = [
-            'Author', 'Topic', 'Genre', 'Region', 'Era', 'Publisher', 'IxtheoNotation'
+            'Author', 'Topic', 'Genre', 'Region', 'Era', 'Publisher', 'ixTheo-Notation'
         ];
         foreach ($remainingOptions as $current) {
             $option = strToLower($current);
@@ -445,7 +445,7 @@ class BrowseController extends AbstractBase
             'genre'           => 'By Genre',
             'region'          => 'By Region',
             'era'             => 'By Era',
-            'ixtheo_notation' => 'by ixTheo Notation'
+            'ixtheo_notation' => 'By ixTheo-Notation'
         ];
 
         return $this->performBrowse('Publisher', $categoryList, true);
@@ -468,7 +468,7 @@ class BrowseController extends AbstractBase
             'publisher'    => 'By Publisher'
         ];
 
-        return $this->performBrowse('ixTheo Notation', $categoryList, true);
+        return $this->performBrowse('ixtheo-notation', $categoryList, true);
     }
 
     /**
@@ -486,7 +486,7 @@ class BrowseController extends AbstractBase
             'region'          => 'By Region',
             'era'             => 'By Era',
             'publisher'       => 'By Publisher',
-            'ixtheo_notation' => 'by ixTheo Notation'
+            'ixtheo_notation' => 'By ixTheo-Notation'
         ];
 
         return $this->performBrowse('Author', $categoryList, false);
@@ -522,7 +522,7 @@ class BrowseController extends AbstractBase
             'region'          => 'By Region',
             'era'             => 'By Era',
             'publisher'       => 'By Publisher',
-            'ixtheo_notation' => 'by ixTheo Notation'
+            'ixtheo_notation' => 'By ixTheo-Notation'
         ];
 
         return $this->performBrowse('Genre', $categoryList, true);
@@ -541,7 +541,7 @@ class BrowseController extends AbstractBase
             'genre'           => 'By Genre',
             'era'             => 'By Era',
             'publisher'       => 'By Publisher',
-            'ixtheo_notation' => 'by ixTheo Notation'
+            'ixtheo_notation' => 'By ixTheo-Notation'
         ];
 
         return $this->performBrowse('Region', $categoryList, true);
@@ -559,7 +559,7 @@ class BrowseController extends AbstractBase
             'topic'           => 'By Topic',
             'genre'           => 'By Genre',
             'region'          => 'By Region',
-            'ixtheo_notation' => 'by ixTheo Notation'
+            'ixtheo_notation' => 'By ixTheo-Notation'
         ];
 
         return $this->performBrowse('Era', $categoryList, true);
@@ -620,8 +620,7 @@ class BrowseController extends AbstractBase
                     $this->getFacetList('publisher_facet', $category)
                 )
              ];
-        }
-        case 'ixtheo_notation':
+        case 'ixtheo-notation':
             return [
                'ixtheo_notation_facet', $this->quoteValues(
                     $this->getFacetList('ixtheo_notation_facet', $category)
@@ -729,7 +728,7 @@ class BrowseController extends AbstractBase
             return 'era_facet';
         case 'publisher':
             return 'publisher_facet';
-        case 'ixtheo_notation':
+        case 'ixtheo-notation':
             return 'ixtheo_notation_facet';
         }
         return $action;
