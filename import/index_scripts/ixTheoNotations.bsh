@@ -8,7 +8,7 @@ import org.marc4j.marc.SubField;
 /**
  * Split the colon-separated ixTheo notation codes into individual codes and return them.
  */
-public Set getLongLat(Record record) {
+public Set getIxtheoNotations(Record record) {
     List<DataField> fields = record.getDataFields("652");
     if (fields == null)
         return null;
