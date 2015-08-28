@@ -6,36 +6,65 @@
  * it will be applied during indexing.
  */
 import org.marc4j.marc.*;
+import java.util.regex.*;
 
-Map /*<String, String>*/ replacements = new LinkedHashMap();
+Map /*<String, String>*/ replacements = new LinkedHashMap(128);
 
 // delete commas at the end
-replacements.put(",$", "");
+replacements.put("\\s*,$", "");
 // delete comments
 replacements.put("\\[(.*)\\]", "");
-// Substitute dopple spaces to single spaces
-replacements.put("  ", "  ");
+// Substitute multiple spaces to single spaces
+replacements.put("\\s+", " ");
 // insert space after a period if doesn't exists.
 replacements.put("\\.(?!\\s)", ". ");
+replacements.put("\\s-", "-");
 
 // Replace some abbreviation:
-replacements.put("u\\.", "und");
+replacements.put(" und ", " u. ");
+replacements.put(" der ", " d. ");
 // replacements.put("&", "und");
 
 replacements.put("Univ\\.-Verl", "Universitätsverlag");
 replacements.put("Verl\\.-Haus", "Verlagshaus");
+
+replacements.put("Verlag-Anst$", "Verlagsanstalt");
+replacements.put("Verl\\.-Anst$", "Verlagsanstalt");
+replacements.put("Verl-Anst\\.", "Verlagsanstalt");
+replacements.put("Verl\\.-Anst\\.", "Verlagsanstalt");
+
+replacements.put("Verlag-Anstalt$", "Verlagsanstalt");
+
+replacements.put("Verlag Anst$", "Verlagsanstalt");
+replacements.put("Verlag Anst\\.", "Verlagsanstalt");
+replacements.put("Verlag Anstalt", "Verlagsanstalt");
+replacements.put("Verlagsanst$", "Verlagsanstalt");
+replacements.put("Verlagsanst\\.", "Verlagsanstalt");
+
+replacements.put("^Verlag d\\. ", "");
+replacements.put("^Verlag der ", "");
+replacements.put("^Verlag des ", "");
+
 replacements.put("Verl\\.", "Verlag");
 replacements.put("Verl$", "Verlag");
 
 replacements.put("Akad$", "Akademie");
+replacements.put("Akad\\.", "Akademie");
 replacements.put("Akadem\\.", "Akademie");
 replacements.put("Akade\\.", "Akademie");
-replacements.put("Akad\\.", "Akademie");
+replacements.put("Acad$", "Academy");
 replacements.put("Acad\\.", "Academy");
 
-replacements.put("Verlag-Anst", "Verlagshaus");
+replacements.put("wiss\\.", "wissenschaft");
+replacements.put("Wiss$", "Wissenschaft");
+replacements.put("Wiss\\.", "Wissenschaft");
+replacements.put("Lit$", "Literatur");
+replacements.put("Lit\\.", "Literatur");
+
 replacements.put("Anst$", "Anstalt");
+replacements.put("Anst\\.$", "Anstalt");
 replacements.put("anst$", "anstalt");
+replacements.put("anst\\.$", "anstalt");
 
 replacements.put("Kathol\\.", "Katholische");
 replacements.put("Evang\\.", "Evangelische");
@@ -44,14 +73,12 @@ replacements.put("Ev\\.", "Evangelische");
 replacements.put("Pr$", "Press");
 replacements.put("Pr\\.", "Press");
 
-replacements.put("", "Press");
-replacements.put("Pr\\.", "Press");
-
 replacements.put("^Priv\\.", "Privilegierte");
 replacements.put("^Privileg\\.", "Privilegierte");
 
 replacements.put("Württ\\.", "Württembergische");
 replacements.put("Württemb\\.", "Württembergische");
+replacements.put("Bayer\\.", "Bayerische");
 
 replacements.put("ges\\.", "gesellschaft");
 replacements.put("ges$", "gesellschaft");
@@ -62,8 +89,6 @@ replacements.put("Inst\\.", "Institution");
 
 replacements.put("Internat$", "International");
 replacements.put("T&T", "International");
-
-replacements.put("Wiss$", "Wissenschaft");
 
 replacements.put("Univ\\. of", "University of");
 replacements.put("Univ\\.-Bibliothek", "Universitätsbibliothek");
@@ -76,10 +101,7 @@ replacements.put(" Regt", " Regiment");
 replacements.put(" Regt\\.", " Regiment");
 replacements.put("RE$", " R. E.");
 
-
 replacements.put("Calif.", "California");
-
-print(replacements);
 
 /**
  * Get all available publishers from the record.
@@ -94,9 +116,8 @@ public Set getPublishers(Record record) {
     for (String publisher : rawPublishers) {
         publisher = publisher.trim();
         for (Map.Entry replacement : replacements.entrySet()) {
-            publisher = publisher.replaceAll(replacement.getKey(), replacement.getValue());
+            publisher = publisher.replaceAll(replacement.getKey(), replacement.getValue()).trim();
         }
-        publisher = publisher.trim();
 
         if (!publisher.isEmpty()) {
            publishers.add(publisher);
