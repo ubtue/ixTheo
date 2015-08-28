@@ -7,6 +7,80 @@
  */
 import org.marc4j.marc.*;
 
+Map /*<String, String>*/ replacements = new LinkedHashMap();
+
+// delete commas at the end
+replacements.put(",$", "");
+// delete comments
+replacements.put("\\[(.*)\\]", "");
+// Substitute dopple spaces to single spaces
+replacements.put("  ", "  ");
+// insert space after a period if doesn't exists.
+replacements.put("\\.(?!\\s)", ". ");
+
+// Replace some abbreviation:
+replacements.put("u\\.", "und");
+// replacements.put("&", "und");
+
+replacements.put("Univ\\.-Verl", "Universitätsverlag");
+replacements.put("Verl\\.-Haus", "Verlagshaus");
+replacements.put("Verl\\.", "Verlag");
+replacements.put("Verl$", "Verlag");
+
+replacements.put("Akad$", "Akademie");
+replacements.put("Akadem\\.", "Akademie");
+replacements.put("Akade\\.", "Akademie");
+replacements.put("Akad\\.", "Akademie");
+replacements.put("Acad\\.", "Academy");
+
+replacements.put("Verlag-Anst", "Verlagshaus");
+replacements.put("Anst$", "Anstalt");
+replacements.put("anst$", "anstalt");
+
+replacements.put("Kathol\\.", "Katholische");
+replacements.put("Evang\\.", "Evangelische");
+replacements.put("Ev\\.", "Evangelische");
+
+replacements.put("Pr$", "Press");
+replacements.put("Pr\\.", "Press");
+
+replacements.put("", "Press");
+replacements.put("Pr\\.", "Press");
+
+replacements.put("^Priv\\.", "Privilegierte");
+replacements.put("^Privileg\\.", "Privilegierte");
+
+replacements.put("Württ\\.", "Württembergische");
+replacements.put("Württemb\\.", "Württembergische");
+
+replacements.put("ges\\.", "gesellschaft");
+replacements.put("ges$", "gesellschaft");
+replacements.put("Ges\\.", "Gesellschaft");
+replacements.put("Ges$", "Gesellschaft");
+
+replacements.put("Inst\\.", "Institution");
+
+replacements.put("Internat$", "International");
+replacements.put("T&T", "International");
+
+replacements.put("Wiss$", "Wissenschaft");
+
+replacements.put("Univ\\. of", "University of");
+replacements.put("Univ\\.-Bibliothek", "Universitätsbibliothek");
+
+replacements.put("^1st ", "1st. ");
+replacements.put(" Fd ", " Field ");
+replacements.put(" Fd\\. ", " Field ");
+replacements.put(" Svy ", " Survey ");
+replacements.put(" Regt", " Regiment");
+replacements.put(" Regt\\.", " Regiment");
+replacements.put("RE$", " R. E.");
+
+
+replacements.put("Calif.", "California");
+
+print(replacements);
+
 /**
  * Get all available publishers from the record.
  *
@@ -19,14 +93,18 @@ public Set getPublishers(Record record) {
 
     for (String publisher : rawPublishers) {
         publisher = publisher.trim();
-        publisher = publisher.replaceAll("\\[(.*)\\]|,$", "");
+        for (Map.Entry replacement : replacements.entrySet()) {
+            publisher = publisher.replaceAll(replacement.getKey(), replacement.getValue());
+        }
         publisher = publisher.trim();
-        publisher = publisher.replaceAll("  ", " ");
-        publishers.add(publisher);
-    }
 
+        if (!publisher.isEmpty()) {
+           publishers.add(publisher);
+        }
+    }
     return publishers;
 }
+
 
 public Set getRawPublishers(Record record) {
     Set publishers = new LinkedHashSet();
