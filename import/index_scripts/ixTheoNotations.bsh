@@ -9,12 +9,12 @@ import org.marc4j.marc.SubField;
  * Split the colon-separated ixTheo notation codes into individual codes and return them.
  */
 public Set getIxtheoNotations(Record record) {
-    List<DataField> fields = record.getDataFields("652");
-    if (fields == null)
+    List fields = record.getVariableFields("652");
+    if (fields.isEmpty())
         return null;
-    DataField data_field = fields.iterator().next(); // We should only have one 652 field.
+    DataField data_field = (DataField)fields.iterator().next(); // We should only have one 652 field.
     String contents = data_field.getSubField('a').getData(); // There should always be exactly one $a subfield.
     String[] parts = contents.split(":");
-    Set<String> values = new HashSet<String>(Arrays.asList(parts));
+    Set values = new HashSet(Arrays.asList(parts));
     return values;
 }
