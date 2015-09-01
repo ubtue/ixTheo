@@ -292,7 +292,8 @@ public Set getFormat(Record record){
                 print("Reihe gefunden!");
                 break;
             case 'P':
-            print("Zeitschrift gefunden!");
+                print("Zeitschrift gefunden!");
+                break;
         }
     }
 
