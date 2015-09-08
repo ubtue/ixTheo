@@ -283,20 +283,6 @@ public Set getFormat(Record record){
             }
     }
 
-    String field007Value = fixedField.getData().toUpperCase();
-    String field008Value = fixedField.getData().toUpperCase();
-    if (field007Value.charAt(7) == 'S') {
-        print_("Serial gefunden!");
-        switch(field008Value.charAt(21)) {
-            case 'M':
-                print("Reihe gefunden!");
-                break;
-            case 'P':
-                print("Zeitschrift gefunden!");
-                break;
-        }
-    }
-
     // Nothing worked!
     if (result.isEmpty()) {
         result.add("Unknown");
