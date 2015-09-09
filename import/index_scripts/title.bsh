@@ -1,0 +1,48 @@
+/**
+ * Custom title extraction script.
+ *
+ * This can be used to override built-in SolrMarc custom functions.  If you change
+ * this script, you will need to activate it in import/marc_local.properties before
+ * it will be applied during indexing.
+ */
+import org.marc4j.marc.Record;
+import org.marc4j.marc.DataField;
+import org.marc4j.marc.Subfield;
+
+
+String TrimSlashesAndSpaces(String s) {
+    int end = s.length();
+    for (int i = end - 1; i > 0; --i) {
+        char ch = s.charAt(i);
+	if (ch != ' ' && ch != '/')
+            break;
+	--end;
+    }
+
+    return s.substring(0, end);
+}
+
+
+/**
+ * Determine Record Title
+ *
+ * @param  Record     record
+ * @return String     nicely formatted title
+ */
+public String getTitle(Record record){
+    DataField title = (DataField) record.getVariableField("245");
+    if (title == null)
+        return null;
+
+    String title_a = (title.getSubfield('a') == null) ? null : title.getSubfield('a').getData();
+    String title_b = (title.getSubfield('b') == null) ? null : title.getSubfield('b').getData();
+    if (title_a == null && title_b == null)
+        return null;
+
+    if (title_a == null)
+        return TrimSlashesAndSpaces(title_b);
+    else if (title_b == null)
+        return TrimSlashesAndSpaces(title_a);
+    else // Neither title_a nor title_b are null.
+        return TrimSlashesAndSpaces(title_a) + " " + TrimSlashesAndSpaces(title_b);
+}
