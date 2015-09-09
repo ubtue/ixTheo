@@ -170,7 +170,7 @@ JS;
                 <? else: ?>
                   <span class="pull-right flip"><i class="fa fa-check"></i></span>
                 <? endif; ?>
-                <?=$this->escapeHtml($thisFacet['displayText'])?>
+                <?=$this->transEsc($thisFacet['displayText'])?>
               </a>
             <? else: ?>
               <? $addURL = $this->currentPath().$results->getUrlQuery()->addFacet($title, $thisFacet['value'], $thisFacet['operator']); ?>
