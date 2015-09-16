@@ -43,6 +43,9 @@ public String getTitle(Record record){
         return TrimSlashesAndSpaces(title_b);
     else if (title_b == null)
         return TrimSlashesAndSpaces(title_a);
-    else // Neither title_a nor title_b are null.
-        return TrimSlashesAndSpaces(title_a) + ": " + TrimSlashesAndSpaces(title_b);
+    else { // Neither title_a nor title_b are null.
+        String trimmed_titel_a = TrimSlashesAndSpaces(title_a);
+        String trimmed_titel_b = TrimSlashesAndSpaces(title_b);
+        return trimmed_titel_a + (trimmed_titel_a.endsWith(":") ? " " : ": ") + trimmed_titel_b;
+    }
 }
