@@ -263,20 +263,20 @@ class SwitchQuery implements RecommendInterface
     }
 
     /**
-     * Will adding a wildcard help?
+     * Will adding a tilde help?
      *
      * @param string $query Query to check
      *
      * @return string|bool
      */
-    protected function checkWildcard($query)
+    protected function checkFuzzy($query)
     {
-        // Don't pile wildcards on phrases:
+        // Don't pile tildes on phrases:
         if (substr($query, -1) == '"') {
             return false;
         }
         $query = trim($query, ' ?');
-        return (substr($query, -1) != '*') ? $query . '*' : false;
+        return (substr($query, -1) != '~' && substr($query, -1) != '*') ? $query . '~' : false;
     }
 
     /**
