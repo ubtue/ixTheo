@@ -1828,7 +1828,7 @@ class SolrDefault extends AbstractBase
 	        $last_colon_pos = strrpos($url_and_material_type, ":");
                 if ($last_colon_pos) {
                     $material_type = substr($url_and_material_type, $last_colon_pos + 1);
-		    $retval[substr($url_and_material_type, 0, $last_colon_pos)] = $material_type;
+                    $retval[substr($url_and_material_type, 0, $last_colon_pos)] = $material_type;
                 }
             }
         }

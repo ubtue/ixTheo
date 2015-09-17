@@ -16,7 +16,7 @@ translations.put("Ausführliche Beschreibung", "detailed description");
 translations.put("Unbekanntes Material", "unknown material type");
 
 /**
- * Returns either a Set<String> of parent (URL + colon + material type).  URLs are taken from 856u and material
+ * Returns a Set<String> of parent (URL + colon + material type).  URLs are taken from 856u and material
  * types from 8563, 856z or 856x.  For missing type subfields the text "Unbekanntes Material" will be used.
  *
  * @return  A, possibly empty, Set<String> containing the URL/material-type pairs.
