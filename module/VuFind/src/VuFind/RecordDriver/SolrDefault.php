@@ -1815,4 +1815,23 @@ class SolrDefault extends AbstractBase
             && !empty($this->fields['hierarchy_parent_id'])
             ? $this->fields['hierarchy_parent_id'][0] : '';
     }
+
+    /**
+     * Return an associative array of URL's mapped to their material types.
+     *
+     * @return array
+     */
+    public function getURLsAndMaterialTypes()
+    {
+	if (isset($this->fields['urls_and_material_types']) && !empty($this->fields['urls_and_material_types'])) {
+           foreach ($this->fields['urls_and_material_types'] as $url_and_material_type) {
+	        $last_colon_pos = strrpos($url_and_material_type, ":");
+                if ($last_colon_pos) {
+                    $material_type = substr($url_and_material_type, $last_colon_pos + 1);
+		    $retval[substr($url_and_material_type, 0, $last_colon_pos)] = $material_type;
+                }
+            }
+        }
+        return $retval;
+    }
 }

@@ -1,0 +1,56 @@
+import org.marc4j.marc.DataField;
+import org.marc4j.marc.Record;
+import org.marc4j.marc.Subfield;
+
+import java.util.*;
+
+Map translations = new HashMap();
+
+translations.put("Inhaltsverzeichnis", "TOC");
+translations.put("Klappentext", "blurb");
+translations.put("Rezension", "review");
+translations.put("Cover", "cover");
+translations.put("Inhaltstext", "contents");
+translations.put("Verlagsinformation", "publisher information");
+translations.put("Ausführliche Beschreibung", "detailed description");
+translations.put("Unbekanntes Material", "unknown material type");
+
+/**
+ * Returns either a Set<String> of parent (URL + colon + material type).  URLs are taken from 856u and material
+ * types from 8563, 856z or 856x.  For missing type subfields the text "Unbekanntes Material" will be used.
+ *
+ * @return  A, possibly empty, Set<String> containing the URL/material-type pairs.
+ */
+public Set getUrlsAndMaterialTypes(Record record) {
+    Set urls_and_material_types = new LinkedHashSet();
+    String material_type, translated_material_type;
+    for (DataField field : record.getVariableFields("856")) {
+    	Subfield subfield_3 = field.getSubfield('3');
+	if (subfield_3 != null) {
+	   material_type = subfield_3.getData();
+	} else {
+	  Subfield subfield_z = field.getSubfield('z');
+      	  if (subfield_z != null) {
+      	     material_type = subfield_z.getData();
+	  } else {
+	    Subfield subfield_x = field.getSubfield('x');
+	    material_type = (subfield_x == null) ? "Unbekanntes Material" : subfield_x.getData();
+      	  }
+    	}
+
+	translated_material_type = translations.get(material_type);
+	if (translated_material_type == null) {
+	   if (material_type.startsWith("Rezension")) {
+	      translated_material_type = translations.get("Rezension");
+	   } else {
+	     print("PPN: " + record.getControlNumber()  + " Unkown material type: " + material_type);
+	     translated_material_type = "unknown material type";
+	   }
+	}
+
+	for (Subfield subfield_u : field.getSubfields('u'))
+	    urls_and_material_types.add(subfield_u.getData() + ":" + translated_material_type);
+    }
+
+    return urls_and_material_types;
+}
