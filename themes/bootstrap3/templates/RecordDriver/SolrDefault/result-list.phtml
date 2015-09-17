@@ -56,7 +56,7 @@
       <? if(!$this->driver->isCollection()): ?>
         <? if ($snippet = $this->driver->getHighlightedSnippet()): ?>
           <? if (!empty($snippet['caption'])): ?>
-            <strong><?=$this->transEsc($snippet['caption']) ?>:</strong> ';
+            <strong><?=$this->transEsc($snippet['caption']) ?>:</strong>
           <? endif; ?>
           <? if (!empty($snippet['snippet'])): ?>
             <span class="quotestart">&#8220;</span>...<?=$this->highlight($snippet['snippet']) ?>...<span class="quoteend">&#8221;</span><br/>
@@ -105,6 +105,13 @@
           <? endif; ?>
         <? endif; ?>
       </div>
+      <? $urls_and_material_types = $this->driver->getURLsAndMaterialTypes(); ?>
+      <? if (!empty($urls_and_material_types)): ?>
+        <? foreach ($urls_and_material_types as $url => $material_type): ?>
+	   <a href="<?=$url?>" class="fulltext" target="new"><i class="fa fa-external-link"></i> <?=$this->transEsc($material_type)?></a>
+           <br/>
+        <? endforeach; ?>
+      <? endif; ?>
 
       <? /* We need to find out if we're supposed to display an OpenURL link ($openUrlActive),
             but even if we don't plan to display the link, we still want to get the $openUrl
