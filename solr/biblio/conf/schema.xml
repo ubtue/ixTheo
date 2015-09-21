@@ -117,6 +117,7 @@
       </analyzer>
       <analyzer type="query">
 	<tokenizer class="solr.WhitespaceTokenizerFactory"/>
+<!--	<filter class="solr.LowerCaseFilterFactory"/> -->
       </analyzer>
     </fieldType>
 
@@ -201,6 +202,10 @@
    <field name="topic_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_browse" type="string" indexed="true" stored="false" multiValued="true"/>
    <field name="author_browse" type="string" indexed="true" stored="false" multiValued="true"/>
+<!-- added jr 20150811 for testing -->
+   <field name="key_word_chains_browse" type="string" indexed="true" stored="false" multiValued="true"/>
+   <field name="key_word_chain_bag_browse" type="string" indexed="true" stored="false" multiValued="true"/>
+
    <field name="genre" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="genre_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
    <field name="geographic" type="text" indexed="true" stored="true" multiValued="true"/>
@@ -253,7 +258,7 @@
    <field name ="key_word_chain_bag" type="string" indexed="true" stored="true" multiValued="true" />
    <field name ="key_word_chain_bag_test1" type="flattenedKeyWordChain" indexed="true" stored="false" multiValued="true" /> 
 <!--  <field name ="key_word_chain_bag_test" type="string" indexed="true" stored="true" multiValued="true" /> -->
-
+   <field name ="prefix4_key_word_chain_bag" type="string" indexed="true" stored="true" multiValued="true" />
 
  </fields>
  <uniqueKey>id</uniqueKey>
@@ -281,6 +286,11 @@
  <copyField source="topic"    dest="topic_browse"/>
  <copyField source="author"    dest="author_browse"/>
  <copyField source="author2"    dest="author_browse"/>
+<!-- added jr 20150811 for testing -->
+ <copyField source="key_word_chains"    dest="key_word_chains_browse"/> 
+ <copyField source="key_word_chain_bag" dest="key_word_chain_bag_browse"/>
+
+
  <!-- CopyFields for All Fields -->
  <copyField source="format"    dest="allfields"/>
  <copyField source="format"    dest="allfields_unstemmed"/>
@@ -293,6 +303,9 @@
 
 <!-- Generate Bag of words from Keyword Chains-->
 <!-- ixTheo-->
-<copyField source="key_word_chains" dest="key_word_chain_bag_test1"/> 
+<!-- <copyField source="key_word_chains" dest="key_word_chain_bag_test1"/> -->
+<copyField source="key_word_chain_bag" dest="allfields"/>
+<copyField source="key_word_chain_bag" dest="spellingShingle"/>
+<copyField source="key_word_chain_bag" dest="prefix4_key_word_chain_bag" maxChars="4"/> 
 
 </schema>
