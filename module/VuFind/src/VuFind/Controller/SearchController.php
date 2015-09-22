@@ -500,6 +500,10 @@ class SearchController extends AbstractSearch
             return $this->forwardTo('Tag', 'Home');
         }
 
+        if ($this->params()->fromQuery('type') == 'BibleRangeSearch') {
+            return $this->forwardTo('BibleRangeSearch', 'Home');
+        }
+
         // Default case -- standard behavior.
         return parent::resultsAction();
     }

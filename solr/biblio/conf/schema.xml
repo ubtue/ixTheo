@@ -158,6 +158,8 @@
    <field name="title_auth" type="text" indexed="true" stored="true"/>
    <field name="physical" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="publisher" type="textProper" indexed="true" stored="true" multiValued="true"/>
+   <field name="publisher_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+   <copyField source="publisher" dest="publisher_facet"/>
    <field name="publisherStr" type="string" indexed="true" stored="false" multiValued="true"/>
    <field name="publishDate" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="publishDateSort" type="string" indexed="true" stored="false"/>
@@ -198,6 +200,7 @@
    <field name="series" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="series2" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="topic" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="title_keywords" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_unstemmed" type="textProper" indexed="true" stored="false" multiValued="true"/>
    <field name="topic_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_browse" type="string" indexed="true" stored="false" multiValued="true"/>
@@ -254,6 +257,9 @@
 
    <!-- IxTheo -->
    <field name ="bible_ranges" type="string" indexed="true" stored="true" />
+   <field name ="ixtheo_notation" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name="ixtheo_notation_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+   <copyField source="ixtheo_notation" dest="ixtheo_notation_facet"/>
    <field name ="key_word_chains" type="string" indexed="true" stored="true" multiValued="true" />
    <field name ="key_word_chain_bag" type="string" indexed="true" stored="true" multiValued="true" />
    <field name ="key_word_chain_bag_test1" type="flattenedKeyWordChain" indexed="true" stored="false" multiValued="true" /> 
