@@ -13,11 +13,14 @@ write.lock
 alphabetical_browse
 tlog.*
 
+# Logs
+*.log
+*.log.1
+
 # Compiled CSS
 compiled.css
 
 # Server specific configuration files
-local/httpd-vufind.conf
 httpd-vufind.conf
 httpd-vufind-vhosts.conf
 local_overrides
@@ -26,3 +29,6 @@ public/.htaccess
 
 # Ignore documentation
 public/doc
+
+KeywordChainParser.jar
+BibleRangeParser.jar

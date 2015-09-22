@@ -1,4 +1,7 @@
-       <?$formats = $this->driver->getFormats(); if (!empty($formats) && ($formats[0] == "Article" || $formats[0] == "Journal" || $formats[0] == "Article")): ?>
+       <?$ip_addr = $_SERVER['REMOTE_ADDR'];?>
+       <?$ip_info = json_decode(file_get_contents("http://ipinfo.io/{$ip_addr}/json"));?>
+       <?$formats = $this->driver->getFormats();
+         if ((empty($ip_info->country) or $ip_info->country == "DE") && !empty($formats) && ($formats[0] == "Article" || $formats[0] == "Journal" || $formats[0] == "Article")): ?>
         <tr>
           <th><?=$this->transEsc('JOP Link')?>: </th>
           <td><div style="color:grey" id="place_holder">JOP Link</div></td>

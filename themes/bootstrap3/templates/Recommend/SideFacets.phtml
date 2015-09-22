@@ -45,7 +45,7 @@
         ?>
         <a class="list-group-item active" href="<?=$removeLink?>">
           <span class="pull-right"><i class="fa fa-times"></i></span>
-          <? if ($filter['operator'] == 'NOT') echo $this->transEsc('NOT') . ' '; if ($filter['operator'] == 'OR' && $i > 0) echo $this->transEsc('OR') . ' '; ?><?=$this->transEsc($field)?>: <?=$this->escapeHtml($filter['displayText'])?>
+          <? if ($filter['operator'] == 'NOT') echo $this->transEsc('NOT') . ' '; if ($filter['operator'] == 'OR' && $i > 0) echo $this->transEsc('OR') . ' '; ?><?=$this->transEsc($field)?>: <?=$this->transEsc($filter['displayText'])?>
         </a>
       <? endforeach; ?>
     <? endforeach; ?>
@@ -168,7 +168,7 @@ JS;
                 <? else: ?>
                   <span class="pull-right"><i class="fa fa-check"></i></span>
                 <? endif; ?>
-                <?=$this->escapeHtml($thisFacet['displayText'])?>
+                <?=$this->transEsc($thisFacet['displayText'])?>
               </a>
             <? else: ?>
               <? $addURL = $this->currentPath().$results->getUrlQuery()->addFacet($title, $thisFacet['value'], $thisFacet['operator']); ?>
@@ -189,7 +189,7 @@ JS;
               <? if($thisFacet['operator'] == 'OR'): ?>
                 <i class="fa fa-square-o"></i>
               <? endif; ?>
-              <?=$this->escapeHtml($thisFacet['displayText'])?>
+              <?=$this->transEsc($thisFacet['displayText'])?>
               <? if ($allowExclude): ?>
                   </a>
                 </div>
