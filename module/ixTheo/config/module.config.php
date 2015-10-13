@@ -13,12 +13,14 @@ $config = array (
     'invokables' => 
     array (
       'BibleRangeSearch' => 'ixTheo\\Controller\\Search\\BibleRangeSearchController',
+      'KeywordChainSearch' => 'ixTheo\\Controller\\Search\\KeywordChainSearchController'
     ),
   ),
 );
 
 $staticRoutes = array (
-    'BibleRangeSearch/Home'
+    'BibleRangeSearch/Home',
+    'KeywordChainSearch/Home'
 );
 
 $routeGenerator = new \VuFind\Route\RouteGenerator();
