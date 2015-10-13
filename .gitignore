@@ -30,5 +30,23 @@ public/.htaccess
 # Ignore documentation
 public/doc
 
+# Eclipse IDE
+.classpath
+.project
+*.pydevproject
+.metadata
+.gradle
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.buildpath
+.target
+
 KeywordChainParser.jar
 BibleRangeParser.jar
