@@ -1,2 +1,14 @@
-<h2>This is Keywordchainsearch</h2>
-<?=$this->render('search/home.phtml');?>
+
+
+<!-- <h2><?=$this->transEsc('Browse Keywordchains');?></h2> -->
+<!-- <h3>Das ist F&uumllltext</h3> -->
+<?=$this->render('search/home.phtml');?> 
+<!-- <?//=$this->render('keywordchainsearch/show_results.phtml');?> -->
+<?=$this->render('keywordchainsearch/test.phtml');?> 
+
+<?
+   $this->headTitle($this->translate('Browse Keywordchains')); 
+   $this->layout()->breadcrumbs = '<a href="' . $this->url('keywordchainsearch-home') . '">' . $this->transEsc('Browse Keywordchains') . '</a>';
+?>
+
+
