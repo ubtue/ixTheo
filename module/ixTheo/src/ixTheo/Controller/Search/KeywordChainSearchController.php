@@ -147,7 +147,6 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractBase
         }
     }
 
-
     /**
      * Helper class that adds quotes around the values of an array
      *
@@ -162,6 +161,20 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractBase
             $array[$i] = $result;
         }
         return $array;
+    }
+
+
+
+   /**
+    * Attach Wildcard to each part of the query string
+    * 
+    *
+    */
+    
+    protected function appendWildcard($query){
+
+	return preg_replace('~(\w+)~', '$1*', $query);
+
     }
 
 
@@ -185,13 +198,27 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractBase
 
         $params = $results->getParams();
         $params->addFacet($facet);
-        if ($category != null) {
-            $query = $category . ':' . $query;
-        } else {
-            $query = $facet . ':' . $query;
-        }
+	$query = $this->appendWildcard($query);
 
-        $query='{!keywordChainParser}' . ':' . 'Gesch*';
+//        if ($category != null) {
+//            $query = $category . ':' . $query;
+//        } else {
+//            $query = $facet . ':' . $query;
+//        }
+
+
+//        $query='{!keywordChainParser}' . ':' . 'Gesch*';
+
+	
+	// Make sure we do not hang
+	
+	if($query == '')
+		return [];
+
+
+	$query = ($query != '') ? $query : '*';
+
+	$query = 'key_word_chain_bag' . ':' . "(" . $query . ")";
         
         $params->setOverrideQuery($query);
         $params->getOptions()->disableHighlighting();
@@ -232,8 +259,9 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractBase
             $view->currentAction = $currentAction;
         }
 
+	$query = $this->getRequest()->getQuery()->get('lookfor');
 
-        $results = $this->getKeywordChainAsFacets('key_word_chains');
+        $results = $this->getKeywordChainAsFacets('key_word_chains', null, 'index', $query);
 
         $resultList = [];
         foreach ($results as $result) {
@@ -259,8 +287,15 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractBase
 	  */
 	 public function homeAction()
 	 {
-		return $this->createViewModel();
+		return parent::createViewModel();
 	 }
+
+
+	public function resultsAction(){
+
+
+		return $this->createViewModel();
+	}
 
 	
 }

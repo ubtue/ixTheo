@@ -46,6 +46,20 @@ return array (
           ),
         ),
       ),
+      'keywordchainsearch-results' => 
+      array (
+        'type' => 'Zend\\Mvc\\Router\\Http\\Literal',
+        'options' => 
+        array (
+          'route' => '/KeywordChainSearch/Results',
+          'defaults' => 
+          array (
+            'controller' => 'KeywordChainSearch',
+            'action' => 'Results',
+          ),
+        ),
+      ),
+
     ),
   ),
   'vufind' => 
