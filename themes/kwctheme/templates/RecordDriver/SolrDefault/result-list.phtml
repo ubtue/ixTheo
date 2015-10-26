@@ -143,9 +143,10 @@
 	<br/>
       <? endif; ?>
 
-      <? $keyWordChains = $this->driver->getKeyWordChains(); if (!empty($keyWordChains)) :
-	  foreach ($keyWordChains as $current): ?> 
-           <?=$this->transEsc('KeyWordChains')?>: <?=$this->escapeHtml($current)?>  
+      <? $keyWordChains = $this->driver->getKeyWordChains(); if (!empty($keyWordChains)) :?>
+	  <?=$this->transEsc('keywordchains')?>:
+	  <?foreach ($keyWordChains as $current): ?> 
+            <?=$this->escapeHtml($current)?>  
             <br/> 
           <? endforeach; ?> 
       <? endif; ?> 
