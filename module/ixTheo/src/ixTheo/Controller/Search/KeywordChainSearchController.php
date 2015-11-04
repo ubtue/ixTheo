@@ -126,26 +126,14 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
         $params->getOptions()->spellcheckEnabled(false);
         $params->setFacetLimit(-1);
         $params->setLimit(0);
-        $params->getOptions()->disableHighlighting();
-        $params->getOptions()->spellcheckEnabled(false);
         $params->setFacetPrefix($this->params()->fromQuery('facet_prefix'));
         $params->setFacetSort($sort);
-//        $result = $results->getFacetList();
-
-//        $params->setFacetOffset(($params->getPage() - 1) * $params->getLimit());
-//        $params->setFacetLimit($params->getLimit() * 20);
         $params->setFacetOffset(($params->getPage() - 1) * $params->getLimit());
-        $params->setFacetLimit(20);
-
+        $params->setFacetLimit($params->getLimit() ? $params->getLimit() : 20);
 
 	$results->setParams($params);
-	return $results;
 
-//        if (isset($result[$facet])) {
-//            return $result[$facet]['list'];
-//        } else {
-//            return [];
-//        }
+	return $results;
 
      }
 
@@ -165,37 +153,24 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
 
 	$query = $this->getRequest()->getQuery()->get('lookfor');
 
-
-// Test only
-
-/*	$this->searchClassId = 'KeywordChainSearch';
-
-        $runner = $this->getServiceLocator()->get('VuFind\SearchRunner');
-
-        // Send both GET and POST variables to search class:
-        $request = $this->getRequest()->getQuery()->toArray()
-            + $this->getRequest()->getPost()->toArray();
-
-        $view = parent::createViewModel(['params' => $params]);
-
-        $view->results = $results = $runner->run(
-            $request, $this->searchClassId, $this->getSearchSetupCallback()
-        );*/
-
-// End test only
-
-
         $results = $this->getKeywordChainAsFacets($facet, null, 'index', $query);
+
 	$params = (!empty($results)) ? $results->getParams() : [];
 	
 	$this->resultScroller()->init($results);
 
+// TEST ONLY
+	// Does retrieving facet before make the difference ???
 
-//        $view = parent::createViewModel(array_merge(['params' => $params, 'results' => $results], $params_ext));
-//       $view = parent::createViewModel(['params' => $params, 'results' => $results]);
+	//if (!empty($results)){
+	//  $tmp = $results->getFacetList();
+	//}
+
+// END TEST ONLY
 
 	if (!empty($results)){
-          $view = parent::createViewModel(['params' => $params, 'results' => $results->getResults()]);	
+       //   $view = parent::createViewModel(['params' => $params, 'results' => $results->getResults()]);	
+          $view = parent::createViewModel(['params' => $params, 'results' => $results]);	
         }
         else{
 	  $view = parent::createViewModel(['params' => $params]);
@@ -216,9 +191,6 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
 
 	$view->resultList = $resultList;
 
-	if (!empty($results)){
-		$view->results = $results->getResults();
-	}
 	
         return $view;
     }

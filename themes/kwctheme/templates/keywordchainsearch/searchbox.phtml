@@ -26,17 +26,6 @@
     $lastLimit = $options->getLastLimit();
 ?>
 <? if ($this->searchType == 'advanced'): ?>
-  <div class="searchForm navbar-form navbar-left flip">
-    <? $tabs = $this->render('search/searchTabs'); ?>
-    <? if (!empty($tabs)): ?><?=$tabs ?><div class="tab-content clearfix"><? endif; ?>
-      <p class="adv_search_terms"><?=$this->transEsc("Your search terms")?> : "<strong><?=$this->escapeHtml($this->lookfor)?></strong>"</p>
-      <p class="adv_search_links">
-        <a href="<?=$this->url($advSearch)?>?edit=<?=$this->escapeHtmlAttr($this->searchId)?>"><?=$this->transEsc("Edit this Advanced Search")?></a> |
-        <a href="<?=$this->url($advSearch)?>"><?=$this->transEsc("Start a new Advanced Search")?></a> |
-        <a href="<?=$this->url($searchHome)?>"><?=$this->transEsc("Start a new Basic Search")?></a>
-      </p>
-    <? if (!empty($tabs)): ?></div><? endif; ?>
-  </div>
 <? else: ?>
   <form class="searchForm navbar-form navbar-left flip" method="get" action="<?=$this->url('keywordchainsearch-results')?>" name="searchForm" autocomplete="off">
     <?= $this->render('search/searchTabs'); ?>
@@ -51,9 +40,6 @@
       <input type="hidden" name="type" value="<?=$this->escapeHtmlAttr($handlers[0]['value'])?>" />
     <? endif; ?>
     <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> <?=$this->transEsc("Find")?></button>
-    <? if ($advSearch): ?>
-      <a href="<?=$this->url($advSearch)?>" class="btn btn-link" rel="nofollow"><?=$this->transEsc("Advanced")?></a>
-    <? endif; ?>
 
     <? $shards = $options->getShards(); if ($options->showShardCheckboxes() && !empty($shards)): ?>
       <?

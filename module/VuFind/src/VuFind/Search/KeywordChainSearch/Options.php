@@ -13,7 +13,8 @@ class Options extends  \VuFind\Search\Solr\Options{
 
    public function getSearchAction(){
 
-	return 'keywordchainsearch-search';
+//	return 'keywordchainsearch-search';
+	return 'keywordchainsearch-results';
 
    }
 
@@ -25,8 +26,12 @@ class Options extends  \VuFind\Search\Solr\Options{
 
 
   public function getAdvancedSearchAction(){
+	
+	// We do not have advanced Search - however a 
+	// missing route error occurs if false is returned
+	// as suggested in vufind documentation
 
-	return false;
+	return 'keywordchainsearch-home';
   }
 
 
@@ -35,7 +40,7 @@ class Options extends  \VuFind\Search\Solr\Options{
 
   public function getVisibleSearchResultLimit(){
 
-        return 20;
+        return 5;
 
   }
 

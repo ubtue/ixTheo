@@ -58,6 +58,19 @@ return array (
             'action' => 'Results',
           ),
         ),
+      ),    
+     'keywordchainsearch-search' => 
+      array (
+        'type' => 'Zend\\Mvc\\Router\\Http\\Literal',
+        'options' => 
+        array (
+          'route' => '/KeywordChainSearch/Search',
+          'defaults' => 
+          array (
+            'controller' => 'KeywordChainSearch',
+            'action' => 'Search',
+          ),
+        ),
       ),
 
     ),
@@ -73,6 +86,29 @@ return array (
           'solrmarc' => 'ixTheo\\RecordDriver\\Factory::getSolrMarc',
         ),
       ),
-    ),
+/*      'search_params' =>
+         array (
+           'factories' => 
+              array(
+                'Solr' => function ($sm) {
+                   $options = $sm->getServiceLocator()->get('VuFind\SearchOptionsPluginManager')->get('Solr');
+                      return new \ixTheo\Controller\Search\Params(
+                        clone($options), $sm->getServiceLocator()->get('VuFind\Config')
+                      );
+                 }
+             ),
+        ),*/ 
+/*      'search_options' =>
+         array (
+           'factories' =>
+              array(
+                'Solr' =>  function ($sm) {
+                     return new \ixTheo\Controller\Search\Options(
+                        $sm->getServiceLocator()->get('VuFind\Config')
+		     );
+                }
+           ),
+        ), */
+     ),
   ),
 );
