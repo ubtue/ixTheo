@@ -40,7 +40,7 @@ class Options extends  \VuFind\Search\Solr\Options{
 
   public function getVisibleSearchResultLimit(){
 
-        return 5;
+        return -1;
 
   }
 

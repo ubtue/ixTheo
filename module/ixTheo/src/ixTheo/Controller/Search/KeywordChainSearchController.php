@@ -124,12 +124,14 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
         $params->setOverrideQuery($query);
         $params->getOptions()->disableHighlighting();
         $params->getOptions()->spellcheckEnabled(false);
-        $params->setFacetLimit(-1);
-        $params->setLimit(0);
+ //       $params->setFacetLimit(-1);
+ //       $params->setLimit(0);
+        $params->setLimit(20);
         $params->setFacetPrefix($this->params()->fromQuery('facet_prefix'));
         $params->setFacetSort($sort);
         $params->setFacetOffset(($params->getPage() - 1) * $params->getLimit());
-        $params->setFacetLimit($params->getLimit() ? $params->getLimit() : 20);
+    //    $params->setFacetLimit($params->getLimit() ? $params->getLimit() : 20);
+        $params->setFacetLimit(200);
 
 	$results->setParams($params);
 

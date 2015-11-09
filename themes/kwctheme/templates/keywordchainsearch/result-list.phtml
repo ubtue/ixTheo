@@ -4,7 +4,7 @@
      <th><?=$this->transEsc('keywordchains')?></th><th><?=$this->transEsc("sort_keywordchain_relevance")?></th>
    </tr>
    <? if (!empty($this->resultList)):?>
-   <?   foreach ($this->resultList as $current):?>
+   <?   foreach ($this->results->getResults() as $current):?>
    <tr>
       <td><a href="<?$this->url('keywordchainsearch-home')?>?field=<?urlencode($current['value'])?>"><?=$this->escapeHtml($current['value'])?></a></td>
       <td><?=$this->escapeHtml($current['count'])?></td>
