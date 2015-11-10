@@ -49,9 +49,6 @@ class Results extends SolrResults
     {
         // Call parent constructor:
         parent::__construct($params);
-
-        // Set up URL helper to use appropriate search parameter:
-        $this->getUrlQuery()->setBasicSearchParam('keywordchainsearch');
     }
 
     /**

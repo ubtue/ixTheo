@@ -4,7 +4,6 @@
 
  <form class="form-inline" method="post" name="bulkActionForm" action="<?=$this->url('cart-home')?>">
         <?=$this->render('keywordchainsearch/result-list.phtml')?>
-        <?//=$this->render('search/results.phtml')?>
         <?=$this->context($this)->renderInContext('search/bulk-action-buttons.phtml', array('idPrefix' => 'bottom_'))?>
         <?=$this->paginationControl($this->results->getPaginator(), 'Sliding', 'search/pagination.phtml', array('results' => $this->results))?>
       </form>
