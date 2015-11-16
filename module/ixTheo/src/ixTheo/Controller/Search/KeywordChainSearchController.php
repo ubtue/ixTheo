@@ -86,24 +86,34 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
 
 	$lookfor = $request->get('lookfor');
 
-	$request->set('lookfor', $this->appendWildcard($lookfor));
+//	if (substr($lookfor, -1) != '*'){
+//	   $lookfor = $this->appendWildcard($lookfor);
+//	}
+
+	$request->set('lookfor', $lookfor);
 	
 	$request->set('type', 'KeywordChainSearch');
 
 	$params->initFromRequest($request);
+
+	// The request does not seem to allow to formulate
+	// complex queries, so we have to to apply the qf-parameter
+	// manually
+
+//	$backendParams = $params->getBackendParameters();
+
+//	$backendParams->set('qf', 'key_word_chain_bag');
 	
 
-    	$query = ($query != '') ? $query : '*';
+//    	$query = ($query != '') ? $query : '*';
 
-    	$query = 'key_word_chain_bag' . ':' . "(" . $query . ")";
+//    	$query = 'key_word_chain_bag' . ':' . "(" . $query . ")";
 
 //	$display_query = $params->getDisplayQuery();
 
 //	var_dump($display_query);
       
 //        $params->setOverrideQuery($query);
-
-
 
 
         $params->getOptions()->disableHighlighting();

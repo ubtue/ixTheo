@@ -86,6 +86,4 @@ class Results extends SolrResults
         }
     }
 
-
-
 }

@@ -9,6 +9,11 @@ class Options extends  \VuFind\Search\Solr\Options{
 
 	parent::__construct($configLoader);
 
+	// Make sure both lucene and dismax syntax is supported,
+	// i.e. choose edismax as default handler
+	$this->defaultHandler = "edismax";
+
+
    }
 
    public function getSearchAction(){
@@ -37,6 +42,7 @@ class Options extends  \VuFind\Search\Solr\Options{
 
   // We only get Facets from Solr, so our resultLimit is
   // set to 0. Thus, we have to set this manually
+  // We want to process all available facets so don't restrict
 
   public function getVisibleSearchResultLimit(){
 
