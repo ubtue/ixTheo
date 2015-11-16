@@ -4,7 +4,7 @@
      <th><?=$this->transEsc('keywordchains')?></th><th><?=$this->transEsc("sort_keywordchain_relevance")?></th>
      <th><?=$this->transEsc('keywordchains_terms')?></th>
    </tr>
-   <? if (isset($this->resultList)):?>
+   <? if(!empty($this->results) && !empty($this->results->getResults())):?>
    <?   foreach ($this->results->getResults() as $current):?>
    <tr>
       <td>

@@ -76,12 +76,12 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
 	$results = $this->getResultsManager()->get($this->searchClassId);
         $params = $results->getParams();
         $params->addFacet($facet);
-	$query = $this->appendWildcard($query);
+//	$query = $this->appendWildcard($query);
 
 	$options = $params->getOptions();
 	
-	if($query == '')
-		return [];
+//	if($query == '')
+//		return [];
 
 
 	$lookfor = $request->get('lookfor');
@@ -95,31 +95,10 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
 	$request->set('type', 'KeywordChainSearch');
 
 	$params->initFromRequest($request);
-
-	// The request does not seem to allow to formulate
-	// complex queries, so we have to to apply the qf-parameter
-	// manually
-
-//	$backendParams = $params->getBackendParameters();
-
-//	$backendParams->set('qf', 'key_word_chain_bag');
-	
-
-//    	$query = ($query != '') ? $query : '*';
-
-//    	$query = 'key_word_chain_bag' . ':' . "(" . $query . ")";
-
-//	$display_query = $params->getDisplayQuery();
-
-//	var_dump($display_query);
-      
-//        $params->setOverrideQuery($query);
-
-
         $params->getOptions()->disableHighlighting();
         $params->getOptions()->spellcheckEnabled(false);
-        $params->setLimit(30);
-        $params->setFacetPrefix($this->params()->fromQuery('facet_prefix'));
+        //$params->setLimit(30);
+        //$params->setFacetPrefix($this->params()->fromQuery('facet_prefix'));
         $params->setFacetSort($sort);
         $params->setFacetOffset(($params->getPage() - 1) * $params->getLimit());
         $params->setFacetLimit(-1);
@@ -128,6 +107,43 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
 	return $results;
 
      }
+
+
+
+
+
+    protected function configureKeywordChainSearch($request, $sort){
+
+	$facet = 'key_word_chains';
+      
+        $results = $this->getResultsManager()->get($this->searchClassId);
+        $params = $results->getParams();
+        $params->addFacet($facet);
+
+        $options = $params->getOptions();
+
+        $lookfor = $request->get('lookfor');
+
+	
+//	if (substr($lookfor, -1) != '*'){
+//          $lookfor = $this->appendWildcard($lookfor);
+//        }
+
+        $request->set('lookfor', $lookfor);
+
+        $request->set('type', 'KeywordChainSearch');
+        $params->initFromRequest($request);
+        $params->getOptions()->disableHighlighting();
+        $params->getOptions()->spellcheckEnabled(false);
+        $params->setFacetSort($sort);
+        $params->setFacetOffset(($params->getPage() - 1) * $params->getLimit());
+        $params->setFacetLimit(-1);
+        $results->setParams($params);
+
+        return $results;
+  
+
+    }
 
  
     /**
@@ -145,18 +161,14 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
 
 
      /**
-	  *
-	  * @return \Zend\View\Model\ViewModel
-	  */
-	 public function homeAction()
-	 {
+       *
+       * @return \Zend\View\Model\ViewModel
+       */
+     public function homeAction(){
 
-	    $params = $this->getServiceLocator()->get('VuFind\SearchParamsPluginManager')->get('KeywordChainSearch');
-	    $options = $this->getServiceLocator()->get('VuFind\SearchOptionsPluginManager')->get('KeywordChainSearch');
-	    $params->setOptions($options);
-	
-            return parent::createViewModel(['params' => $params]);
-	 }
+	  $params = $this->getServiceLocator()->get('VuFind\SearchParamsPluginManager')->get('KeywordChainSearch');
+          return parent::createViewModel(['params' => $params]);
+    }
 
 
 
@@ -172,7 +184,7 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
 
 	     $query = $this->getRequest()->getQuery()->get('lookfor');
 
-             $results = $this->getKeywordChainAsFacets($facet, null, 'index', $query, $request);
+             $results = $this->configureKeywordChainSearch($request, 'index');
 
 	     $params = (!empty($results)) ? $results->getParams() : [];
 	
@@ -186,22 +198,7 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
 
 	     $result_facets = (!empty($results)) ? $results->getFacetList() : [];
 
-
-             $resultList = [];
-             foreach ($result_facets[$facet]['list'] as $result) {
-               $resultList[] = [
-                 'displayText' => $result['displayText'],
-                 'value' => $result['value'],
-                 'count' => $result['count']
-               ];
-              }
-
-	     $view->resultList = $resultList;
-
-	
-            return $view;
-
-//	   return $this->createViewModel();
+             return $view;
 	}
 
 
@@ -211,20 +208,5 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
 	  $this->forwardTo('KeywordChainSearch', 'Results');
 
 	}
-
-
-     /**
-     * Is the result scroller active?
-     *
-     * @return bool
-     */
-    protected function resultScrollerActive()
-    {
-	// We always want scrolling
-	return true;
-
-    }
-
-	
 }
 ?>

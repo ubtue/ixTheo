@@ -9,10 +9,6 @@ class Options extends  \VuFind\Search\Solr\Options{
 
 	parent::__construct($configLoader);
 
-	// Make sure both lucene and dismax syntax is supported,
-	// i.e. choose edismax as default handler
-	$this->defaultHandler = "edismax";
-
 
    }
 
