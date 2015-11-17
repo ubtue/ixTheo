@@ -269,22 +269,14 @@
 
 <!-- Test 20151020 by jr -->
 
-    <? $recordID = $this->driver->getRecordID(); if (!empty($recordID)): ?>
-    <tr>
-      <th><?=$this->transEsc('Record ID')?>: </th>
-       <td property="RecID"><?=$this->escapeHtml($recordID)?></td>
-     </tr>
-    <? endif; ?>
-
      <? $keyWordChains = $this->driver->getKeyWordChains(); if (!empty($keyWordChains)): ?> 
 	<tr>
 	 <th><?=$this->transEsc('keywordchains')?></th>
 	 <td>
           <? foreach ($keyWordChains as $current):?> 
-	 <!--   <?//=$this->escapeHtml($current)?><br/> -->
 		<!-- We have to escape spaces otherwise the search is not 
 		     treated correctly in Solr and we miss results-->
-			<?$currentEscaped = str_replace(' ', '\ ', $current);?>      
+		<?$currentEscaped = '"' . $current . '"';?>      
 		<a href="<?=$this->url('keywordchainsearch-results')?>?lookfor=<?=urlencode($currentEscaped)?>"><?=$this->escapeHtml($current)?></a></br>
           <? endforeach; ?>
 	 </td>

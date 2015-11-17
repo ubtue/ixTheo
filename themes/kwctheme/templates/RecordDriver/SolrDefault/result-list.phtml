@@ -137,21 +137,14 @@
         <? endif; ?>
       <? endif; ?>
 
-<!-- Test jr 20151020 -->
-      <? $recordID = $this->driver->getRecordID(); if (!empty($recordID)): ?>
-        <?=$this->transEsc('Record ID')?>: <?=$this->escapeHtml($recordID)?>
-	<br/>
-      <? endif; ?>
-
       <? $keyWordChains = $this->driver->getKeyWordChains(); if (!empty($keyWordChains)) :?>
 	  <?=$this->transEsc('keywordchains')?>:
 	  <?foreach ($keyWordChains as $current): ?> 
-            <?=$this->escapeHtml($current)?>  
-            <br/> 
+            <?$currentEscaped = '"' . $current . '"';?>
+            <a href="<?=$this->url('keywordchainsearch-results')?>?lookfor=<?=urlencode($currentEscaped)?>"><?=$this->escapeHtml($current)?></a></br>
           <? endforeach; ?> 
       <? endif; ?> 
     
-<!-- End Test jr 20151020 -->
 
 
 
@@ -205,13 +198,6 @@
       <? endif; ?>
 
       <?=$this->driver->supportsCoinsOpenUrl()?'<span class="Z3988" title="'.$this->escapeHtmlAttr($this->driver->getCoinsOpenUrl()).'"></span>':''?>
-
-<!-- Test jr 20151020 -->
-    <? $recordID = $this->driver->getRecordID(); if (!empty($recordID)): ?>
-      <?=$this->transEsc('Record ID')?>: <?=$this->escapeHtml($recordID)?>
-    <? endif; ?>
-
-<!-- End Test jr 20151020 -->
 
     </div>
   </div>
