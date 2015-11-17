@@ -261,7 +261,7 @@ public Set getFormat(Record record){
             break;
         // Component parts
         case 'A':
-            result.add("BookComponentPart");
+            result.add("Article");
             break;
         case 'B':
             result.add("SerialComponentPart");
