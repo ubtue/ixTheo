@@ -16,7 +16,7 @@
       <td>
       <?    foreach(explode('/', $current['value']) as $term):?>
               <a href="<?=$this->url('keywordchainsearch-results')?>?lookfor=<?=urlencode('"' . $term . '"')?>">
-	       &quot<?=$this->escapeHtml($term)?>&quot
+	       &quot;<?=$this->escapeHtml($term)?>&quot;
 	      </a>
            <?endforeach;?>
       </td>
