@@ -42,26 +42,8 @@ class Params extends \VuFind\Search\Solr\Params {
 	// and select a default operator
 	$backendParams->add('qt', 'edismax');
 
-	// Make sure we the individual terms also	
+	// Make sure we look for the individual terms also	
 	$backendParams->add('q.op', 'OR');
-
-
-	// Set the default operator manually otherwise
-
-	$lookfor = $this->getQuery()->getString();
-	
-	// set the default operator to 'OR'
-	
-	$operator = $this->getQuery()->getOperator();
-
-	$this->getQuery()->setOperator('OR');
-
-	// Hack: Fixme:
-//	$this->getQuery()->setString('key_word_chain_bag' . ':' . '(' . $lookfor . ')');
-
-//	$this->getQuery()->setString('');
-
-//	$backendParams->add('q', 'key_word_chain_bag' . ':' . $lookfor);
 
         return $backendParams;
     }
