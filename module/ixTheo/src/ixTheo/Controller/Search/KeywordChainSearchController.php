@@ -57,61 +57,6 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
 
     }
 
-
-  /**
-     * Get Keywordchains as facets
-     *
-     * @param string $facet    which facet we're searching in
-     * @param string $category which subfacet the search applies to
-     * @param string $sort     how are we ranking these? || 'index'
-     * @param string $query    is there a specific query? No = wildcard
-     *
-     * @return array           Array indexed by value with text of displayText and
-     * count
-     */    
-
-    protected function getKeywordChainAsFacets($facet, $category = null,
-                                               $sort = 'index', $query = '*', $request
-        ){
-	$results = $this->getResultsManager()->get($this->searchClassId);
-        $params = $results->getParams();
-        $params->addFacet($facet);
-//	$query = $this->appendWildcard($query);
-
-	$options = $params->getOptions();
-	
-//	if($query == '')
-//		return [];
-
-
-	$lookfor = $request->get('lookfor');
-
-//	if (substr($lookfor, -1) != '*'){
-//	   $lookfor = $this->appendWildcard($lookfor);
-//	}
-
-	$request->set('lookfor', $lookfor);
-	
-	$request->set('type', 'KeywordChainSearch');
-
-	$params->initFromRequest($request);
-        $params->getOptions()->disableHighlighting();
-        $params->getOptions()->spellcheckEnabled(false);
-        //$params->setLimit(30);
-        //$params->setFacetPrefix($this->params()->fromQuery('facet_prefix'));
-        $params->setFacetSort($sort);
-        $params->setFacetOffset(($params->getPage() - 1) * $params->getLimit());
-        $params->setFacetLimit(-1);
-	$results->setParams($params);
-
-	return $results;
-
-     }
-
-
-
-
-
     protected function configureKeywordChainSearch($request, $sort){
 
 	$facet = 'key_word_chains';
