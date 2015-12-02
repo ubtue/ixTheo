@@ -129,7 +129,8 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
 
 	     $query = $this->getRequest()->getQuery()->get('lookfor');
 
-             $results = $this->configureKeywordChainSearch($request, 'index');
+//             $results = $this->configureKeywordChainSearch($request, 'index');
+             $results = $this->configureKeywordChainSearch($request, 'prefix');
 
 	     $params = (!empty($results)) ? $results->getParams() : [];
 	
