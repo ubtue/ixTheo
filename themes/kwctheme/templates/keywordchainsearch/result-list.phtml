@@ -1,0 +1,29 @@
+<table class="table table-striped">
+  <tbody>
+   <tr>
+     <th><?=$this->transEsc('keywordchains')?></th><th><?=$this->transEsc("sort_keywordchain_relevance")?></th>
+     <th><?=$this->transEsc('keywordchains_terms')?></th>
+   </tr>
+   <? if(!empty($this->results) && !empty($this->results->getResults())):?>
+   <?   foreach ($this->results->getResults() as $current):?>
+   <tr>
+      <td>
+	   <a href="<?=$this->url('search-results')?>?lookfor=<?=urlencode('"' .$current['value'] . '"')?>">
+		<?=$this->escapeHtml($current['value'])?>
+	   </a>
+      </td>
+      <td><?=$this->escapeHtml($current['count'])?></td>
+      <td>
+      <?    foreach(explode('/', $current['value']) as $term):?>
+              <a href="<?=$this->url('keywordchainsearch-results')?>?lookfor=<?=urlencode('"' . $term . '"')?>">
+	       &quot;<?=$this->escapeHtml($term)?>&quot;
+	      </a>
+           <?endforeach;?>
+      </td>
+   </tr>
+   <? endforeach; ?> 
+   <? endif; ?>
+  </tbody>
+</table>
+
+
