@@ -4,8 +4,10 @@
      <th><?=$this->transEsc('keywordchains')?></th><th><?=$this->transEsc("sort_keywordchain_relevance")?></th>
      <th><?=$this->transEsc('keywordchains_terms')?></th>
    </tr>
-   <? if(!empty($this->results) && !empty($this->results->getResults())):?>
-   <?   foreach ($this->results->getResults() as $current):?>
+   <? if(!empty($this->results)):?>
+   <?   $r = $this->results->getResults()?>
+   <?	if(!empty($r)):?>
+   <?     foreach ($this->results->getResults() as $current):?>
    <tr>
       <td>
 	   <a href="<?=$this->url('search-results')?>?lookfor=<?=urlencode('"' .$current['value'] . '"')?>">
@@ -22,6 +24,7 @@
       </td>
    </tr>
    <? endforeach; ?> 
+   <? endif; ?>
    <? endif; ?>
   </tbody>
 </table>
