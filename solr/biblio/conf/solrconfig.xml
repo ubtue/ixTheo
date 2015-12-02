@@ -511,6 +511,10 @@
 
    -->
 
+
+<!-- We would like to use a special faceting component  that is able to a customized prefix sorting -->
+ <searchComponent name="facet"     class="de.uni_tuebingen.ub.ixTheo.handler.component.FacetPrefixSortComponent" /> 
+
   <requestHandler name="/search" class="org.apache.solr.handler.component.SearchHandler">
     <lst name="defaults">
       <str name="echoParams">explicit</str>
