@@ -138,7 +138,7 @@ findDirectory()
 # JAVA_OPTIONS="-server -Xmx1024m -XX:+UseParallelGC -XX:NewRatio=5"
 if [ -z "$JAVA_OPTIONS" ]
 then
-  JAVA_OPTIONS="-server -Xms2048m -Xmx4192m -XX:+UseParallelGC -XX:NewRatio=5"
+  JAVA_OPTIONS="-server -Xms2g -Xmx4g -XX:+UseParallelGC -XX:NewRatio=5"
 fi
 
 ##################################################
