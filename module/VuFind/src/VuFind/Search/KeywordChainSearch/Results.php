@@ -27,6 +27,7 @@
  * @link     http://vufind.org   Main Site
  */
 namespace VuFind\Search\KeywordChainSearch;
+
 use VuFind\Search\Solr\Results as SolrResults;
 
 /**
@@ -65,24 +66,27 @@ class Results extends SolrResults
     {
         $query = $this->getParams()->getQuery();
         $params = $this->getParams()->getBackendParameters();
+
+        $offset = ($this->getParams()->getPage() - 1) * $this->getParams()->getLimit();
+        $limit = $this->getParams()->getLimit();
+
+        $params->set("facet.offset", $offset);
+        $params->set("facet.limit", $limit);
+
         // Perform the search:
-        $collection = $this->getSearchService()
-            ->search($this->backendId, $query, 0, 0, $params);
+        $collection = $this->getSearchService()->search($this->backendId, $query, 0, 0, $params);
 
         $this->responseFacets = $collection->getFacets();
 
-	$facet = 'key_word_chains';
+        $facet = 'key_word_chains';
+        $facet_count = $facet . '-count';
 
         // Get the facets from which we will build our results:
         $facets = $this->getFacetList([$facet => null]);
+        $count =  $this->getFacetList([$facet_count => null]);
         if (isset($facets[$facet])) {
-            $params = $this->getParams();
-            $this->resultTotal
-                = (($params->getPage() - 1) * $params->getLimit())
-                + count($facets[$facet]['list']);
-            $this->results = array_slice(
-                $facets[$facet]['list'], 0, $params->getLimit()
-            );
+            $this->resultTotal = $count[$facet_count]['list'][0]['count'];
+            $this->results = $facets[$facet]['list'];
         }
     }
 

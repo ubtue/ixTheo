@@ -5,10 +5,10 @@ namespace ixTheo\Controller\Search;
 class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
 {
 
-   // Try to implement KWC based on the Browse Controller
+    // Try to implement KWC based on the Browse Controller
 
 
-   /**
+    /**
      * Constructor
      */
     public function __construct()
@@ -18,12 +18,11 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
     }
 
 
-
-   /**
-    * VuFind configuration
-    *
-    * @var \Zend\Config\Config
-    */
+    /**
+     * VuFind configuration
+     *
+     * @var \Zend\Config\Config
+     */
     protected $config;
 
 
@@ -44,35 +43,30 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
     }
 
 
+    /**
+     * Attach Wildcard to each part of the query string
+     *
+     *
+     */
 
-   /**
-    * Attach Wildcard to each part of the query string
-    * 
-    *
-    */
-    
-    protected function appendWildcard($query){
-
-	return preg_replace('~(\w+)~', '$1*', $query);
-
+    protected function appendWildcard($query)
+    {
+        return preg_replace('~(\w+)~', '$1*', $query);
     }
 
-    protected function configureKeywordChainSearch($request, $sort){
+    protected function configureKeywordChainSearch($request, $sort)
+    {
+        $facet = 'key_word_chains';
 
-	$facet = 'key_word_chains';
-      
         $results = $this->getResultsManager()->get($this->searchClassId);
         $params = $results->getParams();
         $params->addFacet($facet);
-
-        $options = $params->getOptions();
-
         $lookfor = $request->get('lookfor');
 
-	
+
 //	if (substr($lookfor, -1) != '*'){
-//          $lookfor = $this->appendWildcard($lookfor);
-//        }
+//      $lookfor = $this->appendWildcard($lookfor);
+//  }
 
         $request->set('lookfor', $lookfor);
 
@@ -86,11 +80,11 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
         $results->setParams($params);
 
         return $results;
-  
+
 
     }
 
- 
+
     /**
      * Create a new ViewModel.
      *
@@ -101,58 +95,45 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
 
     protected function createViewModel($params_ext = null)
     {
-
     }
 
 
-     /**
-       *
-       * @return \Zend\View\Model\ViewModel
-       */
-     public function homeAction(){
-
-	  $params = $this->getServiceLocator()->get('VuFind\SearchParamsPluginManager')->get('KeywordChainSearch');
-          return parent::createViewModel(['params' => $params]);
+    /**
+     *
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function homeAction()
+    {
+        $params = $this->getServiceLocator()->get('VuFind\SearchParamsPluginManager')->get('KeywordChainSearch');
+        return parent::createViewModel(['params' => $params]);
     }
 
 
+    public function resultsAction()
+    {
+        $request = new \Zend\Stdlib\Parameters(
+            $this->getRequest()->getQuery()->toArray()
+            + $this->getRequest()->getPost()->toArray()
+        );
+
+        $results = $this->configureKeywordChainSearch($request, 'prefix');
+
+        $params = (!empty($results)) ? $results->getParams() : [];
 
 
-     public function resultsAction(){
-
-	    $facet = 'key_word_chains';
-
- 	    $request =  new \Zend\Stdlib\Parameters(
-              $this->getRequest()->getQuery()->toArray()
-              + $this->getRequest()->getPost()->toArray()
-            );
-
-	     $query = $this->getRequest()->getQuery()->get('lookfor');
-
-//             $results = $this->configureKeywordChainSearch($request, 'index');
-             $results = $this->configureKeywordChainSearch($request, 'prefix');
-
-	     $params = (!empty($results)) ? $results->getParams() : [];
-	
-
-	     if (!empty($results)){
-               $view = parent::createViewModel(['params' => $params, 'results' => $results]);	
-              }
-             else{
-	       $view = parent::createViewModel(['params' => $params]);
-             }
-
-	     $result_facets = (!empty($results)) ? $results->getFacetList() : [];
-
-             return $view;
-	}
+        if (!empty($results)) {
+            $view = parent::createViewModel(['params' => $params, 'results' => $results]);
+        } else {
+            $view = parent::createViewModel(['params' => $params]);
+        }
+        return $view;
+    }
 
 
-
-	public function searchAction(){
-
-	  $this->forwardTo('KeywordChainSearch', 'Results');
-
-	}
+    public function searchAction()
+    {
+        $this->forwardTo('KeywordChainSearch', 'Results');
+    }
 }
+
 ?>

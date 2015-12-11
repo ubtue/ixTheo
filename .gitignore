@@ -50,3 +50,5 @@ local.properties
 
 KeywordChainParser.jar
 BibleRangeParser.jar
+TuelibSolrmarcMixin.jar
+FacetPrefixSortComponent.jar
