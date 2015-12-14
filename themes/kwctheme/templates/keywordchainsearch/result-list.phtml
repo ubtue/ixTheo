@@ -10,7 +10,7 @@
    <?     foreach ($this->results->getResults() as $current):?>
    <tr>
       <td>
-	   <a href="<?=$this->url('search-results')?>?lookfor=<?=urlencode('"' .$current['value'] . '"')?>">
+	   <a href="<?=$this->url('search-results')?>?lookfor=<?=urlencode('"' .$current['value'] . '"')?>&type=Keywordchains">
 		<?=$this->escapeHtml(implode(' / ', explode('/', $current['value'])))?>
 	   </a>
       </td>
