@@ -205,9 +205,6 @@
    <field name="topic_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_browse" type="string" indexed="true" stored="false" multiValued="true"/>
    <field name="author_browse" type="string" indexed="true" stored="false" multiValued="true"/>
-<!-- added jr 20150811 for testing -->
-   <field name="key_word_chains_browse" type="string" indexed="true" stored="false" multiValued="true"/>
-   <field name="key_word_chain_bag_browse" type="string" indexed="true" stored="false" multiValued="true"/>
 
    <field name="genre" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="genre_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
@@ -260,8 +257,10 @@
    <field name ="ixtheo_notation" type="string" indexed="true" stored="true" multiValued="true" />
    <field name="ixtheo_notation_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
    <copyField source="ixtheo_notation" dest="ixtheo_notation_facet"/>
-   <field name ="key_word_chains" type="string" indexed="true" stored="true" multiValued="true" />
-   <field name ="key_word_chain_bag" type="string" indexed="true" stored="true" multiValued="true" />
+<!--   <field name ="key_word_chains" type="text" indexed="true" stored="true" multiValued="true" /> -->
+   <field name ="key_word_chains" type="string" indexed="true" stored="true" multiValued="true" /> 
+   <field name ="key_word_chain_bag" type="text" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chains_text" type="text" indexed="true" stored="true" multiValued="true" /> 
    <field name ="prefix4_key_word_chain_bag" type="string" indexed="true" stored="true" multiValued="true" />
    <field name="urls_and_material_types" type="string" indexed="true" stored="true" multiValued="true"/>
  </fields>
@@ -293,6 +292,7 @@
 <!-- added jr 20150811 for testing -->
  <copyField source="key_word_chains"    dest="key_word_chains_browse"/> 
  <copyField source="key_word_chain_bag" dest="key_word_chain_bag_browse"/>
+ <copyField source="key_word_chains" dest="key_word_chains_text"/>
 
 
  <!-- CopyFields for All Fields -->
