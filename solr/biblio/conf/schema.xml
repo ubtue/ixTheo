@@ -289,11 +289,6 @@
  <copyField source="topic"    dest="topic_browse"/>
  <copyField source="author"    dest="author_browse"/>
  <copyField source="author2"    dest="author_browse"/>
-<!-- added jr 20150811 for testing -->
- <copyField source="key_word_chains"    dest="key_word_chains_browse"/> 
- <copyField source="key_word_chain_bag" dest="key_word_chain_bag_browse"/>
- <copyField source="key_word_chains" dest="key_word_chains_text"/>
-
 
  <!-- CopyFields for All Fields -->
  <copyField source="format"    dest="allfields"/>
