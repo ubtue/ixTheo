@@ -11,15 +11,14 @@
    <tr>
       <td>
 	   <a href="<?=$this->url('search-results')?>?lookfor=<?=urlencode('"' .$current['value'] . '"')?>">
-		<?=$this->escapeHtml($current['value'])?>
+		<?=$this->escapeHtml(implode(' / ', explode('/', $current['value'])))?>
 	   </a>
       </td>
       <td><?=$this->escapeHtml($current['count'])?></td>
       <td>
       <?    foreach(explode('/', $current['value']) as $term):?>
               <a href="<?=$this->url('keywordchainsearch-results')?>?lookfor=<?=urlencode('"' . $term . '"')?>">
-	       &quot;<?=$this->escapeHtml($term)?>&quot;
-	      </a>
+	       <span style="background-color: #d9d9d9; padding:3px;"><?=$this->escapeHtml($term)?></span></a>
            <?endforeach;?>
       </td>
    </tr>
