@@ -257,11 +257,9 @@
    <field name ="ixtheo_notation" type="string" indexed="true" stored="true" multiValued="true" />
    <field name="ixtheo_notation_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
    <copyField source="ixtheo_notation" dest="ixtheo_notation_facet"/>
-<!--   <field name ="key_word_chains" type="text" indexed="true" stored="true" multiValued="true" /> -->
    <field name ="key_word_chains" type="string" indexed="true" stored="true" multiValued="true" /> 
+   <field name ="key_word_chains_sorted" type="string" indexed="true" stored="true" multiValued="true" />
    <field name ="key_word_chain_bag" type="text" indexed="true" stored="true" multiValued="true" />
-   <field name ="key_word_chains_text" type="text" indexed="true" stored="true" multiValued="true" /> 
-   <field name ="prefix4_key_word_chain_bag" type="string" indexed="true" stored="true" multiValued="true" />
    <field name="urls_and_material_types" type="string" indexed="true" stored="true" multiValued="true"/>
  </fields>
  <uniqueKey>id</uniqueKey>
@@ -298,12 +296,5 @@
  <copyField source="callnumber-raw" dest="callnumber-search"/>
  <!-- Default Boolean Operator -->
  <solrQueryParser defaultOperator="AND"/>
-
-
-<!-- Generate Bag of words from Keyword Chains and their truncated counterpart-->
-<!-- ixTheo-->
-<!-- <copyField source="key_word_chain_bag" dest="allfields"/> -->
-<!-- <copyField source="key_word_chain_bag" dest="spellingShingle"/> -->
-<copyField source="key_word_chain_bag" dest="prefix4_key_word_chain_bag" maxChars="4"/> 
 
 </schema>
