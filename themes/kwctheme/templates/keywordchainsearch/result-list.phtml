@@ -10,7 +10,14 @@
    <?     foreach ($this->results->getResults() as $current):?>
    <tr>
       <td>
-	   <a href="<?=$this->url('search-results')?>?lookfor=<?=urlencode('"' .$current['value'] . '"')?>&type=Keywordchains">
+	   <? 
+              // Sort KWC alphabetically
+              $kwc = explode('/', $current['value']);
+              sort($kwc, SORT_STRING);
+	      $kwc_sorted = implode('/', $kwc);
+
+	   ?>
+	   <a href="<?=$this->url('search-results')?>?lookfor=<?=urlencode('"' . $kwc_sorted . '"')?>&type=Keywordchains">
 		<?=$this->escapeHtml(implode(' / ', explode('/', $current['value'])))?>
 	   </a>
       </td>
