@@ -1,0 +1,22 @@
+
+
+<!-- <h2><?=$this->transEsc('Browse Keywordchains');?></h2> -->
+
+ <form class="form-inline" method="post" name="bulkActionForm" action="<?=$this->url('cart-home')?>">
+        <?=$this->render('keywordchainsearch/result-list.phtml')?>
+        <?=$this->context($this)->renderInContext('search/bulk-action-buttons.phtml', array('idPrefix' => 'bottom_'))?>
+        <?=$this->paginationControl($this->results->getPaginator(), 'Sliding', 'search/pagination.phtml', array('results' => $this->results))?>
+      </form>
+
+
+<?=$this->render('keywordchainsearch/search.phtml');?> 
+<?//=$this->render('keywordchainsearch/result-list.phtml');?> 
+
+<?
+   $this->headTitle($this->translate('Browse Keywordchains')); 
+   $this->layout()->breadcrumbs = '<a href="' . $this->url('keywordchainsearch-home') . '">' . $this->transEsc('Browse Keywordchains') . '</a>';
+?>
+
+
+
+

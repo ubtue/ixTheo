@@ -60,6 +60,13 @@ class Options extends \VuFind\Search\Base\Options
     protected $hierarchicalFacetSeparators = [];
 
     /**
+     * Relevance sort override for empty searches
+     *
+     * @var string
+     */
+    protected $emptySearchRelevanceOverride = null;
+
+    /**
      * Constructor
      *
      * @param \VuFind\Config\PluginManager $configLoader Config loader
@@ -77,6 +84,10 @@ class Options extends \VuFind\Search\Base\Options
         }
         if (isset($searchSettings->General->default_sort)) {
             $this->defaultSort = $searchSettings->General->default_sort;
+        }
+        if (isset($searchSettings->General->empty_search_relevance_override)) {
+            $this->emptySearchRelevanceOverride
+                = $searchSettings->General->empty_search_relevance_override;
         }
         if (isset($searchSettings->DefaultSortingByType)
             && count($searchSettings->DefaultSortingByType) > 0
@@ -101,6 +112,10 @@ class Options extends \VuFind\Search\Base\Options
         if (isset($searchSettings->General->default_filters)) {
             $this->defaultFilters = $searchSettings->General->default_filters
                 ->toArray();
+        }
+        // Result limit:
+        if (isset($searchSettings->General->result_limit)) {
+            $this->resultLimit = $searchSettings->General->result_limit;
         }
         if (isset($searchSettings->Basic_Searches)) {
             foreach ($searchSettings->Basic_Searches as $key => $value) {
@@ -140,9 +155,9 @@ class Options extends \VuFind\Search\Base\Options
         if (isset($facetSettings->Advanced_Settings->translated_facets)
             && count($facetSettings->Advanced_Settings->translated_facets) > 0
         ) {
-            foreach ($facetSettings->Advanced_Settings->translated_facets as $c) {
-                $this->translatedFacets[] = $c;
-            }
+            $this->setTranslatedFacets(
+                $facetSettings->Advanced_Settings->translated_facets->toArray()
+            );
         }
         if (isset($facetSettings->Advanced_Settings->special_facets)) {
             $this->specialAdvancedFacets
@@ -250,6 +265,16 @@ class Options extends \VuFind\Search\Base\Options
     public function getAdvancedSearchAction()
     {
         return 'search-advanced';
+    }
+
+    /**
+     * Get the relevance sort override for empty searches.
+     *
+     * @return string Sort field or null if not set
+     */
+    public function getEmptySearchRelevanceOverride()
+    {
+        return $this->emptySearchRelevanceOverride;
     }
 
     /**

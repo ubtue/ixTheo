@@ -1,0 +1,23 @@
+import org.marc4j.marc.Record;
+import org.marc4j.marc.ControlField;
+import org.marc4j.marc.DataField;
+import org.marc4j.marc.Subfield;
+import java.util.*;
+
+
+public Set/*<String>*/ getKeyWordChainBag(Record record) {
+	List/*<DataField>*/ dataFields = record.getDataFields();
+	Set/*<String>*/ keyWordChainsBag = new HashSet/*<String>*/();
+
+	for (DataField dataField : dataFields) {
+		if (dataField.getTag().equals("689")) {
+                	List/*<Subfield>*/ subfields = dataField.getSubfields('a');
+                	for (Subfield subfield : subfields) {
+			        String subfield_data =  subfield.getData();
+		                if (subfield_data.length() > 1)
+			                keyWordChainsBag.add(subfield_data);
+                        }
+		}
+	}
+	return keyWordChainsBag;
+}
