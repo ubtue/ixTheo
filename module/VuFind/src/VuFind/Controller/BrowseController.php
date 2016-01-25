@@ -162,7 +162,7 @@ class BrowseController extends AbstractBase
         // Loop through remaining browse options.  All may be individually disabled
         // in config.ini, but if no settings are found, they are assumed to be on.
         $remainingOptions = [
-            'Author', 'Topic', 'Genre', 'Region', 'Era', 'Publisher', 'ixTheo-Notation'
+            'Author', 'Topic', 'Genre', 'Region', 'Era', 'Publisher', 'IxTheo-Notation'
         ];
         foreach ($remainingOptions as $current) {
             $option = strToLower($current);
@@ -193,7 +193,7 @@ class BrowseController extends AbstractBase
     /**
      * Build an array containing options describing a top-level Browse option.
      *
-     * @param string $action      The name of the Action for this option
+     * @param string $action The name of the Action for this option
      * @param string $description A description of this Browse option
      *
      * @return array              The Browse option array
@@ -251,17 +251,17 @@ class BrowseController extends AbstractBase
             $view->paramTitle
                 = ($this->params()->fromQuery('query_field') != $this->getCategory())
                 ? 'filter[]=' . $this->params()->fromQuery('query_field') . ':'
-                    . urlencode($this->params()->fromQuery('query')) . '&'
+                . urlencode($this->params()->fromQuery('query')) . '&'
                 : '';
-            switch($this->getCurrentAction()) {
-            case 'LCC':
-                $view->paramTitle .= 'filter[]=callnumber-subject:';
-                break;
-            case 'Dewey':
-                $view->paramTitle .= 'filter[]=dewey-ones:';
-                break;
-            default:
-                $view->paramTitle .= 'filter[]=' . $this->getCategory() . ':';
+            switch ($this->getCurrentAction()) {
+                case 'LCC':
+                    $view->paramTitle .= 'filter[]=callnumber-subject:';
+                    break;
+                case 'Dewey':
+                    $view->paramTitle .= 'filter[]=dewey-ones:';
+                    break;
+                default:
+                    $view->paramTitle .= 'filter[]=' . $this->getCategory() . ':';
             }
             $view->paramTitle = str_replace(
                 '+AND+',
@@ -291,8 +291,8 @@ class BrowseController extends AbstractBase
 
         $view->categoryList = [
             'alphabetical' => 'By Alphabetical',
-            'popularity'   => 'By Popularity',
-            'recent'       => 'By Recent'
+            'popularity' => 'By Popularity',
+            'recent' => 'By Recent'
         ];
 
         if ($this->params()->fromQuery('findby')) {
@@ -333,7 +333,7 @@ class BrowseController extends AbstractBase
                     $resultList[$i] = [
                         'displayText' => $tag['tag'],
                         'value' => $tag['tag'],
-                        'count'    => $tag['cnt']
+                        'count' => $tag['cnt']
                     ];
                 }
                 $view->resultList = $resultList;
@@ -410,8 +410,8 @@ class BrowseController extends AbstractBase
      * Generic action function that handles all the common parts of the below actions
      *
      * @param string $currentAction name of the current action. profound stuff.
-     * @param array  $categoryList  category options
-     * @param string $facetPrefix   if this is true and we're looking
+     * @param array $categoryList category options
+     * @param string $facetPrefix if this is true and we're looking
      * alphabetically, add a facet_prefix to the URL
      *
      * @return \Zend\View\Model\ViewModel
@@ -444,13 +444,13 @@ class BrowseController extends AbstractBase
     public function publisherAction()
     {
         $categoryList = [
-            'alphabetical'    => 'By Alphabetical',
-            'lcc'             => 'By Call Number',
-            'topic'           => 'By Topic',
-            'genre'           => 'By Genre',
-            'region'          => 'By Region',
-            'era'             => 'By Era',
-            'ixtheo_notation' => 'By ixTheo-Notation'
+            'alphabetical' => 'By Alphabetical',
+            'lcc' => 'By Call Number',
+            'topic' => 'By Topic',
+            'genre' => 'By Genre',
+            'region' => 'By Region',
+            'era' => 'By Era',
+            'ixtheo-notation' => 'By IxTheo-Notation'
         ];
 
         return $this->performBrowse('Publisher', $categoryList, true);
@@ -465,15 +465,15 @@ class BrowseController extends AbstractBase
     {
         $categoryList = [
             'alphabetical' => 'By Alphabetical',
-            'lcc'          => 'By Call Number',
-            'topic'        => 'By Topic',
-            'genre'        => 'By Genre',
-            'region'       => 'By Region',
-            'era'          => 'By Era',
-            'publisher'    => 'By Publisher'
+            'lcc' => 'By Call Number',
+            'topic' => 'By Topic',
+            'genre' => 'By Genre',
+            'region' => 'By Region',
+            'era' => 'By Era',
+            'publisher' => 'By Publisher'
         ];
 
-        return $this->performBrowse('ixtheo-notation', $categoryList, true);
+        return $this->performBrowse('IxTheo-Notation', $categoryList, true);
     }
 
     /**
@@ -484,14 +484,14 @@ class BrowseController extends AbstractBase
     public function authorAction()
     {
         $categoryList = [
-            'alphabetical'    => 'By Alphabetical',
-            'lcc'             => 'By Call Number',
-            'topic'           => 'By Topic',
-            'genre'           => 'By Genre',
-            'region'          => 'By Region',
-            'era'             => 'By Era',
-            'publisher'       => 'By Publisher',
-            'ixtheo_notation' => 'By ixTheo-Notation'
+            'alphabetical' => 'By Alphabetical',
+            'lcc' => 'By Call Number',
+            'topic' => 'By Topic',
+            'genre' => 'By Genre',
+            'region' => 'By Region',
+            'era' => 'By Era',
+            'publisher' => 'By Publisher',
+            'ixtheo-notation' => 'By IxTheo-Notation'
         ];
 
         return $this->performBrowse('Author', $categoryList, false);
@@ -506,9 +506,9 @@ class BrowseController extends AbstractBase
     {
         $categoryList = [
             'alphabetical' => 'By Alphabetical',
-            'genre'        => 'By Genre',
-            'region'       => 'By Region',
-            'era'          => 'By Era'
+            'genre' => 'By Genre',
+            'region' => 'By Region',
+            'era' => 'By Era'
         ];
 
         return $this->performBrowse('Topic', $categoryList, true);
@@ -522,12 +522,12 @@ class BrowseController extends AbstractBase
     public function genreAction()
     {
         $categoryList = [
-            'alphabetical'    => 'By Alphabetical',
-            'topic'           => 'By Topic',
-            'region'          => 'By Region',
-            'era'             => 'By Era',
-            'publisher'       => 'By Publisher',
-            'ixtheo_notation' => 'By ixTheo-Notation'
+            'alphabetical' => 'By Alphabetical',
+            'topic' => 'By Topic',
+            'region' => 'By Region',
+            'era' => 'By Era',
+            'publisher' => 'By Publisher',
+            'ixtheo-notation' => 'By IxTheo-Notation'
         ];
 
         return $this->performBrowse('Genre', $categoryList, true);
@@ -541,12 +541,12 @@ class BrowseController extends AbstractBase
     public function regionAction()
     {
         $categoryList = [
-            'alphabetical'    => 'By Alphabetical',
-            'topic'           => 'By Topic',
-            'genre'           => 'By Genre',
-            'era'             => 'By Era',
-            'publisher'       => 'By Publisher',
-            'ixtheo_notation' => 'By ixTheo-Notation'
+            'alphabetical' => 'By Alphabetical',
+            'topic' => 'By Topic',
+            'genre' => 'By Genre',
+            'era' => 'By Era',
+            'publisher' => 'By Publisher',
+            'ixtheo-notation' => 'By IxTheo-Notation'
         ];
 
         return $this->performBrowse('Region', $categoryList, true);
@@ -560,11 +560,11 @@ class BrowseController extends AbstractBase
     public function eraAction()
     {
         $categoryList = [
-            'alphabetical'    => 'By Alphabetical',
-            'topic'           => 'By Topic',
-            'genre'           => 'By Genre',
-            'region'          => 'By Region',
-            'ixtheo_notation' => 'By ixTheo-Notation'
+            'alphabetical' => 'By Alphabetical',
+            'topic' => 'By Topic',
+            'genre' => 'By Genre',
+            'region' => 'By Region',
+            'ixtheo-notation' => 'By IxTheo-Notation'
         ];
 
         return $this->performBrowse('Era', $categoryList, true);
@@ -580,74 +580,75 @@ class BrowseController extends AbstractBase
     protected function getSecondaryList($facet)
     {
         $category = $this->getCategory();
-        switch($facet) {
-        case 'alphabetical':
-            return ['', $this->getAlphabetList()];
-        case 'dewey':
-            return [
-                'dewey-tens', $this->quoteValues(
-                    $this->getFacetList('dewey-hundreds', $category, 'index')
-                )
-            ];
-        case 'lcc':
-            return [
-                'callnumber-first', $this->quoteValues(
-                    $this->getFacetList('callnumber-first', $category, 'index')
-                )
-            ];
-        case 'topic':
-            return [
-                'topic_facet', $this->quoteValues(
-                    $this->getFacetList('topic_facet', $category)
-                )
-            ];
-        case 'genre':
-            return [
-                'genre_facet', $this->quoteValues(
-                    $this->getFacetList('genre_facet', $category)
-                )
-            ];
-        case 'region':
-            return [
-                'geographic_facet', $this->quoteValues(
-                    $this->getFacetList('geographic_facet', $category)
-                )
-            ];
-        case 'era':
-            return [
-                'era_facet', $this->quoteValues(
-                    $this->getFacetList('era_facet', $category)
-                )
-            ];
-        case 'publisher':
-            return [
-               'publisher_facet', $this->quoteValues(
-                    $this->getFacetList('publisher_facet', $category)
-                )
-             ];
-        case 'ixtheo-notation':
-            return [
-               'ixtheo_notation_facet', $this->quoteValues(
-                    $this->getFacetList('ixtheo_notation_facet', $category)
-                )
-             ];
+        switch ($facet) {
+            case 'alphabetical':
+                return ['', $this->getAlphabetList()];
+            case 'dewey':
+                return [
+                    'dewey-tens', $this->quoteValues(
+                        $this->getFacetList('dewey-hundreds', $category, 'index')
+                    )
+                ];
+            case 'lcc':
+                return [
+                    'callnumber-first', $this->quoteValues(
+                        $this->getFacetList('callnumber-first', $category, 'index')
+                    )
+                ];
+            case 'topic':
+                return [
+                    'topic_facet', $this->quoteValues(
+                        $this->getFacetList('topic_facet', $category)
+                    )
+                ];
+            case 'genre':
+                return [
+                    'genre_facet', $this->quoteValues(
+                        $this->getFacetList('genre_facet', $category)
+                    )
+                ];
+            case 'region':
+                return [
+                    'geographic_facet', $this->quoteValues(
+                        $this->getFacetList('geographic_facet', $category)
+                    )
+                ];
+            case 'era':
+                return [
+                    'era_facet', $this->quoteValues(
+                        $this->getFacetList('era_facet', $category)
+                    )
+                ];
+            case 'publisher':
+                return [
+                    'publisher_facet', $this->quoteValues(
+                        $this->getFacetList('publisher_facet', $category)
+                    )
+                ];
+            case 'ixtheo-notation':
+                return [
+                    'ixtheo_notation_facet', $this->quoteValues(
+                        $this->getFacetList('ixtheo_notation_facet', $category)
+                    )
+                ];
         }
     }
 
     /**
      * Get a list of items from a facet.
      *
-     * @param string $facet    which facet we're searching in
+     * @param string $facet which facet we're searching in
      * @param string $category which subfacet the search applies to
-     * @param string $sort     how are we ranking these? || 'index'
-     * @param string $query    is there a specific query? No = wildcard
+     * @param string $sort how are we ranking these? || 'index'
+     * @param string $query is there a specific query? No = wildcard
      *
      * @return array           Array indexed by value with text of displayText and
      * count
      */
     protected function getFacetList($facet, $category = null,
-        $sort = 'count', $query = '[* TO *]'
-    ) {
+                                    $sort = 'count', $query = '[* TO *]'
+    )
+    {
         $results = $this->getServiceLocator()
             ->get('VuFind\SearchResultsPluginManager')->get('Solr');
         $params = $results->getParams();
@@ -713,27 +714,27 @@ class BrowseController extends AbstractBase
         if ($action == null) {
             $action = $this->getCurrentAction();
         }
-        switch(strToLower($action)) {
-        case 'alphabetical':
-            return $this->getCategory();
-        case 'dewey':
-            return 'dewey-hundreds';
-        case 'lcc':
-            return 'callnumber-first';
-        case 'author':
-            return 'authorStr';
-        case 'topic':
-            return 'topic_facet';
-        case 'genre':
-            return 'genre_facet';
-        case 'region':
-            return 'geographic_facet';
-        case 'era':
-            return 'era_facet';
-        case 'publisher':
-            return 'publisher_facet';
-        case 'ixtheo-notation':
-            return 'ixtheo_notation_facet';
+        switch (strToLower($action)) {
+            case 'alphabetical':
+                return $this->getCategory();
+            case 'dewey':
+                return 'dewey-hundreds';
+            case 'lcc':
+                return 'callnumber-first';
+            case 'author':
+                return 'authorStr';
+            case 'topic':
+                return 'topic_facet';
+            case 'genre':
+                return 'genre_facet';
+            case 'region':
+                return 'geographic_facet';
+            case 'era':
+                return 'era_facet';
+            case 'publisher':
+                return 'publisher_facet';
+            case 'ixtheo-notation':
+                return 'ixtheo_notation_facet';
         }
         return $action;
     }
@@ -745,24 +746,32 @@ class BrowseController extends AbstractBase
      */
     protected function getAlphabetList()
     {
-        // Get base alphabet:
-        $chars = isset($this->config->Browse->alphabet_letters)
-            ? $this->config->Browse->alphabet_letters
-            : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-        // Put numbers in the front for Era since years are important:
-        if ($this->getCurrentAction() == 'Era') {
-            $chars = '0123456789' . $chars;
-        } else {
-            $chars .= '0123456789';
-        }
-
         // ALPHABET TO ['value','displayText']
         // (value has asterix appended for Solr, but is unmodified for tags)
         $suffix = $this->getCurrentAction() == 'Tag' ? '' : '*';
         $callback = function ($letter) use ($suffix) {
             return ['value' => $letter . $suffix, 'displayText' => $letter];
         };
+
+        $ixtheo_notation_callback = function ($letter) use ($suffix) {
+            return ['value' => $letter . $suffix, 'displayText' => $letter];
+        };
+
+        // Get base alphabet:
+        $chars = isset($this->config->Browse->alphabet_letters)
+            ? $this->config->Browse->alphabet_letters
+            : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        // Put numbers in the front for Era since years are important:
+        if ($this->getCurrentAction() === 'IxTheo-Notation') {
+            $chars = 'ABCFHKNRSTVXZ';
+            $callback = $ixtheo_notation_callback;
+        } else if ($this->getCurrentAction() == 'Era') {
+            $chars = '0123456789' . $chars;
+        } else {
+            $chars .= '0123456789';
+        }
+
         preg_match_all('/(.)/u', $chars, $matches);
         return array_map($callback, $matches[1]);
     }
