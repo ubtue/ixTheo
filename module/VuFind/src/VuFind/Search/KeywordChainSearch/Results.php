@@ -78,7 +78,7 @@ class Results extends SolrResults
 
         $this->responseFacets = $collection->getFacets();
 
-        $facet = 'key_word_chains';
+        $facet = 'key_word_chains_sorted';
         $facet_count = $facet . '-count';
 
         // Get the facets from which we will build our results:
