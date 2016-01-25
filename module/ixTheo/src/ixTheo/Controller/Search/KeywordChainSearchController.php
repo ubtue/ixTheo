@@ -56,7 +56,7 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
 
     protected function configureKeywordChainSearch($request, $sort)
     {
-        $facet = 'key_word_chains';
+        $facet = 'key_word_chains_sorted';
 
         $results = $this->getResultsManager()->get($this->searchClassId);
         $params = $results->getParams();
