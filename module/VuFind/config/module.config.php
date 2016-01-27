@@ -732,7 +732,7 @@ $staticRoutes = [
     'Cover/Show', 'Cover/Unavailable',
     'EDS/Advanced', 'EDS/Home', 'EDS/Search',
     'EIT/Advanced', 'EIT/Home', 'EIT/Search',
-    'Error/Unavailable', 'Feedback/Email', 'Feedback/Home', 'Help/Home',
+    'Error/Unavailable', 'Feedback/Email', 'Feedback/Home', 'Help/Home',  'Help/FAQ',
     'Install/Done', 'Install/FixBasicConfig', 'Install/FixCache',
     'Install/FixDatabase', 'Install/FixDependencies', 'Install/FixILS',
     'Install/FixSecurity', 'Install/FixSolr', 'Install/Home',
