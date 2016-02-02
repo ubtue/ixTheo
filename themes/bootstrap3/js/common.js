@@ -374,7 +374,9 @@ $(document).ready(function() {
               if (json.status == 'OK' && json.data.length > 0) {
                 var datums = [];
                 for (var i=0;i<json.data.length;i++) {
-                  datums.push({val:json.data[i]});
+		  // If we do not escape we get empty results if spaces are in the suggestions
+		  var escaped =  "\"" + json.data[i] + "\"";
+                  datums.push({val:escaped});
                 }
                 cb(datums);
               } else {

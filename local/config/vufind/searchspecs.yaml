@@ -583,8 +583,12 @@ oclc_num:
       - [oclc_num, ~]
 
 Keywordchains:
+   DismaxFields:
+      - key_word_chains
+      - key_word_chains_sorted
    QueryFields:
-     key_word_chain_bag:
-       - [or, ~]
-
+     key_word_chains:
+       - [onephrase, 1000]
+     key_word_chains_sorted:
+       - [onephrase, 1000]
 
