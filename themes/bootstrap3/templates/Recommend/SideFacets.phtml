@@ -45,7 +45,7 @@
         ?>
         <a class="list-group-item active" href="<?=$removeLink?>">
           <span class="pull-right flip"><i class="fa fa-times"></i></span>
-          <? if ($filter['operator'] == 'NOT') echo $this->transEsc('NOT') . ' '; if ($filter['operator'] == 'OR' && $i > 0) echo $this->transEsc('OR') . ' '; ?><?=$this->transEsc($field)?>: <?=$this->escapeHtml($filter['displayText'])?>
+          <? if ($filter['operator'] == 'NOT') echo $this->transEsc('NOT') . ' '; if ($filter['operator'] == 'OR' && $i > 0) echo $this->transEsc('OR') . ' '; ?><?=$this->transEsc($field)?>: <?=$this->transEsc($filter['displayText'])?>
         </a>
       <? endforeach; ?>
     <? endforeach; ?>
