@@ -59,10 +59,6 @@
           <? if (isset($this->overrideSearchHeading)): ?>
             <?=$this->overrideSearchHeading?>
           <? elseif ($this->params->getSearchType() == 'basic'): ?>
-            <?=$this->transEsc('for search')?>: <strong>'<?=$this->escapeHtml($lookfor)?>'</strong>,
-          <? endif; ?>
-          <? if ($qtime = $this->results->getQuerySpeed()): ?>
-            <?=$this->transEsc('query time')?>: <?=$this->localizedNumber($qtime, 2).$this->transEsc('seconds_abbrev')?>
           <? endif; ?>
         <? else: ?>
           <h2><?=$this->transEsc('nohit_heading')?></h2>
