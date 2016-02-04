@@ -2,6 +2,7 @@
 
 namespace ixTheo\Search\Backend\Solr;
 
+use VuFind\Log\Logger;
 use VuFindSearch\Backend\Solr\QueryBuilder;
 use VuFindSearch\Query\AbstractQuery;
 
@@ -23,8 +24,11 @@ class IxTheoQueryBuilder extends QueryBuilder
             return parent::build($query);
         }
         $queryString = $query->getString();
-        if (!empty($queryString)) {
-            $newQuery =  $this->getManipulatedQueryString($query);
+
+        $doBibleRangeSearch = ($query->getHandler() === "BibleRangeSearch");
+
+        if ($doBibleRangeSearch || !empty($queryString)) {
+            $newQuery =  $this->getManipulatedQueryString($query, $doBibleRangeSearch);
             $result = parent::build($query);
             $result->set('q', $newQuery);
             $query->setString($queryString);
@@ -33,9 +37,9 @@ class IxTheoQueryBuilder extends QueryBuilder
         return parent::build($query);
     }
 
-    private function getManipulatedQueryString(AbstractQuery $query) {
+    private function getManipulatedQueryString(AbstractQuery $query, $doBibleRangeSearch) {
         $bibleReferences = $this->parseBibleReference($query);
-        if ($this->isValidBibleReference($bibleReferences)) {
+        if ($doBibleRangeSearch || $this->isValidBibleReference($bibleReferences)) {
             return $this->translateToSearchString($bibleReferences);
         }
         return $query->getString();
@@ -52,7 +56,12 @@ class IxTheoQueryBuilder extends QueryBuilder
     }
 
     private function translateToSearchString($bibleReferences) {
-        return "{!bibleRangeParser}" . str_replace(":", "_", implode(',', $bibleReferences));
+        if (empty($bibleReferences )) {
+            // if no bible references were found for given query, search for a range which doesn't exist to get no result.
+            $bibleReferences = ["9999999_9999999"];
+        }
+        $searchString = "{!bibleRangeParser}" . str_replace(":", "_", implode(',', $bibleReferences));
+        return $searchString;
     }
 
     private function getBibleReferenceCommand($searchQuery) {

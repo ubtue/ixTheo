@@ -27,8 +27,6 @@
  */
 namespace VuFind\View\Helper\Root;
 
-use Zend\View\Exception\RuntimeException;
-
 /**
  * "Load help text" view helper
  *
@@ -99,10 +97,11 @@ class HelpText extends \Zend\View\Helper\AbstractHelper
      * @param array  $context Variables needed for rendering template; these will
      * be temporarily added to the global view context, then reverted after the
      * template is rendered (default = empty).
+     * @param string $directory the template directory to search in.
      *
      * @return string|bool
      */
-    public function render($name, $context = null)
+    public function render($name, $context = null, $directory = "HelpTranslations")
     {
         // Set up the needed context in the view:
         $this->contextHelper->__invoke($this->getView());
@@ -116,18 +115,19 @@ class HelpText extends \Zend\View\Helper\AbstractHelper
         // Clear warnings
         $this->warnings = [];
 
-        try {
-            $tpl = "HelpTranslations/{$this->language}/{$safe_topic}.phtml";
+        $resolver = $this->getView()->resolver();
+        $tpl = "$directory/{$this->language}/{$safe_topic}.phtml";
+        if ($resolver->resolve($tpl)) {
             $html = $this->getView()->render($tpl);
-        } catch (RuntimeException $e) {
-            try {
-                // language missing -- try default language
-                $tplFallback = 'HelpTranslations/' . $this->defaultLanguage . '/'
-                    . $safe_topic . '.phtml';
+        } else {
+            // language missing -- try default language
+            $tplFallback = $directory . '/' . $this->defaultLanguage . '/'
+                . $safe_topic . '.phtml';
+            if ($resolver->resolve($tplFallback)) {
                 $html = $this->getView()->render($tplFallback);
                 $this->warnings[] = 'Sorry, but the help you requested is '
                     . 'unavailable in your language.';
-            } catch (RuntimeException $e) {
+            } else {
                 // no translation available at all!
                 $html = false;
             }

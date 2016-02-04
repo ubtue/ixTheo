@@ -104,6 +104,26 @@
     <fieldType name="date" class="solr.TrieDateField" sortMissingLast="true" omitNorms="true" precisionStep="6"/>
     <fieldType name="random" class="solr.RandomSortField" indexed="true" />
     <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" omitNorms="true"/>
+
+<!-- Test for flattening keyswordchains -->
+
+    <fieldType name="flattenedKeyWordChain" class="solr.TextField" positionIncrementGap="100" multiValued="true">
+      <analyzer type="index">
+<!--	<charFilter class="solr.PatternReplaceCharFilterFactory" pattern="/" replacement=" "/> -->
+<!--	<tokenizer class="solr.LowerCaseTokenizerFactory" pattern="[/,]"/> -->
+	<tokenizer class="solr.PatternTokenizerFactory" pattern="/"/>
+<!--	<tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="/" replace="\"/> -->
+<!--	<filter class="solr.LowerCaseFilterFactory"/> -->
+      </analyzer>
+      <analyzer type="query">
+	<tokenizer class="solr.WhitespaceTokenizerFactory"/>
+<!--	<filter class="solr.LowerCaseFilterFactory"/> -->
+      </analyzer>
+    </fieldType>
+
+<!-- End test for flattening keyword chain -->
+
+
   </types>
  <fields>
    <!-- Required by Solr 4.x -->
@@ -185,6 +205,7 @@
    <field name="topic_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_browse" type="string" indexed="true" stored="false" multiValued="true"/>
    <field name="author_browse" type="string" indexed="true" stored="false" multiValued="true"/>
+
    <field name="genre" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="genre_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
    <field name="geographic" type="text" indexed="true" stored="true" multiValued="true"/>
@@ -236,7 +257,10 @@
    <field name ="ixtheo_notation" type="string" indexed="true" stored="true" multiValued="true" />
    <field name="ixtheo_notation_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
    <copyField source="ixtheo_notation" dest="ixtheo_notation_facet"/>
-   <field name ="key_word_chains" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chains" type="string" indexed="true" stored="true" multiValued="true" /> 
+   <field name ="key_word_chains_sorted" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chain_bag" type="text" indexed="true" stored="true" multiValued="true" />
+   <field name="urls_and_material_types" type="string" indexed="true" stored="true" multiValued="true"/>
  </fields>
  <uniqueKey>id</uniqueKey>
  <defaultSearchField>allfields</defaultSearchField>
@@ -263,6 +287,7 @@
  <copyField source="topic"    dest="topic_browse"/>
  <copyField source="author"    dest="author_browse"/>
  <copyField source="author2"    dest="author_browse"/>
+
  <!-- CopyFields for All Fields -->
  <copyField source="format"    dest="allfields"/>
  <copyField source="format"    dest="allfields_unstemmed"/>
@@ -271,4 +296,5 @@
  <copyField source="callnumber-raw" dest="callnumber-search"/>
  <!-- Default Boolean Operator -->
  <solrQueryParser defaultOperator="AND"/>
+
 </schema>

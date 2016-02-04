@@ -27,6 +27,7 @@
  * @link     http://vufind.org/wiki/vufind2:record_drivers Wiki
  */
 namespace VuFind\RecordDriver;
+
 use VuFindCode\ISBN, VuFind\View\Helper\Root\RecordLink;
 
 /**
@@ -129,15 +130,16 @@ class SolrDefault extends AbstractBase
     /**
      * Constructor
      *
-     * @param \Zend\Config\Config $mainConfig     VuFind main configuration (omit for
+     * @param \Zend\Config\Config $mainConfig VuFind main configuration (omit for
      * built-in defaults)
-     * @param \Zend\Config\Config $recordConfig   Record-specific configuration file
+     * @param \Zend\Config\Config $recordConfig Record-specific configuration file
      * (omit to use $mainConfig as $recordConfig)
      * @param \Zend\Config\Config $searchSettings Search-specific configuration file
      */
     public function __construct($mainConfig = null, $recordConfig = null,
-        $searchSettings = null
-    ) {
+                                $searchSettings = null
+    )
+    {
         // Turn on highlighting/snippets as needed:
         $this->highlight = !isset($searchSettings->General->highlighting)
             ? false : $searchSettings->General->highlighting;
@@ -159,6 +161,16 @@ class SolrDefault extends AbstractBase
             ? false : $mainConfig->Hierarchy->simpleContainerLinks;
 
         parent::__construct($mainConfig, $recordConfig);
+    }
+
+    /**
+     * Get highlighting details from the object.
+     *
+     * @return array
+     */
+    public function getHighlightDetails()
+    {
+        return $this->highlightDetails;
     }
 
     /**
@@ -286,6 +298,7 @@ class SolrDefault extends AbstractBase
         return isset($this->fields['callnumber-raw'])
             ? $this->fields['callnumber-raw'] : [];
     }
+
     /**
      * Return the first valid ISBN found in the record (favoring ISBN-10 over
      * ISBN-13 when possible).
@@ -656,11 +669,11 @@ class SolrDefault extends AbstractBase
     }
 
     /**
-     * Support method for getOpenURL() -- pick the OpenURL format.
+     * Support method for getOpenUrl() -- pick the OpenURL format.
      *
      * @return string
      */
-    protected function getOpenURLFormat()
+    protected function getOpenUrlFormat()
     {
         // If we have multiple formats, Book, Journal and Article are most
         // important...
@@ -675,8 +688,10 @@ class SolrDefault extends AbstractBase
             return $formats[0];
         } else if (strlen($this->getCleanISSN()) > 0) {
             return 'Journal';
+        } else if (strlen($this->getCleanISBN()) > 0) {
+            return 'Book';
         }
-        return 'Book';
+        return 'UnknownFormat';
     }
 
     /**
@@ -707,7 +722,7 @@ class SolrDefault extends AbstractBase
      *
      * @return array
      */
-    protected function getDefaultOpenURLParams()
+    protected function getDefaultOpenUrlParams()
     {
         // Get a representative publication date:
         $pubDate = $this->getPublicationDates();
@@ -715,6 +730,7 @@ class SolrDefault extends AbstractBase
 
         // Start an array of OpenURL parameters:
         return [
+            'url_ver' => 'Z39.88-2004',
             'ctx_ver' => 'Z39.88-2004',
             'ctx_enc' => 'info:ofi/enc:UTF-8',
             'rfr_id' => 'info:sid/' . $this->getCoinsID() . ':generator',
@@ -728,9 +744,9 @@ class SolrDefault extends AbstractBase
      *
      * @return array
      */
-    protected function getBookOpenURLParams()
+    protected function getBookOpenUrlParams()
     {
-        $params = $this->getDefaultOpenURLParams();
+        $params = $this->getDefaultOpenUrlParams();
         $params['rft_val_fmt'] = 'info:ofi/fmt:kev:mtx:book';
         $params['rft.genre'] = 'book';
         $params['rft.btitle'] = $params['rft.title'];
@@ -755,9 +771,9 @@ class SolrDefault extends AbstractBase
      *
      * @return array
      */
-    protected function getArticleOpenURLParams()
+    protected function getArticleOpenUrlParams()
     {
-        $params = $this->getDefaultOpenURLParams();
+        $params = $this->getDefaultOpenUrlParams();
         $params['rft_val_fmt'] = 'info:ofi/fmt:kev:mtx:journal';
         $params['rft.genre'] = 'article';
         $params['rft.issn'] = (string)$this->getCleanISSN();
@@ -787,9 +803,9 @@ class SolrDefault extends AbstractBase
      *
      * @return array
      */
-    protected function getUnknownFormatOpenURLParams($format)
+    protected function getUnknownFormatOpenUrlParams($format = 'UnknownFormat')
     {
-        $params = $this->getDefaultOpenURLParams();
+        $params = $this->getDefaultOpenUrlParams();
         $params['rft_val_fmt'] = 'info:ofi/fmt:kev:mtx:dc';
         $params['rft.creator'] = $this->getPrimaryAuthor();
         $publishers = $this->getPublishers();
@@ -809,9 +825,9 @@ class SolrDefault extends AbstractBase
      *
      * @return array
      */
-    protected function getJournalOpenURLParams()
+    protected function getJournalOpenUrlParams()
     {
-        $params = $this->getUnknownFormatOpenURLParams('Journal');
+        $params = $this->getUnknownFormatOpenUrlParams('Journal');
         /* This is probably the most technically correct way to represent
          * a journal run as an OpenURL; however, it doesn't work well with
          * Zotero, so it is currently commented out -- instead, we just add
@@ -844,28 +860,40 @@ class SolrDefault extends AbstractBase
      * Get the OpenURL parameters to represent this record (useful for the
      * title attribute of a COinS span tag).
      *
+     * @param bool $overrideSupportsOpenUrl Flag to override checking
+     * supportsOpenUrl() (default is false)
+     *
      * @return string OpenURL parameters.
      */
-    public function getOpenURL()
+    public function getOpenUrl($overrideSupportsOpenUrl = false)
     {
+        // stop here if this record does not support OpenURLs
+        if (!$overrideSupportsOpenUrl && !$this->supportsOpenUrl()) {
+            return false;
+        }
+
         // Set up parameters based on the format of the record:
-        switch ($format = $this->getOpenURLFormat()) {
-        case 'Book':
-            $params = $this->getBookOpenURLParams();
-            break;
-        case 'Article':
-            $params = $this->getArticleOpenURLParams();
-            break;
-        case 'Journal':
-            $params = $this->getJournalOpenURLParams();
-            break;
-        default:
-            $params = $this->getUnknownFormatOpenURLParams($format);
-            break;
+        $format = $this->getOpenUrlFormat();
+        $method = "get{$format}OpenUrlParams";
+        if (method_exists($this, $method)) {
+            $params = $this->$method();
+        } else {
+            $params = $this->getUnknownFormatOpenUrlParams($format);
         }
 
         // Assemble the URL:
         return http_build_query($params);
+    }
+
+    /**
+     * Get the OpenURL parameters to represent this record for COinS even if
+     * supportsOpenUrl() is false for this RecordDriver.
+     *
+     * @return string OpenURL parameters.
+     */
+    public function getCoinsOpenUrl()
+    {
+        return $this->getOpenUrl($this->supportsCoinsOpenUrl());
     }
 
     /**
@@ -1163,10 +1191,10 @@ class SolrDefault extends AbstractBase
             return $this->fields['thumbnail'];
         }
         $arr = [
-            'author'     => mb_substr($this->getPrimaryAuthor(), 0, 300, 'utf-8'),
+            'author' => mb_substr($this->getPrimaryAuthor(), 0, 300, 'utf-8'),
             'callnumber' => $this->getCallNumber(),
-            'size'       => $size,
-            'title'      => mb_substr($this->getTitle(), 0, 300, 'utf-8')
+            'size' => $size,
+            'title' => mb_substr($this->getTitle(), 0, 300, 'utf-8')
         ];
         if ($isbn = $this->getCleanISBN()) {
             $arr['isbn'] = $isbn;
@@ -1313,7 +1341,8 @@ class SolrDefault extends AbstractBase
      */
     public function setHierarchyDriverManager(
         \VuFind\Hierarchy\Driver\PluginManager $pm
-    ) {
+    )
+    {
         $this->hierarchyDriverManager = $pm;
         return $this;
     }
@@ -1362,30 +1391,30 @@ class SolrDefault extends AbstractBase
 
         // Check config setting for what constitutes a collection, act accordingly:
         switch ($hierarchyDriver->getCollectionLinkType()) {
-        case 'All':
-            if (isset($this->fields['hierarchy_parent_title'])
-                && isset($this->fields['hierarchy_parent_id'])
-            ) {
-                $titles = $this->fields['hierarchy_parent_title'];
-                $ids = $this->fields['hierarchy_parent_id'];
-            }
-            break;
-        case 'Top':
-            if (isset($this->fields['hierarchy_top_title'])
-                && isset($this->fields['hierarchy_top_id'])
-            ) {
-                foreach ($this->fields['hierarchy_top_id'] as $i => $topId) {
-                    // Don't mark an item as its own parent -- filter out parent
-                    // collections whose IDs match that of the current collection.
-                    if (!$isCollection
-                        || $topId !== $this->fields['is_hierarchy_id']
-                    ) {
-                        $ids[] = $topId;
-                        $titles[] = $this->fields['hierarchy_top_title'][$i];
+            case 'All':
+                if (isset($this->fields['hierarchy_parent_title'])
+                    && isset($this->fields['hierarchy_parent_id'])
+                ) {
+                    $titles = $this->fields['hierarchy_parent_title'];
+                    $ids = $this->fields['hierarchy_parent_id'];
+                }
+                break;
+            case 'Top':
+                if (isset($this->fields['hierarchy_top_title'])
+                    && isset($this->fields['hierarchy_top_id'])
+                ) {
+                    foreach ($this->fields['hierarchy_top_id'] as $i => $topId) {
+                        // Don't mark an item as its own parent -- filter out parent
+                        // collections whose IDs match that of the current collection.
+                        if (!$isCollection
+                            || $topId !== $this->fields['is_hierarchy_id']
+                        ) {
+                            $ids[] = $topId;
+                            $titles[] = $this->fields['hierarchy_top_title'][$i];
+                        }
                     }
                 }
-            }
-            break;
+                break;
         }
 
         // Map the titles and IDs to a useful format:
@@ -1400,6 +1429,9 @@ class SolrDefault extends AbstractBase
     /**
      * Get the value of whether or not this is a collection level record
      *
+     * NOTE: \VuFind\Hierarchy\TreeDataFormatter\AbstractBase::isCollection()
+     * duplicates some of this logic.
+     *
      * @return bool
      */
     public function isCollection()
@@ -1411,61 +1443,19 @@ class SolrDefault extends AbstractBase
 
         // Check config setting for what constitutes a collection
         switch ($hierarchyDriver->getCollectionLinkType()) {
-        case 'All':
-            return (isset($this->fields['is_hierarchy_id']));
-        case 'Top':
-            return isset($this->fields['is_hierarchy_title'])
+            case 'All':
+                return (isset($this->fields['is_hierarchy_id']));
+            case 'Top':
+                return isset($this->fields['is_hierarchy_title'])
                 && isset($this->fields['is_hierarchy_id'])
                 && in_array(
                     $this->fields['is_hierarchy_id'],
                     $this->fields['hierarchy_top_id']
                 );
-        default:
-            // Default to not be a collection level record
-            return false;
+            default:
+                // Default to not be a collection level record
+                return false;
         }
-    }
-
-    /**
-     * Get the positions of this item within parent collections.  Returns an array
-     * of parent ID => sequence number.
-     *
-     * @return array
-     */
-    public function getHierarchyPositionsInParents()
-    {
-        $retVal = [];
-        if (isset($this->fields['hierarchy_parent_id'])
-            && isset($this->fields['hierarchy_sequence'])
-        ) {
-            foreach ($this->fields['hierarchy_parent_id'] as $key => $val) {
-                $retVal[$val] = $this->fields['hierarchy_sequence'][$key];
-            }
-        }
-        return $retVal;
-    }
-
-     /**
-     * Get the titles of this item within parent collections.  Returns an array
-     * of parent ID => sequence number.
-     *
-     * @return Array
-     */
-    public function getTitlesInHierarchy()
-    {
-        $retVal = [];
-        if (isset($this->fields['title_in_hierarchy'])
-            && is_array($this->fields['title_in_hierarchy'])
-        ) {
-            $titles = $this->fields['title_in_hierarchy'];
-            $parentIDs = $this->fields['hierarchy_parent_id'];
-            if (count($titles) === count($parentIDs)) {
-                foreach ($parentIDs as $key => $val) {
-                    $retVal[$val] = $titles[$key];
-                }
-            }
-        }
-        return $retVal;
     }
 
     /**
@@ -1524,9 +1514,9 @@ class SolrDefault extends AbstractBase
      * Return an XML representation of the record using the specified format.
      * Return false if the format is unsupported.
      *
-     * @param string     $format     Name of format to use (corresponds with OAI-PMH
+     * @param string $format Name of format to use (corresponds with OAI-PMH
      * metadataPrefix parameter).
-     * @param string     $baseUrl    Base URL of host containing VuFind (optional;
+     * @param string $baseUrl Base URL of host containing VuFind (optional;
      * may be used to inject record URLs into XML when appropriate).
      * @param RecordLink $recordLink Record link helper (optional; may be used to
      * inject record URLs into XML when appropriate).
@@ -1582,24 +1572,6 @@ class SolrDefault extends AbstractBase
 
         // Unsupported format:
         return false;
-    }
-
-    /**
-     * Does the OpenURL configuration indicate that we should display OpenURLs in
-     * the specified context?
-     *
-     * @param string $area 'results', 'record' or 'holdings'
-     *
-     * @return bool
-     */
-    public function openURLActive($area)
-    {
-        // Only display OpenURL link if the option is turned on and we have
-        // an ISSN.  We may eventually want to make this rule more flexible.
-        if (!$this->getCleanISSN()) {
-            return false;
-        }
-        return parent::openURLActive($area);
     }
 
     /**
@@ -1720,25 +1692,25 @@ class SolrDefault extends AbstractBase
         $types = [];
         foreach ($this->getFormats() as $format) {
             switch ($format) {
-            case 'Book':
-            case 'eBook':
-                $types['Book'] = 1;
-                break;
-            case 'Video':
-            case 'VHS':
-                $types['Movie'] = 1;
-                break;
-            case 'Photo':
-                $types['Photograph'] = 1;
-                break;
-            case 'Map':
-                $types['Map'] = 1;
-                break;
-            case 'Audio':
-                $types['MusicAlbum'] = 1;
-                break;
-            default:
-                $types['CreativeWork'] = 1;
+                case 'Book':
+                case 'eBook':
+                    $types['Book'] = 1;
+                    break;
+                case 'Video':
+                case 'VHS':
+                    $types['Movie'] = 1;
+                    break;
+                case 'Photo':
+                    $types['Photograph'] = 1;
+                    break;
+                case 'Map':
+                    $types['Map'] = 1;
+                    break;
+                case 'Audio':
+                    $types['MusicAlbum'] = 1;
+                    break;
+                default:
+                    $types['CreativeWork'] = 1;
             }
         }
         return array_keys($types);
@@ -1812,7 +1784,27 @@ class SolrDefault extends AbstractBase
     public function getContainerRecordID()
     {
         return $this->containerLinking
-            && !empty($this->fields['hierarchy_parent_id'])
+        && !empty($this->fields['hierarchy_parent_id'])
             ? $this->fields['hierarchy_parent_id'][0] : '';
+    }
+
+    /**
+     * Return an associative array of URL's mapped to their material types.
+     *
+     * @return array
+     */
+    public function getURLsAndMaterialTypes()
+    {
+        $retval = [];
+        if (isset($this->fields['urls_and_material_types']) && !empty($this->fields['urls_and_material_types'])) {
+            foreach ($this->fields['urls_and_material_types'] as $url_and_material_type) {
+                $last_colon_pos = strrpos($url_and_material_type, ":");
+                if ($last_colon_pos) {
+                    $material_type = substr($url_and_material_type, $last_colon_pos + 1);
+                    $retval[substr($url_and_material_type, 0, $last_colon_pos)] = $material_type;
+                }
+            }
+        }
+        return $retval;
     }
 }

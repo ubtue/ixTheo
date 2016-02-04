@@ -356,6 +356,8 @@ AllFields:
     - description
     - isbn
     - issn
+    - key_word_chains
+    - key_word_chain_bag
   QueryFields:
     0:
       0:
@@ -414,6 +416,11 @@ AllFields:
       - [onephrase, ~]
     issn:
       - [onephrase, ~]
+    key_word_chains:
+      - [onephrase, ~]
+    key_word_chain_bag:
+      - [onephrase, ~]
+
 #  ExactSettings:
 #    DismaxFields:
 #      - title_full_unstemmed^600
@@ -477,7 +484,7 @@ DeweyBrowse:
 
 LccBrowse:
   QueryFields:
-    callnumber-a:
+    callnumber-raw:
       - [onephrase, ~]
 
 CallNumber:
@@ -486,7 +493,6 @@ CallNumber:
   # which will return a larger number of hits at a lower boost.
   CustomMunge:
     callnumber_exact:
-      - [uppercase]
       # Strip whitespace and quotes:
       - [preg_replace, '/[ "]/', ""]
       # Escape colons (unescape first to avoid double-escapes):
@@ -495,7 +501,6 @@ CallNumber:
       # Strip pre-existing trailing asterisks:
       - [preg_replace, "/\*+$/", ""]
     callnumber_fuzzy:
-      - [uppercase]
       # Strip whitespace and quotes:
       - [preg_replace, '/[ "]/', ""]
       # Escape colons (unescape first to avoid double-escapes):
@@ -505,10 +510,10 @@ CallNumber:
       - [preg_replace, "/\*+$/", ""]
       - [append, "*"]
   QueryFields:
-    callnumber:
+    callnumber-search:
       - [callnumber_exact, 1000]
       - [callnumber_fuzzy, ~]
-    dewey-full:
+    dewey-search:
       - [callnumber_exact, 1000]
       - [callnumber_fuzzy, ~]
 
@@ -576,3 +581,14 @@ oclc_num:
   QueryFields:
     oclc_num:
       - [oclc_num, ~]
+
+Keywordchains:
+   DismaxFields:
+      - key_word_chains
+      - key_word_chains_sorted
+   QueryFields:
+     key_word_chains:
+       - [onephrase, 1000]
+     key_word_chains_sorted:
+       - [onephrase, 1000]
+
