@@ -28,7 +28,7 @@ private void processField(DataField dataField, Map/*<Character, List<String>>*/ 
     char chainID = dataField.getIndicator1();
     List/*<String>*/ keyWordChain = getKeyWordChain(keyWordChains, chainID);
     List/*<Subfield>*/ subfields = dataField.getSubfields('a');
-    
+
     for (Subfield subfield : subfields) {
         if (subfield.getData().length() > 1) {
             String keyWord = subfield.getData();
@@ -45,7 +45,7 @@ private void processField(DataField dataField, Map/*<Character, List<String>>*/ 
  */
 private List/*<String>*/ getKeyWordChain(Map/*<Character, List<String>>*/ keyWordChains, char chainID) {
     List/*<String>*/ keyWordChain = (List)keyWordChains.get(chainID);
-        
+
     if (keyWordChain == null) {
         keyWordChain = new ArrayList/*<String>*/();
         keyWordChains.put(chainID, keyWordChain);
@@ -58,7 +58,7 @@ private List/*<String>*/ getKeyWordChain(Map/*<Character, List<String>>*/ keyWor
 private Set/*<String>*/ concatenateKeyWordsToChains(Map/*<Character, List<String>>*/ keyWordChains) {
     List/*<Character>*/ chainIDs = new ArrayList/*<Character>*/(keyWordChains.keySet());
     Collections.sort(chainIDs);
-    
+
     Set/*<String>*/ chainSet = new LinkedHashSet/*<String>*/();
     for (Character chainID : chainIDs) {
         chainSet.add(keyChainToString((List)keyWordChains.get(chainID)));
@@ -73,10 +73,10 @@ private String keyChainToString(List/*<String>*/ keyWordChain) {
         buffer.append(KEYWORD_DELIMITER);
         buffer.append(keyWord);
     }
-    
+
     if (buffer.length() == 0) {
         return "";
     }
-    // Discard leading keyword delimiter. 
+    // Discard leading keyword delimiter.
     return buffer.toString().substring(1);
 }
