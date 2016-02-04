@@ -1,0 +1,118 @@
+<?
+// Set page title.
+$this->headTitle($this->translate('Search Home'));
+
+// Set default value if necessary:
+if (!isset($this->searchClassId)) {
+    $this->searchClassId = 'Solr';
+}
+
+// Load search actions and settings (if any):
+$options = $this->searchOptions($this->searchClassId);
+$basicSearch = $options->getSearchAction();
+$advSearch = $options->getAdvancedSearchAction();
+
+$this->layout()->breadcrumbs = false;
+?>
+
+<div class="blog">
+    <div class="col-md-6">
+        <h2><a href="#aktuelles">Aktuelles</a></h2>
+
+        <div class="post">
+            <h3 class="post-title"><a href="#aktuelles">Lorem ipsum dolor sit amet</a></h3>
+            <span class="post-date">24. Dezember 2015</span>
+
+            <p>
+                Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+                erat,
+                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+                no
+                sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
+                elitr.</p>
+        </div>
+        <div class="">
+            <h3 class="post-title"><a href="#aktuelles">Duis autem vel eum iriure</a></h3>
+            <span class="post-date">24. Dezember 2015</span>
+
+            <p>
+                Dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla
+                facilisis
+                at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis
+                dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
+                nonummy
+                nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+        </div>
+        <div class="post">
+            <h3 class="post-title"><a href="#aktuelles">Ut wisi enim ad minim veniam</a></h3>
+            <span class="post-date">24. Dezember 2015</span>
+
+            <p>
+                Guis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis
+                autem
+                vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu
+                feugiat
+                nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril
+                delenit
+                augue duis dolore te feugait nulla facilisi.</p>
+        </div>
+        <div class="post">
+            <h3 class="post-title"><a href="#aktuelles">Nam liber tempor cum soluta</a></h3>
+            <span class="post-date">24. Dezember 2015</span>
+
+            <p>
+                Nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem
+                ipsum
+                dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore
+                magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
+                suscipit
+                lobortis nisl ut aliquip ex ea commodo consequat.</p>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h2><a href="#blog">Blog</a></h2>
+
+        <div class="post">
+            <h3 class="post-title"><a href="#aktuelles">Duis autem vel eum iriure dolor in hendrerit in vulputate</a>
+            </h3>
+            <span class="post-date">24. Dezember 2015</span>
+
+            <p>
+                Velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et
+                iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla
+                facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
+                tincidunt ut laoreet dolore magna aliquam erat volutpat.
+            </p>
+        </div>
+        <div class="post">
+            <h3 class="post-title"><a href="#aktuelles">Ut wisi enim ad minim veniam</a></h3>
+            <span class="post-date">24. Dezember 2015</span>
+
+            <p>
+                Quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis
+                autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu
+                feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum
+                zzril delenit augue duis dolore te feugait nulla facilisi.
+            </p>
+        </div>
+        <div class="post">
+            <h3 class="post-title"><a href="#aktuelles">Nam liber tempor cum soluta nobis eleifend</a></h3>
+            <span class="post-date">24. Dezember 2015</span>
+
+            <p>
+                Option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit
+                amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
+                aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit
+                lobortis nisl ut aliquip ex ea commodo consequat.
+            </p>
+        </div>
+        <div class="post">
+            <h3 class="post-title"><a href="#aktuelles">Duis autem vel eum iriure dolor in hendrerit</a></h3>
+            <span class="post-date">24. Dezember 2015</span>
+
+            <p>
+                In vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.
+            </p>
+        </div>
+    </div>
+</div>

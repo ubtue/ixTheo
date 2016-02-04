@@ -46,7 +46,7 @@ class IxTheoQueryBuilder extends QueryBuilder
     }
 
     private function parseBibleReference(AbstractQuery $query) {
-        $searchQuery = str_replace(" ", "", $query->getString());
+        $searchQuery = $query->getString();
         if (!empty($searchQuery)) {
             $cmd = $this->getBibleReferenceCommand($searchQuery);
             exec($cmd, $output, $return_var);

@@ -4,11 +4,15 @@
       <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getUniqueID())?>" class="hiddenId" />
       <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getResourceSource())?>" class="hiddenSource" />
     </div>
-    <? if ($cover = $this->record($this->driver)->getCover('result-list', 'medium', $this->recordLink()->getUrl($this->driver))): ?>
-      <div class="col-sm-2 col-xs-3 left"><?=$cover ?></div>
-    <? endif ?>
-    <div class="<?=$cover ? 'col-sm-7 col-xs-6' : 'col-sm-9 col-xs-9'?> middle">
+    <div class="col-sm-11 col-xs-7 middle">
       <div>
+        <? if ($this->userlist()->getMode() !== 'disabled'): ?>
+          <? /* Saved lists */ ?>
+          <div class="savedLists hidden">
+            <strong><?=$this->transEsc("Saved in")?>:</strong>
+          </div>
+        <? endif; ?>
+
         <a href="<?=$this->recordLink()->getUrl($this->driver)?>" class="title">
           <?=$this->record($this->driver)->getTitleHtml()?>
         </a>
@@ -59,7 +63,7 @@
             <strong><?=$this->transEsc($snippet['caption']) ?>:</strong>
           <? endif; ?>
           <? if (!empty($snippet['snippet'])): ?>
-            <span class="quotestart">&#8220;</span>...<?=$this->highlight($snippet['snippet']) ?>...<span class="quoteend">&#8221;</span><br/>
+            <span class="quotestart">&#8220;</span><?=$this->highlight($snippet['snippet']) ?><span class="quoteend">&#8221;</span><br/>
           <? endif; ?>
         <? endif; ?>
       <? endif; ?>
@@ -113,8 +117,6 @@
         <? endforeach; ?>
       <? endif; ?>
 
-
-
       <? /* We need to find out if we're supposed to display an OpenURL link ($openUrlActive),
             but even if we don't plan to display the link, we still want to get the $openUrl
             value for use in generating a COinS (Z3988) tag -- see bottom of file.
@@ -136,52 +138,20 @@
           <? endforeach; ?>
         <? endif; ?>
       <? endif; ?>
-
-      <? $keyWordChains = $this->driver->getKeyWordChains(); if (!empty($keyWordChains)) :?>
-	  <?=$this->transEsc('keywordchains')?>:
-	  <?foreach ($keyWordChains as $current): ?> 
-            <?$currentEscaped = '"' . $current . '"';?>
-            <a href="<?=$this->url('keywordchainsearch-results')?>?lookfor=<?=urlencode($currentEscaped)?>"><?=$this->escapeHtml($current)?></a></br>
-          <? endforeach; ?> 
-      <? endif; ?> 
-    
-
-
-
-      <?=str_replace('class="', 'class="label label-info ', $this->record($this->driver)->getFormatList())?>
-
       <? if (!$openUrlActive && empty($urls) && $this->driver->supportsAjaxStatus()): ?>
         <span class="status ajax-availability hidden">
           <span class="label label-default"><?=$this->transEsc('Loading')?>...</span>
         </span>
       <? endif; ?>
       <?=$this->record($this->driver)->getPreviews()?>
+      <?=str_replace('class="', 'class="label label-info ', $this->record($this->driver)->getFormatList())?>
     </div>
-    <div class="col-xs-3 right hidden-print">
-      <? /* Display qrcode if appropriate: */ ?>
-      <? if ($QRCode = $this->record($this->driver)->getQRCode("results")): ?>
-        <?
-          // Add JS Variables for QrCode
-          $this->jsTranslations()->addStrings(array('qrcode_hide' => 'qrcode_hide', 'qrcode_show' => 'qrcode_show'));
-        ?>
-        <span class="hidden-xs">
-          <i class="fa fa-fw fa-qrcode"></i> <a href="<?=$this->escapeHtmlAttr($QRCode);?>" class="qrcodeLink"><?=$this->transEsc('qrcode_show')?></a>
-          <div class="qrcode hidden">
-            <script type="text/template" class="qrCodeImgTag">
-              <img alt="<?=$this->transEsc('QR Code')?>" src="<?=$this->escapeHtmlAttr($QRCode);?>"/>
-            </script>
-          </div><br/>
-        </span>
-      <? endif; ?>
-
+    <div class="col-xs-1 right hidden-print">
       <? if ($this->userlist()->getMode() !== 'disabled'): ?>
         <? /* Add to favorites */ ?>
-        <i class="fa fa-fw fa-star"></i> <a href="<?=$this->recordLink()->getActionUrl($this->driver, 'Save')?>" class="save-record modal-link" id="<?=$this->driver->getUniqueId() ?>" title="<?=$this->transEsc('Add to favorites')?>"><?=$this->transEsc('Add to favorites')?></a><br/>
-
-        <? /* Saved lists */ ?>
-        <div class="savedLists alert alert-info hidden">
-          <strong><?=$this->transEsc("Saved in")?>:</strong>
-        </div>
+        <a href="<?=$this->recordLink()->getActionUrl($this->driver, 'Save')?>" class="save-record modal-link" id="<?=$this->driver->getUniqueId() ?>" title="<?=$this->transEsc('Add to favorites')?>">
+          <i class="fa fa-fw fa-star"></i>
+        </a>
       <? endif; ?>
 
       <? /* Hierarchy tree link */ ?>
@@ -198,7 +168,6 @@
       <? endif; ?>
 
       <?=$this->driver->supportsCoinsOpenUrl()?'<span class="Z3988" title="'.$this->escapeHtmlAttr($this->driver->getCoinsOpenUrl()).'"></span>':''?>
-
     </div>
   </div>
 </div>
