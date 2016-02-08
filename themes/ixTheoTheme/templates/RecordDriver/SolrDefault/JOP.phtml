@@ -1,4 +1,6 @@
 <? $formats = $this->driver->getFormats(); if (!empty($formats) && ($formats[0] == "Article" || $formats[0] == "Journal" || $formats[0] == "Article")): ?>
+  <?$issn = $this->driver->tryMethod('getCleanISSN')?>
+   <?if (!empty($issn)):  ?>
     <tr>
         <th>Journals Online &amp; Print:</th>
         <td>
@@ -63,4 +65,5 @@
             }
         }); // end ajax
     </script>
+  <? endif; ?>
 <? endif; ?>
