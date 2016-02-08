@@ -1,0 +1,5 @@
+For creating custom methods modify de.unituebingen.ub.ubtools.solrmarcMixin.TuelibMixin in ub_tools/solrmarc_mixin
+or create a new Mixin in this package.
+
+
+

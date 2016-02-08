@@ -753,7 +753,7 @@ $staticRoutes = [
     'QRCode/Show', 'QRCode/Unavailable',
     'OAI/Server', 'Pazpar2/Home', 'Pazpar2/Search', 'Records/Home',
     'Search/Advanced', 'Search/Email', 'Search/History', 'Search/Home',
-    'Search/NewItem', 'Search/OpenSearch', 'Search/Results',
+    'Search/OpenSearch', 'Search/Results',
     'Search/Suggest',
     'Summon/Advanced', 'Summon/Home', 'Summon/Search',
     'Tag/Home',
