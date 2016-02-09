@@ -43,44 +43,6 @@ use Zend\I18n\Translator\TextDomain;
 class DevtoolsController extends \VuFind\Controller\AbstractBase
 {
     /**
-     * Deminify action
-     *
-     * @return \Zend\View\Model\ViewModel
-     */
-    public function deminifyAction()
-    {
-        $min = trim($this->params()->fromPost('min'));
-        $view = $this->createViewModel();
-        if (empty(!$min)) {
-            $view->min = unserialize($min);
-        }
-        if (isset($view->min) && $view->min) {
-            $view->results = $view->min->deminify(
-                $this->getServiceLocator()->get('VuFind\SearchResultsPluginManager')
-            );
-        }
-        if (isset($view->results) && $view->results) {
-            $params = $view->results->getParams();
-            $view->query = $params->getQuery();
-            if (is_callable([$params, 'getBackendParameters'])) {
-                $view->backendParams = $params->getBackendParameters()->getArrayCopy();
-            }
-            try {
-                $backend = $this->getServiceLocator()
-                    ->get('VuFind\Search\BackendManager')
-                    ->get($params->getSearchClassId());
-            } catch (\Exception $e) {
-                $backend = false;
-            }
-            if ($backend && is_callable([$backend, 'getQueryBuilder'])) {
-                $builder = $backend->getQueryBuilder();
-                $view->queryParams = $builder->build($view->query)->getArrayCopy();
-            }
-        }
-        return $view;
-    }
-
-    /**
      * Get a list of help files in the specified language.
      *
      * @param string $language Language to check.
