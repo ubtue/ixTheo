@@ -25,6 +25,8 @@
  */
 namespace TueLib\Controller;
 
+use VuFind\Exception\Forbidden as ForbiddenException;
+
 /**
  * This controller handles global web proxy functionality.
  *
@@ -34,10 +36,19 @@ namespace TueLib\Controller;
  */
 class ProxyController extends \VuFind\Controller\AbstractBase
 {
+    const DNB_REGEX = 'http://services.dnb.de/fize-service/gvr/full.xml.*';
+    const WHITE_LIST_REGEX = ProxyController::DNB_REGEX;
+
     public function loadAction()
     {
-        $url = $this->params()->fromQuery('url');
-        $client = $this->getServiceLocator()->get('VuFind\Http')->createClient();
-        return $client->setUri($url)->send();
+        $requestUri = $this->getRequest()->getUri()->getQuery();
+        $url = urldecode(strstr($requestUri, 'http'));
+        error_log("url: " . $url);
+        if (ereg(ProxyController::WHITE_LIST_REGEX, $url) !== FALSE) {
+            $client = $this->getServiceLocator()->get('VuFind\Http')->createClient();
+            return $client->setUri($url)->send();
+        } else {
+            throw new ForbiddenException('Access denied.');
+        }
     }
 }
