@@ -8,36 +8,6 @@
         </td>
       </tr>
       <script type="text/javascript" language="javascript">
-        // Parses the XML <result> nodes returned from the AJAX call to the JOP server and updates the DOM based on those data.
-        // Updates global variables "replacement" and "filter".
-        function UpdateDOM(index, value) {
-          var state = $(this).attr("state");
-          if (state >= 0 && state <= 3) {
-            var accessURL = $(value).find('AccessURL').first().text();
-            if (accessURL) {
-              if (filter[accessURL] != 1) {
-                if (replacement)
-                  replacement += '<br />';
-                replacement += '<a href="' + accessURL + '">'
-                               + '<?=$this->transEsc("Available online")?>' + '.</a>';
-                filter[accessURL] = 1;
-              }
-            } else {  // Hopefully available in print!
-              var location = $(value).find('Location').first().text();
-              var call_number = $(value).find('Signature').first().text();
-              var label = location;
-              if (call_number)
-                label += " (" + call_number + ")";
-              if (filter[label] != 1) {
-                if (replacement)
-                  replacement += '<br />';
-                replacement += label;
-                filter[label] = 1;
-              }
-            }
-          }
-        }
-
         var genre = ("<?=$formats[0]?>" == "Article" ? "article" : "journal");
         $.ajax({
           type: "GET",
@@ -47,7 +17,33 @@
             $(document).ready(function() {
               var replacement = "";
               var filter = [];
-              $(xml).find('Result').each(UpdateDOM);
+              $(xml).find('Result').each(function(index, value) {
+                var state = $(this).attr("state");
+                if (state >= 0 && state <= 3) {
+                  var accessURL = $(value).find('AccessURL').first().text();
+                  if (accessURL) {
+                    if (filter[accessURL] != 1) {
+                      if (replacement)
+                        replacement += '<br />';
+                      replacement += '<a href="' + accessURL + '">'
+                                     + '<?=$this->transEsc("Available online")?>' + '.</a>';
+                      filter[accessURL] = 1;
+                    }
+                  } else {  // Hopefully available in print!
+                    var location = $(value).find('Location').first().text();
+                    var call_number = $(value).find('Signature').first().text();
+                    var label = location;
+                    if (call_number)
+                      label += " (" + call_number + ")";
+                    if (filter[label] != 1) {
+                      if (replacement)
+                        replacement += '<br />';
+                      replacement += label;
+                      filter[label] = 1;
+                    }
+                  }
+                }
+              });
               if (replacement != null) {
                 $("#jop_place_holder").each(function() {
                   $(this).replaceWith(replacement);

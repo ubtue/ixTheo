@@ -43,7 +43,6 @@ class ProxyController extends \VuFind\Controller\AbstractBase
     {
         $requestUri = $this->getRequest()->getUri()->getQuery();
         $url = urldecode(strstr($requestUri, 'http'));
-        error_log("url: " . $url);
         if (ereg(ProxyController::WHITE_LIST_REGEX, $url) !== FALSE) {
             $client = $this->getServiceLocator()->get('VuFind\Http')->createClient();
             return $client->setUri($url)->send();
