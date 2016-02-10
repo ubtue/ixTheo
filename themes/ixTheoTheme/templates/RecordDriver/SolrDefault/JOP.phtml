@@ -6,7 +6,7 @@
         <td>
           <?$genre=($formats[0] == "Article") ? "article" : "journal";?>
           <?$article_information=""?>
-          <?if($genre == "article"):?>
+          <?if ($genre == "article"):?>
             <?$volume=$this->escapeHtml($this->driver->getVolume())?>
             <?$issue=$this->escapeHtml($this->driver->getIssue())?>
             <?$year=$this->escapeHtml($this->driver->getYear())?>
