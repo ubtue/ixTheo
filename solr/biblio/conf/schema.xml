@@ -173,6 +173,8 @@
    <field name="ctrlnum" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="isbn" type="isn" indexed="true" stored="true" multiValued="true"/>
    <field name="issn" type="isn" indexed="true" stored="true" multiValued="true"/>
+   <field name="journal_issue" type="textProper" indexed="true" stored="true" multiValued="false"/>
+   <field name="journal_year" type="textProper" indexed="true" stored="true" multiValued="false"/>
    <field name="oclc_num" type="string" indexed="true" stored="true" multiValued="true" />
    <field name="callnumber-first" type="string" indexed="true" stored="true"/>
    <field name="callnumber-subject" type="string" indexed="true" stored="true"/>
@@ -261,6 +263,16 @@
    <field name ="key_word_chains_sorted" type="string" indexed="true" stored="true" multiValued="true" />
    <field name ="key_word_chain_bag" type="text" indexed="true" stored="true" multiValued="true" />
    <field name="urls_and_material_types" type="string" indexed="true" stored="true" multiValued="true"/>
+
+   <!-- Multi-part fields -->
+   <field name="containee_ids_and_titles" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="container_ids_and_titles" type="string" indexed="true" stored="true" multiValued="true"/>
+
+   <!-- Miscellaneous -->
+   <field name="issue" type="string" indexed="false" stored="true" multiValued="false"/>
+   <field name="pages" type="string" indexed="false" stored="true" multiValued="false"/>
+   <field name="volume" type="string" indexed="false" stored="true" multiValued="false"/>
+   <field name="year" type="string" indexed="false" stored="true" multiValued="false"/>
  </fields>
  <uniqueKey>id</uniqueKey>
  <defaultSearchField>allfields</defaultSearchField>
@@ -296,5 +308,4 @@
  <copyField source="callnumber-raw" dest="callnumber-search"/>
  <!-- Default Boolean Operator -->
  <solrQueryParser defaultOperator="AND"/>
-
 </schema>
