@@ -1,66 +1,74 @@
 <? $formats = $this->driver->getFormats(); if (!empty($formats) && ($formats[0] == "Article" || $formats[0] == "Journal" || $formats[0] == "Article")): ?>
-    <tr>
+  <?$issn = $this->driver->tryMethod('getCleanISSN')?>
+    <?if (!empty($issn)): ?>
+      <tr>
         <th>Journals Online &amp; Print:</th>
         <td>
-            <div style="color:grey" id="jop_place_holder"><?=$this->transEsc("Loading")?>...</div>
+          <?$genre=($formats[0] == "Article") ? "article" : "journal";?>
+          <div style="color:grey" id="jop_icons"><a href=http://services.dnb.de/fize-service/gvr/html-service.htm?sid=bib:tueb&issn=<?=$this->escapeHtml($this->driver->getCleanISSN())?>&genre=<?=$genre?>>
+             <img src=<?=$this->url('home') ?>proxy/load?url=http%3A%2F%2Fservices.dnb.de%2Ffize-service%2Fgvr%2Ficon%3Fsid%3Dbib%3Atueb%26issn%3D<?=$this->escapeHtml($this->driver->getCleanISSN())?>%26genre%3D<?=$genre?>%26pid%3Dclient_ip%253D<?=$_SERVER['REMOTE_ADDR'];?> alt="JOP Icons should be here">
+</a>
+</div>
+          <div style="color:grey" id="jop_place_holder"><?=$this->transEsc("Loading")?>...</div>
         </td>
-    </tr>
-    <script type="text/javascript" language="javascript">
+      </tr>
+      <script type="text/javascript" language="javascript">
         var genre = ("<?=$formats[0]?>" == "Article" ? "article" : "journal");
         $.ajax({
-            type: "GET",
-            url: "<?=$this->url('home') ?>proxy/load?url=http%3A%2F%2Fservices.dnb.de%2Ffize-service%2Fgvr%2Ffull.xml%3Fsid%3Dbib%3Atueb%26issn%3D<?=$this->escapeHtml($this->driver->getCleanISSN())?>%26genre%3D"+genre+"%26pid%3Dclient_ip%253D<?=$_SERVER['REMOTE_ADDR'];?>",
-            dataType: "xml",
-            success: function(xml) {
-                $(document).ready(function() {
-                    var replacement = "";
-                    var filter = [];
-                    $(xml).find('Result').each(function(index, value) {
-                        var state = $(this).attr("state");
-                        if (state >= 0 && state <= 3) {
-                            var accessURL = $(value).find('AccessURL').first().text();
-                            if (accessURL) {
-                                if (filter[accessURL] != 1) {
-                                    if (replacement)
-                                        replacement += '<br />';
-                                    replacement += '<a href="' + accessURL + '">'
-                                        + '<?=$this->transEsc("Available online")?>' + '.</a>';
-                                    filter[accessURL] = 1;
-                                }
-                            } else {  // Hopefully available in print!
-                                var location    = $(value).find('Location').first().text();
-                                var call_number = $(value).find('Signature').first().text();
-                                var label = location;
-                                if (call_number)
-                                    label += " (" + call_number + ")";
-                                if (filter[label] != 1) {
-                                    if (replacement)
-                                        replacement += '<br />';
-                                    replacement += label;
-                                    filter[label] = 1;
-                                }
-                            }
-                        }
-                    });
-                    if (replacement != null) {
-                        $("#jop_place_holder").each(function() {
-                            $(this).replaceWith(replacement);
-                        });
-                    } else {
-                        $("#jop_place_holder").each(function() {
-                            $(this).replaceWith('<?=$this->transEsc("Not available")?>.');
-                        })
+          type: "GET",
+          url: "<?=$this->url('home') ?>proxy/load?url=http%3A%2F%2Fservices.dnb.de%2Ffize-service%2Fgvr%2Ffull.xml%3Fsid%3Dbib%3Atueb%26issn%3D<?=$this->escapeHtml($this->driver->getCleanISSN())?>%26genre%3D"+genre+"%26pid%3Dclient_ip%253D<?=$_SERVER['REMOTE_ADDR'];?>",
+          dataType: "xml",
+          success: function(xml) {
+            $(document).ready(function() {
+              var replacement = "";
+              var filter = [];
+              $(xml).find('Result').each(function(index, value) {
+                var state = $(this).attr("state");
+                if (state >= 0 && state <= 3) {
+                  var accessURL = $(value).find('AccessURL').first().text();
+                  if (accessURL) {
+                    if (filter[accessURL] != 1) {
+                      if (replacement)
+                        replacement += '<br />';
+                      replacement += '<a href="' + accessURL + '">'
+                                     + '<?=$this->transEsc("Available online")?>' + '.</a>';
+                      filter[accessURL] = 1;
                     }
-                });
-            }, // end success
-            error: function(xhr, ajaxOptions, thrownError) {
-                $("#jop_place_holder").each(function() {
-                    $(this).replaceWith('Invalid server response. (JOP server down?)');
-                })
-                if (window.console && window.console.log) {
-                    console.log("Status: " + xhr.status + ", Error: " + thrownError);
+                  } else {  // Hopefully available in print!
+                    var location = $(value).find('Location').first().text();
+                    var call_number = $(value).find('Signature').first().text();
+                    var label = location;
+                    if (call_number)
+                      label += " (" + call_number + ")";
+                    if (filter[label] != 1) {
+                      if (replacement)
+                        replacement += '<br />';
+                      replacement += label;
+                      filter[label] = 1;
+                    }
+                  }
                 }
+              });
+              if (replacement != null) {
+                $("#jop_place_holder").each(function() {
+                  $(this).replaceWith(replacement);
+                });
+              } else {
+                $("#jop_place_holder").each(function() {
+                  $(this).replaceWith('<?=$this->transEsc("Not available")?>.');
+                })
+              }
+            });
+          }, // end success
+          error: function(xhr, ajaxOptions, thrownError) {
+            $("#jop_place_holder").each(function() {
+              $(this).replaceWith('Invalid server response. (JOP server down?)');
+            })
+            if (window.console && window.console.log) {
+              console.log("Status: " + xhr.status + ", Error: " + thrownError);
             }
+          }
         }); // end ajax
-    </script>
-<? endif; ?>
+      </script>
+    <? endif; ?>
+  <? endif; ?>
