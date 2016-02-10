@@ -4,6 +4,7 @@ ChangeLog
 TAGS
 *~
 vendor/.git
+local/cache/
 
 # SOLR index files:
 _*
