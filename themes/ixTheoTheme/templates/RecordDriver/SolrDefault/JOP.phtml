@@ -5,18 +5,30 @@
         <th>Journals Online &amp; Print:</th>
         <td>
           <?$genre=($formats[0] == "Article") ? "article" : "journal";?>
-          <div style="color:grey" id="jop_icons"><a href=http://services.dnb.de/fize-service/gvr/html-service.htm?sid=bib:tueb&issn=<?=$this->escapeHtml($this->driver->getCleanISSN())?>&genre=<?=$genre?>>
-             <img src=<?=$this->url('home') ?>proxy/load?url=http%3A%2F%2Fservices.dnb.de%2Ffize-service%2Fgvr%2Ficon%3Fsid%3Dbib%3Atueb%26issn%3D<?=$this->escapeHtml($this->driver->getCleanISSN())?>%26genre%3D<?=$genre?>%26pid%3Dclient_ip%253D<?=$_SERVER['REMOTE_ADDR'];?> alt="JOP Icons should be here">
+          <?$article_information=""?>
+          <?if ($genre == "article"):?>
+            <?$volume=$this->escapeHtml($this->driver->getVolume())?>
+            <?$issue=$this->escapeHtml($this->driver->getIssue())?>
+            <?$year=$this->escapeHtml($this->driver->getYear())?>
+            <?$pages=$this->escapeHtml(str_replace(' ', '', $this->driver->getPages()))?>
+            <?$article_information="&volume=" . $volume . "&issue=" .$issue . "&pages=" . $pages . "&date=" . $year?>
+          <?endif?>
+          <div style="color:grey" id="jop_icons"><a href=http://services.dnb.de/fize-service/gvr/html-service.htm?sid=bib:tueb&issn=<?=$this->escapeHtml($this->driver->getCleanISSN())?>&genre=<?=$genre?><?=$article_information?>>
+             <img src=<?=$this->url('home') ?>proxy/load?url=http%3A%2F%2Fservices.dnb.de%2Ffize-service%2Fgvr%2Ficon%3Fsid%3Dbib%3Atueb%26issn%3D<?=$this->escapeHtml($this->driver->getCleanISSN())?>&genre=<?=$genre?><?=$article_information?>%26pid%3Dclient_ip%253D<?=$_SERVER['REMOTE_ADDR'];?> alt="JOP Icons should be here">
 </a>
 </div>
           <div style="color:grey" id="jop_place_holder"><?=$this->transEsc("Loading")?>...</div>
         </td>
       </tr>
       <script type="text/javascript" language="javascript">
-        var genre = ("<?=$formats[0]?>" == "Article" ? "article" : "journal");
+        var genre  = ("<?=$formats[0]?>" == "Article" ? "article" : "journal");
+        var article_information = ("");
+        if (genre == "article"){
+          article_information = ("<?=$article_information?>");
+        }
         $.ajax({
           type: "GET",
-          url: "<?=$this->url('home') ?>proxy/load?url=http%3A%2F%2Fservices.dnb.de%2Ffize-service%2Fgvr%2Ffull.xml%3Fsid%3Dbib%3Atueb%26issn%3D<?=$this->escapeHtml($this->driver->getCleanISSN())?>%26genre%3D"+genre+"%26pid%3Dclient_ip%253D<?=$_SERVER['REMOTE_ADDR'];?>",
+          url: "<?=$this->url('home') ?>proxy/load?url=http%3A%2F%2Fservices.dnb.de%2Ffize-service%2Fgvr%2Ffull.xml%3Fsid%3Dbib%3Atueb%26issn%3D<?=$this->escapeHtml($issn)?>%26genre%3D"+genre+article_information+"%26pid%3Dclient_ip%253D<?=$_SERVER['REMOTE_ADDR'];?>",
           dataType: "xml",
           success: function(xml) {
             $(document).ready(function() {

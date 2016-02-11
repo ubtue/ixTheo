@@ -897,6 +897,52 @@ class SolrDefault extends AbstractBase
     }
 
     /**
+     * Get the issue of the current record.
+     *
+     * @return string
+     */
+    public function getIssue()
+    {
+        return isset($this->fields['issue']) ?
+            $this->fields['issue'] : '';
+    }
+
+    /**
+     * Get the pages of the current record.
+     *
+     * @return string
+     */
+    public function getPages()
+    {
+        return isset($this->fields['pages']) ?
+            $this->fields['pages'] : '';
+    }
+
+    /**
+     * Get the volume of the current record.
+     *
+     * @return string
+     */
+    public function getVolume()
+    {
+        return isset($this->fields['volume']) ?
+            $this->fields['volume'] : '';
+    }
+
+    /**
+     * Get the year of the current record.
+     *
+     * @return string
+     */
+    public function getYear()
+    {
+        return isset($this->fields['year']) ?
+            $this->fields['year'] : '';
+    }
+
+
+
+    /**
      * Get an array of physical descriptions of the item.
      *
      * @return array
