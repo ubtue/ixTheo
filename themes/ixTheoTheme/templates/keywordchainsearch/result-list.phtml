@@ -40,7 +40,12 @@
        if(event.shiftKey){
          event.preventDefault();
          var oldformval = $("#kwc_input").val();
-         $("#kwc_input").val(oldformval + " " + "\"" + $(this).text() + "\"");                             
+	 var newKWC = "\"" + $(this).text() + "\"";
+	 if (oldformval.indexOf(newKWC) > -1) {
+	    $("#kwc_input").val(oldformval.replace(newKWC, "").replace("  ", " ").trim());
+	 } else {
+           $("#kwc_input").val(oldformval + " " + newKWC);
+	 }
        }
     });
     $("*").bind('keypress', function(event){
