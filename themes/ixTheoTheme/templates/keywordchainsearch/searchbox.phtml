@@ -22,7 +22,7 @@
 <? else: ?>
   <form class="searchForm navbar-form navbar-left flip" method="get" action="<?=$this->url('keywordchainsearch-results')?>" name="searchForm" autocomplete="off">
     <?= $this->render('search/searchTabs'); ?>
-    <input class="searchForm_lookfor form-control search-query" type="text" name="lookfor" value="<?=$this->escapeHtmlAttr($this->lookfor)?>"/>
+    <input id="kwc_input"  class="searchForm_lookfor form-control search-query" type="text" name="lookfor" value="<?=$this->escapeHtmlAttr($this->lookfor)?>"/>
     <? if ($handlerCount > 1): ?>
       <select class="searchForm_type form-control" name="type" data-native-menu="false">
         <? foreach ($handlers as $handler): ?>
