@@ -25,7 +25,7 @@
       <td>
       <?    foreach(explode('/', $current['value']) as $term):?>
               <a href="<?=$this->url('keywordchainsearch-results')?>?lookfor=<?=urlencode('"' . $term . '"')?>">
-	       <span style="background-color: #d9d9d9; padding:3px;"><?=$this->escapeHtml($term)?></span></a>
+	       <span class="kwc_single_term" style="background-color: #d9d9d9; padding:3px;"><?=$this->escapeHtml($term)?></span></a>
            <?endforeach;?>
       </td>
    </tr>
@@ -34,5 +34,21 @@
    <? endif; ?>
   </tbody>
 </table>
+<script>
+  $(document).ready(function(){
+    $(".kwc_single_term").bind('click keypress', function(event){
+       if(event.shiftKey){
+         event.preventDefault();
+         var oldformval = $("#kwc_input").val();
+         $("#kwc_input").val(oldformval + " " + "\"" + $(this).text() + "\"");                             
+       }
+    });
+    $("*").bind('keypress', function(event){
+      if(event.shiftKey && event.which === 8){
+        $("#kwc_input").val("");
+       }
+    });
+  });
+</script>
 
 
