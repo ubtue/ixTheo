@@ -73,7 +73,7 @@
       <h1>
         <a href="<?=$this->url('home')?>" title="Index Theologicus">Index Theologicus</a>
       </h1>
-      <small>Internationale open access Bibliographie für Theologie, Kirchengeschichte und Religionswissenschaft</small>
+      <small><?=$this->transEsc("ixtheo_subtitle")?></small>
       <br />
       <? if ($this->ils()->getOfflineMode() == "ils-offline"): ?>
         <div class="alert alert-warning">
