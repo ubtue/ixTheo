@@ -244,7 +244,7 @@
 		<!-- We have to escape spaces otherwise the search is not 
 		     treated correctly in Solr and we miss results-->
 		<?$currentEscaped = '"' . $current . '"';?>      
-		<a href="<?=$this->url('keywordchainsearch-results')?>?lookfor=<?=urlencode($currentEscaped)?>"><?=$this->escapeHtml($current)?></a></br>
+		<a href="<?=$this->url('keywordchainsearch-results')?>?lookfor=<?=urlencode($currentEscaped)?>"><?=$this->escapeHtml($current)?></a><br />
           <? endforeach; ?>
 	 </td>
         </tr>
