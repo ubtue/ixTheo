@@ -145,4 +145,4 @@ echo "Now Importing $1 ..."
 echo "`date '+%h %d, %H:%M:%S'` $RUN_CMD" >&2
 exec $RUN_CMD
 
-exit 0
+exit 
