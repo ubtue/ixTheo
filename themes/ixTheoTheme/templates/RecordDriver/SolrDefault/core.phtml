@@ -85,7 +85,7 @@
       <tr>
         <th><?=$this->transEsc('Other Authors')?>: </th>
         <td>
-          <? $i = 0; foreach ($authors['secondary'] as $field): ?><?=($i++ == 0)?'':', '?><span property="contributor"><a href="<?=$this->record($this->driver)->getLink('author', $field)?>"><?=$this->escapeHtml($field)?></a></span><? endforeach; ?>
+          <? $i = 0; foreach ($authors['secondary'] as $field): ?><?=($i++ == 0)?'':'; '?><span property="contributor"><a href="<?=$this->record($this->driver)->getLink('author', $field)?>"><?=$this->escapeHtml($field)?></a></span><? endforeach; ?>
         </td>
       </tr>
       <? endif; ?>
@@ -233,31 +233,22 @@
           </td>
         </tr>
       <? endif; ?>
-
-<!-- Test 20151020 by jr -->
-
       <? $keyWordChains = $this->driver->getKeyWordChains();
       if (!empty($keyWordChains)): ?>
         <tr>
           <th><?= $this->transEsc('keywordchains') ?></th>
           <td>
-            <? foreach ($keyWordChains as $current): ?>
-              <!-- We have to escape spaces otherwise the search is not
-                   treated correctly in Solr and we miss results-->
-              <? $query = '"'. implode('" "', explode('/', $current)).'"'; ?>
-              <? $currentEscaped = '"' . $current . '"'; ?>
-              <a href="<?= $this->url('keywordchainsearch-results') ?>?lookfor=<?= urlencode($query) ?>"><?= $this->escapeHtml($current) ?></a>
+            <? foreach ($keyWordChains as $current):
+              $parts = explode('/', $current);
+              $query = '"'. implode('" "', $parts).'"';
+              $description = implode(" / ", $parts);
+              ?>
+              <a href="<?= $this->url('keywordchainsearch-results') ?>?lookfor=<?= urlencode($query) ?>"><?= $this->escapeHtml($description) ?></a>
               <br/>
             <? endforeach; ?>
           </td>
         </tr>
       <? endif; ?>
-
-
-
-
-<!-- End Test 20151020 by jr -->
-
     </table>
     <?/* End Main Details */?>
   </div>
