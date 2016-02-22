@@ -1273,8 +1273,12 @@ class SolrDefault extends AbstractBase
      */
     public function getTitle()
     {
-        return isset($this->fields['title']) ?
-            $this->fields['title'] : '';
+        $title = $this->getShortTitle();
+        $subtitle = $this->getSubtitle();
+        $titleSection = $this->getTitleSection();
+        if (!empty($subtitle)) { $title .= ' : ' . $subtitle; }
+        if (!empty($titleSection)) { $title .= ' / ' . $titleSection; }
+        return $title;
     }
 
     /**
