@@ -192,7 +192,8 @@ JS;
               <? if($thisFacet['operator'] == 'OR'): ?>
                 <i class="fa fa-square-o"></i>
               <? endif; ?>
-              <?=$this->transEsc($thisFacet['displayText'])?>
+              <? $prefix = $title == 'ixtheo_notation_facet' ? 'ixtheo-' : ''; ?>
+              <?=$this->transEsc($prefix . $thisFacet['displayText'])?>
               <? if ($allowExclude): ?>
                   </a>
                 </div>
