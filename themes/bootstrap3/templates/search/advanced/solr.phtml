@@ -8,6 +8,7 @@
       <? endif; ?>
       <div class="row">
         <? foreach ($this->facetList as $field => $list): ?>
+          <? $prefix = $field == 'ixtheo_notation_facet' ? 'ixtheo-' : ''; ?>
           <div class="col-sm-<?=floor(12/count($this->facetList)) ?>">
             <label for="limit_<?=$this->escapeHtmlAttr(str_replace(' ', '', $field))?>"><?=$this->transEsc($list['label'])?>:</label>
             <select class="form-control" id="limit_<?=$this->escapeHtmlAttr(str_replace(' ', '', $field))?>" name="filter[]" multiple="multiple" size="10">
@@ -31,7 +32,7 @@
                 ?>
                 <? foreach ($sorted as $i => $display): ?>
                   <? $value = $list['list'][$i]; ?>
-                  <option value="<?=$this->escapeHtmlAttr(($value['operator'] == 'OR' ? '~' : '') . $field . ':"' . $value['value'] . '"')?>"<?=(isset($value['selected']) && $value['selected'])?' selected="selected"':''?>><?=$this->escapeHtml($display)?></option>
+                  <option value="<?=$this->escapeHtmlAttr(($value['operator'] == 'OR' ? '~' : '') . $field . ':"' . $value['value'] . '"')?>"<?=(isset($value['selected']) && $value['selected'])?' selected="selected"':''?>><?=$this->transEsc($prefix . $display)?></option>
                 <? endforeach; ?>
               <? endif; ?>
             </select>
