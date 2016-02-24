@@ -69,6 +69,12 @@
                     }
                   }
                 }
+                else{
+                  var access_url= 'http://services.dnb.de/fize-service/gvr/html-service.htm?sid=bib:tueb&issn=' + 
+                                  '<?=$this->escapeHtml($this->driver->getCleanISSN())?>' + '&genre=' + '<?=$genre?>' + 
+                                  '<?=$article_information?>';
+                  replacement = '<a href="' + access_url + '">'+ '<?=$this->transEsc("Check Availability")?>' +'</a>';
+                }
               });
               if (replacement != null) {
                 $("#jop_place_holder").each(function() {
