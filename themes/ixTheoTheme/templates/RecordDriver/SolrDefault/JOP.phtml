@@ -69,7 +69,7 @@
                     }
                   }
                 }
-                else{
+                else if (state == 4 || state == 10) {
                   var access_url = 'http://services.dnb.de/fize-service/gvr/html-service.htm?sid=bib:tueb&issn=' + 
                                   '<?=$this->escapeHtml($this->driver->getCleanISSN())?>' + '&genre=' + '<?=$genre?>' + 
                                   '<?=$article_information?>';
