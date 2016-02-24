@@ -358,6 +358,11 @@
  <!-- CopyFields for call numbers -->
  <copyField source="dewey-raw" dest="dewey-search"/>
  <copyField source="callnumber-raw" dest="callnumber-search"/>
+ <!-- CopyFields for Topics in Keywordchains and vice versa-->
+ <copyField source="topic" dest="key_word_chains"/>
+ <copyField source="topic" dest="key_word_chains_sorted"/>
+ <copyField source="topic" dest="key_word_chain_bag"/>
+ <copyField source="key_word_chain_bag" dest="topic"/>
  <!-- Default Boolean Operator -->
  <solrQueryParser defaultOperator="AND"/>
 </schema>
