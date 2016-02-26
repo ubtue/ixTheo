@@ -153,15 +153,6 @@
         </tr>
       <? endif; ?>
 
-      <? if (array_search("Journal", $formats) !== false): ?>
-        <tr>
-          <th><?=$this->transEsc('Articles')?>: </th>
-          <td>
-            <a href="<?= $this->url('search-results') ?>?lookfor=<?= urlencode('"' . $this->driver->getShortTitle() . '"')?><?="&filter[]=format%3A%22Article%22";?>"><?= $this->transEsc("Search for articles"); ?></a>
-          </td>
-        </tr>
-      <? endif; ?>
-
       <? $edition = $this->driver->getEdition(); if (!empty($edition)): ?>
       <tr>
         <th><?=$this->transEsc('Edition')?>: </th>
