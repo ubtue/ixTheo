@@ -1,3 +1,4 @@
+
 <h1>Hilfe zur erweiterten Suche</h1>
 
 <ul class="HelpMenu">
@@ -8,9 +9,9 @@
 <dl class="Content">
   <dt><a name="Search Fields"></a>Suchfelder</dt>
   <dd>
-    <p>Wenn Sie das erste Mal die erweiterte Suche aufrufen, erscheinen 
+    <p>Wenn Sie das erste Mal die erweiterte Suche aufrufen, erscheinen
        verschiedene Suchfelder. In jedem Feld können Sie einen Suchbegriff 
-       eingeben. Folgende <a href="Home?topic=search">Suchoperatoren</a>
+       eingeben. Folgende <a class="help-link" href="<?=$this->url('help-home')?>?topic=search">Suchoperatoren</a>
        sind erlaubt.</p>
     <p>Jedes Eingabefeld ist mit einem Auswahlmenü versehen, mit welchem Sie das
        Suchfeld auswählen können (z.B. Titel, Autor). Sie können auch
@@ -58,3 +59,10 @@
     </ul>
   </dd>
 </dl>
+
+<script>
+    $('.help-link').click(function() {
+        var split = this.href.split('=');
+        return Lightbox.get('Help','Home',{topic:split[1]});
+    });
+</script>
