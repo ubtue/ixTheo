@@ -225,7 +225,7 @@
    <field name="ctrlnum" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="isbn" type="isn" indexed="true" stored="true" multiValued="true"/>
    <field name="issn" type="isn" indexed="true" stored="true" multiValued="true"/>
-   <field name="journal_issue" type="textProper" indexed="true" stored="true" multiValued="false"/>
+   <field name="journal_issue" type="textProper" indexed="true" stored="true" multiValued="true"/>
    <field name="journal_year" type="textProper" indexed="true" stored="true" multiValued="false"/>
    <field name="oclc_num" type="string" indexed="true" stored="true" multiValued="true" />
    <field name="callnumber-first" type="string" indexed="true" stored="true"/>

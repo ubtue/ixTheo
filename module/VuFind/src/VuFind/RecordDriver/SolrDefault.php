@@ -1643,6 +1643,19 @@ class SolrDefault extends AbstractBase
      *
      * @return string
      */
+    public function getJournalIssue()
+    {
+        return isset($this->fields['journal_issue'])
+            ? $this->fields['journal_issue'] : '';    
+    }
+
+
+    /**
+     * Get the title of the item that contains this record (i.e. MARC 773s of a
+     * journal).
+     *
+     * @return string
+     */
     public function getContainerTitle()
     {
         return isset($this->fields['container_title'])

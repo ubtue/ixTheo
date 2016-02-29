@@ -31,7 +31,22 @@
                 : $this->escapeHtml($summAuthor);
           ?></a>
           <? endif; ?>
-
+          <? // Handle superior data according to Issue 131 / Rule 5 ?>
+          <? $journal_issue = $this->driver->getJournalIssue()?>
+          <? if (!empty($journal_issue)): ?>
+            <div>
+              <?=$this->transEsc('in: ')?>
+              <? if(!empty($journal_issue[2])): ?>
+                 <? $superior_ppn = preg_replace('/\(.*\)/', '', $journal_issue[2]); ?>
+                 <? unset($journal_issue[2]); ?>
+                 <a  href="Results?lookfor=id%3A<?=$superior_ppn?>"><?=implode($journal_issue,  " ")?></a>
+                <? else: ?>
+                 <? implode($journal_issue, " ") ?>
+                <? endif; ?>
+            </div>
+          <? else: ?>
+              <? // Fill with with non article handling code ?>
+          <? endif; ?>
           <? $journalTitle = $this->driver->getContainerTitle(); $summDate = $this->driver->getPublicationDates(); ?>
           <? if (!empty($journalTitle)): ?>
             <?=!empty($summAuthor) ? '<br />' : ''?>
@@ -40,9 +55,9 @@
             <? /* TODO: handle highlighting more elegantly here: */?>
             <a href="<?=($containerID ? $this->recordLink()->getUrl("VuFind|$containerID") : $this->record($this->driver)->getLink('journaltitle', str_replace(array('{{{{START_HILITE}}}}', '{{{{END_HILITE}}}}'), '', $journalTitle)))?>"><?=$this->highlight($journalTitle) ?></a>
             <?=!empty($summDate) ? ' (' . $this->escapeHtml($summDate[0]) . ')' : ''?>
-          <? elseif (!empty($summDate)): ?>
+          <? elseif (!empty($summDate) && empty($journal_issue)): ?>
             <?=!empty($summAuthor) ? '<br />' : ''?>
-            <?=$this->transEsc('Published') . ' ' . $this->escapeHtml($summDate[0])?>
+            <?=$this->escapeHtml($summDate[0])?>
           <? endif; ?>
           <? $summInCollection = $this->driver->getContainingCollections(); if (!empty($summInCollection)): ?>
             <? foreach ($summInCollection as $collId => $collText): ?>
