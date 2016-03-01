@@ -484,6 +484,20 @@ class SolrDefault extends AbstractBase
     }
 
     /**
+     * Get a highlighted corporation string, if available.
+     *
+     * @return string
+     */
+    public function getHighlightedCorporation(){
+        // Don't check for highlighted values if highlighting is disabled:
+        if (!$this->highlight) {
+            return '';
+        }
+        return (isset($this->highlightDetails['corporation'][0]))
+            ? $this->highlightDetails['corporation'][0] : '';
+    }
+
+    /**
      * Get a string representing the last date that the record was indexed.
      *
      * @return string
@@ -996,7 +1010,7 @@ class SolrDefault extends AbstractBase
         return isset($this->fields['author']) ?
             $this->fields['author'] : '';
     }
-
+    
     /**
      * Get credits of people involved in production of the item.
      *
@@ -1125,6 +1139,41 @@ class SolrDefault extends AbstractBase
         return isset($this->fields['author2']) ?
             $this->fields['author2'] : [];
     }
+
+    /**
+     * Get role of secondary authors.
+     *
+     * @return array
+     */
+    public function getSecondaryAuthorsRole()
+    {
+        return isset($this->fields['author2-role']) ?
+            $this->fields['author2-role'] : [];
+    }
+
+    /**
+     * Get secondary author and its role in a '$'-separated string
+     *
+     * @return array
+     */
+    public function getSecondaryAuthorsAndRole(){
+        return isset($this->fields['author2_and_role']) ?
+            $this->fields['author2_and_role'] : [];
+    }
+
+
+
+    /**
+     * Get corporation.
+     *
+     * @return array
+     */
+    public function getCorporation()
+    {
+        return isset($this->fields['corporation']) ?
+            $this->fields['corporation'] : [];
+    }
+
 
     /**
      * Get an array of all series names containing the record.  Array entries may
@@ -1636,6 +1685,19 @@ class SolrDefault extends AbstractBase
     {
         return ['APA', 'Chicago', 'MLA'];
     }
+
+    /**
+     * Get the title of the item that contains this record (i.e. MARC 773s of a
+     * journal).
+     *
+     * @return string
+     */
+    public function getJournalIssue()
+    {
+        return isset($this->fields['journal_issue'])
+            ? $this->fields['journal_issue'] : '';    
+    }
+
 
     /**
      * Get the title of the item that contains this record (i.e. MARC 773s of a

@@ -22,16 +22,80 @@
         <? if($this->driver->isCollection()): ?>
           <?=implode('<br>', array_map(array($this, 'escapeHtml'), $this->driver->getSummary())); ?>
         <? else: ?>
-          <? $summAuthor = $this->driver->getPrimaryAuthor(); if (!empty($summAuthor)): ?>
-          <?=$this->transEsc('by')?>
-          <a href="<?=$this->record($this->driver)->getLink('author', $summAuthor)?>"><?
-            $summHighlightedAuthor = $this->driver->getHighlightedAuthor();
-            echo !empty($summHighlightedAuthor)
+          <? // Handle displaying of author according to rule 3 of issue 131 ?>
+          <? $primaryAuthor = $this->driver->getPrimaryAuthor(); ?> 
+          <? $otherAuthors = $this->driver->getSecondaryAuthors(); ?>
+          <? if (!empty($primaryAuthor) || !empty($otherAuthors)): ?>
+            <?=$this->transEsc('by')?>
+            <? if (!empty($primaryAuthor)): ?>
+              <a href="<?=$this->record($this->driver)->getLink('author', $primaryAuthor)?>"><?
+              $summHighlightedAuthor = $this->driver->getHighlightedAuthor();
+              echo !empty($summHighlightedAuthor)
                 ? $this->highlight($summHighlightedAuthor)
-                : $this->escapeHtml($summAuthor);
-          ?></a>
+                : $this->escapeHtml($primaryAuthor);
+              ?></a>
+            <? endif; ?>
+            <? if (!empty($otherAuthors)): ?>
+              <? if (!empty($primaryAuthor)): ?>
+                <? echo ' ; ' ?>
+              <? endif; ?>
+              <? $otherAuthorsAndRoles = $this->driver->getSecondaryAuthorsAndRole() ?>
+              <? $i = 0 ?>
+              <? foreach($otherAuthors as $author): ?>
+                <? if (i > 1): ?>
+                  <? echo '...' ?>
+                  <? break; ?>
+                <? endif; ?>
+                <a href="<?=$this->record($this->driver)->getLink('author', $author)?>"><?
+                //$summHighlightedAuthor = $this->driver->getHighlightedAuthor();
+                $summHighlightedAuthor = "";
+                echo !empty($summHighlightedAuthor)
+                  ? $this->highlight($summHighlightedAuthor)
+                  : $this->escapeHtml($author);
+                ?></a> 
+                <? foreach ($otherAuthorsAndRoles as $author_and_role): ?>
+                   <? $author_and_role_splitted = preg_split('/\$/', $author_and_role) ?>
+                   <? if ($author_and_role_splitted[0] == preg_replace('/(\s*)(\d+)(\s*)-?(\d*)(\s*)/', '',  $author)): ?>
+                     <? echo '(' . $author_and_role_splitted[1] . ')' ?>
+                   <? endif; ?>
+                <? endforeach ?>
+                <? if (!($author == end($otherAuthors))): ?>
+                  <? echo ' ; ' ?>
+                <? endif; ?>
+              <? endforeach; ?>
+            <? endif; ?>
+          <? else: ?>
+            <? // Handle corporation information... ?>   
+            <? $corporation = implode($this->driver->getCorporation()) ?>
+            <? if (!empty($corporation)): ?>
+               <a href="<?=$this->record($this->driver)->getLink('author', $corporation)?>"><?
+                //$summCorporation = $this->driver->getHighlightedAuthor();
+                $summCorporation = "";
+                echo !empty($summCorporation)
+                  ? $this->highlight($summCorporation)
+                  : $this->escapeHtml($corporation);
+               ?></a>
+            <? endif; ?>
           <? endif; ?>
-
+          <? // Handle superior data according to Issue 131 / Rule 5 ?>
+          <? $journal_issue = $this->driver->getJournalIssue()?>
+          <? if (!empty($journal_issue)): ?>
+            <div>
+              <?=$this->transEsc('in: ')?>
+              <? if(!empty($journal_issue[2])): ?>
+                 <? $superior_ppn = preg_replace('/\(.*\)/', '', $journal_issue[2]); ?>
+                 <? unset($journal_issue[2]); ?>
+                 <a  href="Results?lookfor=id%3A<?=$superior_ppn?>"><?=implode($journal_issue,  " ")?></a>
+                <? else: ?>
+                 <? implode($journal_issue, " ") ?>
+                <? endif; ?>
+            </div>
+          <? else: ?>
+              <div>
+              <? // Fill with non article handling code ?>
+              <?=implode($this->driver->getPublishers()) ?>
+              </div>
+          <? endif; ?>
           <? $journalTitle = $this->driver->getContainerTitle(); $summDate = $this->driver->getPublicationDates(); ?>
           <? if (!empty($journalTitle)): ?>
             <?=!empty($summAuthor) ? '<br />' : ''?>
@@ -40,9 +104,9 @@
             <? /* TODO: handle highlighting more elegantly here: */?>
             <a href="<?=($containerID ? $this->recordLink()->getUrl("VuFind|$containerID") : $this->record($this->driver)->getLink('journaltitle', str_replace(array('{{{{START_HILITE}}}}', '{{{{END_HILITE}}}}'), '', $journalTitle)))?>"><?=$this->highlight($journalTitle) ?></a>
             <?=!empty($summDate) ? ' (' . $this->escapeHtml($summDate[0]) . ')' : ''?>
-          <? elseif (!empty($summDate)): ?>
+          <? elseif (!empty($summDate) && empty($journal_issue)): ?>
             <?=!empty($summAuthor) ? '<br />' : ''?>
-            <?=$this->transEsc('Published') . ' ' . $this->escapeHtml($summDate[0])?>
+            <?=$this->escapeHtml($summDate[0])?>
           <? endif; ?>
           <? $summInCollection = $this->driver->getContainingCollections(); if (!empty($summInCollection)): ?>
             <? foreach ($summInCollection as $collId => $collText): ?>
