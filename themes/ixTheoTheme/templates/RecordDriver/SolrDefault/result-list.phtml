@@ -54,11 +54,6 @@
                   : $this->escapeHtml($author);
                 ?></a> 
                 <? foreach ($otherAuthorsAndRoles as $author_and_role): ?>
-                   <?//= "|" . $author ?> 
-                   <?//=   preg_replace('/(\s*)(\d+)(\s*)-?(\d*)(\s*)/', '',  $author) ?>
-                   <?//=$author_and_role . "|"?>
-
-
                    <? $author_and_role_splitted = preg_split('/\$/', $author_and_role) ?>
                    <? if ($author_and_role_splitted[0] == preg_replace('/(\s*)(\d+)(\s*)-?(\d*)(\s*)/', '',  $author)): ?>
                      <? echo '(' . $author_and_role_splitted[1] . ')' ?>
@@ -96,7 +91,10 @@
                 <? endif; ?>
             </div>
           <? else: ?>
+              <div>
               <? // Fill with non article handling code ?>
+              <?=implode($this->driver->getPublishers()) ?>
+              </div>
           <? endif; ?>
           <? $journalTitle = $this->driver->getContainerTitle(); $summDate = $this->driver->getPublicationDates(); ?>
           <? if (!empty($journalTitle)): ?>
