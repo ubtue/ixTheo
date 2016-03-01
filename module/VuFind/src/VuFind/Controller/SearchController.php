@@ -27,6 +27,7 @@
  */
 namespace VuFind\Controller;
 
+use ixTheo\Controller\Search\BibleRangeSearchController;
 use VuFind\Exception\Mail as MailException;
 
 /**
@@ -503,10 +504,6 @@ class SearchController extends AbstractSearch
         }
         if ($this->params()->fromQuery('type') == 'tag') {
             return $this->forwardTo('Tag', 'Home');
-        }
-
-        if ($this->params()->fromQuery('type') == 'BibleRangeSearch') {
-            return $this->forwardTo('BibleRangeSearch', 'Home');
         }
 
         // Default case -- standard behavior.
