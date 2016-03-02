@@ -83,12 +83,13 @@
             <div>
               <?=$this->transEsc('in: ')?>
               <? if(!empty($journal_issue[2])): ?>
-                 <? $superior_ppn = preg_replace('/\(.*\)/', '', $journal_issue[2]); ?>
-                 <? unset($journal_issue[2]); ?>
-                 <a  href="Results?lookfor=id%3A<?=$superior_ppn?>"><?=implode($journal_issue,  " ")?></a>
-                <? else: ?>
-                 <? implode($journal_issue, " ") ?>
-                <? endif; ?>
+                <? $superior_ppn = preg_replace('/\(.*\)/', '', $journal_issue[2]); ?>
+                <? unset($journal_issue[2]); ?>
+                <? $journal_issue_display = ?=preg_replace('/(\d+)(\()/','$1, $2', implode($journal_issue,  " ") ?>
+                <a  href="Results?lookfor=id%3A<?=$superior_ppn?>"><?=$journal_isssue_display?></a>
+              <? else: ?>
+                <? implode($journal_issue, " ") ?>
+              <? endif; ?>
             </div>
           <? else: ?>
               <div>
