@@ -66,7 +66,7 @@
             <? endif; ?>
           <? else: ?>
             <? // Handle corporation information... ?>   
-            <? $corporation = implode($this->driver->getCorporation()) ?>
+            <? $corporation = implode($this->driver->getCorporation(), " ") ?>
             <? if (!empty($corporation)): ?>
                <a href="<?=$this->record($this->driver)->getLink('author', $corporation)?>"><?
                 //$summCorporation = $this->driver->getHighlightedAuthor();
@@ -83,17 +83,18 @@
             <div>
               <?=$this->transEsc('in: ')?>
               <? if(!empty($journal_issue[2])): ?>
-                 <? $superior_ppn = preg_replace('/\(.*\)/', '', $journal_issue[2]); ?>
-                 <? unset($journal_issue[2]); ?>
-                 <a  href="Results?lookfor=id%3A<?=$superior_ppn?>"><?=implode($journal_issue,  " ")?></a>
-                <? else: ?>
-                 <? implode($journal_issue, " ") ?>
-                <? endif; ?>
+                <? $superior_ppn = preg_replace('/\(.*\)/', '', $journal_issue[2]); ?>
+                <? unset($journal_issue[2]); ?>
+                <? $journal_issue_display = preg_replace('/(\d+)(\()/','$1, $2', implode($journal_issue,  " ")) ?>
+                <a href="Results?lookfor=id%3A<?=$superior_ppn?>"><?=$journal_issue_display ?></a>
+              <? else: ?>
+                <? implode($journal_issue, " ") ?>
+              <? endif; ?>
             </div>
           <? else: ?>
               <div>
               <? // Fill with non article handling code ?>
-              <?=implode($this->driver->getPublishers()) ?>
+              <?=implode($this->driver->getPublicationDetailsNoPlaces(), " ") ?>
               </div>
           <? endif; ?>
           <? $journalTitle = $this->driver->getContainerTitle(); $summDate = $this->driver->getPublicationDates(); ?>
@@ -104,9 +105,6 @@
             <? /* TODO: handle highlighting more elegantly here: */?>
             <a href="<?=($containerID ? $this->recordLink()->getUrl("VuFind|$containerID") : $this->record($this->driver)->getLink('journaltitle', str_replace(array('{{{{START_HILITE}}}}', '{{{{END_HILITE}}}}'), '', $journalTitle)))?>"><?=$this->highlight($journalTitle) ?></a>
             <?=!empty($summDate) ? ' (' . $this->escapeHtml($summDate[0]) . ')' : ''?>
-          <? elseif (!empty($summDate) && empty($journal_issue)): ?>
-            <?=!empty($summAuthor) ? '<br />' : ''?>
-            <?=$this->escapeHtml($summDate[0])?>
           <? endif; ?>
           <? $summInCollection = $this->driver->getContainingCollections(); if (!empty($summInCollection)): ?>
             <? foreach ($summInCollection as $collId => $collText): ?>

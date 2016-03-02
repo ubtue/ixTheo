@@ -1072,6 +1072,34 @@ class SolrDefault extends AbstractBase
         return $retval;
     }
 
+
+    /**
+     * Get an array of publication detail lines combining information from
+     * getPublicationDates(), getPublishers()
+     *
+     * @return array
+     */
+    public function getPublicationDetailsNoPlaces(){
+
+        $names = $this->getPublishers();
+        $dates = $this->getHumanReadablePublicationDates();
+
+        $i = 0;
+        $retval = [];
+        while (isset($names[$i]) || isset($dates[$i])) {
+            // Build objects to represent each set of data; these will
+            // transform seamlessly into strings in the view layer.
+            $retval[] = new Response\PublicationDetails(
+                isset($names[$i]) ? $names[$i] : '',
+                isset($dates[$i]) ? $dates[$i] : ''
+            );
+            $i++;
+        }
+
+        return $retval;
+    }
+   
+
     /**
      * Get an array of publication frequency information.
      *
