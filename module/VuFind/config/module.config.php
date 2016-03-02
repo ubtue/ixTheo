@@ -733,7 +733,7 @@ $staticRoutes = [
     'Alphabrowse/Home', 'Author/Home', 'Author/Search',
     'Authority/Home', 'Authority/Record', 'Authority/Search',
     'Browse/Author', 'Browse/Dewey', 'Browse/Era', 'Browse/Genre', 'Browse/Home',
-    'Browse/LCC', 'Browse/Region', 'Browse/Tag', 'Browse/Topic', 'Browse/Publisher', 'Browse/IxTheo-Notation',
+    'Browse/LCC', 'Browse/Region', 'Browse/Tag', 'Browse/Topic', 'Browse/Publisher', 'Browse/IxTheo-Classification',
     'Cart/doExport', 'Cart/Email', 'Cart/Export', 'Cart/Home', 'Cart/MyResearchBulk',
     'Cart/Save', 'Collections/ByTitle', 'Collections/Home',
     'Combined/Home', 'Combined/Results', 'Combined/SearchBox', 'Confirm/Confirm',
