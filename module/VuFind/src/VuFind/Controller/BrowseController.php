@@ -162,7 +162,7 @@ class BrowseController extends AbstractBase
         // Loop through remaining browse options.  All may be individually disabled
         // in config.ini, but if no settings are found, they are assumed to be on.
         $remainingOptions = [
-            'Author', 'Topic', 'Genre', 'Region', 'Era', 'Publisher', 'IxTheo-Notation'
+            'IxTheo-Classification', 'Topic', 'Author', 'Publisher'
         ];
         foreach ($remainingOptions as $current) {
             $option = strToLower($current);
@@ -450,7 +450,7 @@ class BrowseController extends AbstractBase
             'genre' => 'By Genre',
             'region' => 'By Region',
             'era' => 'By Era',
-            'ixtheo-notation' => 'By IxTheo-Notation'
+            'ixtheo-classification' => 'By IxTheo-Classification'
         ];
 
         return $this->performBrowse('Publisher', $categoryList, true);
@@ -461,7 +461,7 @@ class BrowseController extends AbstractBase
      *
      * @return \Zend\View\Model\ViewModel
      */
-    public function ixTheoNotationAction()
+    public function ixTheoClassificationAction()
     {
         $categoryList = [
             'alphabetical' => 'By Alphabetical',
@@ -473,7 +473,7 @@ class BrowseController extends AbstractBase
             'publisher' => 'By Publisher'
         ];
 
-        return $this->performBrowse('IxTheo-Notation', $categoryList, true);
+        return $this->performBrowse('IxTheo-Classification', $categoryList, true);
     }
 
     /**
@@ -491,7 +491,7 @@ class BrowseController extends AbstractBase
             'region' => 'By Region',
             'era' => 'By Era',
             'publisher' => 'By Publisher',
-            'ixtheo-notation' => 'By IxTheo-Notation'
+            'ixtheo-classification' => 'By IxTheo-Classification'
         ];
 
         return $this->performBrowse('Author', $categoryList, false);
@@ -508,7 +508,10 @@ class BrowseController extends AbstractBase
             'alphabetical' => 'By Alphabetical',
             'genre' => 'By Genre',
             'region' => 'By Region',
-            'era' => 'By Era'
+            'era' => 'By Era',
+            'author' => 'By Author',
+            'publisher' => 'By Publisher',
+            'ixtheo-classification' => 'By IxTheo-Classification'
         ];
 
         return $this->performBrowse('Topic', $categoryList, true);
@@ -527,7 +530,7 @@ class BrowseController extends AbstractBase
             'region' => 'By Region',
             'era' => 'By Era',
             'publisher' => 'By Publisher',
-            'ixtheo-notation' => 'By IxTheo-Notation'
+            'ixtheo-classification' => 'By IxTheo-Classification'
         ];
 
         return $this->performBrowse('Genre', $categoryList, true);
@@ -546,7 +549,7 @@ class BrowseController extends AbstractBase
             'genre' => 'By Genre',
             'era' => 'By Era',
             'publisher' => 'By Publisher',
-            'ixtheo-notation' => 'By IxTheo-Notation'
+            'ixtheo-classification' => 'By IxTheo-Classification'
         ];
 
         return $this->performBrowse('Region', $categoryList, true);
@@ -564,7 +567,7 @@ class BrowseController extends AbstractBase
             'topic' => 'By Topic',
             'genre' => 'By Genre',
             'region' => 'By Region',
-            'ixtheo-notation' => 'By IxTheo-Notation'
+            'ixtheo-classification' => 'By IxTheo-Classification'
         ];
 
         return $this->performBrowse('Era', $categoryList, true);
@@ -625,7 +628,7 @@ class BrowseController extends AbstractBase
                         $this->getFacetList('publisher_facet', $category)
                     )
                 ];
-            case 'ixtheo-notation':
+            case 'ixtheo-classification':
                 return [
                     'ixtheo_notation_facet', $this->quoteValues(
                         $this->getFacetList('ixtheo_notation_facet', $category)
@@ -733,7 +736,7 @@ class BrowseController extends AbstractBase
                 return 'era_facet';
             case 'publisher':
                 return 'publisher_facet';
-            case 'ixtheo-notation':
+            case 'ixtheo-classification':
                 return 'ixtheo_notation_facet';
         }
         return $action;
@@ -763,7 +766,7 @@ class BrowseController extends AbstractBase
             : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
         // Put numbers in the front for Era since years are important:
-        if ($this->getCurrentAction() === 'IxTheo-Notation') {
+        if ($this->getCurrentAction() === 'IxTheo-Classification') {
             $chars = 'ABCFHKNRSTVXZ';
             $callback = $ixtheo_notation_callback;
         } else if ($this->getCurrentAction() == 'Era') {

@@ -111,8 +111,6 @@
         <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-umlauts.txt" />
         <tokenizer class="solr.ICUTokenizerFactory"/>
         <filter class="solr.LowerCaseFilterFactory"/>
-        <filter class="solr.SynonymFilterFactory" synonyms="author_synonyms.map"
-		ignoreCase="true" expand="true"/>
         <filter class="solr.WordDelimiterFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="1" catenateNumbers="1" catenateAll="0" splitOnCaseChange="1"/>
         <filter class="solr.ICUFoldingFilterFactory"/>
         <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
@@ -137,8 +135,6 @@
         <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-umlauts.txt" />
         <tokenizer class="solr.ICUTokenizerFactory"/>
         <filter class="solr.LowerCaseFilterFactory"/>
-        <filter class="solr.SynonymFilterFactory" synonyms="author_synonyms.map"
-		ignoreCase="true" expand="true"/>
         <filter class="solr.WordDelimiterFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="1" catenateNumbers="1" catenateAll="0" splitOnCaseChange="1"/>
         <filter class="solr.ICUFoldingFilterFactory"/>
         <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
