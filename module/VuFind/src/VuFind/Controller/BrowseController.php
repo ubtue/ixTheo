@@ -464,7 +464,7 @@ class BrowseController extends AbstractBase
     public function ixTheoClassificationAction()
     {
         $categoryList = [
-            'alphabetical' => 'By Alphabetical',
+            'alphabetical' => 'By Categories',
             'lcc' => 'By Call Number',
             'topic' => 'By Topic',
             'genre' => 'By Genre',
