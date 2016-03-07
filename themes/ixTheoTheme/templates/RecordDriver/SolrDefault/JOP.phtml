@@ -13,7 +13,7 @@
                     $article_information .= "&volume=" . $volume;
                 $issue = $this->escapeHtml($this->driver->getIssue());
                 if (!empty($issue))
-                    $article_information .= "&issue=" . $issue;
+                    $article_information .= "&issue=" . str_replace("=", "%20", $issue);
                 $year = $this->escapeHtml($this->driver->getYear());
                 if (!empty($year))
                     $article_information .= "&date=" . $year;

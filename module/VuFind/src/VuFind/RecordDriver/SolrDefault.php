@@ -1091,7 +1091,8 @@ class SolrDefault extends AbstractBase
             // transform seamlessly into strings in the view layer.
             $retval[] = new Response\PublicationDetails(
                 isset($names[$i]) ? $names[$i] : '',
-                isset($dates[$i]) ? $dates[$i] : ''
+                isset($dates[$i]) ? $dates[$i] : '',
+                null
             );
             $i++;
         }

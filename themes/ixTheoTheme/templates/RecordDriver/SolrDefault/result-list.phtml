@@ -42,7 +42,7 @@
               <? $otherAuthorsAndRoles = $this->driver->getSecondaryAuthorsAndRole() ?>
               <? $i = 0 ?>
               <? foreach($otherAuthors as $author): ?>
-                <? if (i > 1): ?>
+                <? if ($i > 1): ?>
                   <? echo '...' ?>
                   <? break; ?>
                 <? endif; ?>
