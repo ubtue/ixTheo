@@ -154,6 +154,7 @@
 Author:
   DismaxFields:
     - author^100
+    - author_synonyms^99
     - author_fuller^50
     - author2
     - author_additional
@@ -163,6 +164,10 @@ Author:
       - [onephrase, 350]
       - [and, 200]
       - [or, 100]
+    author_synonyms:
+      - [onephrase, 349]
+      - [and, 199]
+      - [or, 99]
     author_fuller:
       - [onephrase, 200]
       - [and, 100]
