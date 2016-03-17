@@ -53,6 +53,15 @@
         <? endif; ?>
       </div>
 
+      <? $ids_and_titles_and_volume = $this->driver->getContainerIDsAndTitles(); ?>
+      <? if (!empty($ids_and_titles_and_volume)): ?>
+        <? foreach ($ids_and_titles_and_volume as $id => $title_and_volume): ?>
+          <div>
+            <?=$this->transEsc('In')?>: <a href="/Record/<?=$id?>"><?=$this->escapeHtml(implode(" ", $title_and_volume))?></a>
+          </div>
+        <? endforeach; ?>
+      <? endif; ?>
+
       <? if(!$this->driver->isCollection()): ?>
         <? if ($snippet = $this->driver->getHighlightedSnippet()): ?>
           <? if (!empty($snippet['caption'])): ?>
