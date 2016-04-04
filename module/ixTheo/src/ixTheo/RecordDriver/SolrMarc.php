@@ -27,7 +27,7 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
             // We lose this information when evaluating the SOLR field 
             // and thus have to filter manually
             $keywordchains = preg_replace("/\sgnd\s/", '', $keywordchains);
-            $keywordchains = preg_replace("/\(\w{2}-\d{3}\)[\dX-]+/", '', $keywordchains);
+            $keywordchains = preg_replace("/\(\w{2}-\d{3}\)[\dX-]+\s*/", '', $keywordchains);
             return $keywordchains;
         }
         else {
