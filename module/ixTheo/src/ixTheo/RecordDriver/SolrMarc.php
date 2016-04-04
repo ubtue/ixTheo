@@ -17,8 +17,22 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
 
     public function getKeyWordChains()
     {
-        return isset($this->fields['key_word_chains']) ?
-            $this->fields['key_word_chains'] : '';
+        if(isset($this->fields['key_word_chains'])) {
+            $keywordchains = $this->fields['key_word_chains'];
+            // Currently topic fields are also copied
+            // These contain GND numbers and other stuff that should
+            // not be displayed in KWCs
+            // As to topics vufind directly evaluates the full records
+            // and can thus directly filter out number subfields 
+            // We lose this information when evaluating the Solr field 
+            // and thus have to filter manually
+            $keywordchains = preg_replace("/\sgnd\s/", '', $keywordchains);
+            $keywordchains = preg_replace("/\(\w{2}-\d{3}\)[\dX-]+/", '', $keywordchains);
+            return $keywordchains;
+        }
+        else{
+          return '';         
+        }
     }
 
     public function getKeyWordChainBag()
