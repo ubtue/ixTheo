@@ -188,7 +188,9 @@
         </span>
       <? endif; ?>
       <?=$this->record($this->driver)->getPreviews()?>
-      <?=str_replace('class="', 'class="label label-info ', $this->record($this->driver)->getFormatList())?>
+      <?$label = str_replace('class="', 'class="label label-info ', $this->record($this->driver)->getFormatList())?>
+      <? /* Remove separator needed for long title view */ ?>
+      <?=str_replace(' | ', '', $label)?>
     </div>
     <div class="col-xs-1 right hidden-print">
       <? if ($this->userlist()->getMode() !== 'disabled'): ?>
