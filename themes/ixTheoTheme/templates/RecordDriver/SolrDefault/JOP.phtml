@@ -6,7 +6,7 @@
         <th>Journals Online &amp; Print:</th>
         <td>
           <?php
-            $genre = (in_array('Article', $formats)) ? "article" : "journal";
+            $genre = in_array('Article', $formats) ? "article" : "journal";
             $article_information = "";
             if ($genre == "article") {
                 $volume = $this->escapeHtml($this->driver->getVolume());
