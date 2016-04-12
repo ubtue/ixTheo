@@ -33,7 +33,7 @@
       <script type="text/javascript" language="javascript">
         var genre  = ("<?=in_array('Article', $formats)?>" ? "article" : "journal");
         var article_information = ("");
-        if (genre == "article"){
+        if (genre == "article") {
           article_information = ("<?=$article_information?>");
         }
         $.ajax({
@@ -82,7 +82,7 @@
                   }
                 }
               });
-              if (replacement != "") {
+              if (replacement != ""){
                 $("#jop_place_holder").each(function() {
                   $(this).replaceWith(replacement);
                 });
