@@ -31,7 +31,7 @@
         </td>
       </tr>
       <script type="text/javascript" language="javascript">
-        var genre  = ("<?=in_array('Article', $formats)?>" ? "article" : "journal");
+        var genre  = "<?=in_array('Article', $formats)?>" ? "article" : "journal";
         var article_information = "";
         if (genre == "article") {
           article_information = "<?=$article_information?>";
