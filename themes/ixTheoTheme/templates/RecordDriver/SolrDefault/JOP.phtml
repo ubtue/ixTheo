@@ -75,7 +75,7 @@
                                   '<?=$this->escapeHtml($issn)?>' + '&genre=' + '<?=$genre?>' + 
                                   '<?=$article_information?>';
                   if (replacement == "") {
-                     replacement = '<a href="' + access_url + '">' + '<?=$this->transEsc("Check Availability")?>' +'</a>';
+                     replacement = '<a href="' + access_url + '">' + '<?=$this->transEsc("Check Availability")?>' + '</a>';
                      // We get an 1x1 pixel gif from JOP that can be seen as an empty line
                      // => remove it
                      $("#jop_icons").remove();
