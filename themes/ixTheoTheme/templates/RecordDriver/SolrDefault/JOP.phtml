@@ -31,7 +31,7 @@
         </td>
       </tr>
       <script type="text/javascript" language="javascript">
-        var genre  = ("<?=$formats[0]?>" == "Article" ? "article" : "journal");
+        var genre  = ("<?=in_array('Article', $formats)?>" == "Article" ? "article" : "journal");
         var article_information = ("");
         if (genre == "article"){
           article_information = ("<?=$article_information?>");
@@ -74,7 +74,8 @@
                   var access_url = 'http://services.dnb.de/fize-service/gvr/html-service.htm?sid=bib:tueb&issn=' + 
                                   '<?=$this->escapeHtml($issn)?>' + '&genre=' + '<?=$genre?>' + 
                                   '<?=$article_information?>';
-                  replacement = '<a href="' + access_url + '">'+ '<?=$this->transEsc("Check Availability")?>' +'</a>';
+                  if(replacement == null)
+                    replacement = '<a href="' + access_url + '">'+ '<?=$this->transEsc("Check Availability")?>' +'</a>';
                 }
               });
               if (replacement != null) {
