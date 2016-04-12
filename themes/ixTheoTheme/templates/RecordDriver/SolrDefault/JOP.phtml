@@ -6,7 +6,7 @@
         <th>Journals Online &amp; Print:</th>
         <td>
           <?php
-            $genre = ($formats[0] == "Article") ? "article" : "journal";
+            $genre = in_array('Article', $formats) ? "article" : "journal";
             $article_information = "";
             if ($genre == "article") {
                 $volume = $this->escapeHtml($this->driver->getVolume());
@@ -31,10 +31,10 @@
         </td>
       </tr>
       <script type="text/javascript" language="javascript">
-        var genre  = ("<?=in_array('Article', $formats)?>" == "Article" ? "article" : "journal");
-        var article_information = ("");
-        if (genre == "article"){
-          article_information = ("<?=$article_information?>");
+        var genre  = "<?=in_array('Article', $formats)?>" ? "article" : "journal";
+        var article_information = "";
+        if (genre == "article") {
+          article_information = "<?=$article_information?>";
         }
         $.ajax({
           type: "GET",
@@ -74,11 +74,15 @@
                   var access_url = 'http://services.dnb.de/fize-service/gvr/html-service.htm?sid=bib:tueb&issn=' + 
                                   '<?=$this->escapeHtml($issn)?>' + '&genre=' + '<?=$genre?>' + 
                                   '<?=$article_information?>';
-                  if (replacement == null)
-                    replacement = '<a href="' + access_url + '">'+ '<?=$this->transEsc("Check Availability")?>' +'</a>';
+                  if (replacement == "") {
+                     replacement = '<a href="' + access_url + '">' + '<?=$this->transEsc("Check Availability")?>' + '</a>';
+                     // We get an 1x1 pixel gif from JOP that can be seen as an empty line
+                     // => remove it
+                     $("#jop_icons").remove();
+                  }
                 }
               });
-              if (replacement != null) {
+              if (replacement != "") {
                 $("#jop_place_holder").each(function() {
                   $(this).replaceWith(replacement);
                 });
