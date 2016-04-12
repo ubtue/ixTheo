@@ -32,9 +32,9 @@
       </tr>
       <script type="text/javascript" language="javascript">
         var genre  = ("<?=in_array('Article', $formats)?>" ? "article" : "journal");
-        var article_information = ("");
+        var article_information = "";
         if (genre == "article") {
-          article_information = ("<?=$article_information?>");
+          article_information = "<?=$article_information?>";
         }
         $.ajax({
           type: "GET",
