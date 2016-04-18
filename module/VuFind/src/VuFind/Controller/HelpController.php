@@ -60,7 +60,7 @@ class HelpController extends AbstractBase
         return $this->createViewModel(
             ['topics' =>
                 [
-
+                    "KeineFAQ"
                 ]
             ]
         );
