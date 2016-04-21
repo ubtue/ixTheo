@@ -138,10 +138,15 @@ function registerTabEvents() {
     var parts = $(this).attr('href').split('?');
     parts = parts[0].split('/');
     var params = deparam($(this).attr('href'));
-    params.id = parts[parts.length-2];
+    params.id = decodeURIComponent(parts[parts.length-2]);
     params.hashKey = params.hashKey.split('#')[0]; // Remove #tabnav
     return Lightbox.get('Record', parts[parts.length-1], params, false, function(html) {
-      Lightbox.checkForError(html, Lightbox.changeContent);
+      var $page = $('<div>'+html+'</div>');
+      if ($page.find('.record').length) {
+        Lightbox.checkForError(html, Lightbox.changeContent);
+      } else {
+        Lightbox.changeContent(html);
+      }
     });
   });
 }
@@ -152,7 +157,7 @@ function ajaxLoadTab(tabid) {
   // we're flagged to skip AJAX for this tab, just return true and let the
   // browser handle it.
   var urlroot = document.URL.match(new RegExp('/[^/]+/'+id));
-  if(!urlroot || document.getElementById(tabid).parentNode.className.indexOf('noajax') > -1) {
+  if(!urlroot) {
     return true;
   }
   $.ajax({
@@ -221,9 +226,12 @@ $(document).ready(function(){
   registerTabEvents();
 
   $('ul.recordTabs a').click(function (e) {
-    if($(this).parents('li.active').length > 0) {
+    // Follow active and noajax tabs
+    var $li = $(this).parent();
+    if($li.hasClass('active') || $li.hasClass('noajax')) {
       return true;
     }
+    // Load tab
     var tabid = $(this).attr('id').toLowerCase();
     if($('#'+tabid+'-tab').length > 0) {
       $('#record-tabs .tab-pane.active').removeClass('active');
@@ -270,10 +278,10 @@ $(document).ready(function(){
   });
   Lightbox.addFormCallback('placeHold', function(html) {
     Lightbox.checkForError(html, function(html) {
-      var divPattern = '<div class="alert alert-info">';
+      var divPattern = '<div class="alert alert-success">';
       var fi = html.indexOf(divPattern);
       var li = html.indexOf('</div>', fi+divPattern.length);
-      Lightbox.confirm(html.substring(fi+divPattern.length, li).replace(/^[\s<>]+|[\s<>]+$/g, ''));
+      Lightbox.success(html.substring(fi+divPattern.length, li).replace(/^[\s<>]+|[\s<>]+$/g, ''));
     });
   });
   Lightbox.addFormCallback('placeILLRequest', function() {
