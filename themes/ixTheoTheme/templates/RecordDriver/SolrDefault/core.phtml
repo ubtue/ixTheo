@@ -191,21 +191,48 @@
         </td>
       </tr>
       <? endif; ?>
-
-      <? $subjects = $this->driver->getAllSubjectHeadings(); if (!empty($subjects)): ?>
+      <? $subjects = $this->driver->getAllStandardizedSubjectHeadings(); if (!empty($subjects)): ?>
       <tr>
-        <th><?=$this->transEsc('Subjects')?>: </th>
+        <th><?=$this->transEsc('Standardized Subjects')?>: </th>
         <td>
-          <? foreach ($subjects as $field): ?>
-          <div class="subjectLine" property="keywords">
-            <? $subject = ''; ?>
-            <? if(count($field) == 1) $field = explode('--', $field[0]); ?>
-            <? $i = 0; foreach ($field as $subfield): ?>
-              <?=($i++ == 0) ? '' : ' &gt; '?>
-              <? $subject = trim($subject . ' ' . $subfield); ?>
-              <a class="backlink" title="<?=$this->escapeHtmlAttr($subject)?>" href="<?=$this->record($this->driver)->getLink('subject', $subject)?>" rel="nofollow"><?=trim($this->escapeHtml($subfield))?></a>
-            <? endforeach; ?>
-          </div>
+          <? foreach ($subjects as $current):?>
+              <? // Offer a browse button that allows to jump to browse mode ?>
+              <? $parts = explode('|', $current); ?>
+                <? $query = '"'. implode(' ', $parts).'"'; ?>
+                <a href="<?=$this->url('keywordchainsearch-results')?>?lookfor=<?=urlencode($query)?>"><span class="iconlabel label label-info">Browse</span></a>
+                <? // Make single keywords clickable ?>
+                <? if (count($parts) > 1):?>
+                  <? foreach ($parts as $part):?>
+                    <a href="<?= $this->record($this->driver)->getLink('subject', $part)?>"><?= $this->escapeHtml($part) ?></a>
+                  <? endforeach; ?>
+                <? else: ?>
+                <? // We have an original keyword chain and should display it appropriately?>
+                <? $kwc = explode('/', $current); ?>
+                <? $kwc_count = count($kwc); ?>
+                  <? foreach ($kwc as $part):?>
+                    <a href="<?= $this->record($this->driver)->getLink('subject', $part)?>"><?= $this->escapeHtml($part) ?></a>
+                    <?=($i++ < $kwc_count) ? ' / ' : '' ?>
+                  <? endforeach; ?>
+               <? endif; ?>
+              </br>
+          <? endforeach; ?>
+        </td>
+      </tr>
+      <? endif; ?>
+      <? $subjects = $this->driver->getAllNonStandardizedSubjectHeadings(); if (!empty($subjects)): ?>
+      <tr>
+        <th><?=$this->transEsc('Nonstandardized Subjects')?>: </th>
+        <td>
+          <? foreach ($subjects as $current):?>
+              <? // Offer a browse button that allows to jump to browse mode ?>
+              <? $parts = explode('|', $current); ?>
+              <? $query = '"'. implode(' ', $parts).'"'; ?>
+              <a href="<?=$this->url('keywordchainsearch-results')?>?lookfor=<?=urlencode($query)?>"><span class="iconlabel label label-info">Browse</span></a>
+              <? // Make single keywords clickable 
+                foreach ($parts as $part):?>
+                  <a href="<?= $this->record($this->driver)->getLink('subject', $part)?>"><?= $this->escapeHtml($part) ?></a>
+              <? endforeach; ?>
+              <br/>
           <? endforeach; ?>
         </td>
       </tr>
@@ -262,22 +289,6 @@
               <i class="fa fa-plus"></i> <?=$this->transEsc('Add Tag')?></a>
             </a>
             <?=$this->context($this)->renderInContext('record/taglist', array('tagList'=>$tagList, 'loggedin'=>$loggedin)) ?>
-          </td>
-        </tr>
-      <? endif; ?>
-      <? $keyWordChains = $this->driver->tryMethod('getKeyWordChains');
-      if (!empty($keyWordChains)): ?>
-        <tr>
-          <th><?= $this->transEsc('keywordchains') ?></th>
-          <td>
-            <? foreach ($keyWordChains as $current):
-              $parts = explode('/', $current);
-              $query = '"'. implode('" "', $parts).'"';
-              $description = implode(" / ", $parts);
-              ?>
-              <a href="<?= $this->url('keywordchainsearch-results') ?>?lookfor=<?= urlencode($query) ?>"><?= $this->escapeHtml($description) ?></a>
-              <br/>
-            <? endforeach; ?>
           </td>
         </tr>
       <? endif; ?>
