@@ -88,5 +88,32 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
 
         return $retval;
     }
+   
+    /**
+     * Get all non-standardized topics
+     */
+
+    public function getAllNonStandardizedSubjectHeadings()
+    {
+       return (isset($this->fields['topic_non_standardized'])) ?
+            $this->fields['topic_non_standardized'] : '';
+
+    }
+
+
+    /**
+     * Get all standardized topics including KWCs
+     */
+
+    public function getAllStandardizedSubjectHeadings()
+    {
+
+       return (isset($this->fields['topic_standardized'])) ?
+            $this->fields['topic_standardized'] : '';
+
+    }
+
+
+
 }
 
