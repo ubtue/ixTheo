@@ -97,7 +97,6 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
     {
        return (isset($this->fields['topic_non_standardized'])) ?
             $this->fields['topic_non_standardized'] : '';
-
     }
 
 
@@ -107,10 +106,8 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
 
     public function getAllStandardizedSubjectHeadings()
     {
-
        return (isset($this->fields['topic_standardized'])) ?
             $this->fields['topic_standardized'] : '';
-
     }
 
     public function isSuperiorWork() {
