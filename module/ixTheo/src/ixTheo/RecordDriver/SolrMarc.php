@@ -88,5 +88,8 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
 
         return $retval;
     }
-}
 
+    public function isSuperiorWork() {
+        return isset($this->fields['is_superior_work']);
+    }
+}
