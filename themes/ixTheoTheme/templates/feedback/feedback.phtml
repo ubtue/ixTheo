@@ -26,18 +26,18 @@
         //init feedback_me plugin
         fm.init(fm_options);
 
-        setMoode('0');
+        setMood('0');
         $('#feedback-submit').click(function(event){
-            var moode = $("#feedback-message-input").val();
+            var mood = $("#feedback-message-input").val();
             var message = $("textarea#feedback-message-text").val();
-            if (!moode || !message) {
+            if (!mood || !message) {
                 return;
             }
             $.ajax({url: "/ajax/feedback",
                 type: "POST",
-                data: {"moode": moode, "message": message},
+                data: {"mood": mood, "message": message},
                 success: function(result) {
-                    setMoode('0');
+                    setMood('0');
                     $("textarea#feedback-message-text").val("");
                     $(".feedback-radio").removeAttr('checked');
                     fm.stopPropagation(event);
@@ -47,15 +47,15 @@
         });
     });
 
-    function setMoode(moode) {
-        $("#feedback-message-input").val(moode);
-        if (moode == '1') {
+    function setMood(mood) {
+        $("#feedback-message-input").val(mood);
+        if (mood == '1') {
             $("#feedback-form").show();
             $("#feedback-message").html("Thanks. Anything else you’d like to add?");
-        } else if (moode == '2') {
+        } else if (mood == '2') {
             $("#feedback-form").show();
             $("#feedback-message").html("What could we have changed to make it even better?");
-        } else if (moode == '3') {
+        } else if (mood == '3') {
             $("#feedback-form").show();
             $("#feedback-message").html("Sorry to hear that. How can we improve?");
         } else {

@@ -34,20 +34,20 @@ namespace TueLib\Controller;
  */
 class AjaxController extends \VuFind\Controller\AjaxController
 {
-    protected $moodes = ["1" => "Gut", "2" => "Ok", "3" => "Schlecht"];
+    protected $moods = ["1" => "Gut", "2" => "Ok", "3" => "Schlecht"];
 
     public function feedbackAction()
     {
         $this->outputMode = 'plaintext';
 
-        $moode = htmlentities($this->getRequest()->getPost()->get('moode'));
+        $mood = htmlentities($this->getRequest()->getPost()->get('mood'));
         $message = htmlentities($this->getRequest()->getPost()->get('message'));
 
-        if (($moode !== '1' && $moode !== '2' && $moode !== '3') || strlen($message) === 0) {
+        if (($mood !== '1' && $mood !== '2' && $mood !== '3') || strlen($message) === 0) {
             return $this->output(null, self::STATUS_ERROR);
         }
 
-        $mailContent = "Es war: " . $this->moodes[$moode] . "\n\n";
+        $mailContent = "Es war: " . $this->moods[$mood] . "\n\n";
         $mailContent .= $message . "\n\n";
         $mailContent .= "----------------------------------------------------------------------------------------------\n";
         $mailContent .= "Aktuelle Seite: " . $this->getRequest()->getHeaders("Referer")->getUri() . "\n";
