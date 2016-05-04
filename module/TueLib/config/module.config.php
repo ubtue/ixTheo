@@ -5,6 +5,7 @@ $config = array(
     'controllers' => array(
         'invokables' => array(
             'proxy' => 'TueLib\Controller\ProxyController',
+            'ajax' => 'TueLib\Controller\AjaxController',
         ),
     ),
     'router' => array(
@@ -17,6 +18,16 @@ $config = array(
                         'controller' => 'Proxy',
                         'action'     => 'Load',
                     )
+                )
+            )
+        ),
+        'proxy-load' => array(
+            'type' => 'Zend\Mvc\Router\Http\Literal',
+            'options' => array(
+                'route'    => '/Ajax/Feedback',
+                'defaults' => array(
+                    'controller' => 'Ajax',
+                    'action'     => 'Feedback',
                 )
             )
         )

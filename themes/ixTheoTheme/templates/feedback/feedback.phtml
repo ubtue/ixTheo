@@ -1,0 +1,66 @@
+<script>
+    var custom_html = `<?=$this->render('feedback/feedback-box.phtml')?>`;
+
+    $(document).ready(function () {
+        //set up some minimal options for the feedback_me plugin
+        fm_options = {
+            bootstrap: true,
+            title_label : "",
+            position: 'right-bottom',
+            show_form: false,
+            custom_html: custom_html,
+            delayed_close : true,
+            delayed_options : {
+                delay_success_milliseconds : 2000,
+                delay_fail_milliseconds : 2000,
+                sending : "Sending...",
+                send_fail : "Sending failed.",
+                send_success : "Feedback sent.",
+                fail_color : undefined,
+                success_color : undefined,
+                custom_html_success: undefined,
+                custom_html_fail: undefined
+            }
+        };
+
+        //init feedback_me plugin
+        fm.init(fm_options);
+
+        setMoode('0');
+        $('#feedback-submit').click(function(event){
+            var moode = $("#feedback-message-input").val();
+            var message = $("textarea#feedback-message-text").val();
+            if (!moode || !message) {
+                return;
+            }
+            $.ajax({url: "/ajax/feedback",
+                type: "POST",
+                data: {"moode": moode, "message": message},
+                success: function(result) {
+                    setMoode('0');
+                    $("textarea#feedback-message-text").val("");
+                    $(".feedback-radio").removeAttr('checked');
+                    fm.stopPropagation(event);
+                    fm.triggerAction(event,'right-bottom');
+                }
+            });
+        });
+    });
+
+    function setMoode(moode) {
+        $("#feedback-message-input").val(moode);
+        if (moode == '1') {
+            $("#feedback-form").show();
+            $("#feedback-message").html("Thanks. Anything else you’d like to add?");
+        } else if (moode == '2') {
+            $("#feedback-form").show();
+            $("#feedback-message").html("What could we have changed to make it even better?");
+        } else if (moode == '3') {
+            $("#feedback-form").show();
+            $("#feedback-message").html("Sorry to hear that. How can we improve?");
+        } else {
+            $("#feedback-form").hide();
+            $("#feedback-message").html("");
+        }
+    }
+</script>
