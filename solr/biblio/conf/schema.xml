@@ -314,6 +314,8 @@
    <field name="urls_and_material_types" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="corporation" type="textProper" indexed="true" stored="true" multiValued="true"/>
    <field name="author2_and_role" type="textProper" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_standardized" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_non_standardized" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="is_superior_work" type="boolean" indexed="false" stored="true" multiValued="false"/>
    <!-- Multi-part fields -->
    <field name="containee_ids_and_titles" type="string" indexed="true" stored="true" multiValued="true"/>
