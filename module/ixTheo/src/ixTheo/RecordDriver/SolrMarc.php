@@ -26,8 +26,8 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
             // and can thus directly filter out number subfields 
             // We lose this information when evaluating the SOLR field 
             // and thus have to filter manually
-            $keywordchains = preg_replace("/\sgnd\s/", '', $keywordchains);
-            $keywordchains = preg_replace("/\(\w{2}-\d{3}\)[\dX-]+\s*/", '', $keywordchains);
+            $keywordchains = preg_replace('/\sgnd\s/', '', $keywordchains);
+            $keywordchains = preg_replace('/\(\w{2}-\d{3}\)[\dX-]+\s*/', '', $keywordchains);
             return $keywordchains;
         }
         else {
@@ -65,30 +65,9 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
                 }
             }
         }
-
         return $retval;
     }
 
-    /**
-     * Return an associative array of all containee IDs (children) mapped to their titles containing the record.
-     *
-     * @return array
-     */
-    public function getContaineeIDsAndTitles()
-    {
-        $retval = array();
-        if (isset($this->fields['containee_ids_and_titles']) && !empty($this->fields['containee_ids_and_titles'])) {
-            foreach ($this->fields['containee_ids_and_titles'] as $id_and_title) {
-                $a = explode(":", $id_and_title, 2);
-                if (count($a) == 2) {
-                    $retval[$a[0]] = $a[1];
-                }
-            }
-        }
-
-        return $retval;
-    }
-   
     /**
      * Get all non-standardized topics
      */

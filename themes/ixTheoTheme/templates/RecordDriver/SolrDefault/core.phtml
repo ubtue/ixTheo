@@ -147,12 +147,12 @@
             <? foreach ($ids_and_titles as $id => $title): ?>
               <a href="<?=$id?>"><?=$this->escapeHtml($title[0])?></a>
               <br/>
-              <?=implode(', ', $infos);?>
             <? endforeach; ?>
+            <?=implode(', ', $infos);?>
           </td>
         </tr>
       <? endif; ?>
-      <?if($this->driver->isSuperiorWork()): ?>
+      <? if($this->driver->isSuperiorWork()): ?>
         <tr>
           <th><?=$this->transEsc('Inferior Works')?>: </th>
           <td>
