@@ -152,6 +152,19 @@
           </td>
         </tr>
       <? endif; ?>
+
+      <? $reviews = $this->driver->tryMethod('getReviews'); if (!empty($reviews)): ?>
+        <tr>
+          <th><?=$this->transEsc('Reviews')?>: </th>
+          <td>
+            <? foreach ($reviews as $id => $title): ?>
+              <a href="<?=$id?>"><?=$this->escapeHtml($title[1])?> (<?=$this->escapeHtml($title[0])?>)</a>
+              <br/>
+            <? endforeach; ?>
+          </td>
+        </tr>
+      <? endif; ?>
+
       <? if($this->driver->isSuperiorWork()): ?>
         <tr>
           <th><?=$this->transEsc('Inferior Works')?>: </th>
