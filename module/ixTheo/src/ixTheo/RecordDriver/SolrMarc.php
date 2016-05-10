@@ -58,7 +58,22 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
         $retval = array();
         if (isset($this->fields['container_ids_and_titles']) && !empty($this->fields['container_ids_and_titles'])) {
             foreach ($this->fields['container_ids_and_titles'] as $id_and_title) {
-                $a = explode(chr(0x1F), $id_and_title, 3);
+                $a = explode(chr(0x1F), str_replace("#31;", chr(0x1F), $id_and_title), 3);
+                if (count($a) == 3) {
+                    $retval[$a[0]] = array($a[1], $a[2]);
+                }
+            }
+        }
+        return $retval;
+    }
+
+
+    public function getReviews()
+    {
+        $retval = array();
+        if (isset($this->fields['reviews']) && !empty($this->fields['reviews'])) {
+            foreach ($this->fields['reviews'] as $review) {
+                $a = explode(chr(0x1F), str_replace("#31;", chr(0x1F), $review), 3);
                 if (count($a) == 3) {
                     $retval[$a[0]] = array($a[1], $a[2]);
                 }
