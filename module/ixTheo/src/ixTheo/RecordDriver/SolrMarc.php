@@ -104,6 +104,6 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
     }
 
     public function isSuperiorWork() {
-        return isset($this->fields['is_superior_work']);
+        return $this->fields['is_superior_work'];
     }
 }
