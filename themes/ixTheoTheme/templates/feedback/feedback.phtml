@@ -30,7 +30,7 @@
         $('#feedback-submit').click(function(event){
             var mood = $("#feedback-message-input").val();
             var message = $("textarea#feedback-message-text").val();
-            if (!mood || !message) {
+            if ((!mood || mood == '0') && !message) {
                 return;
             }
             $.ajax({url: "/ajax/feedback",
@@ -50,17 +50,13 @@
     function setMood(mood) {
         $("#feedback-message-input").val(mood);
         if (mood == '1') {
-            $("#feedback-form").show();
             $("#feedback-message").html("Thanks. Anything else you’d like to add?");
         } else if (mood == '2') {
-            $("#feedback-form").show();
             $("#feedback-message").html("What could we have changed to make it even better?");
         } else if (mood == '3') {
-            $("#feedback-form").show();
             $("#feedback-message").html("Sorry to hear that. How can we improve?");
         } else {
-            $("#feedback-form").hide();
-            $("#feedback-message").html("");
+            $("#feedback-message").html("&nbsp;");
         }
     }
 </script>
