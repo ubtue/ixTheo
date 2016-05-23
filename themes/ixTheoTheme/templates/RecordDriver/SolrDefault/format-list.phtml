@@ -1,3 +1,8 @@
-<? foreach (($formats = $this->driver->getFormats()) as $format): ?>
+<? 
+  $formats = $this->driver->getFormats();  
+  if ($this->driver->getMediaType() == "Electronic"):
+    $formats = array_merge(["Electronic"], $formats);
+  endif;
+  foreach ($formats as $format): ?>
   <span class="iconlabel <?=$this->record($this->driver)->getFormatClass($format)?>"><?=$this->transEsc($format)?><?=($i++ < count($formats) - 1) ? " |" : ""?> </span>
 <? endforeach; ?>
