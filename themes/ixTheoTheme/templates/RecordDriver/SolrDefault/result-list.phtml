@@ -78,13 +78,14 @@
             <? endif; ?>
           <? endif; ?>
           <? // Handle superior data according to Issue 131 / Rule 5 ?>
-          <? $journal_issue = $this->driver->getJournalIssue()?>
+          <? $journal_issue = $this->driver->getJournalIssue(); ?>
           <? if (!empty($journal_issue)): ?>
+            <? $superior_ppn_index = !empty($journal_issue[2]) ? 2 : 1; ?>
+            <? $superior_ppn = preg_replace('/\(.*\)/', '', $journal_issue[$superior_ppn_index]); ?>
+            <? unset($journal_issue[$superior_ppn_index]); ?>
             <div>
-              <? if(!empty($journal_issue[2])): ?>
-                <?=$this->transEsc('in: ')?>
-                <? $superior_ppn = preg_replace('/\(.*\)/', '', $journal_issue[2]); ?>
-                <? unset($journal_issue[2]); ?>
+              <? if(!empty($superior_ppn)): ?>
+                <?=$this->transEsc('in')?>:
                 <? $journal_issue_display = preg_replace('/(\d+)(\()/','$1 $2', implode($journal_issue,  ", ")) ?>
                 <a href="Results?lookfor=id%3A<?=$superior_ppn?>"><?=$journal_issue_display ?></a>
               <? else: ?>

@@ -26,8 +26,8 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
             // and can thus directly filter out number subfields 
             // We lose this information when evaluating the SOLR field 
             // and thus have to filter manually
-            $keywordchains = preg_replace("/\sgnd\s/", '', $keywordchains);
-            $keywordchains = preg_replace("/\(\w{2}-\d{3}\)[\dX-]+\s*/", '', $keywordchains);
+            $keywordchains = preg_replace('/\sgnd\s/', '', $keywordchains);
+            $keywordchains = preg_replace('/\(\w{2}-\d{3}\)[\dX-]+\s*/', '', $keywordchains);
             return $keywordchains;
         }
         else {
@@ -56,43 +56,36 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
     public function getContainerIDsAndTitles()
     {
         $retval = array();
-
         if (isset($this->fields['container_ids_and_titles']) && !empty($this->fields['container_ids_and_titles'])) {
             foreach ($this->fields['container_ids_and_titles'] as $id_and_title) {
-                $a = explode("#31;", $id_and_title, 3); // \u00F1 gets represented by #31;.
+                $a = explode(chr(0x1F), str_replace("#31;", chr(0x1F), $id_and_title), 3);
                 if (count($a) == 3) {
                     $retval[$a[0]] = array($a[1], $a[2]);
                 }
             }
         }
-
         return $retval;
     }
 
-    /**
-     * Return an associative array of all containee IDs (children) mapped to their titles containing the record.
-     *
-     * @return array
-     */
-    public function getContaineeIDsAndTitles()
+
+    public function getReviews()
     {
         $retval = array();
-        if (isset($this->fields['containee_ids_and_titles']) && !empty($this->fields['containee_ids_and_titles'])) {
-            foreach ($this->fields['containee_ids_and_titles'] as $id_and_title) {
-                $a = explode(":", $id_and_title, 2);
-                if (count($a) == 2) {
-                    $retval[$a[0]] = $a[1];
+        if (isset($this->fields['reviews']) && !empty($this->fields['reviews'])) {
+            foreach ($this->fields['reviews'] as $review) {
+                $a = explode(chr(0x1F), str_replace("#31;", chr(0x1F), $review), 3);
+                if (count($a) == 3) {
+                    $retval[$a[0]] = array($a[1], $a[2]);
                 }
             }
         }
-
         return $retval;
     }
-   
+
+
     /**
      * Get all non-standardized topics
      */
-
     public function getAllNonStandardizedSubjectHeadings()
     {
        return (isset($this->fields['topic_non_standardized'])) ?
@@ -111,7 +104,7 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
     }
 
     public function isSuperiorWork() {
-        return isset($this->fields['is_superior_work']);
+        return $this->fields['is_superior_work'];
     }
 
     /**

@@ -9,6 +9,8 @@ return array(
         'vendor/font-awesome.min.css',
         'vendor/bootstrap-slider.css',
         'print.css:print',
+        'vendor/jquery.feedback_me.css',
+        'feedback.css'
     ),
     'js' => array(
         'vendor/base64.js:lt IE 10', // btoa polyfill
@@ -21,6 +23,7 @@ return array(
         'vendor/rc4.js',
         'common.js',
         'lightbox.js',
+        'vendor/jquery.feedback_me.js'
     ),
     'less' => array(
         'active' => false,
