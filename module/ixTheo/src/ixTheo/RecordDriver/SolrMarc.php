@@ -82,6 +82,20 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
         return $retval;
     }
 
+    public function getReviewedRecords()
+    {
+        $retval = array();
+        if (isset($this->fields['reviewed_records']) && !empty($this->fields['reviewed_records'])) {
+            foreach ($this->fields['reviewed_records'] as $review) {
+                $a = explode(chr(0x1F), str_replace("#31;", chr(0x1F), $review), 3);
+                if (count($a) == 3) {
+                    $retval[$a[0]] = array($a[1], $a[2]);
+                }
+            }
+        }
+        return $retval;
+    }
+
 
     /**
      * Get all non-standardized topics
