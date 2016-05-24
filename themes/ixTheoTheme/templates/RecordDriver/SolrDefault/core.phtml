@@ -210,21 +210,15 @@
         <td>
           <? foreach ($subjects as $current):?>
               <? // Offer a browse button that allows to jump to browse mode ?>
-              <? $parts = explode('|', $current); ?>
-                <? $query = '"'. implode(' ', $parts).'"'; ?>
-                <a href="<?=$this->url('keywordchainsearch-results')?>?lookfor=<?=urlencode($query)?>"><span class="iconlabel label label-info">Browse</span></a>
+              <? $parts = explode('/', $current); ?>
+                <? $query = '"'. implode('" "', $parts).'"'; ?>
+                <a href="<?=$this->url('keywordchainsearch-results')?>?lookfor=<?=urlencode($query)?>"><span class="iconlabel label label-info">B</span></a>
                 <? // Make single keywords clickable ?>
                 <? if (count($parts) > 1):?>
+                  <? $i=0 ?>
                   <? foreach ($parts as $part):?>
-                    <a href="<?= $this->record($this->driver)->getLink('subject', $part)?>"><?= $this->escapeHtml($part) ?></a>
-                  <? endforeach; ?>
-                <? else: ?>
-                <? // We have an original keyword chain and should display it appropriately?>
-                <? $kwc = explode('/', $current); ?>
-                <? $kwc_count = count($kwc); ?>
-                  <? foreach ($kwc as $part):?>
-                    <a href="<?= $this->record($this->driver)->getLink('subject', $part)?>"><?= $this->escapeHtml($part) ?></a>
-                    <?=($i++ < $kwc_count) ? ' / ' : '' ?>
+                    <a href="<?= $this->record($this->driver)->getLink('subject', $part)?>"><?= $this->escapeHtml($part) ?></a> 
+                  <?= $i++ < count($parts) - 1 ? ' / ' : '' ?>
                   <? endforeach; ?>
                <? endif; ?>
               </br>
@@ -239,8 +233,8 @@
           <? foreach ($subjects as $current):?>
               <? // Offer a browse button that allows to jump to browse mode ?>
               <? $parts = explode('|', $current); ?>
-              <? $query = '"'. implode(' ', $parts).'"'; ?>
-              <a href="<?=$this->url('keywordchainsearch-results')?>?lookfor=<?=urlencode($query)?>"><span class="iconlabel label label-info">Browse</span></a>
+              <? $query = '"'. implode('" "', $parts).'"'; ?>
+              <a href="<?=$this->url('keywordchainsearch-results')?>?lookfor=<?=urlencode($query)?>"><span class="iconlabel label label-info">B</span></a>
               <? // Make single keywords clickable 
                 foreach ($parts as $part):?>
                   <a href="<?= $this->record($this->driver)->getLink('subject', $part)?>"><?= $this->escapeHtml($part) ?></a>

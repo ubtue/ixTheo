@@ -106,4 +106,13 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
     public function isSuperiorWork() {
         return $this->fields['is_superior_work'];
     }
+
+    /**
+     * Get the mediatype
+     */
+    public function getMediaType() 
+    {
+        return (isset($this->fields['mediatype'])) ? 
+             $this->fields['mediatype'] : '';
+    }
 }
