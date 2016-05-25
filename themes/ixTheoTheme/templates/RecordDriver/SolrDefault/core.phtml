@@ -163,13 +163,23 @@
             <? endforeach; ?>
           </td>
         </tr>
+      <? endif; ?><? $reviews = $this->driver->tryMethod('getReviewedRecords'); if (!empty($reviews)): ?>
+        <tr>
+          <th><?=$this->transEsc('Reviewed')?>: </th>
+          <td>
+            <? foreach ($reviews as $id => $title): ?>
+              <a href="<?=$id?>"><?=$this->escapeHtml($title[1])?> (<?=$this->escapeHtml($title[0])?>)</a>
+              <br/>
+            <? endforeach; ?>
+          </td>
+        </tr>
       <? endif; ?>
 
       <? if($this->driver->isSuperiorWork()): ?>
         <tr>
-          <th><?=$this->transEsc('Inferior Works')?>: </th>
+          <th><?=$this->transEsc('Volumes / Articles')?>: </th>
           <td>
-            <a href="<?=$this->url("search-results", array(), array('query' => array('lookfor' => 'journal_issue:' . $this->driver->getRecordId())))?>"><?=$this->transEsc('Search for inferior works');?>.</a>
+            <a href="<?=$this->url("search-results", array(), array('query' => array('lookfor' => 'superior_ppn:' . $this->driver->getRecordId())))?>"><?=$this->transEsc('Show Volumes / Articles');?>.</a>
           </td>
         </tr>
       <? endif; ?>

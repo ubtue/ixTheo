@@ -42,6 +42,7 @@ class AjaxController extends \VuFind\Controller\AjaxController
 
         $mood = htmlentities($this->getRequest()->getPost()->get('mood'));
         $message = htmlentities($this->getRequest()->getPost()->get('message'));
+        $email = htmlentities($this->getRequest()->getPost()->get('email'));
 
         if (($mood !== '' || $mood !== '1' && $mood !== '2' && $mood !== '3') || strlen($message) === 0) {
             return $this->output(null, self::STATUS_ERROR);
@@ -49,6 +50,11 @@ class AjaxController extends \VuFind\Controller\AjaxController
 
         $mailContent = "Es war: " . $this->moods[$mood] . ".\n\n";
         $mailContent .= $message . "\n\n";
+        if (!empty($email)){
+            $mailContent .= "\n";
+            $mailContent .= "E-Mail: " . $email;
+            $mailContent .= "\n";
+        }
         $mailContent .= "----------------------------------------------------------------------------------------------\n";
         $mailContent .= "Aktuelle Seite: " . $this->getRequest()->getHeaders("Referer")->getUri() . "\n";
         $mailContent .= "Browser:        " . htmlentities($this->getRequest()->getHeaders("User-Agent")->getFieldValue()) . "\n";
