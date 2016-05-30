@@ -214,7 +214,7 @@
                 <? $query = '"'. implode('" "', $parts).'"'; ?>
                 <a href="<?=$this->url('keywordchainsearch-results')?>?lookfor=<?=urlencode($query)?>"><span class="iconlabel label label-info">B</span></a>
                 <? // Make single keywords clickable ?>
-                <? if (count($parts) > 1):?>
+                <? if (count($parts) > 0):?>
                   <? $i=0 ?>
                   <? foreach ($parts as $part):?>
                     <a href="<?= $this->record($this->driver)->getLink('subject', $part)?>"><?= $this->escapeHtml($part) ?></a> 
