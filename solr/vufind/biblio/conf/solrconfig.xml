@@ -512,6 +512,10 @@
 
    -->
 
+
+<!-- We would like to use a special faceting component  that is able to a customized prefix sorting -->
+  <!--  <searchComponent name="facet"     class="de.uni_tuebingen.ub.ixTheo.handler.component.FacetPrefixSortComponent" /> -->
+
   <requestHandler name="/search" class="org.apache.solr.handler.component.SearchHandler">
     <lst name="defaults">
       <str name="echoParams">explicit</str>
@@ -697,6 +701,9 @@
   <queryResponseWriter name="xslt" class="org.apache.solr.response.XSLTResponseWriter">
     <int name="xsltCacheLifetimeSeconds">5</int>
   </queryResponseWriter>
+
+  <queryParser class="de.uni_tuebingen.ub.ixTheo.bibleRangeSearch.BibleRangeParserPlugin" name="bibleRangeParser" />
+  <queryParser class="de.uni_tuebingen.ub.ixTheo.keywordChainSearch.KeywordChainParserParserPlugin" name="keywordChainParser" />
 
   <!-- config for the admin interface -->
   <admin>

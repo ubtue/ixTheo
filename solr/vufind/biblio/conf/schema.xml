@@ -120,6 +120,7 @@
    <field name="language" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="format" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="author" type="textProper" indexed="true" stored="true" multiValued="true" termVectors="true"/>
+   <field name="author_synonyms" type="text" indexed="true" stored="true" termVectors="true"/>
    <field name="author_variant" type="text" indexed="true" stored="true" multiValued="true" termVectors="true"/>
    <field name="author_role" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="author_facet" type="textFacet" indexed="true" stored="false" multiValued="true"/>
@@ -134,6 +135,8 @@
    <field name="title_auth" type="text" indexed="true" stored="true"/>
    <field name="physical" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="publisher" type="textProper" indexed="true" stored="true" multiValued="true"/>
+   <field name="publisher_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+   <copyField source="publisher" dest="publisher_facet"/>
    <field name="publisherStr" type="string" indexed="true" stored="false" multiValued="true"/>
    <field name="publishDate" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="publishDateSort" type="string" indexed="true" stored="false"/>
@@ -147,6 +150,8 @@
    <field name="ctrlnum" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="isbn" type="isn" indexed="true" stored="true" multiValued="true"/>
    <field name="issn" type="isn" indexed="true" stored="true" multiValued="true"/>
+   <field name="journal_issue" type="textProper" indexed="true" stored="true" multiValued="true"/>
+   <field name="journal_year" type="textProper" indexed="true" stored="true" multiValued="false"/>
    <field name="oclc_num" type="string" indexed="true" stored="true" multiValued="true" />
    <field name="callnumber-first" type="string" indexed="true" stored="true"/>
    <field name="callnumber-subject" type="string" indexed="true" stored="true"/>
@@ -176,6 +181,7 @@
    <field name="series" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="series2" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="topic" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="title_keywords" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_unstemmed" type="textProper" indexed="true" stored="false" multiValued="true"/>
    <field name="topic_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_browse" type="string" indexed="true" stored="false" multiValued="true"/>
@@ -225,6 +231,35 @@
    <dynamicField name="*_txtP_mv" type="textProper" indexed="true" stored="true" multiValued="true"/>
    <dynamicField name="*_random" type="random" />
    <dynamicField name="*_boolean" type="boolean" indexed="true" stored="true"/>
+
+   <!-- IxTheo -->
+   <field name ="bible_ranges" type="string" indexed="true" stored="true" />
+   <field name ="ixtheo_notation" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name="ixtheo_notation_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+   <copyField source="ixtheo_notation" dest="ixtheo_notation_facet"/>
+   <field name ="key_word_chains" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chains_sorted" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chain_bag" type="text" indexed="true" stored="true" multiValued="true" />
+   <field name="urls_and_material_types" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="corporation" type="textProper" indexed="true" stored="true" multiValued="true"/>
+   <field name="author2_and_role" type="textProper" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_standardized" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_non_standardized" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="is_superior_work" type="boolean" indexed="false" stored="true" multiValued="false"/>
+   <field name="reviews" type="text" indexed="false" stored="true" multiValued="true"/>
+   <field name="reviewed_records" type="text" indexed="false" stored="true" multiValued="true"/>
+   <field name="superior_ppn" type="string" indexed="true" stored="true" multiValued="true"/>
+
+   <!-- Multi-part fields -->
+   <field name="containee_ids_and_titles" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="container_ids_and_titles" type="string" indexed="true" stored="true" multiValued="true"/>
+
+   <!-- Miscellaneous -->
+   <field name="issue" type="string" indexed="false" stored="true" multiValued="false"/>
+   <field name="pages" type="string" indexed="false" stored="true" multiValued="false"/>
+   <field name="volume" type="string" indexed="false" stored="true" multiValued="false"/>
+   <field name="year" type="string" indexed="false" stored="true" multiValued="false"/>
+   <field name="mediatype" type="string" indexed="true" stored="true" multiValued="false"/>
  </fields>
  <uniqueKey>id</uniqueKey>
  <defaultSearchField>allfields</defaultSearchField>
@@ -258,6 +293,11 @@
  <!-- CopyFields for call numbers -->
  <copyField source="dewey-raw" dest="dewey-search"/>
  <copyField source="callnumber-raw" dest="callnumber-search"/>
+ <!-- CopyFields for Topics in Keywordchains and vice versa-->
+ <copyField source="topic" dest="key_word_chains"/>
+ <copyField source="topic" dest="key_word_chains_sorted"/>
+ <copyField source="topic" dest="key_word_chain_bag"/>
+ <copyField source="key_word_chain_bag" dest="topic"/>
  <!-- Default Boolean Operator -->
  <solrQueryParser defaultOperator="AND"/>
 </schema>
