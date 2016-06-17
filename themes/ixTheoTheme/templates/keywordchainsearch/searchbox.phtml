@@ -15,8 +15,8 @@ $basicSearch = $this->searchbox()->combinedHandlersActive() ? 'combined-searchbo
 
 $searchHome = $options->getSearchHomeAction();
 $advSearch = $options->getAdvancedSearchAction();
-$lastSort = $options->getLastSort();
-$lastLimit = $options->getLastLimit();
+$lastSort = $this->searchMemory()->getLastSort($this->searchClassId);
+$lastLimit = $this->searchMemory()->getLastLimit($this->searchClassId);
 ?>
 <form class="searchForm" method="get" action="<?= $this->url('keywordchainsearch-results') ?>" name="searchForm"
       autocomplete="off">
