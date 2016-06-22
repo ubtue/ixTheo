@@ -2,7 +2,7 @@
   <div class="row">
     <div>
       <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getUniqueID())?>" class="hiddenId" />
-      <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getResourceSource())?>" class="hiddenSource" />
+      <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getSourceIdentifier())?>" class="hiddenSource" />
     </div>
     <div class="col-sm-11 col-xs-7 middle">
       <div>
@@ -29,10 +29,8 @@
             <?=$this->transEsc('by')?>
             <? if (!empty($primaryAuthor)): ?>
               <a href="<?=$this->record($this->driver)->getLink('author', $primaryAuthor)?>"><?
-              $summHighlightedAuthor = $this->driver->getHighlightedAuthor();
-              echo !empty($summHighlightedAuthor)
-                ? $this->highlight($summHighlightedAuthor)
-                : $this->escapeHtml($primaryAuthor);
+                /* TODO: Highlight primary author. */
+                echo $this->escapeHtml($primaryAuthor);
               ?></a>
             <? endif; ?>
             <? if (!empty($otherAuthors)): ?>
@@ -47,11 +45,8 @@
                   <? break; ?>
                 <? endif; ?>
                 <a href="<?=$this->record($this->driver)->getLink('author', $author)?>"><?
-                //$summHighlightedAuthor = $this->driver->getHighlightedAuthor();
-                $summHighlightedAuthor = "";
-                echo !empty($summHighlightedAuthor)
-                  ? $this->highlight($summHighlightedAuthor)
-                  : $this->escapeHtml($author);
+                  /* Highlight author */
+                  echo $this->escapeHtml($author);
                 ?></a> 
                 <? foreach ($otherAuthorsAndRoles as $author_and_role): ?>
                    <? $author_and_role_splitted = preg_split('/\$/', $author_and_role) ?>
@@ -102,9 +97,10 @@
           <? if (!empty($journalTitle)): ?>
             <?=!empty($summAuthor) ? '<br />' : ''?>
             <?=$this->transEsc('Published in')?>
+            <? $containerSource = $this->driver->getSourceIdentifier(); ?>
             <? $containerID = $this->driver->getContainerRecordID(); ?>
             <? /* TODO: handle highlighting more elegantly here: */?>
-            <a href="<?=($containerID ? $this->recordLink()->getUrl("VuFind|$containerID") : $this->record($this->driver)->getLink('journaltitle', str_replace(array('{{{{START_HILITE}}}}', '{{{{END_HILITE}}}}'), '', $journalTitle)))?>"><?=$this->highlight($journalTitle) ?></a>
+            <a href="<?=($containerID ? $this->recordLink()->getUrl("$containerSource|$containerID") : $this->record($this->driver)->getLink('journaltitle', str_replace(array('{{{{START_HILITE}}}}', '{{{{END_HILITE}}}}'), '', $journalTitle)))?>"><?=$this->highlight($journalTitle) ?></a>
             <?=!empty($summDate) ? ' (' . $this->escapeHtml($summDate[0]) . ')' : ''?>
           <? endif; ?>
           <? $summInCollection = $this->driver->getContainingCollections(); if (!empty($summInCollection)): ?>
@@ -207,7 +203,7 @@
           <div class="hierarchyTreeLink">
             <input type="hidden" value="<?=$this->escapeHtmlAttr($hierarchyID)?>" class="hiddenHierarchyId" />
             <i class="fa fa-fw fa-sitemap"></i>
-            <a class="hierarchyTreeLinkText modal-link" href="<?=$this->recordLink()->getTabUrl($this->driver, 'HierarchyTree')?>?hierarchy=<?=urlencode($hierarchyID)?>#tabnav" title="<?=$this->transEsc('hierarchy_tree')?>">
+            <a class="hierarchyTreeLinkText" data-lightbox href="<?=$this->recordLink()->getTabUrl($this->driver, 'HierarchyTree')?>?hierarchy=<?=urlencode($hierarchyID)?>#tabnav" title="<?=$this->transEsc('hierarchy_tree')?>" data-lightbox-href="<?=$this->recordLink()->getTabUrl($this->driver, 'AjaxTab')?>?hierarchy=<?=urlencode($hierarchyID)?>" data-lightbox-post="tab=hierarchytree">
               <?=$this->transEsc('hierarchy_view_context')?><? if (count($trees) > 1): ?>: <?=$this->escapeHtml($hierarchyTitle)?><? endif; ?>
             </a>
           </div>

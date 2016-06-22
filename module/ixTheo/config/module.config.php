@@ -1,114 +1,52 @@
 <?php
 
-return array (
-  'ixTheo' => 
-  array (
-    'search_backend' => 
-    array (
-      'Solr' => 'ixTheo\\Search\\Factory\\SolrDefaultBackendFactory',
-    ),
-  ),
-  'controllers' => 
-  array (
-    'invokables' => 
-    array (
-      'BibleRangeSearch' => 'ixTheo\\Controller\\Search\\BibleRangeSearchController',
-      'KeywordChainSearch' => 'ixTheo\\Controller\\Search\\KeywordChainSearchController',
-    ),
-  ),
-  'router' => 
-  array (
-    'routes' => 
-    array (
-      'biblerangesearch-home' => 
-      array (
-        'type' => 'Zend\\Mvc\\Router\\Http\\Literal',
-        'options' => 
-        array (
-          'route' => '/BibleRangeSearch/Home',
-          'defaults' => 
-          array (
-            'controller' => 'BibleRangeSearch',
-            'action' => 'Home',
-          ),
+$config = array(
+    'ixTheo' =>
+        array(
+            'search_backend' =>
+                array(
+                    'Solr' => 'ixTheo\Search\Factory\IxTheoSolrDefaultBackendFactory',
+                ),
         ),
-      ),
-      'keywordchainsearch-home' => 
-      array (
-        'type' => 'Zend\\Mvc\\Router\\Http\\Literal',
-        'options' => 
-        array (
-          'route' => '/KeywordChainSearch/Home',
-          'defaults' => 
-          array (
-            'controller' => 'KeywordChainSearch',
-            'action' => 'Home',
-          ),
+    'controllers' =>
+        array(
+            'invokables' =>
+                array(
+                    'BibleRangeSearch' => 'ixTheo\Controller\Search\BibleRangeSearchController',
+                    'KeywordChainSearch' => 'ixTheo\Controller\Search\KeywordChainSearchController',
+                    'Pipeline' => 'ixTheo\Controller\Pipeline',
+                    'my-research' => 'ixTheo\Controller\MyResearchController',
+                ),
         ),
-      ),
-      'keywordchainsearch-results' => 
-      array (
-        'type' => 'Zend\\Mvc\\Router\\Http\\Literal',
-        'options' => 
-        array (
-          'route' => '/KeywordChainSearch/Results',
-          'defaults' => 
-          array (
-            'controller' => 'KeywordChainSearch',
-            'action' => 'Results',
-          ),
+    'vufind' =>
+        array(
+            'plugin_managers' =>
+                array(
+                    'recorddriver' =>
+                        array(
+                            'factories' =>
+                                array(
+                                    'solrmarc' => 'ixTheo\RecordDriver\Factory::getSolrMarc',
+                                ),
+                        ),
+                ),
         ),
-      ),    
-     'keywordchainsearch-search' => 
-      array (
-        'type' => 'Zend\\Mvc\\Router\\Http\\Literal',
-        'options' => 
-        array (
-          'route' => '/KeywordChainSearch/Search',
-          'defaults' => 
-          array (
-            'controller' => 'KeywordChainSearch',
-            'action' => 'Search',
-          ),
-        ),
-      ),
-
-    ),
-  ),
-  'vufind' => 
-  array (
-    'plugin_managers' => 
-    array (
-      'recorddriver' => 
-      array (
-        'factories' => 
-        array (
-          'solrmarc' => 'ixTheo\\RecordDriver\\Factory::getSolrMarc',
-        ),
-      ),
-/*      'search_params' =>
-         array (
-           'factories' => 
-              array(
-                'Solr' => function ($sm) {
-                   $options = $sm->getServiceLocator()->get('VuFind\SearchOptionsPluginManager')->get('Solr');
-                      return new \ixTheo\Controller\Search\Params(
-                        clone($options), $sm->getServiceLocator()->get('VuFind\Config')
-                      );
-                 }
-             ),
-        ),*/ 
-/*      'search_options' =>
-         array (
-           'factories' =>
-              array(
-                'Solr' =>  function ($sm) {
-                     return new \ixTheo\Controller\Search\Options(
-                        $sm->getServiceLocator()->get('VuFind\Config')
-		     );
-                }
-           ),
-        ), */
-     ),
-  ),
 );
+
+$recordRoutes = array();
+$dynamicRoutes = array();
+$staticRoutes = array(
+    'Browse/IxTheo-Classification',
+    'Biblerangesearch/Home',
+    'Keywordchainsearch/Home',
+    'Keywordchainsearch/Results',
+    'Keywordchainsearch/Search',
+    'Pipeline/Home'
+);
+
+$routeGenerator = new \VuFind\Route\RouteGenerator();
+$routeGenerator->addRecordRoutes($config, $recordRoutes);
+$routeGenerator->addDynamicRoutes($config, $dynamicRoutes);
+$routeGenerator->addStaticRoutes($config, $staticRoutes);
+
+return $config;
