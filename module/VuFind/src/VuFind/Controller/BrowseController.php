@@ -19,11 +19,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA    02111-1307    USA
  *
- * @category VuFind2
+ * @category VuFind
  * @package  Controller
  * @author   Chris Hallberg <challber@villanova.edu>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
- * @link     http://vufind.org/wiki/vufind2:building_a_controller Wiki
+ * @link     https://vufind.org/wiki/development:plugins:controllers Wiki
  */
 namespace VuFind\Controller;
 
@@ -32,11 +32,11 @@ namespace VuFind\Controller;
  *
  * Controls the alphabetical browsing feature
  *
- * @category VuFind2
+ * @category VuFind
  * @package  Controller
  * @author   Chris Hallberg <challber@villanova.edu>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
- * @link     http://vufind.org/wiki/vufind2:building_a_controller Wiki
+ * @link     https://vufind.org/wiki/development:plugins:controllers Wiki
  */
 class BrowseController extends AbstractBase
 {
@@ -583,57 +583,57 @@ class BrowseController extends AbstractBase
     protected function getSecondaryList($facet)
     {
         $category = $this->getCategory();
-        switch ($facet) {
-            case 'alphabetical':
-                return ['', $this->getAlphabetList()];
-            case 'dewey':
-                return [
+        switch($facet) {
+        case 'alphabetical':
+            return ['', $this->getAlphabetList()];
+        case 'dewey':
+            return [
                     'dewey-tens', $this->quoteValues(
                         $this->getFacetList('dewey-hundreds', $category, 'index')
                     )
                 ];
-            case 'lcc':
-                return [
+        case 'lcc':
+            return [
                     'callnumber-first', $this->quoteValues(
                         $this->getFacetList('callnumber-first', $category, 'index')
                     )
                 ];
-            case 'topic':
-                return [
+        case 'topic':
+            return [
                     'topic_facet', $this->quoteValues(
                         $this->getFacetList('topic_facet', $category)
                     )
                 ];
-            case 'genre':
-                return [
+        case 'genre':
+            return [
                     'genre_facet', $this->quoteValues(
                         $this->getFacetList('genre_facet', $category)
                     )
                 ];
-            case 'region':
-                return [
+        case 'region':
+            return [
                     'geographic_facet', $this->quoteValues(
                         $this->getFacetList('geographic_facet', $category)
                     )
                 ];
-            case 'era':
-                return [
+        case 'era':
+            return [
                     'era_facet', $this->quoteValues(
                         $this->getFacetList('era_facet', $category)
                     )
                 ];
-            case 'publisher':
-                return [
-                    'publisher_facet', $this->quoteValues(
-                        $this->getFacetList('publisher_facet', $category)
-                    )
-                ];
-            case 'ixtheo-classification':
-                return [
-                    'ixtheo_notation_facet', $this->quoteValues(
-                        $this->getFacetList('ixtheo_notation_facet', $category)
-                    )
-                ];
+        case 'publisher':
+            return [
+                'publisher_facet', $this->quoteValues(
+                    $this->getFacetList('publisher_facet', $category)
+                )
+            ];
+        case 'ixtheo-classification':
+            return [
+                'ixtheo_notation_facet', $this->quoteValues(
+                    $this->getFacetList('ixtheo_notation_facet', $category)
+                )
+            ];
         }
     }
 
@@ -717,27 +717,27 @@ class BrowseController extends AbstractBase
         if ($action == null) {
             $action = $this->getCurrentAction();
         }
-        switch (strToLower($action)) {
-            case 'alphabetical':
-                return $this->getCategory();
-            case 'dewey':
-                return 'dewey-hundreds';
-            case 'lcc':
-                return 'callnumber-first';
-            case 'author':
-                return 'authorStr';
-            case 'topic':
-                return 'topic_facet';
-            case 'genre':
-                return 'genre_facet';
-            case 'region':
-                return 'geographic_facet';
-            case 'era':
-                return 'era_facet';
-            case 'publisher':
-                return 'publisher_facet';
-            case 'ixtheo-classification':
-                return 'ixtheo_notation_facet';
+        switch(strToLower($action)) {
+        case 'alphabetical':
+            return $this->getCategory();
+        case 'dewey':
+            return 'dewey-hundreds';
+        case 'lcc':
+            return 'callnumber-first';
+        case 'author':
+            return 'author_facet';
+        case 'topic':
+            return 'topic_facet';
+        case 'genre':
+            return 'genre_facet';
+        case 'region':
+            return 'geographic_facet';
+        case 'era':
+            return 'era_facet';
+        case 'publisher':
+            return 'publisher_facet';
+        case 'ixtheo-classification':
+            return 'ixtheo_notation_facet';
         }
         return $action;
     }
