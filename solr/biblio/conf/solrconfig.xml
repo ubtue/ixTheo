@@ -211,7 +211,8 @@
     not load all stored fields, especially if the skipped fields are large compressed
     text fields.
     -->
-    <enableLazyFieldLoading>true</enableLazyFieldLoading>
+<!--    <enableLazyFieldLoading>true</enableLazyFieldLoading> -->
+    <enableLazyFieldLoading>true</enableLazyFieldLoading> 
 
     <!-- Example of a generic cache.  These caches may be accessed by name
          through SolrIndexSearcher.getCache(),cacheLookup(), and cacheInsert().
@@ -364,6 +365,12 @@
       <str name="spellcheck.onlyMorePopular">true</str>
       <str name="spellcheck.count">20</str>
     </lst>
+<!--    <lst name="appends">
+      <str name="fl" >*,[multiLanguageDocTransformer]</str> 
+    </lst> -->
+    <lst name="appends">
+      <str name="fl">*,[multiLanguageDocTransformer]</str> 
+    </lst> 
     <arr name="last-components">
       <str>spellcheck</str>
     </arr>
@@ -386,6 +393,10 @@
       <str name="spellcheck.onlyMorePopular">true</str>
       <str name="spellcheck.count">20</str>
     </lst>
+    <lst name="appends">
+<!--      <str name="fl" >[multiLanguageDocTransformer]</str> -->
+      <str name="fl">[multiLanguageDocTransformer]</str> 
+    </lst>
     <arr name="last-components">
       <str>spellcheck</str>
     </arr>
@@ -400,6 +411,15 @@
       <str name="spellcheck.onlyMorePopular">true</str>
       <str name="spellcheck.count">20</str>
       <str name="lowercaseOperators">false</str>
+<!--      <str name="fl">[multiLanguageDocTransformer]</str> -->
+      <str name="fl">[multiLanguageDocTransformer]</str> 
+    </lst>
+
+<!--    <lst name="invariants">
+      <str name="fl" >[multiLanguageDocTransformer]</str>
+    </lst> -->
+    <lst name="invariants">
+      <str name="fl" >[multiLanguageDocTransformer]</str>
     </lst>
     <arr name="last-components">
       <str>spellcheck</str>
@@ -724,6 +744,12 @@
 
   <queryParser class="de.uni_tuebingen.ub.ixTheo.bibleRangeSearch.BibleRangeParserPlugin" name="bibleRangeParser" />
   <queryParser class="de.uni_tuebingen.ub.ixTheo.keywordChainSearch.KeywordChainParserParserPlugin" name="keywordChainParser" />
+
+  <transformer class="de.uni_tuebingen.ub.ixTheo.MultiLanguageDocTransformerFactory" name="multiLanguageDocTransformer">
+    <bool name="enabled">true</bool>
+    <str name="fields">topic_standardized,topic_non_standardized</str>
+    <str name="lang_extensions">_de,_en,_fr</str>
+  </transformer>
 
   <!-- config for the admin interface -->
   <admin>
