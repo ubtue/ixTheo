@@ -249,7 +249,7 @@
    <field name="reviews" type="text" indexed="false" stored="true" multiValued="true"/>
    <field name="reviewed_records" type="text" indexed="false" stored="true" multiValued="true"/>
    <field name="superior_ppn" type="string" indexed="true" stored="true" multiValued="true"/>
-   <field name="recording_date_string" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="recording_date" type="date" indexed="true" stored="true" multiValued="true"/>
 
    <!-- Multi-part fields -->
    <field name="containee_ids_and_titles" type="string" indexed="true" stored="true" multiValued="true"/>
