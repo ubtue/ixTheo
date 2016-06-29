@@ -53,3 +53,6 @@ KeywordChainParser.jar
 BibleRangeParser.jar
 TuelibSolrmarcMixin.jar
 FacetPrefixSortComponent.jar
+/vendor
+composer.lock
+import/solrmarc.log

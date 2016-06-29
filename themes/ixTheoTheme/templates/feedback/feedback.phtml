@@ -28,14 +28,15 @@
 
         setMood('0');
         $('#feedback-submit').click(function(event){
-            var mood = $("#feedback-message-input").val();
+            var mood = $("#feedback-message-mood").val();
             var message = $("textarea#feedback-message-text").val();
+            var email = $("#feedback-message-email").val();
             if ((!mood || mood == '0') && !message) {
                 return;
             }
             $.ajax({url: "/ajax/feedback",
                 type: "POST",
-                data: {"mood": mood, "message": message},
+                data: {"mood": mood, "message": message, "email": email},
                 success: function(result) {
                     setMood('0');
                     $("textarea#feedback-message-text").val("");
