@@ -36,6 +36,7 @@ class Params extends \VuFind\Search\Solr\Params {
 
 	// We are either called with a specific chain, thus we have to search 
 	// key_word_chains or we are looking on the flattened bag
+
         $backendParams->add('qf', 'key_word_chain_bag key_word_chains');
 
 	// Make sure we use edismax, so we can use the 'qf'-parameter 
@@ -44,6 +45,9 @@ class Params extends \VuFind\Search\Solr\Params {
 
 	// Make sure we look for the individual terms also	
 	$backendParams->add('q.op', 'OR');
+        
+        // Trigger choosing the appropriate language field on the solr side
+        $backendParams->add('defType', multiLanguageQueryParser);
 
         return $backendParams;
     }

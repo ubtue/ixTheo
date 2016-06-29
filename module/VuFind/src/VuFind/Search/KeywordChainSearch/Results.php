@@ -78,7 +78,11 @@ class Results extends SolrResults
 
         $this->responseFacets = $collection->getFacets();
 
-        $facet = 'key_word_chains_sorted';
+        // Generate language extension and remove language subcode 
+        $lang =  implode('', $params->get("lang"));
+        $lang_ext = $lang ? "_" . split("-", $lang)[0] : "";
+
+        $facet = 'key_word_chains_sorted' . $lang_ext;
         $facet_count = $facet . '-count';
 
         // Get the facets from which we will build our results:

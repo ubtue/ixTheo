@@ -301,6 +301,20 @@
    <field name ="key_word_chains" type="string" indexed="true" stored="true" multiValued="true" /> 
    <field name ="key_word_chains_sorted" type="string" indexed="true" stored="true" multiValued="true" />
    <field name ="key_word_chain_bag" type="text" indexed="true" stored="true" multiValued="true" />
+
+   <field name ="key_word_chains_de" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chains_sorted_de" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chain_bag_de" type="text" indexed="true" stored="true" multiValued="true" />
+
+   <field name ="key_word_chains_en" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chains_sorted_en" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chain_bag_en" type="text" indexed="true" stored="true" multiValued="true" />
+
+   <field name ="key_word_chains_fr" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chains_sorted_fr" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chain_bag_fr" type="text" indexed="true" stored="true" multiValued="true" />
+
+
    <field name="urls_and_material_types" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="corporation" type="textProper" indexed="true" stored="true" multiValued="true"/>
    <field name="author2_and_role" type="textProper" indexed="true" stored="true" multiValued="true"/>
