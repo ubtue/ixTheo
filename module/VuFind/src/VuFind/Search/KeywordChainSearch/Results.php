@@ -80,7 +80,7 @@ class Results extends SolrResults
 
         // Generate language extension and remove language subcode 
         $lang =  implode('', $params->get("lang"));
-        $lang_ext = $lang ? "_" . split("-", $lang)[0] : "";
+        $lang_ext = $lang ? "_" . split("-", $lang)[0] : "_de";
 
         $facet = 'key_word_chains_sorted' . $lang_ext;
         $facet_count = $facet . '-count';
