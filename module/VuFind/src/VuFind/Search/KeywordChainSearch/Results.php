@@ -67,9 +67,9 @@ class Results extends SolrResults
         $query = $this->getParams()->getQuery();
         $params = $this->getParams()->getBackendParameters();
 
-        $offset = ($this->getParams()->getPage() - 1) * $this->getParams()->getLimit();
         $limit = $this->getParams()->getLimit();
-
+        $offset = ($this->getParams()->getPage() - 1) * $limit();
+    
         $params->set("facet.offset", $offset);
         $params->set("facet.limit", $limit);
 
@@ -79,7 +79,7 @@ class Results extends SolrResults
         $this->responseFacets = $collection->getFacets();
 
         // Generate language extension and remove language subcode 
-        $lang =  implode('', $params->get("lang"));
+        $lang =  implode($params->get("lang"));
         $lang_ext = $lang ? "_" . split("-", $lang)[0] : "_de";
 
         $facet = 'key_word_chains_sorted' . $lang_ext;
