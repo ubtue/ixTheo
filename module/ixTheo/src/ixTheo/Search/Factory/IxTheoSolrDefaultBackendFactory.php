@@ -1,5 +1,4 @@
 <?php
-
 namespace ixTheo\Search\Factory;
 
 use VuFind\Search\Factory\SolrDefaultBackendFactory;
@@ -28,20 +27,16 @@ class IxTheoSolrDefaultBackendFactory extends SolrDefaultBackendFactory
         $specs   = $this->loadSpecs();
         $config = $this->config->get('config');
         $defaultDismax = isset($config->Index->default_dismax_handler)
-                       ? $config->Index->default_dismax_handler : 'dismax';
+                         ? $config->Index->default_dismax_handler : 'dismax';
         $builder = new IxTheoQueryBuilder($specs, $defaultDismax);
 
         // Configure builder:
         $search = $this->config->get($this->searchConfig);
-        $caseSensitiveBooleans
-            = isset($search->General->case_sensitive_bools)
-            ? $search->General->case_sensitive_bools : true;
-        $caseSensitiveRanges
-            = isset($search->General->case_sensitive_ranges)
-            ? $search->General->case_sensitive_ranges : true;
-        $helper = new LuceneSyntaxHelper(
-            $caseSensitiveBooleans, $caseSensitiveRanges
-        );
+        $caseSensitiveBooleans = isset($search->General->case_sensitive_bools)
+                                 ? $search->General->case_sensitive_bools : true;
+        $caseSensitiveRanges = isset($search->General->case_sensitive_ranges)
+                               ? $search->General->case_sensitive_ranges : true;
+        $helper = new LuceneSyntaxHelper($caseSensitiveBooleans, $caseSensitiveRanges);
         $builder->setLuceneHelper($helper);
         return $builder;
     }
@@ -52,8 +47,7 @@ class IxTheoSolrDefaultBackendFactory extends SolrDefaultBackendFactory
      *
      * @return Connector
      */
-
- protected function createConnector()
+    protected function createConnector()
     {
         $config = $this->config->get('config');
         
@@ -74,12 +68,8 @@ class IxTheoSolrDefaultBackendFactory extends SolrDefaultBackendFactory
             array_push($handlers['select']['appends']['fq'], $filter);
         }
 
-        $connector = new Connector(
-            $this->getSolrUrl(), new HandlerMap($handlers), $this->uniqueKey
-        );
-        $connector->setTimeout(
-            isset($config->Index->timeout) ? $config->Index->timeout : 30
-        );
+        $connector = new Connector($this->getSolrUrl(), new HandlerMap($handlers), $this->uniqueKey);
+        $connector->setTimeout(isset($config->Index->timeout) ? $config->Index->timeout : 30);
 
         if ($this->logger) {
             $connector->setLogger($this->logger);
@@ -89,7 +79,4 @@ class IxTheoSolrDefaultBackendFactory extends SolrDefaultBackendFactory
         }
         return $connector;
     }
-
-
-
 }
