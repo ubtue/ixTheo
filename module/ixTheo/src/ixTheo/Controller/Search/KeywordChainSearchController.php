@@ -4,7 +4,6 @@ namespace ixTheo\Controller\Search;
 
 class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
 {
-
     // Try to implement KWC based on the Browse Controller
 
 
@@ -63,9 +62,7 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
         $params->addFacet($facet);
         $lookfor = $request->get('lookfor');
 
-        
         $request->set('lookfor', $lookfor);
-
         $request->set('type', 'KeywordChainSearch');
         $params->initFromRequest($request);
         $params->getOptions()->disableHighlighting();
@@ -76,8 +73,6 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
         $results->setParams($params);
 
         return $results;
-
-
     }
 
 
@@ -131,5 +126,4 @@ class KeywordChainSearchController extends \VuFind\Controller\AbstractSearch
         $this->forwardTo('KeywordChainSearch', 'Results');
     }
 }
-
 ?>
