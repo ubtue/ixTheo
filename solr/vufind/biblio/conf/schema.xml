@@ -240,11 +240,26 @@
    <field name ="key_word_chains" type="string" indexed="true" stored="true" multiValued="true" />
    <field name ="key_word_chains_sorted" type="string" indexed="true" stored="true" multiValued="true" />
    <field name ="key_word_chain_bag" type="text" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chains_de" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chains_sorted_de" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chain_bag_de" type="text" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chains_en" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chains_sorted_en" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chain_bag_en" type="text" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chains_fr" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chains_sorted_fr" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name ="key_word_chain_bag_fr" type="text" indexed="true" stored="true" multiValued="true" />
    <field name="urls_and_material_types" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="corporation" type="textProper" indexed="true" stored="true" multiValued="true"/>
    <field name="author2_and_role" type="textProper" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_standardized" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_non_standardized" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_standardized_de" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_non_standardized_de" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_standardized_en" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_non_standardized_en" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_standardized_fr" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_non_standardized_fr" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="is_superior_work" type="boolean" indexed="false" stored="true" multiValued="false"/>
    <field name="reviews" type="text" indexed="false" stored="true" multiValued="true"/>
    <field name="reviewed_records" type="text" indexed="false" stored="true" multiValued="true"/>
