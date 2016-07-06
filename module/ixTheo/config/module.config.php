@@ -1,13 +1,9 @@
 <?php
+namespace Ixtheo;
+
+use \Vufind\Route\RouteGenerator;
 
 $config = array(
-    'ixTheo' =>
-        array(
-            'search_backend' =>
-                array(
-                    'Solr' => 'ixTheo\Search\Factory\IxTheoSolrDefaultBackendFactory',
-                ),
-        ),
     'controllers' =>
         array(
             'invokables' =>
@@ -29,8 +25,16 @@ $config = array(
                                     'solrmarc' => 'ixTheo\RecordDriver\Factory::getSolrMarc',
                                 ),
                         ),
-                ),
-        ),
+                     'search_backend' =>
+                         array(
+                              'factories' =>
+                                   array(
+                                       'Solr' => 'ixTheo\Search\Factory\IxTheoSolrDefaultBackendFactory',
+                                   ),
+                          ),
+                     ),
+
+              )
 );
 
 $recordRoutes = array();
@@ -45,6 +49,7 @@ $staticRoutes = array(
 );
 
 $routeGenerator = new \VuFind\Route\RouteGenerator();
+//$routeGenerator = new RouteGenerator();
 $routeGenerator->addRecordRoutes($config, $recordRoutes);
 $routeGenerator->addDynamicRoutes($config, $dynamicRoutes);
 $routeGenerator->addStaticRoutes($config, $staticRoutes);
