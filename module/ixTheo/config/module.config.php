@@ -1,8 +1,6 @@
 <?php
 namespace Ixtheo;
 
-use \Vufind\Route\RouteGenerator;
-
 $config = array(
     'controllers' =>
         array(
@@ -49,7 +47,6 @@ $staticRoutes = array(
 );
 
 $routeGenerator = new \VuFind\Route\RouteGenerator();
-//$routeGenerator = new RouteGenerator();
 $routeGenerator->addRecordRoutes($config, $recordRoutes);
 $routeGenerator->addDynamicRoutes($config, $dynamicRoutes);
 $routeGenerator->addStaticRoutes($config, $staticRoutes);
