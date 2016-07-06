@@ -1,13 +1,7 @@
 <?php
+namespace Ixtheo;
 
 $config = array(
-    'ixTheo' =>
-        array(
-            'search_backend' =>
-                array(
-                    'Solr' => 'ixTheo\Search\Factory\IxTheoSolrDefaultBackendFactory',
-                ),
-        ),
     'controllers' =>
         array(
             'invokables' =>
@@ -29,8 +23,16 @@ $config = array(
                                     'solrmarc' => 'ixTheo\RecordDriver\Factory::getSolrMarc',
                                 ),
                         ),
-                ),
-        ),
+                     'search_backend' =>
+                         array(
+                              'factories' =>
+                                   array(
+                                       'Solr' => 'ixTheo\Search\Factory\IxTheoSolrDefaultBackendFactory',
+                                   ),
+                          ),
+                     ),
+
+              )
 );
 
 $recordRoutes = array();

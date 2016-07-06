@@ -181,6 +181,9 @@
    <field name="series" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="series2" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="topic" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_de" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_en" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_fr" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="title_keywords" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_unstemmed" type="textProper" indexed="true" stored="false" multiValued="true"/>
    <field name="topic_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
@@ -310,10 +313,25 @@
  <copyField source="dewey-raw" dest="dewey-search"/>
  <copyField source="callnumber-raw" dest="callnumber-search"/>
  <!-- CopyFields for Topics in Keywordchains and vice versa-->
- <copyField source="topic" dest="key_word_chains"/>
- <copyField source="topic" dest="key_word_chains_sorted"/>
- <copyField source="topic" dest="key_word_chain_bag"/>
- <copyField source="key_word_chain_bag" dest="topic"/>
+ <copyField source="topic_de" dest="key_word_chains_de"/>
+ <copyField source="topic_de" dest="key_word_chains_sorted_de"/>
+ <copyField source="topic_de" dest="key_word_chain_bag_de"/>
+ <copyField source="topic_en" dest="key_word_chains_en"/>
+ <copyField source="topic_en" dest="key_word_chains_sorted_en"/>
+ <copyField source="topic_en" dest="key_word_chain_bag_en"/>
+ <copyField source="topic_fr" dest="key_word_chains_fr"/>
+ <copyField source="topic_fr" dest="key_word_chains_sorted_fr"/>
+ <copyField source="topic_fr" dest="key_word_chain_bag_fr"/>
+ <copyField source="key_word_chain_bag_de" dest="topic_de"/>
+ <copyField source="key_word_chain_bag_en" dest="topic_en"/>
+ <copyField source="key_word_chain_bag_fr" dest="topic_fr"/>
+ <copyField source="topic_de" dest="topic"/>
+ <copyField source="topic_en" dest="topic"/>
+ <copyField source="topic_fr" dest="topic"/>
+ <copyField source="key_word_chain_bag_de" dest="topic"/>
+ <copyField source="key_word_chain_bag_en" dest="topic"/>
+ <copyField source="key_word_chain_bag_fr" dest="topic"/>
+
  <!-- Default Boolean Operator -->
  <solrQueryParser defaultOperator="AND"/>
 </schema>
