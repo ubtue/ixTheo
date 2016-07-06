@@ -8,29 +8,36 @@ $config = array(
                     'Solr' => 'ixTheo\Search\Factory\IxTheoSolrDefaultBackendFactory',
                 ),
         ),
-    'controllers' =>
-        array(
-            'invokables' =>
-                array(
-                    'BibleRangeSearch' => 'ixTheo\Controller\Search\BibleRangeSearchController',
-                    'KeywordChainSearch' => 'ixTheo\Controller\Search\KeywordChainSearchController',
-                    'Pipeline' => 'ixTheo\Controller\Pipeline',
-                    'my-research' => 'ixTheo\Controller\MyResearchController',
-                ),
-        ),
-    'vufind' =>
-        array(
-            'plugin_managers' =>
-                array(
-                    'recorddriver' =>
-                        array(
-                            'factories' =>
-                                array(
-                                    'solrmarc' => 'ixTheo\RecordDriver\Factory::getSolrMarc',
-                                ),
-                        ),
-                ),
-        ),
+    'vufind' => [
+        'plugin_managers' => [
+            'recorddriver' => [
+                'factories' => [
+                    'solrmarc' => 'ixTheo\RecordDriver\Factory::getSolrMarc',
+                ],
+            ],
+            'search_results' => [
+                'factories' => [
+                    'subscriptions' => 'VuFind\Search\Results\Factory::getSubscriptions',
+                ],
+            ],
+        ],
+    ],
+    'controllers' => [
+        'factories' => [
+            'record' => 'ixTheo\Controller\Factory::getRecordController',
+        ],
+        'invokables' => [
+            'BibleRangeSearch' => 'ixTheo\Controller\Search\BibleRangeSearchController',
+            'KeywordChainSearch' => 'ixTheo\Controller\Search\KeywordChainSearchController',
+            'Pipeline' => 'ixTheo\Controller\Pipeline',
+            'MyResearch' => 'ixTheo\Controller\MyResearchController',
+        ],
+    ],
+    'controller_plugins' => [
+        'invokables' => [
+            'subscriptions' => 'VuFind\Controller\Plugin\Subscriptions',
+        ]
+    ],
 );
 
 $recordRoutes = array();
@@ -41,7 +48,9 @@ $staticRoutes = array(
     'Keywordchainsearch/Home',
     'Keywordchainsearch/Results',
     'Keywordchainsearch/Search',
-    'Pipeline/Home'
+    'Pipeline/Home',
+    'MyResearch/Subscriptions',
+    'MyResearch/DeleteSubscription',
 );
 
 $routeGenerator = new \VuFind\Route\RouteGenerator();

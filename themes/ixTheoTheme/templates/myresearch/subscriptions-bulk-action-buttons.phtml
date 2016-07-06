@@ -1,0 +1,16 @@
+<? if (isset($list)): ?>
+  <input type="hidden" name="listID" value="<?=$this->escapeHtmlAttr($list->id)?>" />
+  <input type="hidden" name="listName" value="<?=$this->escapeHtmlAttr($list->title)?>" />
+<? endif; ?>
+<? $user = $this->auth()->isLoggedIn(); ?>
+<div class="checkbox">
+  <label>
+    <input type="checkbox" name="selectAll" class="checkbox-select-all"/>
+    <?=$this->transEsc('select_page')?> | <?=$this->transEsc('with_selected')?>:
+  </label>
+</div>
+<div class="btn-group">
+  <input class="btn btn-default" type="submit" name="email" value="<?=$this->transEsc('Email')?>" title="<?=$this->transEsc('email_selected')?>"/>
+  <input class="btn btn-default" id="<?=$this->idPrefix?>delete_list_items_<?=!is_null($this->list) ? $this->escapeHtmlAttr($this->list->id) : ''?>" type="submit" name="delete" value="<?=$this->transEsc('Delete')?>" title="<?=$this->transEsc('delete_selected')?>"/>
+  <input class="btn btn-default" type="submit" name="print" value="<?=$this->transEsc('Print')?>" title="<?=$this->transEsc('print_selected')?>" data-lightbox-ignore/>
+</div>
