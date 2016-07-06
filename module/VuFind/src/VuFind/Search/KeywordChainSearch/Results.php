@@ -68,7 +68,7 @@ class Results extends SolrResults
         $params = $this->getParams()->getBackendParameters();
 
         $limit = $this->getParams()->getLimit();
-        $offset = ($this->getParams()->getPage() - 1) * $limit();
+        $offset = ($this->getParams()->getPage() - 1) * $limit;
     
         $params->set("facet.offset", $offset);
         $params->set("facet.limit", $limit);
