@@ -113,12 +113,14 @@
         </tr>
       <? endif; ?>
 
-      <? $isbns = $this->driver->getISBNs(); if (!empty($isbns)): ?>
-        <tr>
-          <th><?=$this->transEsc('Check Availability')?>: </th>
-          <td><a href="http://openurlgw.hbz-nrw.de/gw?isbn=<?=$isbns[0]?>">HBZ Gateway</a></td>
-        </tr>
-      <? endif; ?>
+      <tr>
+        <th><?=$this->transEsc('Check Availability')?>: </th>
+          <? $isbns = $this->driver->getISBNs(); if (!empty($isbns)): ?>
+            <td><a href="http://openurlgw.hbz-nrw.de/gw?isbn=<?=$isbns[0]?>">HBZ Gateway</a></td>
+          <? else: ?>
+            <td><a href="http://openurlgw.hbz-nrw.de/gw?title=<?=urlencode($this->driver->getTitle())?>">HBZ Gateway</a></td>
+          <? endif; ?>
+      </tr>
 
       <? include(realpath(dirname(__FILE__) . '/JOP.phtml')); ?>
 
