@@ -1,13 +1,7 @@
 <?php
+namespace Ixtheo;
 
 $config = array(
-    'ixTheo' =>
-        array(
-            'search_backend' =>
-                array(
-                    'Solr' => 'ixTheo\Search\Factory\IxTheoSolrDefaultBackendFactory',
-                ),
-        ),
     'vufind' => [
         'plugin_managers' => [
             'recorddriver' => [
@@ -18,6 +12,11 @@ $config = array(
             'search_results' => [
                 'factories' => [
                     'subscriptions' => 'VuFind\Search\Results\Factory::getSubscriptions',
+                ],
+            ],
+            'search_backend' => [
+            	'factories' => [
+                    'Solr' => 'ixTheo\Search\Factory\IxTheoSolrDefaultBackendFactory',
                 ],
             ],
         ],

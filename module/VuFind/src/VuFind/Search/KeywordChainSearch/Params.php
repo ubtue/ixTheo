@@ -1,18 +1,12 @@
 <?
-
 namespace VuFind\Search\KeywordChainSearch;
 
 class Params extends \VuFind\Search\Solr\Params {
+    public function __construct($options, \VuFind\Config\PluginManager $configLoader) {
+        parent::__construct($options, $configLoader);
+    }
 
-  public function __construct($options, \VuFind\Config\PluginManager $configLoader){
-
-	parent::__construct($options, $configLoader);
-
-  }
-
-
-   protected function initBasicSearch($request)
-    {
+   protected function initBasicSearch($request) {
         // If no lookfor parameter was found, we have no search terms to
         // add to our array!
         if (is_null($lookfor = $request->get('lookfor'))) {
@@ -30,12 +24,11 @@ class Params extends \VuFind\Search\Solr\Params {
      *
      * @return ParamBag
      */
-    public function getBackendParameters(){
-
+    public function getBackendParameters() {
         $backendParams = parent::getBackendParameters();
 
 	// We are either called with a specific chain, thus we have to search 
-	// key_word_chains or we are looking on the flattened bag
+	// key_word_chains or we are looking in the flattened bag
         $backendParams->add('qf', 'key_word_chain_bag key_word_chains');
 
 	// Make sure we use edismax, so we can use the 'qf'-parameter 
@@ -44,15 +37,11 @@ class Params extends \VuFind\Search\Solr\Params {
 
 	// Make sure we look for the individual terms also	
 	$backendParams->add('q.op', 'OR');
+        
+        // Trigger choosing the appropriate language field on the solr side
+        $backendParams->add('defType', 'multiLanguageQueryParser');
 
         return $backendParams;
     }
-
-
 }
-
 ?>
-
-
-
-

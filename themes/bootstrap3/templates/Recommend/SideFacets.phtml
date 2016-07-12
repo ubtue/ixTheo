@@ -158,6 +158,8 @@ JS;
               <?
                 if(strlen($thisFacet['displayText']) == 0) {
                   $thisFacet['displayText'] = "-";
+                } else {
+                  $thisFacet['displayText'] = $this->transEsc($thisFacet['displayText']);
                 }
               ?>
               <? $moreClass = 'narrowGroupHidden-'.$this->escapeHtmlAttr($title).' hidden'; ?>

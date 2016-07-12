@@ -601,4 +601,6 @@ Keywordchains:
        - [onephrase, 1000]
      key_word_chains_sorted:
        - [onephrase, 1000]
+   DismaxParams:
+       - ["defType", "multiLanguageQueryParser"]
 
