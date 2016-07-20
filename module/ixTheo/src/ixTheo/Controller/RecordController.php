@@ -11,6 +11,7 @@ class RecordController extends \VuFind\Controller\RecordController
             return $this->forceLogin();
         }
         $post = $this->getRequest()->getPost()->toArray();
+        var_dump($post);
         $results = $this->loadRecord()->subscribe($post, $user);
 
         if ($results == null) {

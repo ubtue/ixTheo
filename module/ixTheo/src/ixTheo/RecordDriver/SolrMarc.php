@@ -131,8 +131,21 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
              $this->fields['mediatype'] : '';
     }
 
+    private function getAuthorsAsString() {
+        $author_implode = function ($array) {
+                if (is_null($array)) {
+                    return null;
+                }
+                return implode(", ", array_filter($array, function($entry) {
+                    return empty($entry) ? false : true;
+                }));
+            };
+        return $author_implode(array_map($author_implode, array_map("array_keys", $this->getDeduplicatedAuthors())));
+    }
+
     public function subscribe($params, $user)
     {
+
         if (!$user) {
             throw new LoginRequiredException('You must be logged in first');
         }
@@ -144,7 +157,7 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
         if (!empty($table->findExisting($userId, $recordId))) {
             return "Exists";
         }
-        return $table->subscribe($userId, $recordId);
+        return $table->subscribe($userId, $recordId, $this->getTitle(), $this->getAuthorsAsString(), $this->getPublicationDates()[0]);
     }
 
     public function unsubscribe($params, $user)

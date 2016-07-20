@@ -25,9 +25,12 @@ class Subscription extends Gateway implements \VuFind\Db\Table\DbTableAwareInter
         parent::__construct('ixtheo_journal_subscriptions', 'VuFind\Db\Row\Subscription');
     }
 
-    public function getNew($userId, $recordId) {
+    public function getNew($userId, $recordId, $title, $author, $year) {
         $row = $this->createRow();
         $row->id = $userId;
+        $row->journal_title = $title;
+        $row->journal_author = $author;
+        $row->journal_year = $year;
         $row->journal_control_number = $recordId;
         $row->last_issue_date = date('Y-m-d\TH:i:s\Z');
         return $row;
@@ -37,8 +40,8 @@ class Subscription extends Gateway implements \VuFind\Db\Table\DbTableAwareInter
         return $this->select(['id' => $userId, 'journal_control_number' => $recordId])->current();
     }
 
-    public function subscribe($userId, $recordId) {
-        $row = $this->getNew($userId, $recordId);
+    public function subscribe($userId, $recordId, $title, $author, $year) {
+        $row = $this->getNew($userId, $recordId, $title, $author, $year);
         $row->save();
         return $row->id;
     }
@@ -47,7 +50,56 @@ class Subscription extends Gateway implements \VuFind\Db\Table\DbTableAwareInter
         return $this->delete(['id' => $userId, 'journal_control_number' => $recordId]);
     }
 
-    public function getAll($userId) {
-        return $this->select(['id' => $userId]);
+    public function getAll($userId, $sort) {
+        $select = $this->getSql()->select()->where(['id' => $userId]);
+        $this->applySort($select, $sort);
+        return $this->selectWith($select);
+    }
+
+    public function get($userId, $sort, $start, $limit) {
+        $select = $this->getSql()->select()->where(['id' => $userId])->offset($start)->limit($limit);
+        $this->applySort($select, $sort);
+        return $this->selectWith($select);
+    }
+
+    /**
+     * Apply a sort parameter to a query on the resource table.
+     *
+     * @param \Zend\Db\Sql\Select $query Query to modify
+     * @param string              $sort  Field to use for sorting (may include 'desc'
+     * qualifier)
+     *
+     * @return void
+     */
+    public static function applySort($query, $sort)
+    {
+        // Apply sorting, if necessary:
+        $legalSorts = [
+            'journal_title', 'journal_title desc', 'journal_author', 'journal_author desc', 'journal_year', 'journal_year desc'
+        ];
+        if (!empty($sort) && in_array(strtolower($sort), $legalSorts)) {
+            // Strip off 'desc' to obtain the raw field name -- we'll need it
+            // to sort null values to the bottom:
+            $parts = explode(' ', $sort);
+            $rawField = trim($parts[0]);
+
+            // Start building the list of sort fields:
+            $order = [];
+
+            // The title field can't be null, so don't bother with the extra
+            // isnull() sort in that case.
+            if (strtolower($rawField) != 'title') {
+                $order[] = new Expression(
+                    'isnull(?)', [$rawField],
+                    [Expression::TYPE_IDENTIFIER]
+                );
+            }
+
+            // Apply the user-specified sort:
+            $order[] = $sort;
+
+            // Inject the sort preferences into the query object:
+            $query->order($order);
+        }
     }
 }

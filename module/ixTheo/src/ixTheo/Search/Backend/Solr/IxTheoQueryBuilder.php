@@ -22,7 +22,6 @@ class IxTheoQueryBuilder extends QueryBuilder
         if (is_a($query, 'VuFindSearch\Query\QueryGroup') || $query->getHandler() !== "BibleRangeSearch") {
             return parent::build($query);
         }
-
         $queryString = $query->getString();
         $newQuery = $this->getManipulatedQueryString($query);
         $result = parent::build($query);
@@ -55,6 +54,7 @@ class IxTheoQueryBuilder extends QueryBuilder
             $bibleReferences = ["9999999_9999999"];
         }
         $searchString = "{!bibleRangeParser}" . str_replace(":", "_", implode(',', $bibleReferences));
+        var_dump($searchString);
         return $searchString;
     }
 

@@ -12,10 +12,10 @@ class Options extends \VuFind\Search\Base\Options
     {
         parent::__construct($configLoader);
 
-        $this->defaultSort = 'title';
+        $this->defaultSort = 'journal_title';
         $this->sortOptions = [
-            'title' => 'sort_title', 'author' => 'sort_author',
-            'year DESC' => 'sort_year', 'year' => 'sort_year asc'
+            'journal_title' => 'sort_title', 'journal_author' => 'sort_author',
+            'journal_year DESC' => 'sort_year', 'journal_year' => 'sort_year asc'
         ];
     }
 

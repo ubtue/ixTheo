@@ -6,6 +6,7 @@
         fm_options = {
             bootstrap: true,
             title_label : "",
+            trigger_label: "<?=$this->transEsc("Feedback");?>",
             position: 'right-bottom',
             show_form: false,
             custom_html: custom_html,
@@ -13,9 +14,9 @@
             delayed_options : {
                 delay_success_milliseconds : 2000,
                 delay_fail_milliseconds : 2000,
-                sending : "Sending...",
-                send_fail : "Sending failed.",
-                send_success : "Feedback sent.",
+                sending : "<?=$this->transEsc("Sending...");?>",
+                send_fail : "<?=$this->transEsc("Sending failed.");?>",
+                send_success : "<?=$this->transEsc("Feedback sent.");?>",
                 fail_color : undefined,
                 success_color : undefined,
                 custom_html_success: undefined,
@@ -51,11 +52,11 @@
     function setMood(mood) {
         $("#feedback-message-input").val(mood);
         if (mood == '1') {
-            $("#feedback-message").html("Thanks. Anything else you’d like to add?");
+            $("#feedback-message").html('<?=$this->transEsc("Thanks. Anything else you’d like to add?");?>');
         } else if (mood == '2') {
-            $("#feedback-message").html("What could we have changed to make it even better?");
+            $("#feedback-message").html('<?=$this->transEsc("What could we have changed to make it even better?");?>');
         } else if (mood == '3') {
-            $("#feedback-message").html("Sorry to hear that. How can we improve?");
+            $("#feedback-message").html('<?=$this->transEsc("Sorry to hear that. How can we improve?");?>');
         } else {
             $("#feedback-message").html("&nbsp;");
         }

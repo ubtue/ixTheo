@@ -1,7 +1,8 @@
 <?php
 
 namespace ixTheo\Controller;
-use VuFind\Search\RecommendListener;
+use VuFind\Search\RecommendListener,
+    VuFind\Exception\ListPermission as ListPermissionException;
 
 class MyResearchController extends \VuFind\Controller\MyResearchController
 {
@@ -70,13 +71,27 @@ class MyResearchController extends \VuFind\Controller\MyResearchController
     }
 
     function confirmDeleteSubscription($deleteId, $deleteSource) {
+        var_dump("confirmDeleteSubscription");
 
     }
-    function performDeleteSubscription($deleteId, $deleteSource) {
+    function performDeleteSubscription($id, $deleteSource) {
+        // Force login:
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->forceLogin();
+        }
 
+        // Load/check incoming parameters:
+        if (empty($id)) {
+            throw new \Exception('Cannot delete empty ID!');
+        }
+
+        $table = $this->getTable('Subscription');
+        $table->unsubscribe($user->id, $id);
+        return true;
     }
 
     function DeleteSubscriptionAction() {
-
+        var_dump("DeleteSubscriptionAction");
     }
 }

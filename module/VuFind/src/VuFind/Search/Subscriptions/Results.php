@@ -35,85 +35,33 @@ class Results extends BaseResults
      */
     public function getFacetList($filter = null)
     {
-        // Make sure we have processed the search before proceeding:
-        if (is_null($this->user)) {
-            $this->performAndProcessSearch();
-        }
-
-        // If there is no filter, we'll use all facets as the filter:
-        if (is_null($filter)) {
-            $filter = $this->getParams()->getFacetConfig();
-        }
-
-        // Start building the facet list:
-        $retVal = [];
-
-        // Loop through every requested field:
-        $validFields = array_keys($filter);
-        foreach ($validFields as $field) {
-            if (!isset($this->facets[$field])) {
-                $this->facets[$field] = [
-                    'label' => $this->getParams()->getFacetLabel($field),
-                    'list' => []
-                ];
-                switch ($field) {
-                case 'tags':
-                    if ($this->list) {
-                        $tags = $this->list->getTags();
-                    } else {
-                        $tags = $this->user ? $this->user->getTags() : [];
-                    }
-                    foreach ($tags as $tag) {
-                        $this->facets[$field]['list'][] = [
-                            'value' => $tag->tag,
-                            'displayText' => $tag->tag,
-                            'count' => $tag->cnt,
-                            'isApplied' =>
-                                $this->getParams()->hasFilter("$field:" . $tag->tag)
-                        ];
-                    }
-                    break;
-                }
-            }
-            if (isset($this->facets[$field])) {
-                $retVal[$field] = $this->facets[$field];
-            }
-        }
-        return $retVal;
+        return [];
     }
 
     /**
      * Support method for performAndProcessSearch -- perform a search based on the
      * parameters passed to the object.
      *
-     * @return void
+     * @throws ListPermissionException
      */
     protected function performSearch()
     {
-        $list = $this->getListObject();
         $auth = $this->getAuthorizationService();
         $this->user = $auth ? $auth->getIdentity() : false;
+        $list = $this->getListObject();
 
-        // Make sure the user and/or list objects make it possible to view
-        // the current result set -- we need to check logged in status and
-        // list permissions.
         if (is_null($list) && !$this->user) {
-            throw new ListPermissionException(
-                'Cannot retrieve favorites without logged in user.'
-            );
+            throw new ListPermissionException('Cannot retrieve subscriptions without logged in user.');
         }
-
         $this->resultTotal = count($list->toArray());
-/*
+
         // Apply offset and limit if necessary!
         $limit = $this->getParams()->getLimit();
         if ($this->resultTotal > $limit) {
-            $rawResults = $resource->getFavorites(
-                $userId, $listId, $this->getTagFilters(),
-                $this->getParams()->getSort(), $this->getStartRecord() - 1, $limit
-            );
+            $table = $this->getTable('Subscription');
+            $list = $table->get($this->user->id, $this->getParams()->getSort(), $this->getStartRecord() - 1, $limit);
         }
-*/
+
         // Retrieve record drivers for the selected items.
         $recordsToRequest = [];
         foreach ($list as $row) {
@@ -129,17 +77,6 @@ class Results extends BaseResults
     }
 
     /**
-     * Get an array of tags being applied as filters.
-     *
-     * @return array
-     */
-    protected function getTagFilters()
-    {
-        $filters = $this->getParams()->getFilters();
-        return isset($filters['tags']) ? $filters['tags'] : [];
-    }
-
-    /**
      * Get the list object associated with the current search (null if no list
      * selected).
      *
@@ -148,24 +85,10 @@ class Results extends BaseResults
     public function getListObject()
     {
         // If we haven't previously tried to load a list, do it now:
-
         if ($this->list === false) {
             $table = $this->getTable('Subscription');
-            $this->list = $table->getAll(1);
+            $this->list = $table->getAll($this->user->id, $this->getParams()->getSort());
         }
-/*
-        if ($this->list === false) {
-            // Check the filters for a list ID, and load the corresponding object
-            // if one is found:
-            $filters = $this->getParams()->getFilters();
-            $listId = isset($filters['lists'][0]) ? $filters['lists'][0] : null;
-            if (null === $listId) {
-                $this->list = null;
-            } else {
-                $table = $this->getTable('UserList');
-                $this->list = $table->getExisting($listId);
-            }
-        }*/
         return $this->list;
     }
 }
