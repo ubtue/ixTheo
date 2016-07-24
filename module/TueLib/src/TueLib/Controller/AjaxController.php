@@ -61,7 +61,7 @@ class AjaxController extends \VuFind\Controller\AjaxController
         $mailContent .= "Cookies:        " . htmlentities($this->getRequest()->getCookie()->getFieldValue()) . "\n";
         $mailContent .= "----------------------------------------------------------------------------------------------\n";
 
-        mail("ixtheo2@listserv.uni-tuebingen.de", "Feedback", $mailContent);
+        mail("ixtheo@ub.uni-tuebingen.de", "Feedback", $mailContent);
 
         return $this->output(null, self::STATUS_OK);
     }

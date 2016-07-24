@@ -30,6 +30,7 @@ $config = array(
             'KeywordChainSearch' => 'ixTheo\Controller\Search\KeywordChainSearchController',
             'Pipeline' => 'ixTheo\Controller\Pipeline',
             'MyResearch' => 'ixTheo\Controller\MyResearchController',
+            'StaticPage' => 'ixTheo\Controller\StaticPageController',
         ],
     ],
     'controller_plugins' => [
@@ -51,6 +52,20 @@ $staticRoutes = array(
     'MyResearch/Subscriptions',
     'MyResearch/DeleteSubscription',
 );
+
+$config['router']['routes']['static-page'] = [
+    'type'    => 'Zend\Mvc\Router\Http\Segment',
+    'options' => [
+        'route'    => "/:page",
+        'constraints' => [
+            'page'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+        ],
+        'defaults' => [
+            'controller' => 'StaticPage',
+            'action'     => 'staticPage',
+        ]
+    ]
+];
 
 $routeGenerator = new \VuFind\Route\RouteGenerator();
 $routeGenerator->addRecordRoutes($config, $recordRoutes);

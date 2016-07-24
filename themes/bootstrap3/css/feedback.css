@@ -23,3 +23,15 @@
 .feedback-box textarea {
     width: 100%;
 }
+
+@media (max-width: 430px) {
+    .feedback_content, .feedback_trigger {
+        display: none;
+    }
+}
+
+@media (max-height: 400px) {
+.feedback_content, .feedback_trigger {
+    display: none;
+}
+}
