@@ -52,6 +52,6 @@ class RecordController extends \VuFind\Controller\RecordController
         $recordId = $driver->getUniqueId();
         $userId = $user->id;
 
-        return $this->createViewModel(["subscription" => empty($table->findExisting($userId, $recordId))]);
+        return $this->createViewModel(["subscription" => !($table->findExisting($userId, $recordId))]);
     }
 }
