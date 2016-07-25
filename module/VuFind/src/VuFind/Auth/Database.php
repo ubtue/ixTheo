@@ -112,7 +112,8 @@ class Database extends AbstractBase
         // in the code below.
         $params = [
             'firstname' => '', 'lastname' => '', 'username' => '',
-            'password' => '', 'password2' => '', 'email' => ''
+            'password' => '', 'password2' => '', 'email' => '',
+            'title' => '', 'institution' => '', 'country' => ''
         ];
         foreach ($params as $param => $default) {
             $params[$param] = $request->getPost()->get($param, $default);
@@ -152,6 +153,9 @@ class Database extends AbstractBase
             $user->password = $params['password'];
         }
         $user->save();
+
+        $ixTheoUser = $this->getDbTableManager()->get('IxTheoUser')->getNew($user->id, $params['title'], $params['institution'], $params['country']);
+        $ixTheoUser->save();
         return $user;
     }
 

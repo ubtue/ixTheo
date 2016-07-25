@@ -28,9 +28,9 @@ class Subscription extends Gateway implements \VuFind\Db\Table\DbTableAwareInter
     public function getNew($userId, $recordId, $title, $author, $year) {
         $row = $this->createRow();
         $row->id = $userId;
-        $row->journal_title = $title;
-        $row->journal_author = $author;
-        $row->journal_year = $year;
+        $row->journal_title = $title ?: "";
+        $row->journal_author = $author ?: "";
+        $row->journal_year = $year ?: "";
         $row->journal_control_number = $recordId;
         $row->last_issue_date = date('Y-m-d\TH:i:s\Z');
         return $row;
@@ -78,28 +78,7 @@ class Subscription extends Gateway implements \VuFind\Db\Table\DbTableAwareInter
             'journal_title', 'journal_title desc', 'journal_author', 'journal_author desc', 'journal_year', 'journal_year desc'
         ];
         if (!empty($sort) && in_array(strtolower($sort), $legalSorts)) {
-            // Strip off 'desc' to obtain the raw field name -- we'll need it
-            // to sort null values to the bottom:
-            $parts = explode(' ', $sort);
-            $rawField = trim($parts[0]);
-
-            // Start building the list of sort fields:
-            $order = [];
-
-            // The title field can't be null, so don't bother with the extra
-            // isnull() sort in that case.
-            if (strtolower($rawField) != 'title') {
-                $order[] = new Expression(
-                    'isnull(?)', [$rawField],
-                    [Expression::TYPE_IDENTIFIER]
-                );
-            }
-
-            // Apply the user-specified sort:
-            $order[] = $sort;
-
-            // Inject the sort preferences into the query object:
-            $query->order($order);
+            $query->order([$sort]);
         }
     }
 }
