@@ -26,6 +26,7 @@
  * @link     https://vufind.org/wiki/development Wiki
  */
 namespace VuFind\View\Helper\Root;
+
 use Zend\ServiceManager\ServiceManager;
 
 /**
@@ -230,7 +231,20 @@ class Factory
     {
         $config = $sm->getServiceLocator()->get('VuFind\Config')->get('config');
         $url = isset($config->Piwik->url) ? $config->Piwik->url : false;
-        $siteId = isset($config->Piwik->site_id) ? $config->Piwik->site_id : 1;
+        $siteId = -1;
+        if (isset($config->Piwik->site_ids)) {
+            $siteIds = array_reduce(explode(",", $config->Piwik->site_ids), function ($array, $value) {
+                $values = array_map("trim", explode(":", $value));
+                $array[$values[0]] = $values[1];
+                return $array;
+            }, []);
+            $siteId = $siteIds[$_SERVER['HTTP_HOST']] ?: $siteId;
+        } else {
+            $siteId = $config->Piwik->site_id ?: $siteId;
+        }
+        if ($siteId == -1) {
+            return new Piwik("", null, false);
+        }
         $customVars = isset($config->Piwik->custom_variables)
             ? $config->Piwik->custom_variables
             : false;
