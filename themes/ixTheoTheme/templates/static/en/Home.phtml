@@ -90,56 +90,6 @@ $panelWidth = "col-md-6";
     </div>
   </div>
 </div>
-<!--<div class="col-md-6" style="text-align:justify;">
-    <div class="panel <?= $panelClass; ?>">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <i class="fa fa-list"></i> Browsing
-            </h4>
-        </div>
-        <div id="<?= $panelId++; ?>" class="panel-collapse ">
-            <div class="panel-body">
-                <input type="checkbox" class="read-more-state" id="post-2" />
-                <div class="read-more-wrap">
-                    <p>THIS IS VERY LONG AND EXTENSIVE PLAIN TEXT THAT IS LONGER THAN WE EXPECTED</p>
-                    <div class="read-more-target">
-                        <h3>IxTheo-Themen Browsing</h3>
-                        <p>Es öffnet sich ein weiterer Suchschlitz, in den Sie Ihren Suchbegriff eingeben. Er dient als
-                            Startpunkt des Browsens.</p>
-                        <p>Beispiel 1: geben Sie den Begriff „Gott“ ein. Sie sehen dann eine spezielle Liste mit
-                            Schlagwortfolgen, in denen der Begriff Gott vorkommt.</p>
-                        <p>Beispiel 2: geben den Begriff „Gott“ und „Bibel“ ein. Sie sehen dann eine spezielle Liste mit
-                            Schlagwortfolgen, in denen der Begriff „Gott“ und „Bibel“ vorkommt.</p>
-                        <p>Wenn Sie rechts oben auf der Website die Sprache auf Englisch ändern, werden die Begriffe im
-                            Englischen angezeigt, wenn sie in der Sprachkonkordanz vorhanden sind.</p>
-
-                        <h3>Katalogbrowsen</h3>
-                        <p>Die Standard-Browsing Funktion der Software des IxTheo (VuFind) ermöglicht das Browsen in
-                            verschiedenen Feldern: DDC-Klassifikation, IxTheo-Klassifikation, Thema (Schlagwort), Verfasser
-                            und
-                            Verlag. In einem weiteren Schritt kann hier das Browsing durch andere Felder eingeschränkt werden.</p>
-                        <p>Beispiel: Wählen Sie „Verfasser“, dann „Nach IxTheo-Klassifikation“, dann „HB Altes Testament“
-                            aus.
-                            Sie sehen dann eine Liste von Autoren, die im Bereich des Alten Testaments publiziert haben,
-                            sortiert nach Häufigkeit der Titel im IxTheo.</p>
-
-                        <h3>Alphabetisch browsen</h3>
-                        <p>Hier können Sie bestimmen, an welcher Stelle des Alphabets Sie in das Browsing einsteigen wollen.
-                            Nach der Auswahl des Browsingaspektes (möglich sind „Thema“, Verfasser, Titel und
-                            DDC-Klassifikation) geben Sie den Buchstaben ein, ab dem das Browsing starten soll.</p>
-                        <p>Beispiel 1: Wählen Sie „Nach Verfasser“ und geben Sie ein: ab „Z“. Es werden dann alle Verfasser
-                            aufgelistet, die mit dem Buchstaben Z beginnen.</p>
-                        <p>Beispiel 2: Wählen Sie „Nach Titel“ und geben Sie ein: ab „Tr“. Es werden dann alle Titel
-                            aufgelistet, die mit der Buchstabenfolge Tr beginnen.</p>
-                    </div>
-                </div>
-                <label for="post-2" class="read-more-trigger"></label>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-
 <div class="col-md-6" style="text-align:justify;">
   <div class="panel <?= $panelClass; ?>">
     <div class="panel-heading">
@@ -245,7 +195,7 @@ $panelWidth = "col-md-6";
               New Testament and the Vulgate. In a few cases, there are ambiguities due to accidental similarities in the way some Bible book 
               names are abbreviated in different languages. For example, the abbreviation “es” is used for Isaiah in French, but for Exodus in 
               Italian. In such cases, it is necessary to decide which abbreviations are allowed in order to avoid a conflict. You can access the 
-              list of abbreviations allowed here: (Link).</p>
+              list of abbreviations allowed <a href="<?=$SERVER_NAME . '/Bible_abbreviation.pdf'?>">here</a></p>
             <p>Enter the passage you are looking for in the following manner:</p>
             <p>Abbreviation of the Bible book chapter,verses</p>
             <b>Examples:</b>
