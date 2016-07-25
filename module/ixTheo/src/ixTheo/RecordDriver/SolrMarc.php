@@ -154,7 +154,7 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
         $recordId = $this->getUniqueId();
         $userId = $user->id;
 
-        if (!empty($table->findExisting($userId, $recordId))) {
+        if ($table->findExisting($userId, $recordId)) {
             return "Exists";
         }
         return $table->subscribe($userId, $recordId, $this->getTitle(), $this->getAuthorsAsString(), $this->getPublicationDates()[0]);
