@@ -70,8 +70,10 @@
         </td>
       </tr>
       <? endif; ?>
+<?
 
-      <? $authors = $this->driver->getDeduplicatedAuthors(); ?>
+?>
+      <? $authors = $this->driver->getDeduplicatedAuthors();?>
       <? if (isset($authors['main']) && !empty($authors['main'])): ?>
       <tr>
           <th><?=$this->transEsc(count($authors['main']) > 1 ? 'Main Authors' : 'Main Author')?>: </th>

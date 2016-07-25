@@ -1,6 +1,7 @@
 <?php
 
 namespace ixTheo\RecordDriver;
+use VuFind\Exception\LoginRequired as LoginRequiredException;
 
 class SolrMarc extends \VuFind\RecordDriver\SolrMarc
 {
@@ -128,5 +129,47 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
     {
         return (isset($this->fields['mediatype'])) ? 
              $this->fields['mediatype'] : '';
+    }
+
+    private function getAuthorsAsString() {
+        $author_implode = function ($array) {
+                if (is_null($array)) {
+                    return null;
+                }
+                return implode(", ", array_filter($array, function($entry) {
+                    return empty($entry) ? false : true;
+                }));
+            };
+        return $author_implode(array_map($author_implode, array_map("array_keys", $this->getDeduplicatedAuthors())));
+    }
+
+    public function subscribe($params, $user)
+    {
+
+        if (!$user) {
+            throw new LoginRequiredException('You must be logged in first');
+        }
+
+        $table = $this->getDbTable('Subscription');
+        $recordId = $this->getUniqueId();
+        $userId = $user->id;
+
+        if (!empty($table->findExisting($userId, $recordId))) {
+            return "Exists";
+        }
+        return $table->subscribe($userId, $recordId, $this->getTitle(), $this->getAuthorsAsString(), $this->getPublicationDates()[0]);
+    }
+
+    public function unsubscribe($params, $user)
+    {
+        if (!$user) {
+            throw new LoginRequiredException('You must be logged in first');
+        }
+
+        $table = $this->getDbTable('Subscription');
+        $recordId = $this->getUniqueId();
+        $userId = $user->id;
+
+        return $table->unsubscribe($userId, $recordId);
     }
 }

@@ -1,20 +1,20 @@
 <div class="feedback-box">
-    <h2>What do you think?</h2>
+    <h2><?$this->transEsc("What do you think?");?></h2>
 
     <div class="radio">
-        <label><input type="radio" class="feedback-radio" name="feedback-radio" onclick="setMood('1')">It was great</label>
+        <label><input type="radio" class="feedback-radio" name="feedback-radio" onclick="setMood('1')"><?=$this->transEsc("It was great");?></label>
     </div>
     <div class="radio">
-        <label><input type="radio" class="feedback-radio" name="feedback-radio" onclick="setMood('2')">It was okay</label>
+        <label><input type="radio" class="feedback-radio" name="feedback-radio" onclick="setMood('2')"><?=$this->transEsc("It was okay");?></label>
     </div>
     <div class="radio">
-        <label><input type="radio" class="feedback-radio" name="feedback-radio" onclick="setMood('3')">It was disappointing</label>
+        <label><input type="radio" class="feedback-radio" name="feedback-radio" onclick="setMood('3')"><?=$this->transEsc("It was disappointing");?></label>
     </div>
     <div id="feedback-form">
         <div id="feedback-message"></div>
         <input id="feedback-message-mood" type="hidden" name="mood" value="0" width="100%"/>
-        <input id="feedback-message-email" type="email" name="email" placeholder="Optional E-Mail Address">
-        <textarea id="feedback-message-text" placeholder="In my opinion..."></textarea><br>
-        <button id="feedback-submit">Submit feedback</button>
+        <input id="feedback-message-email" type="email" name="email" placeholder="<?=$this->transEsc("Optional E-Mail Address");?>">
+        <textarea id="feedback-message-text" placeholder="<?=$this->transEsc("In my opinion...");?>"></textarea><br>
+        <button id="feedback-submit"><?=$this->transEsc("Submit feedback");?></button>
     </div>
 </div>

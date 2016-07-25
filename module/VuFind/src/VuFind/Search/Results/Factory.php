@@ -77,4 +77,20 @@ class Factory
         );
         return $solr;
     }
+
+    /**
+     * Factory for Subscriptions results object.
+     *
+     * @param ServiceManager $sm Service manager.
+     *
+     * @return Subscriptions
+     */
+    public static function getSubscriptions(ServiceManager $sm)
+    {
+        $factory = new PluginFactory();
+        $obj = $factory->createServiceWithName($sm, 'subscriptions', 'Subscriptions');
+        $init = new \ZfcRbac\Initializer\AuthorizationServiceInitializer();
+        $init->initialize($obj, $sm);
+        return $obj;
+    }
 }
