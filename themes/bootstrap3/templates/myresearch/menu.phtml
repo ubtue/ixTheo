@@ -5,7 +5,7 @@
       <i class="fa fa-fw fa-star"></i> <?=$this->transEsc('Favorites')?>
     </a>
     <a href="<?=$this->url('myresearch-subscriptions')?>" class="list-group-item<?=$this->active == 'subscriptions' ? ' active' : ''?>">
-      <i class="fa fa-fw fa-archive"></i> <?=$this->transEsc('Subscriptions')?>
+      <i class="fa fa-fw fa-bell"></i> <?=$this->transEsc('Subscriptions')?>
     </a>
   <? endif; ?>
   <? if ('ils-none' !== $this->ils()->getOfflineMode()): ?>
