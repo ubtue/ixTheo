@@ -116,7 +116,7 @@
         <?=$this->render('header.phtml')?>
       </div>
       <div class="container">
-        <nav class="nav searchbox hidden-lg hidden-print">
+        <nav class="nav searchbox hidden-lg hidden-print" style="background: white; padding: 20px; border-top-left-radius: 4px; border-top-right-radius: 4px;">
           <?=$this->layout()->searchbox ?>
         </nav>
         <? if((!isset($this->layout()->showBreadcrumbs) || $this->layout()->showBreadcrumbs == true)
