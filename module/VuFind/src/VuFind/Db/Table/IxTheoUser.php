@@ -11,13 +11,10 @@ class IxTheoUser extends Gateway implements \VuFind\Db\Table\DbTableAwareInterfa
         parent::__construct('ixtheo_user', 'VuFind\Db\Row\IxTheoUser');
     }
 
-    public function getNew($userId, $title, $institution, $country)
+    public function getNew($userId)
     {
         $row = $this->createRow();
         $row->id = $userId;
-        $row->title = $title;
-        $row->institution = $institution;
-        $row->country = $country;
         return $row;
     }
 }
