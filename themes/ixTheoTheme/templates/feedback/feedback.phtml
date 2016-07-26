@@ -28,11 +28,13 @@
         fm.init(fm_options);
 
         setMood('0');
-        $('#feedback-submit').click(function(event){
-            var mood = $("#feedback-message-mood").val();
+        $('#feedback-submit').click(function(event) {
+            var mood = $("#feedback_radio1:checked").val() ? 1 : 
+                           ($("#feedback_radio2:checked").val() ? 2 : 
+                                ($("#feedback_radio3:checked").val() ? 3 : 0));
             var message = $("textarea#feedback-message-text").val();
             var email = $("#feedback-message-email").val();
-            if ((!mood || mood == '0') && !message) {
+            if (mood == 0 && !message) {
                 return;
             }
             $.ajax({url: "/ajax/feedback",
@@ -50,7 +52,6 @@
     });
 
     function setMood(mood) {
-        $("#feedback-message-input").val(mood);
         if (mood == '1') {
             $("#feedback-message").html('<?=$this->transEsc("Thanks. Anything else you’d like to add?");?>');
         } else if (mood == '2') {
