@@ -1,3 +1,6 @@
+<? $message = 'Hallo'
+?>
+
 <style>
 .read-more-state {
   display: none;
@@ -17,7 +20,7 @@
 }
 
 .read-more-state ~ .read-more-trigger:before {
-  content: 'Show more';
+  content: 'Show more'; 
 }
 
 .read-more-state:checked ~ .read-more-trigger:before {
@@ -249,7 +252,7 @@ $panelWidth = "col-md-6";
                              Französischen für das Jesajabuch, im Italienischen aber für das Buch Exodus verwendet. In diesen Fällen musste 
                              eine Entscheidung getroffen werden, welche Abkürzungen zugelassen werden, damit keine uneindeutigen Treffer 
                              erzeugt werden. Die Liste der gültigen Abkürzungen für die Bibelstellensuche finden Sie 
-                             <a href="<?=$SERVER_NAME . '/Bible_abbreviation.pdf'?>">hier</a>.</p>
+                             <a href="<?=$SERVER_NAME . '/Bible_abbreviation.pdf'?>" target="_blank"><b>hier</b></a>.</p>
                          <p>Geben Sie die gesuchte Stelle in folgender Form ein:
                              Abkürzung_des_Bibelbuches Kapitel, Versangaben</p>
                              <b>Beispiele:</b>
@@ -275,7 +278,7 @@ $panelWidth = "col-md-6";
                             siebenstellige numerische Zahlenfolge übersetzt, mit der im Anschluss gerechnet werden kann. Dabei entsprechen die beiden ersten 
                             Zahlen dem Bibelbuch, die folgenden drei Stellen dem Kapitel und die letzten beiden Zahlen dem Vers. Mk 5,25-34 wird folgendermaßen 
                             umgesetzt: 0200525_0200534. Um die Nähe der gefundenen Stellen zur gesuchten Stelle zu berechnen, wird ein Scoring-Wert gebildet. 
-                            Weiterführende Informationen finden sich <a href=https://github.com/ubtue/ixTheo/wiki/Bibelstellensuche---Technischer-%C3%9Cberblick>hier</a><p/>
+                            Weiterführende Informationen finden sich <a href=https://github.com/ubtue/ixTheo/wiki/Bibelstellensuche---Technischer-%C3%9Cberblick><b>hier</b></a><p/>
                     </div>
                 </div>
                 <label for="post-4" class="read-more-trigger"></label>
