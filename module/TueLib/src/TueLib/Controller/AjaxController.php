@@ -34,7 +34,7 @@ namespace TueLib\Controller;
  */
 class AjaxController extends \VuFind\Controller\AjaxController
 {
-    protected $moods = ["1" => "Gut", "2" => "Okay", "3" => "Schlecht", "" => "Keine Angaben"];
+    protected $moods = ["1" => "Gut", "2" => "Okay", "3" => "Schlecht", "0" => "Keine Angaben", "" => "Keine Angaben"];
 
     public function feedbackAction()
     {
@@ -43,9 +43,9 @@ class AjaxController extends \VuFind\Controller\AjaxController
         $mood = htmlentities($this->getRequest()->getPost()->get('mood'));
         $message = htmlentities($this->getRequest()->getPost()->get('message'));
         $email = htmlentities($this->getRequest()->getPost()->get('email'));
-
-        if (($mood !== '' || $mood !== '1' && $mood !== '2' && $mood !== '3') || strlen($message) === 0) {
-            return $this->output(null, self::STATUS_ERROR);
+       
+        if (!array_key_exists($mood, $this->moods)) {
+            return $this->notFoundAction();
         }
 
         $mailContent = "Es war: " . $this->moods[$mood] . ".\n\n";
