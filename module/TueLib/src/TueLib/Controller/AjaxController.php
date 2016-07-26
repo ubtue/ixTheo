@@ -49,7 +49,7 @@ class AjaxController extends \VuFind\Controller\AjaxController
         }
 
         $mailContent = "Es war: " . $this->moods[$mood] . ".\n\n";
-        $mailContent .= $message . "\n\n";
+        $mailContent .= html_entity_decode($message, ENT_COMPAT, UTF-8) . "\n\n";
         if (!empty($email)){
             $mailContent .= "\n";
             $mailContent .= "E-Mail: " . $email;
@@ -61,7 +61,7 @@ class AjaxController extends \VuFind\Controller\AjaxController
         $mailContent .= "Cookies:        " . htmlentities($this->getRequest()->getCookie()->getFieldValue()) . "\n";
         $mailContent .= "----------------------------------------------------------------------------------------------\n";
 
-        mail("ixtheo@ub.uni-tuebingen.de", "Feedback", $mailContent);
+        mail("ixtheo@ub.uni-tuebingen.de", "Feedback-IxTheo", $mailContent, 'Content-Type: text/plain; charset=UTF-8;');
 
         return $this->output(null, self::STATUS_OK);
     }
