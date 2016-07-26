@@ -1,10 +1,7 @@
 <?
-$countries = [
-    "Afghanistan", "Åland Islands", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua And Barbuda", "Argentina", "Armenia", "Aruba", "Ascension Island", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia And Herzegovina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory", "British Virgin Islands", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burma", "Burundi", "Cambodia", "Cameroon", "Canada", "Canary Islands", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (keeling) Islands", "Colombia", "Comoros", "Congo", "Congo", "Cook Islands", "Costa Rica", "CÔte D'ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Diego Garcia", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "European Union", "Falkland Islands (malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "French Guiana", "French Polynesia", "French Southern Territories", "Gabon", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Heard Island And Mcdonald Islands", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle Of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Lao People's Democratic Republic", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macao", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "North Korea", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Palestinian Territory", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Republic of Macedonia", "RÉunion", "Romania", "Russian Federation", "Rwanda", "Saint Helena", "Saint Kitts And Nevis", "Saint Lucia", "Saint Pierre And Miquelon", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome And Principe", "Saudi Arabia", "Saudi–Iraqi neutral zone", "Senegal", "Serbia", "Serbien und Montenegro", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Georgia And The South Sandwich Islands", "South Korea", "Soviet Union", "Spain", "Sri Lanka", "Sudan", "Suriname", "Svalbard And Jan Mayen", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "The Gambia", "Togo", "Tokelau", "Tonga", "Trinidad And Tobago", "Tristan da Cunha", "Tunisia", "Turkey", "Turkmenistan", "Turks And Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Viet Nam", "Virgin Islands", "Wallis And Futuna", "Western Sahara", "Yemen", "Zambia", "Zimbabwe"
-];
-$titles = [
-    "Mr", "Mrs"
-];
+$countries = VuFind\Auth\Database::$countries;
+$sexes = VuFind\Auth\Database::$sexes;
+$titles = VuFind\Auth\Database::$titles;
 ?>
 
 <div class="form-group">
@@ -39,13 +36,22 @@ $titles = [
 </div>
 <hr/>
 <div class="form-group">
-    <label class="col-sm-4 control-label" for="account_title"></label>
+    <label class="col-sm-4 control-label" for="account_title"><?= $this->transEsc('Title') ?>:</label>
     <div class="col-sm-2">
+        <select name="sex" class="form-control">
+            <option></option>
+            <? foreach ($sexes as $sex): ?>
+                <? $selected = $this->request->get('sex') === $sex ? 'selected' : ''; ?>
+                <option <?= $selected; ?> value="<?= $sex; ?>"><?= $this->transEsc($sex); ?></option>
+            <? endforeach; ?>
+        </select>
+    </div>
+    <div class="col-sm-6">
         <select name="title" class="form-control">
             <option></option>
             <? foreach ($titles as $title): ?>
                 <? $selected = $this->request->get('title') == $title ? 'selected' : ''; ?>
-                <option <?=$selected;?> value="<?= $title; ?>"><?= $this->transEsc($title); ?></option>
+                <option <?= $selected; ?> value="<?= $title; ?>"><?= $this->transEsc($title); ?></option>
             <? endforeach; ?>
         </select>
     </div>
@@ -65,17 +71,30 @@ $titles = [
 </div>
 <div class="form-group">
     <label class="col-sm-4 control-label" for="account_institution"><?= $this->transEsc('Institution') ?>:</label>
-    <div class="col-md-4">
+    <div class="col-md-8">
         <input id="account_institution" type="text" name="institution"
                value="<?= $this->escapeHtmlAttr($this->request->get('institution')) ?>"
-               placeholder="" class="form-control"/>
+               placeholder="<?= $this->transEsc('Institution') ?>" class="form-control"/>
     </div>
+</div>
+
+<div class="form-group">
+    <label class="col-sm-4 control-label" for="account_country"><?= $this->transEsc('Country and Language') ?>
+        :</label>
     <div class="col-md-4">
-        <select  id="account_country" name="country" class="form-control">
+        <select id="account_country" name="country" class="form-control">
             <option></option>
             <? foreach ($countries as $country): ?>
                 <? $selected = $this->request->get('country') == $country ? 'selected' : ''; ?>
-                <option <?=$selected;?> value="<?= $country; ?>"><?= $this->transEsc($country); ?></option>
+                <option <?= $selected; ?> value="<?= $country; ?>"><?= $this->transEsc($country); ?></option>
+            <? endforeach; ?>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <select id="account_country" name="language" class="form-control">
+            <? foreach ($this->layout()->allLangs as $langCode => $langName): ?>
+                <? $selected = $this->layout()->userLang === $langCode ? 'selected' : '';?>
+                <option <?= $selected; ?> value="<?= $langCode; ?>"><?=$this->displayLanguageOption($langName)?></option>
             <? endforeach; ?>
         </select>
     </div>
