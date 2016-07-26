@@ -1,6 +1,3 @@
-<? $message = 'Hallo'
-?>
-
 <style>
 .read-more-state {
   display: none;
@@ -19,12 +16,13 @@
   max-height: 999em;
 }
 
+
 .read-more-state ~ .read-more-trigger:before {
-  content: 'Show more'; 
+  content: 'Mehr'; 
 }
 
 .read-more-state:checked ~ .read-more-trigger:before {
-  content: 'Show less';
+  content: 'Weniger';
 }
 
 .read-more-trigger {
