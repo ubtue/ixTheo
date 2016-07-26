@@ -47,7 +47,6 @@ class AjaxController extends \VuFind\Controller\AjaxController
         if (!array_key_exists($mood, $this->moods)) {
             return $this->notFoundAction();
         }
-var_dump("MOOD: " . $mood);
         $mailContent = "Rückmeldung: " . $this->moods[$mood] . ".\n\n";
         $mailContent .= html_entity_decode($message, ENT_COMPAT, UTF-8) . "\n\n";
         if (!empty($email)){
