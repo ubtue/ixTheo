@@ -264,6 +264,7 @@
    <field name="topic_standardized_fr" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_non_standardized_fr" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="is_superior_work" type="boolean" indexed="false" stored="true" multiValued="false"/>
+   <field name="is_subscribable" type="boolean" indexed="false" stored="true" multiValued="false"/>
    <field name="reviews" type="text" indexed="false" stored="true" multiValued="true"/>
    <field name="reviewed_records" type="text" indexed="false" stored="true" multiValued="true"/>
    <field name="superior_ppn" type="string" indexed="true" stored="true" multiValued="true"/>
