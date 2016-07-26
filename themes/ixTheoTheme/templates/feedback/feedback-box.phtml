@@ -10,10 +10,17 @@
     <div class="radio">
         <label><input type="radio" class="feedback-radio" name="feedback_radio" id="feedback_radio3" onclick="setMood('3')" value="3"><?=$this->transEsc("It was disappointing");?></label>
     </div>
+    </p>
+    <div class="radio">
+        <label><input type="radio" class="feedback-radio" name="feedback_radio"  id="feedback_radio4" onclick="setMood('4')" value="4"><?=$this->transEsc("Report an error");?></label>
+    </div>
     <div id="feedback-form">
         <div id="feedback-message"></div>
         <input id="feedback-message-email" type="email" name="email" placeholder="<?=$this->transEsc("Optional E-Mail Address");?>">
-        <textarea id="feedback-message-text" placeholder="<?=$this->transEsc("In my opinion...");?>"></textarea><br>
+        <textarea id="feedback-message-text" placeholder="<?=$this->transEsc("In my opinion.../ I would like to report...");?>"></textarea><br>
         <button id="feedback-submit"><?=$this->transEsc("Submit feedback");?></button>
+        <div>
+            <font size=1><?=$this->transEsc("Feedback_Disclaimer");?></font>
+        </div>
     </div>
 </div>

@@ -31,7 +31,9 @@
         $('#feedback-submit').click(function(event) {
             var mood = $("#feedback_radio1:checked").val() ? 1 : 
                            ($("#feedback_radio2:checked").val() ? 2 : 
-                                ($("#feedback_radio3:checked").val() ? 3 : 0));
+                                ($("#feedback_radio3:checked").val() ? 3 : 
+                                    ($("#feedback_radio4:checked").val() ? 4 : 0)));
+                                      
             var message = $("textarea#feedback-message-text").val();
             var email = $("#feedback-message-email").val();
             if (mood == 0 && !message) {
@@ -58,8 +60,14 @@
             $("#feedback-message").html('<?=$this->transEsc("What could we have changed to make it even better?");?>');
         } else if (mood == '3') {
             $("#feedback-message").html('<?=$this->transEsc("Sorry to hear that. How can we improve?");?>');
+        } else if (mood == '4') {
+            $("#feedback-message").html('<?=$this->transEsc("Please describe the error");?>');
         } else {
             $("#feedback-message").html("&nbsp;");
         }
+    }
+    
+    function toggle() {
+      ($("#feedback_radio1:checked").val()) ? $("#feedback_radio1:checked") = false : $("#feedback_radio1:checked") = true;
     }
 </script>
