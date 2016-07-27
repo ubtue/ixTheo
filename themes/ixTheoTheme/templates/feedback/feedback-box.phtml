@@ -15,8 +15,8 @@
         <label><input type="radio" class="feedback-radio" name="feedback_radio"  id="feedback_radio4" onclick="setMood('4')" value="4"><?=$this->transEsc("Report an error");?></label>
     </div>
     <div id="feedback-form">
-        <div id="feedback-message"></div>
-        <input id="feedback-message-email" type="email" name="email" placeholder="<?=$this->transEsc("Optional E-Mail Address");?>">
+       <div id="feedback-message"></div>
+       <input id="feedback-message-email" type="email" name="email" placeholder="<?=$this->transEsc("Your email address if you wish an answer");?>" size="36">
         <textarea id="feedback-message-text" placeholder="<?=$this->transEsc("In my opinion.../ I would like to report...");?>"></textarea><br>
         <button id="feedback-submit"><?=$this->transEsc("Submit feedback");?></button>
         <div>
