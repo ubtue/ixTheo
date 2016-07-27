@@ -122,7 +122,7 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
         return $this->fields['is_superior_work'];
     }
 
-    public function isSubsribable() {
+    public function isSubscribable() {
         return $this->fields['is_subscribable'];
     }
 
