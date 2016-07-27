@@ -51,7 +51,7 @@
       </noscript>
     </li>
   <? endif; ?>
-  <? if ($this->driver->isSuperiorWork()):?>
+  <? if ($this->driver->isSubscribable()):?>
   <li><a class="subscribe-record <?=$controllerClass?>" data-lightbox href="<?=$this->recordLink()->getActionUrl($this->driver, 'Subscribe')?>" rel="nofollow"><i class="fa fa-archive"></i> <?=$this->transEsc('Subscribe')?></a></li>
   <? endif; ?>
 </ul>

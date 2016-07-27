@@ -195,7 +195,7 @@
         <a href="<?=$this->recordLink()->getActionUrl($this->driver, 'Save')?>" class="save-record modal-link" id="<?=$this->driver->getUniqueId() ?>" title="<?=$this->transEsc('Add to favorites')?>">
           <i class="fa fa-fw fa-star"></i>
         </a><br/>
-        <? if ($this->driver->isSuperiorWork()):?>
+        <? if ($this->driver->isSubscribable()):?>
           <a class="subscribe-record save-record modal-link" data-lightbox  id="<?=$this->driver->getUniqueId() ?>" href="<?=$this->recordLink()->getActionUrl($this->driver, 'Subscribe')?>" rel="nofollow" title="<?=$this->transEsc('Subscribe')?>">
             <i class="fa fa-fw fa-bell"></i>
           </a>

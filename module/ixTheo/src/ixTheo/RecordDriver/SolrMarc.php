@@ -122,6 +122,10 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
         return $this->fields['is_superior_work'];
     }
 
+    public function isSubsribable() {
+        return $this->fields['is_subscribable'];
+    }
+
     /**
      * Get the mediatype
      */
