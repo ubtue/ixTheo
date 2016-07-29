@@ -2,19 +2,25 @@
     <h2><?$this->transEsc("What do you think?");?></h2>
 
     <div class="radio">
-        <label><input type="radio" class="feedback-radio" name="feedback-radio" onclick="setMood('1')"><?=$this->transEsc("It was great");?></label>
+        <label><input type="radio" class="feedback-radio" name="feedback_radio" id="feedback_radio1" onclick="setMood('1')" value="1"><?=$this->transEsc("It was great");?></label>
     </div>
     <div class="radio">
-        <label><input type="radio" class="feedback-radio" name="feedback-radio" onclick="setMood('2')"><?=$this->transEsc("It was okay");?></label>
+        <label><input type="radio" class="feedback-radio" name="feedback_radio" id="feedback_radio2" onclick="setMood('2')" value="2"><?=$this->transEsc("It was okay");?></label>
     </div>
     <div class="radio">
-        <label><input type="radio" class="feedback-radio" name="feedback-radio" onclick="setMood('3')"><?=$this->transEsc("It was disappointing");?></label>
+        <label><input type="radio" class="feedback-radio" name="feedback_radio" id="feedback_radio3" onclick="setMood('3')" value="3"><?=$this->transEsc("It was disappointing");?></label>
+    </div>
+    </p>
+    <div class="radio">
+        <label><input type="radio" class="feedback-radio" name="feedback_radio"  id="feedback_radio4" onclick="setMood('4')" value="4"><?=$this->transEsc("Report an error");?></label>
     </div>
     <div id="feedback-form">
-        <div id="feedback-message"></div>
-        <input id="feedback-message-mood" type="hidden" name="mood" value="0" width="100%"/>
-        <input id="feedback-message-email" type="email" name="email" placeholder="<?=$this->transEsc("Optional E-Mail Address");?>">
-        <textarea id="feedback-message-text" placeholder="<?=$this->transEsc("In my opinion...");?>"></textarea><br>
+       <div id="feedback-message"></div>
+       <input id="feedback-message-email" type="email" name="email" placeholder="<?=$this->transEsc("Your email address if you wish an answer");?>" size="36">
+        <textarea id="feedback-message-text" placeholder="<?=$this->transEsc("In my opinion.../ I would like to report...");?>"></textarea><br>
         <button id="feedback-submit"><?=$this->transEsc("Submit feedback");?></button>
+        <div>
+            <font size=1><?=$this->transEsc("Feedback_Disclaimer");?></font>
+        </div>
     </div>
 </div>
