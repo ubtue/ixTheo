@@ -54,7 +54,6 @@ class IxTheoQueryBuilder extends QueryBuilder
             $bibleReferences = ["9999999_9999999"];
         }
         $searchString = "{!bibleRangeParser}" . str_replace(":", "_", implode(',', $bibleReferences));
-        var_dump($searchString);
         return $searchString;
     }
 
