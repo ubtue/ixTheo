@@ -163,7 +163,7 @@
           <th><?=$this->transEsc('In')?>: </th>
           <td>
             <? foreach ($ids_and_titles as $id => $title): ?>
-              <a href="<?=$id?>"><?=$this->escapeHtml($title[0])?></a>
+              <a href="<?=$this->url("record", array("id" => $id));?>"><?=$this->escapeHtml($title[0])?></a>
               <br/>
             <? endforeach; ?>
             <?=implode(', ', $infos);?>
