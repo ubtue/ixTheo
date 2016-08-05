@@ -169,6 +169,9 @@ class Database extends AbstractBase
         $ixTheoUser->language = $params['language'];
         $ixTheoUser->save();
 
+	// Update the TAD access flag:
+	exec("/usr/local/bin/set_tad_access_flag.sh " . $user->id);
+
         return $user;
     }
 
