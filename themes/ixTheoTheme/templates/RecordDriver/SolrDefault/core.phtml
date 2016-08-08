@@ -1,9 +1,13 @@
 <?
-  if($loggedin = $this->auth()->isLoggedIn()) {
+  if ($loggedin = $this->auth()->isLoggedIn()) {
     $user_id = $loggedin->id;
     $loggedin = true;
+    $can_use_tad = $this->driver->canUseTAD($user_id);
+    echo("CAN USE TAD: " . $can_use_tad);
   } else {
     $user_id = false;
+    $can_use_tad = false;
+    echo("NOt LOGGED IN");
   }
 ?>
 <div class="row" vocab="http://schema.org/" resource="#record" typeof="<?=$this->driver->getSchemaOrgFormats()?> Product">
