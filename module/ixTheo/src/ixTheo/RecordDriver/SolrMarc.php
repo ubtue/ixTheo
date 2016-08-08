@@ -176,4 +176,9 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
 
         return $table->unsubscribe($userId, $recordId);
     }
+
+    public function canUseTAD($userId)
+    {
+        return $this->getDbTable('IxTheoUser')->canUseTAD($userId);
+    }
 }

@@ -17,4 +17,12 @@ class IxTheoUser extends Gateway implements \VuFind\Db\Table\DbTableAwareInterfa
         $row->id = $userId;
         return $row;
     }
+
+    public function canUseTAD($userId)
+    {
+        $select = $this->getSql()->select();
+        $select->where("id=" . $userId);
+        $rowset = $this->selectWith($select);
+        return $rowset->current()->can_use_tad;
+    }
 }
