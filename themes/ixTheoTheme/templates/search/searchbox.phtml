@@ -58,7 +58,6 @@
       </div>
     </div>
     <? if ($advSearch): ?>
-    <? endif; ?>
       <ul class="nav nav-pills">
           <li>
             <a href="<?=$this->url($advSearch) . ((isset($this->searchId) && $this->searchId) ? '?edit=' . $this->escapeHtmlAttr($this->searchId) : $hiddenFilterParams) ?>" class="btn btn-link" rel="nofollow"><?=$this->transEsc("Advanced Search")?></a>
@@ -84,7 +83,7 @@
               </ul>
           </li>
       </ul>
-
+    <? endif; ?>
 
     <? $shards = $options->getShards(); if ($options->showShardCheckboxes() && !empty($shards)): ?>
       <?
