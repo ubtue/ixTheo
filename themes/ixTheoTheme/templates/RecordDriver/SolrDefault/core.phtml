@@ -128,10 +128,10 @@
 
       <? include(realpath(dirname(__FILE__) . '/JOP.phtml')); ?>
 
-      <? if ($can_use_tad && $this->driver->isArticle()): ?>
+      <? if ($can_use_tad && $this->driver->canBeOrderedViaTAD()): ?>
         <tr>
           <th>TAD: </th>
-          <td><a href="http://biber3.ub.uni-tuebingen.de/tad?ppn=<?=$this->driver->getPPN()?>">Bestellen</a></td>
+          <td><a href="http://biber3.ub.uni-tuebingen.de/tad?ppn=<?=$this->driver->getRecordId()?>">Bestellen</a></td>
         </tr>
       <? endif; ?>
 

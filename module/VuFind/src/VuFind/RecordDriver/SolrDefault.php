@@ -808,17 +808,6 @@ class SolrDefault extends AbstractBase
         return 'UnknownFormat';
     }
 
-    public function isArticle()
-    {
-        $formats = $this->getFormats();
-        return in_array('Article', $formats);
-    }
-
-    public function getPPN()
-    {
-        return $this->fields['id'];
-    }
-
     /**
      * Get the COinS identifier.
      *
