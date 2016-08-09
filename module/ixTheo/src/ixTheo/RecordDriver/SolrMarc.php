@@ -10,7 +10,7 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
      *
      * @return string
      */
-    public function getRecordID()
+    public function getRecordId()
     {
         return isset($this->fields['id']) ?
             $this->fields['id'] : '';
@@ -180,5 +180,30 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
     public function canUseTAD($userId)
     {
         return $this->getDbTable('IxTheoUser')->canUseTAD($userId);
+    }
+
+    public function isAvailableInTubingenUniversityLibrary() {
+       $local_fields = $this->getMarcRecord()->getFields("LOK");
+       foreach ($local_fields as $local_field) {
+           $subfields = $this->getSubfieldArray($local_field, ['0', 'a'], /* $concat = */false);
+           if (count($subfields) == 2 && $subfields[0] == "852" && $subfields[1] == "DE-21")
+               return true;
+       }
+
+       return false;
+    }
+
+    public function canBeOrderedViaTAD() {
+        if (!$this->isAvailableInTubingenUniversityLibrary())
+            return false;
+
+        // Exclude electronic resources:
+        $_007_field = $this->getMarcRecord()->getField("007");
+        if (!$_007_field || $_007_field->getData()[0] != 'c')
+            return false;
+
+        // Publication type "continuing resource" and type "newspaper" or "periodical":
+        $_008_field = $this->getMarcRecord()->getField("008");
+        return $_008_field && preg_match("^.{6}(c|d).{14}(n|p)", $_008_field->getData());
     }
 }
