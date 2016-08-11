@@ -3,17 +3,25 @@
 function isIxTheoNotation($self, $title) {
   return $title === $self->transEsc('ixtheo_notation_facet');
 }
+
 function getIxTheoNotationForTrans($self, $facet) {
   if (isUnassigned($self, $facet)) {
     return $facet;
   }
   return "ixtheo-" . $facet;
 }
+
 function isUnassigned($self, $facet) {
   return  $facet == $self->transEsc('[Unassigned]');
 }
+
 function getOverallPercentage($count, $results) {
   return ($count * 100) / $results->getResultTotal();
+}
+
+function getLocalizedOverallPercentage($self, $count, $results) {
+  $percentage = getOverallPercentage($count, $results);
+  return $percentage > 0.1 ? $self->localizedNumber($percentage, 1) : "&lt; 0.1";
 }
 ?>
 <? if ($results->getResultTotal() > 0): ?>
@@ -200,7 +208,7 @@ JS;
                 <a href="<?=$addURL ?>" class="list-group-item facet<?=$thisFacet['operator'] ?><? if ($i >= $facets_before_more): ?> <?=$moreClass ?><?endif ?>">
               <? endif; ?>
               <span class="badge">
-                <?=isUnassigned($this, $thisFacet['displayText']) ? $this->localizedNumber(getOverallPercentage($thisFacet['count'], $results),1) . '%' : $this->localizedNumber($thisFacet['count'])?>
+                <?=isUnassigned($this, $thisFacet['displayText']) ? getLocalizedOverallPercentage($this, $thisFacet['count'], $results) . '%' : $this->localizedNumber($thisFacet['count'])?>
                 <? if ($allowExclude): ?>
                   <a href="<?=$this->currentPath().$results->getUrlQuery()->addFacet($title, $thisFacet['value'], 'NOT') ?>" title="<?=$this->transEsc('exclude_facet') ?>"><i class="fa fa-times"></i></a>
                 <? endif; ?>
