@@ -8,11 +8,11 @@
         <input class="btn btn-primary" type="submit" value="<?= $this->transEsc('Subscribe') ?>"/>
     </form>
 <?php } else { ?>
-    <p> Subscription exists for this document. </p>
+    <p><?=$this->transEsc("Subscription exists for this document");?>.</p>
     <form id="edit-save-form" class="form-horizontal" method="post"
           action="<?= $this->recordLink()->getActionUrl($this->driver, 'Subscribe') ?>" name="unsubscribeRecord"
           data-lightbox-onclose="checkSubscribeStatuses();">
         <input type="hidden" name="action" value="unsubscribe"/>
-        <input class="btn btn-danger" type="submit" value="<?= $this->transEsc('Unsubscribe') ?>"/>
+        <input class="btn btn-danger" type="submit" value="<?= $this->transEsc("Unsubscribe");?>"/>
     </form>
 <?php } ?>
