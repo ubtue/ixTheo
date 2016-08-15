@@ -182,6 +182,12 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
         return $this->getDbTable('IxTheoUser')->canUseTAD($userId);
     }
 
+    public function getEmailAddress($userId)
+    {
+        $user = $this->getDbTable('User')->getByEmail($userId);
+	return $user ? $user->email : "";
+    }
+
     public function isAvailableInTubingenUniversityLibrary() {
        $local_fields = $this->getMarcRecord()->getFields("LOK");
        foreach ($local_fields as $local_field) {

@@ -101,6 +101,18 @@ class User extends Gateway
     }
 
     /**
+     * Retrieve a user object from the database based on ID
+     *
+     * @param int    $id ID to use for retrieval.
+     *
+     * @return UserRow
+     */
+    public function getById($id)
+    {
+        return $this->select(['id' => $id])->current();
+    }
+
+    /**
      * Retrieve a user object from the database based on email.
      *
      * @param string $email email to use for retrieval.
