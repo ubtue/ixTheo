@@ -1,3 +1,41 @@
+<style>
+    .read-more-state {
+        display: none;
+    }
+
+    .read-more-target {
+        opacity: 0;
+        max-height: 0;
+        font-size: 0;
+        transition: .25s ease;
+    }
+
+    .read-more-state:checked ~ .read-more-wrap .read-more-target {
+        opacity: 1;
+        font-size: inherit;
+        max-height: 999em;
+    }
+
+    .read-more-state ~ .read-more-trigger:before {
+        content: 'Plus';
+    }
+
+    .read-more-state:checked ~ .read-more-trigger:before {
+        content: 'Moins';
+    }
+
+    .read-more-trigger {
+        cursor: pointer;
+        display: inline-block;
+        padding: 0 .5em;
+        color: #666;
+        font-size: .9em;
+        line-height: 2;
+        border: 1px solid #ddd;
+        border-radius: .25em;
+    }
+</style>
+
 <div class="col-md-12" style="text-align:justify;">
     <h2>Chers usagers de l’Index Theologicus,</h2>
     <div class="post">
@@ -132,7 +170,7 @@ $panelWidth = "col-md-6";
                     <p>La recherche de passages de la Bible a été conçue complètement à neuf et adaptée aux besoins des usagers s’intéressant à la recherche scientifique. Pour rechercher un passage de la Bible, il faut choisir la facette &raquo;Passages bibliques&raquo; à droite du champ de saisie. La liste de titres trouvés doit ensuite être triée selon la pertinence.</p>
                     <div class="read-more-target">
                         <p>On peut spécifier le passage en employant les noms de livres bibliques reconnus internationalement ou les abréviations connues. Outre les abréviations françaises, l’IxTheo reconnaît également les abréviations anglaises, allemandes, italiennes et espagnoles de même que celles employées dans l’édition Nestle-Aland du Nouveau Testament et dans la Vulgate. La possibilité d’employer diverses langues a cependant causé des ambiguïtés pour les noms de certains livres bibliques. Par exemple, l’abréviation &raquo;Es&raquo; pour le livre d’Ésaïe en français désigne le livre de l’Exode en italien. Dans ces cas, nous avons dû décider quelles abréviations nous pouvions accepter pour éviter de tels conflits. Vous pouvez consulter la liste des abréviations reconnues par l’IxTheo au lien suivant :
-                            <a href="<?=$_SERVER['SERVER_NAME'] . '/Bible_abbreviation.pdf'?>" target="_blank"><b>ici</b></a>.</p>
+                            <a href="<?='https://' . $_SERVER['SERVER_NAME'] . '/Bible_abbreviation.pdf'?>" target="_blank"><b>ici</b></a>.</p>
                         <p>Saisissez le passage de la Bible que vous désirez rechercher de la façon suivante :
                             [Abréviation du livre] chapitre,verset(s)</p>
                         <b>Exemples :</b>
@@ -153,7 +191,7 @@ $panelWidth = "col-md-6";
                         <p>Dans cet exemple, la recherche permet également de trouver les titres liés à la notice d’autorité &raquo;Blutflüssige Frau&raquo; (&raquo;femme avec une perte de sang&raquo;). Les passages synoptiques Mc 5,25-34 de même que Mt 9,20-22 et Lc 8,43-48 sont associés à cette notice.</p>
                         <p>Néanmoins, il est toujours profitable de mener une recherche sur un passage biblique en utilisant &raquo;Tous les champs&raquo; comme facette de recherche, car ce ne sont pas encore tous les titres qui ont été associés aux notices d’autorité des passages bibliques. Par contre, ce type de recherche plus général ne permet pas de tirer profit des caractéristiques uniques de la recherche IxTheo des passages bibliques.</p>
                         <p>Au niveau technique de la mise en œuvre de la recherche IxTheo des passages bibliques, le  passage saisi en tant que chaîne de caractères est converti en une suite de 7 chiffres, avec laquelle il est possible d’effectuer des opérations. Les deux premiers chiffres correspondent au livre de la Bible, les trois chiffres du milieu au chapitre, et les deux derniers au verset. Ainsi, Mc 5,25-34 est converti comme suit : 0200525_0200534. En vue de déterminer la proximité entre le passage saisi et celui du titre trouvé, un score est attribué à cette paire de passages. Vous trouverez plus d’informations (en allemand) à la page suivante:
-                            <a href=https://github.com/ubtue/ixTheo/wiki/Bibelstellensuche---Technischer-%C3%9Cberblick><b>Technischer Überblick</b></a><p/>
+                            <a href=https://github.com/ubtue/ixTheo/wiki/Bibelstellensuche---Technischer-%C3%9Cberblick target="_blank"><b>Aper&ccedil;u technique</b></a><p/>
                     </div>
                 </div>
                 <label for="post-4" class="read-more-trigger"></label>
