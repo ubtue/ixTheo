@@ -49,6 +49,8 @@ local.properties
 .buildpath
 .target
 
+MultiLanguageDocTransformerFactory.jar
+MultiLanguageQueryParser.jar
 KeywordChainParser.jar
 BibleRangeParser.jar
 TuelibSolrmarcMixin.jar
