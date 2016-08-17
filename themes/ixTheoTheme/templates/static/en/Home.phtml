@@ -1,3 +1,41 @@
+<style>
+    .read-more-state {
+        display: none;
+    }
+
+    .read-more-target {
+        opacity: 0;
+        max-height: 0;
+        font-size: 0;
+        transition: .25s ease;
+    }
+
+    .read-more-state:checked ~ .read-more-wrap .read-more-target {
+        opacity: 1;
+        font-size: inherit;
+        max-height: 999em;
+    }
+
+    .read-more-state ~ .read-more-trigger:before {
+        content: 'Show more';
+    }
+
+    .read-more-state:checked ~ .read-more-trigger:before {
+        content: 'Show less';
+    }
+
+    .read-more-trigger {
+        cursor: pointer;
+        display: inline-block;
+        padding: 0 .5em;
+        color: #666;
+        font-size: .9em;
+        line-height: 2;
+        border: 1px solid #ddd;
+        border-radius: .25em;
+    }
+</style>
+
 <div class="col-md-12" style="text-align:justify;">
     <h2>Dear users of the Index Theologicus</h2>
     <div class="post">
@@ -168,7 +206,7 @@ $panelWidth = "col-md-6";
                             New Testament and the Vulgate. In a few cases, there are ambiguities due to accidental similarities in the way some Bible book
                             names are abbreviated in different languages. For example, the abbreviation “es” is used for Isaiah in French, but for Exodus in
                             Italian. In such cases, it is necessary to decide which abbreviations are allowed in order to avoid a conflict. You can access the
-                            list of abbreviations allowed <a href="<?=$_SERVER['SERVER_NAME'] . '/Bible_abbreviation.pdf'?>" target="_blank"><b>here</b></a></p>
+                            list of abbreviations allowed <a href="<?='https://' . $_SERVER['SERVER_NAME'] . '/Bible_abbreviation.pdf'?>" target="_blank"><b>here</b></a></p>
                         <p>Enter the passage you are looking for in the following manner:</p>
                         <p>Abbreviation of the Bible book chapter,verses</p>
                         <b>Examples:</b>
@@ -195,7 +233,7 @@ $panelWidth = "col-md-6";
                             computations are possible. The first two digits specify the Bible book, the three middle digits concern the chapter, and the final three
                             contain the verse. For example, Mk 5,25-34 gets translated to the following: 02005025_02005034. In order to determine how close the
                             entries found are to the requested passage, a scoring value is then computed. More information on this topic may be found
-                            <a href="https://github.com/ubtue/ixTheo/wiki/Bibelstellensuche---Technischer-%C3%9Cberblick"><b>here</b></a> (in German)</p>
+                            <a href="https://github.com/ubtue/ixTheo/wiki/Bibelstellensuche---Technischer-%C3%9Cberblick" target="_blank"><b>here</b></a> (in German)</p>
                     </div>
                 </div>
                 <label for="post-4" class="read-more-trigger"></label>
