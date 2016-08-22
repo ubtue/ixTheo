@@ -198,7 +198,7 @@ JS;
                 <? else: ?>
                   <span class="pull-right flip"><i class="fa fa-check"></i></span>
                 <? endif; ?>
-                <?=$this->escapeHtml($thisFacet['displayText'])?>
+                <?=$thisFacet['displayText']?>
               </a>
             <? else: ?>
               <? $addURL = $this->currentPath().$results->getUrlQuery()->addFacet($title, $thisFacet['value'], $thisFacet['operator']); ?>
@@ -220,7 +220,7 @@ JS;
                 <i class="fa fa-square-o"></i>
               <? endif; ?>
               <?$fancy_result = isIxTheoNotation($this, $title) ? $this->transEsc(getIxTheoNotationForTrans($this, $thisFacet['displayText'])): $thisFacet['displayText'];?>
-              <?=$this->escapeHtml($fancy_result)?>
+              <?=$fancy_result?>
               <? if ($allowExclude): ?>
                   </a>
                 </div>
