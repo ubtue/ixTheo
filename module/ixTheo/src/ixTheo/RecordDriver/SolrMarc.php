@@ -204,7 +204,7 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
 
     public function getEmailAddress($userId)
     {
-        $user = $this->getDbTable('User')->getByEmail($userId);
+        $user = $this->getDbTable('User')->getById($userId);
 	return $user ? $user->email : "";
     }
 
