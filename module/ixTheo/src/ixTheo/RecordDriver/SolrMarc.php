@@ -2,9 +2,29 @@
 
 namespace ixTheo\RecordDriver;
 use VuFind\Exception\LoginRequired as LoginRequiredException;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-class SolrMarc extends \VuFind\RecordDriver\SolrMarc
+
+class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAwareInterface
 {
+    protected $serviceLocator;
+
+    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
+    {
+        $this->serviceLocator = $serviceLocator->getServiceLocator();
+    }
+
+    public function getServiceLocator()
+    {
+        return $this->serviceLocator;
+    }
+
+    public function getRecordDriverByPPN($ppn) {
+        $recordLoader = $this->getServiceLocator()->get('VuFind\RecordLoader');
+        return $recordLoader->load($ppn, 'Solr', false);
+    }
+
     /**
      * Get the record ID of the current record.
      *
@@ -184,8 +204,21 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
 
     public function getEmailAddress($userId)
     {
-        $user = $this->getDbTable('User')->getByEmail($userId);
+        $user = $this->getDbTable('User')->getById($userId);
 	return $user ? $user->email : "";
+    }
+
+    public function getSuperiorRecord() {
+       $_773_field = $this->getMarcRecord()->getField("773");
+       if (!$_773_field)
+           return NULL;
+       $subfields = $this->getSubfieldArray($_773_field, ['w'], /* $concat = */false);
+       if (!$subfields)
+           return NULL;
+       $ppn = substr($subfields[0], 8);
+       if (!$ppn || strlen($ppn) != 9)
+           return NULL;
+       return $this->getRecordDriverByPPN($ppn);
     }
 
     public function isAvailableInTubingenUniversityLibrary() {
@@ -199,17 +232,24 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
        return false;
     }
 
-    public function canBeOrderedViaTAD() {
-        if (!$this->isAvailableInTubingenUniversityLibrary())
+    private function canBeOrderedViaTADHelper($record) {
+        if (!$record->isAvailableInTubingenUniversityLibrary())
             return false;
 
         // Exclude electronic resources:
-        $_007_field = $this->getMarcRecord()->getField("007");
-        if (!$_007_field || $_007_field->getData()[0] != 'c')
+        $_007_field = $record->getMarcRecord()->getField("007");
+        if (!$_007_field || $_007_field->getData()[0] == 'c')
             return false;
 
         // Publication type "continuing resource" and type "newspaper" or "periodical":
-        $_008_field = $this->getMarcRecord()->getField("008");
-        return $_008_field && preg_match("^.{6}(c|d).{14}(n|p)", $_008_field->getData());
+        $_008_field = $record->getMarcRecord()->getField("008");
+        return $_008_field && preg_match("/^.{6}(c|d).{14}(n|p)/", $_008_field->getData());
+    }
+
+    public function canBeOrderedViaTAD() {
+       if ($this->canBeOrderedViaTADHelper($this))
+           return true;
+       $parent = $this->getSuperiorRecord();
+       return $parent ? $this->canBeOrderedViaTADHelper($parent) : false;
     }
 }
