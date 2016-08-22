@@ -68,7 +68,14 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
             $this->fields['prefix4_key_word_chain_bag'] : '';
     }
 
-
+    /**
+      * @return string
+      */
+    public function getPageRange()
+    {
+        return isset($this->fields['page_range']) ? $this->fields['page_range'] : '';
+    }
+				 
     /**
      * Return an associative array of all container IDs (parents) mapped to their titles containing the record.
      *
