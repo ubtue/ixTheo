@@ -209,12 +209,6 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
         return $this->getDbTable('IxTheoUser')->canUseTAD($userId);
     }
 
-    public function getEmailAddress($userId)
-    {
-        $user = $this->getDbTable('User')->getById($userId);
-	return $user ? $user->email : "";
-    }
-
     public function getSuperiorRecord() {
        $_773_field = $this->getMarcRecord()->getField("773");
        if (!$_773_field)

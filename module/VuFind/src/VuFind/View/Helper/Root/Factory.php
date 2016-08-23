@@ -238,7 +238,7 @@ class Factory
                 $array[$values[0]] = $values[1];
                 return $array;
             }, []);
-            $siteId = $siteIds[$_SERVER['HTTP_HOST']] ?: $siteId;
+            $siteId = array_key_exists($_SERVER['HTTP_HOST'], $siteIds) ? $siteIds[$_SERVER['HTTP_HOST']] : $siteId;
         } else {
             $siteId = $config->Piwik->site_id ?: $siteId;
         }
