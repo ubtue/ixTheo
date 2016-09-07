@@ -1,5 +1,9 @@
+<div style="display:none;" id="feedback_custom_html">
+    <?=$this->render('feedback/feedback-box.phtml')?>
+</div>
+
 <script>
-    var custom_html = `<?=$this->render('feedback/feedback-box.phtml')?>`;
+    var custom_html = $("div#feedback_custom_html").html();
 
     $(document).ready(function () {
         //set up some minimal options for the feedback_me plugin
