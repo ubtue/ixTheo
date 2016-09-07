@@ -72,6 +72,7 @@
     }
     
     function toggle() {
-      ($("#feedback_radio1:checked").val()) ? $("#feedback_radio1:checked") = false : $("#feedback_radio1:checked") = true;
+        var radio = $("input#feedback_radio1");
+      (radio.checked) ? radio.checked = false : radio.checked = true;
     }
 </script>
