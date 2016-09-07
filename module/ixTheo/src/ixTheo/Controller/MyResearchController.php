@@ -94,4 +94,50 @@ class MyResearchController extends \VuFind\Controller\MyResearchController
     function DeleteSubscriptionAction() {
         var_dump("DeleteSubscriptionAction");
     }
+
+
+    public function profileAction($request)
+    {
+
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->forceLogin();
+        }
+        $table = $this->getTable('IxTheoUser');
+        $ixTheoUser = $table->get($user->id);;
+
+        if (!empty($this->getRequest()->getPost("submit"))) {
+            $this->updateProfile($this->getRequest(), $user, $ixTheoUser);
+        }
+        $view = $this->createViewModel();
+        $view->user= $user;
+        $view->ixTheoUser = $ixTheoUser;
+        $view->request = $this->mergePostDataWithUserData($this->getRequest()->getPost(), $user, $ixTheoUser);
+        return $view;
+    }
+
+    private function updateProfile($request, $user, $ixTheoUser) {
+        $params = [
+            'firstname' => '', 'lastname' => '',
+            'title' => '', 'institution' => '', 'country' => '',
+            'language' => '', 'sex' => ''
+        ];
+        foreach ($params as $param => $default) {
+            $params[$param] = $request->getPost()->get($param, $default);
+        }
+        $this->getAuthManager()->getAuth()->createOrUpdateIxTheoUser($params, $user, $ixTheoUser);
+    }
+
+    private function mergePostDataWithUserData($post, $user, $ixTheoUser) {
+        $fields = ['email', 'username', 'sex', 'title', 'firstname', 'lastname', 'institution', 'country'];
+        foreach ($fields as $field) {
+            if (!$post->$field) {
+                $post->$field = $user->offsetExists($field) ? $user->$field : $ixTheoUser->$field;
+            }
+        }
+        if (!$post->language) {
+            $post->language = $ixTheoUser->language ?: $this->layout()->userLang;
+        }
+        return $post;
+    }
 }

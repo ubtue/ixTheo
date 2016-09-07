@@ -58,6 +58,9 @@
 </div>
 <? if ($this->auth()->isLoggedIn() && $this->auth()->getManager()->supportsPasswordChange()): ?>
   <h4><?=$this->transEsc('Preferences')?></h4>
+  <a href="<?=$this->url('myresearch-profile')?>" class="list-group-item<?=$this->active == 'profile' ? ' active' : ''?>">
+    <i class="fa fa-fw fa-user"></i> <?=$this->transEsc('Profile')?>
+  </a>
   <div class="list-group">
     <a href="<?=$this->url('myresearch-changepassword') ?>" class="list-group-item<?=$this->active == 'newpassword' ? ' active' : ''?>">
       <i class="fa fa-fw fa-lock"></i> <?=$this->transEsc('Change Password') ?>

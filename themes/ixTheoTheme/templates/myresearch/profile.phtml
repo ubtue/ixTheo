@@ -1,0 +1,14 @@
+<?
+// Set up page title:
+$this->headTitle($this->translate('My Profile'));
+
+// Set up breadcrumbs:
+$this->layout()->breadcrumbs = '<li><a href="' . $this->url('myresearch-home') . '">' . $this->transEsc('Your Account') . '</a></li> <li class="active">' . $this->transEsc('Profile') . '</li>';
+
+?>
+    <h1><?=$this->translate('My Profile')?></h1>
+
+<form method="post" name="accountForm" id="accountForm" class="form-horizontal" data-toggle="validator" role="form">
+    <?=$this->context($this)->renderInContext('Auth/Database/create.phtml', ['only_additional_information' => true]);?>
+    <input class="btn btn-primary" name="submit" value="Abschicken" type="submit">
+</form>

@@ -4,6 +4,7 @@ $sexes = VuFind\Auth\Database::$sexes;
 $titles = VuFind\Auth\Database::$titles;
 ?>
 
+<? if (!$this->only_additional_information): ?>
 <div class="form-group">
     <label class="col-sm-4 control-label" for="account_email"><?= $this->transEsc('Email Address') ?>:</label>
     <div class="col-md-8">
@@ -35,6 +36,7 @@ $titles = VuFind\Auth\Database::$titles;
     </div>
 </div>
 <hr/>
+<?endif;?>
 <div class="form-group">
     <label class="col-sm-4 control-label" for="account_title"><?= $this->transEsc('Title') ?>:</label>
     <div class="col-sm-2">
@@ -93,7 +95,7 @@ $titles = VuFind\Auth\Database::$titles;
     <div class="col-md-4">
         <select id="account_country" name="language" class="form-control">
             <? foreach ($this->layout()->allLangs as $langCode => $langName): ?>
-                <? $selected = $this->layout()->userLang === $langCode ? 'selected' : '';?>
+                <? $selected = $this->request->get('language') === $langCode ? 'selected' : '';?>
                 <option <?= $selected; ?> value="<?= $langCode; ?>"><?=$this->displayLanguageOption($langName)?></option>
             <? endforeach; ?>
         </select>
