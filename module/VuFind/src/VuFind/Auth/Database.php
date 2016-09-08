@@ -112,7 +112,7 @@ class Database extends AbstractBase
      * @throws AuthException
      * @return \VuFind\Db\Row\User New user row.
      */
-    public function create($request)
+    public function create($request, $user = null, $ixTheoUser = null)
     {
         // Ensure that all expected parameters are populated to avoid notices
         // in the code below.
@@ -149,7 +149,9 @@ class Database extends AbstractBase
         }
 
         // If we got this far, we're ready to create the account:
-        $user = $table->createRowForUsername($params['username']);
+        if (is_null($user)) {
+            $user = $table->createRowForUsername($params['username']);
+        }
         $user->firstname = $params['firstname'];
         $user->lastname = $params['lastname'];
         $user->email = $params['email'];
@@ -161,18 +163,27 @@ class Database extends AbstractBase
         }
         $user->save();
 
-        $ixTheoUser = $this->getDbTableManager()->get('IxTheoUser')->getNew($user->id);
-        $ixTheoUser->sex = in_array($params['sex'], Database::$sexes) ? $params['sex'] : '';
-        $ixTheoUser->title = in_array($params['title'], Database::$titles) ? $params['title'] : '';
-        $ixTheoUser->institution = $params['institution'];
-        $ixTheoUser->country = in_array($params['country'], Database::$sexes) ? $params['country'] : '';
-        $ixTheoUser->language = $params['language'];
-        $ixTheoUser->save();
+        $this->createOrUpdateIxTheoUser($params, $user, $ixTheoUser);
 
 	// Update the TAD access flag:
 	exec("/usr/local/bin/set_tad_access_flag.sh " . $user->id);
 
         return $user;
+    }
+
+    public function createOrUpdateIxTheoUser($params, $user = null, $ixTheoUser = null) {
+        if (is_null($ixTheoUser)) {
+            $ixTheoUser = $this->getDbTableManager()->get('IxTheoUser')->getNew($user->id);
+        }
+        $user->firstname = $params['firstname'];
+        $user->lastname = $params['lastname'];
+        $user->save();
+        $ixTheoUser->sex = in_array($params['sex'], Database::$sexes) ? $params['sex'] : $ixTheoUser->sex;
+        $ixTheoUser->title = in_array($params['title'], Database::$titles) ? $params['title'] : $ixTheoUser->title;
+        $ixTheoUser->institution = $params['institution'];
+        $ixTheoUser->country = in_array($params['country'], Database::$countries) ? $params['country'] : $ixTheoUser->country;
+        $ixTheoUser->language = $params['language'];
+        $ixTheoUser->save();
     }
 
     /**

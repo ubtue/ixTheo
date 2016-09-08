@@ -1,12 +1,14 @@
 <?
-  if ($loggedin = $this->auth()->isLoggedIn()) {
-    $user_id = $loggedin->id;
-    $loggedin = true;
-    $can_use_tad = $this->driver->canUseTAD($user_id);
-    $email = $this->driver->getEmailAddress($user_id);
+  $user = $this->auth()->isLoggedIn();
+  $loggedin = ($user == true);
+  if ($loggedin) {
+      $user_id = $user->id;
+      $can_use_tad = $this->driver->canUseTAD($user_id);
+      $email = $user->email;
   } else {
-    $user_id = false;
-    $can_use_tad = false;
+      $user_id = false;
+      $can_use_tad = false;
+      $email = false;
   }
 ?>
 <div class="row" vocab="http://schema.org/" resource="#record" typeof="<?=$this->driver->getSchemaOrgFormats()?> Product">

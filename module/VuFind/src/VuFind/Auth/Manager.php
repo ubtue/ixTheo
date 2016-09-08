@@ -159,7 +159,7 @@ class Manager implements \ZfcRbac\Identity\IdentityProviderInterface
      *
      * @return AbstractBase
      */
-    protected function getAuth($name = null)
+    public function getAuth($name = null)
     {
         $name = empty($name) ? $this->activeAuth : $name;
         if (!isset($this->auth[$name])) {
