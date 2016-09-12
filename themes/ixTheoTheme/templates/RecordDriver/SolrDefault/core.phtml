@@ -137,13 +137,13 @@
       ?>
         <tr>
           <th><?=$this->transEsc('Subito Delivery Service');?>: </th>
-	  <td><a href="http://www.subito-doc.de/order/po.php?BI=IXTHEO&VOL=<?=$this->escapeHtml($container_volume);?>&PG=<?=$this->escapeHtml($page_range);?>&SS=<?=$this->escapeHtml($issn);?>&SB=<?=$this->escapeHtml($isbn);?>"><?=$this->transEsc("Order now");?>.</a></td>
+	  <td><a target="_blank" href="http://www.subito-doc.de/order/po.php?BI=IXTHEO&VOL=<?=$this->escapeHtml($container_volume);?>&PG=<?=$this->escapeHtml($page_range);?>&SS=<?=$this->escapeHtml($issn);?>&SB=<?=$this->escapeHtml($isbn);?>"><?=$this->transEsc("Order now");?>.</a></td>
         </tr>
       <? endif; ?>
       <? if ($can_use_tad && $this->driver->canBeOrderedViaTAD()): ?>
         <tr>
           <th>TAD: </th>
-          <td><a href="http://biber3.ub.uni-tuebingen.de/tad?ppn=<?=$this->driver->getRecordId()?>&email=<?=$email?>">Bestellen</a></td>
+          <td><a target="_blank" href="http://biber3.ub.uni-tuebingen.de/tad?ppn=<?=$this->driver->getRecordId()?>&email=<?=$email?>">Bestellen</a></td>
         </tr>
       <? endif; ?>
 
