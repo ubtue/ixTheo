@@ -207,7 +207,11 @@
           <th><?=$this->transEsc('Reviewed')?>: </th>
           <td>
             <? foreach ($reviews as $id => $title): ?>
-              <a href="<?=$id?>"><?=$this->escapeHtml($title[1])?> (<?=$this->escapeHtml($title[0])?>)</a>
+	      <? if ($id != "000000000"): ?>
+                <a href="<?=$id?>"><?=$this->escapeHtml($title[1])?> (<?=$this->escapeHtml($title[0])?>)</a>
+	      <? else: ?>
+	        <?=$this->escapeHtml($title[1] . " (" . $title[0]) . ")"?>
+	      <? endif; ?>
               <br/>
             <? endforeach; ?>
           </td>
