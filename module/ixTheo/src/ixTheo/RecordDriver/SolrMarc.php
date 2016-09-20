@@ -44,15 +44,15 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
             // These contain GND numbers and other stuff that should
             // not be displayed in keywordchains
             // As to topics VuFind directly evaluates the full records
-            // and can thus directly filter out number subfields 
-            // We lose this information when evaluating the SOLR field 
+            // and can thus directly filter out number subfields
+            // We lose this information when evaluating the SOLR field
             // and thus have to filter manually
             $keywordchains = preg_replace('/\sgnd\s/', '', $keywordchains);
             $keywordchains = preg_replace('/\(\w{2}-\d{3}\)[\dX-]+\s*/', '', $keywordchains);
             return $keywordchains;
         }
         else {
-          return '';         
+          return '';
         }
     }
 
@@ -75,7 +75,7 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
     {
         return isset($this->fields['page_range']) ? $this->fields['page_range'] : '';
     }
-				 
+
     /**
      * Return an associative array of all container IDs (parents) mapped to their titles containing the record.
      *
@@ -95,6 +95,10 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
         return $retval;
     }
 
+    public function getOtherTitles() {
+        return isset($this->fields['other_titles']) ?
+            $this->fields['other_titles'] : array();
+    }
 
     public function getReviews()
     {
@@ -156,9 +160,9 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
     /**
      * Get the mediatype
      */
-    public function getMediaType() 
+    public function getMediaType()
     {
-        return (isset($this->fields['mediatype'])) ? 
+        return (isset($this->fields['mediatype'])) ?
              $this->fields['mediatype'] : '';
     }
 

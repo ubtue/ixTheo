@@ -75,9 +75,17 @@
         </td>
       </tr>
       <? endif; ?>
-<?
 
-?>
+      <? $other_titles = $this->driver->getOtherTitles(); if (!empty($other_titles)): ?>
+      <tr>
+        <th><?=$this->transEsc('Other Title')?>: </th>
+          <? foreach($other_titles as $other_title): ?>
+	    <td><?=$other_title?></td>
+          <? endforeach; ?>
+        </td>
+      </tr>
+      <? endif; ?>
+
       <? $authors = $this->driver->getDeduplicatedAuthors();?>
       <? if (isset($authors['main']) && !empty($authors['main'])): ?>
       <tr>
