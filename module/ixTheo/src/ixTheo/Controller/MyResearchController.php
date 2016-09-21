@@ -106,7 +106,7 @@ class MyResearchController extends \VuFind\Controller\MyResearchController
         $table = $this->getTable('IxTheoUser');
         $ixTheoUser = $table->get($user->id);;
 
-        if (!empty($this->getRequest()->getPost("submit"))) {
+        if ($this->getRequest()->getPost("submit")) {
             $this->updateProfile($this->getRequest(), $user, $ixTheoUser);
         }
         $view = $this->createViewModel();
