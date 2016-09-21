@@ -236,25 +236,4 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
 
        return false;
     }
-
-    private function canBeOrderedViaTADHelper($record) {
-        if (!$record->isAvailableInTubingenUniversityLibrary())
-            return false;
-
-        // Exclude electronic resources:
-        $_007_field = $record->getMarcRecord()->getField("007");
-        if (!$_007_field || $_007_field->getData()[0] == 'c')
-            return false;
-
-        // Publication type "continuing resource" and type "newspaper" or "periodical":
-        $_008_field = $record->getMarcRecord()->getField("008");
-        return $_008_field && preg_match("/^.{6}(c|d).{14}(n|p)/", $_008_field->getData());
-    }
-
-    public function canBeOrderedViaTAD() {
-       if ($this->canBeOrderedViaTADHelper($this))
-           return true;
-       $parent = $this->getSuperiorRecord();
-       return $parent ? $this->canBeOrderedViaTADHelper($parent) : false;
-    }
 }
