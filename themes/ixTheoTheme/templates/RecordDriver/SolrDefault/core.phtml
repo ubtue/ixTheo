@@ -5,7 +5,7 @@
       $user_id = $user->id;
       $can_use_tad = $this->driver->canUseTAD($user_id);
       $email = $user->email;
-      $fullname = $user->firstname . ' ' . $user->$lastname;
+      $fullname = $user->firstname . ' ' . $user->lastname;
   } else {
       $user_id = false;
       $can_use_tad = false;
