@@ -5,6 +5,7 @@
       $user_id = $user->id;
       $can_use_tad = $this->driver->canUseTAD($user_id);
       $email = $user->email;
+      $fullname = $user->firstname . ' ' . $user->$lastname;
   } else {
       $user_id = false;
       $can_use_tad = false;
@@ -151,7 +152,7 @@
       <? if ($can_use_tad && $this->driver->isAvailableInTubingenUniversityLibrary()): ?>
         <tr>
           <th>TAD: </th>
-          <td><a target="_blank" href="http://biber3.ub.uni-tuebingen.de/tad?ppn=<?=$this->driver->getRecordId()?>&email=<?=$email?>">Bestellen</a></td>
+          <td><a target="_blank" href="http://biber3.ub.uni-tuebingen.de/tad?ppn=<?=$this->driver->getRecordId()?>&email=<?=$email?>&name=<?=$this->escapeHtml($fullname?);>">Bestellen</a></td>
         </tr>
       <? endif; ?>
 
