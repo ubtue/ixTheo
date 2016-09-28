@@ -79,10 +79,11 @@
 
       <? $other_titles = $this->driver->getOtherTitles(); if (!empty($other_titles)): ?>
       <tr>
-        <th><?=$this->transEsc('Other Title')?>: </th>
-          <? foreach($other_titles as $other_title): ?>
-	    <td><?=$other_title?></td>
-          <? endforeach; ?>
+        <th><?=$this->transEsc('Other Titles')?>: </th>
+          <td>
+            <? foreach ($other_titles as $other_title): ?>
+            <?= $this->escapeHtml($other_title)?><br/>
+            <? endforeach; ?>
         </td>
       </tr>
       <? endif; ?>
@@ -125,7 +126,7 @@
       <? $langs = $this->driver->getLanguages(); if (!empty($langs)): ?>
         <tr>
           <th><?=$this->transEsc('Language')?>: </th>
-          <td><? foreach ($langs as $lang): ?><?= $this->escapeHtml($lang)?><br/><? endforeach; ?></td>
+          <td><? foreach ($langs as $lang): ?><?= $this->transEsc($lang)?><br/><? endforeach; ?></td>
         </tr>
       <? endif; ?>
 
