@@ -35,7 +35,7 @@ if (!empty($ids_and_titles)) {
     $i = 0;
     foreach ($ids_and_titles as $id => $title):
         echo $title[0];
-        if (++$i < $ids_and_titles.count())
+        if (++$i < count($ids_and_titles))
             echo ", ";
     endforeach;
     echo "}\n";
