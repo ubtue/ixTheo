@@ -276,6 +276,7 @@
    <field name="volume" type="string" indexed="false" stored="true" multiValued="false"/>
    <field name="year" type="string" indexed="false" stored="true" multiValued="false"/>
    <field name="mediatype" type="string" indexed="true" stored="true" multiValued="false"/>
+   <field name="zdb_number" type="string" indexed="true" stored="true" multiValued="false"/>
  </fields>
  <uniqueKey>id</uniqueKey>
  <defaultSearchField>allfields</defaultSearchField>
