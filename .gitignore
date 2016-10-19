@@ -5,6 +5,8 @@ TAGS
 *~
 vendor/.git
 local/cache/
+local/ixTheo/cache
+local/relBib/cache
 
 # SOLR index files:
 _*
