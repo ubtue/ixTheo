@@ -236,4 +236,55 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
 
        return false;
     }
+
+    public function getSubitoURL($broker_id) {
+       $base_url = "http://www.subito-doc.de/preorder/?BI=" . $broker_id;
+       switch ($this->getBibliographicLevel()) {
+           case 'Monograph':
+               $isbn = $this->getCleanISBN();
+               if (!empty($isbn))
+                   return $base_url . "&SB=" . $isbn;
+               return $base_url . "&CAT=SWB&ND" . getRecordId(); 
+           case 'Serial':
+               $zdb_number = $this->getZDBNumber();
+               if (!empty($zdb_number))
+                   return $base_url . "&ND=" . $zdb_number;
+               $issn = $this->getCleanISSN();
+               if (!empty($issn))
+                   return $base_url . "&SS=" . $issn;
+               break;
+           case 'MonographPart':
+           case 'SerialPart':
+               $isbn = $this->getCleanISBN();
+               $issn = $this->getCleanISSN();
+               $title = $this->getTitle();
+               $authors = $this->getDeduplicatedAuthors();
+               $page_range = $this->getPageRange();
+               $volume = $this->getVolume();
+               $issue = $this->getIssue();
+               $year = $this->getYear();;
+               if ((!empty($isbn) || !empty($issn)) && !empty($title) && !empty($authors) && !empty($page_range)
+                   && (!empty($volume) || !empty($issue)) && !empty($year))
+               {
+                   $title = $this->escapeHtml($title);
+                   $author_list = "";
+                   foreach ($authors as $author) {
+                       if (!empty($author_list))
+                           $author_list .= "%3B";
+                       $author_list .= $this->escapeHtml($author);
+                   }
+                   $page_range = $this->escapeHtml($page_range);
+
+                   $volume_and_or_issue = $this->escapeHtml($volume);
+                   if (!empty($volume_and_or_issue))
+                       $volume_and_or_issue .= "%2F";
+                   $volume_and_or_issue .= $this->escapeHtml($issue);
+
+                   return $base_url . (!empty($isbn) ? "&SB=" . $isbn : "&SS=" . $issn) . "&ATI=" . $title . "&AAU="
+                          . $author_list . "&PG=" . $page_range . "&APY=" . $year . "&VOL=" . $volume_and_or_issue;
+               }
+       }
+
+       return "";
+    }
 }

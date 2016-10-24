@@ -141,15 +141,15 @@
 
       <? include(realpath(dirname(__FILE__) . '/JOP.phtml')); ?>
 
-      <? $issn = $this->driver->getCleanISSN(); $isbn = $this->driver->getCleanISBN(); if (!empty($issn) || !empty($isbn)):
-        $page_range = $this->driver->getPageRange();
-	$container_volume = $this->driver->getContainerVolume();
+      <?
+        $subito_url = $this->driver->getSubitoURL('IXTHEO');
+        if (!empty($subito_url)):
       ?>
-        <tr>
           <th><?=$this->transEsc('Subito Delivery Service');?>: </th>
-	  <td><a target="_blank" href="http://www.subito-doc.de/order/po.php?BI=IXTHEO&VOL=<?=$this->escapeHtml($container_volume);?>&PG=<?=$this->escapeHtml($page_range);?>&SS=<?=$this->escapeHtml($issn);?>&SB=<?=$this->escapeHtml($isbn);?>"><?=$this->transEsc("Order now");?>.</a></td>
+	  <td><a target="_blank" href="<?=$subito_url?>"><?=$this->transEsc("Order now");?>.</a></td>
         </tr>
-      <? endif; ?>
+       <? endif; ?>
+
       <? if ($can_use_tad && $this->driver->isAvailableInTubingenUniversityLibrary()): ?>
         <tr>
           <th>TAD: </th>
