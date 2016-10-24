@@ -66,9 +66,9 @@
       <br />
       <br />
       <h1>
-        <a href="<?=$this->url('home')?>" title="Religionswissenschaftliche Bibliographie">Religionswissenschaftliche Bibliographie</a>
+        <a href="<?=$this->url('home')?>" title="<?=$this->transEsc("Religionswissenschaftliche Bibliographie")?>"><?=$this->transEsc("Religionswissenschaftliche Bibliographie")?></a>
       </h1>
-      <small><?=$this->transEsc("ixtheo_subtitle")?></small>
+      <small><?=$this->transEsc("relbib_subtitle")?></small>
       <br />
       <? if ($this->ils()->getOfflineMode() == "ils-offline"): ?>
         <div class="alert alert-warning">
