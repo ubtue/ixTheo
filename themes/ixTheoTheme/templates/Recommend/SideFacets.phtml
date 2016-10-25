@@ -1,7 +1,8 @@
 <? $results = $this->recommend->getResults(); ?>
 <?
 function isIxTheoNotation($self, $title) {
-  return $title === $self->transEsc('ixtheo_notation_facet');
+  return $title === $self->transEsc('ixtheo_notation_facet') ||
+         $title === $self->transEsc('relbib_notation_facet');
 }
 
 function getIxTheoNotationForTrans($self, $facet) {
