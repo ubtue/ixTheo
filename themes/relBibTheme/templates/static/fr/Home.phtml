@@ -1,1 +1,167 @@
-/usr/local/vufind2/themes/ixTheoTheme/templates/static/fr/Home.phtml
+<style>
+    .read-more-state {
+        display: none;
+    }
+
+    .read-more-target {
+        opacity: 0;
+        max-height: 0;
+        font-size: 0;
+        transition: .25s ease;
+    }
+
+    .read-more-state:checked ~ .read-more-wrap .read-more-target {
+        opacity: 1;
+        font-size: inherit;
+        max-height: 999em;
+    }
+
+    .read-more-state ~ .read-more-trigger:before {
+        content: 'Plus';
+    }
+
+    .read-more-state:checked ~ .read-more-trigger:before {
+        content: 'Moins';
+    }
+
+    .read-more-trigger {
+        cursor: pointer;
+        display: inline-block;
+        padding: 0 .5em;
+        color: #666;
+        font-size: .9em;
+        line-height: 2;
+        border: 1px solid #ddd;
+        border-radius: .25em;
+    }
+    
+    <!-- http://getbootstrap.com.vn/examples/equal-height-columns/equal-height-columns.css (10/24/16)--> 
+    .row-eq-height {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+    }  
+
+</style>
+
+<div class="col-md-12" style="text-align:justify;">
+    <h2>Chers usagers de la RelBib,</h2>
+    <div class="post">
+        <p>nous sommes heureux de vous présenter la version alpha de la nouvelle Relbib.</p>
+        <p>La nouvelle RelBib est une bibliographie exhaustive des sciences des religions. On peut maintenant y faire des recherches non seulement sur des articles, mais également sur des monographies, des banques de données et des liens Internet. Il inclut aussi les données de certaines revues de critique choisies. Lorsque les licences le permettent, il est possible d’accéder directement au texte complet des articles, des critiques et des livres concernés.</p>
+        <p>La nouvelle RelBib est un service à libre accès et gratuit offert à la communauté mondiale de recherche. L'éditeur de la Relbib est la bibliothèque de l’Université de Tübingen (Universitätsbibliothek Tübingen).</p>
+        <p>Nous regrettons que certaines erreurs soient toujours présentes dans cette version préliminaire. Nous vous souhaitons une expérience agréable d’utilisation de la RelBib et serions reconnaissants pour tout commentaire nous aidant à l’améliorer.</p>
+    </div>
+</div>
+<?
+$panelId = 0;
+$panelClass = "panel-default";
+$panelWidth = "col-md-6";
+?>
+<h2 class="col-md-12 panel-group">Découvrir la RelBib</h2>
+<div class="col-md-4" style="text-align:justify;">
+    <div class="panel <?= $panelClass; ?>">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <i class="fa fa-search"></i> Rechercher
+            </h4>
+        </div>
+        <div id="<?= $panelId++; ?>" class="panel-collapse">
+            <div class="panel-body">
+                <input type="checkbox" class="read-more-state" id="post-1" />
+                <div class="read-more-wrap">
+                    <p>Vous pouvez amorcer une recherche sur tous les titres catalogués dans l’IxTheo en appuyant sur le bouton &raquo;Rechercher&raquo;. Vous trouverez alors plus de 1,6 millions de titres.</p>
+                    <div class="read-more-target">
+                        <p>Vous pouvez ensuite affiner la recherche selon certains critères en choisissant les facettes correspondantes. Par exemple, vous pouvez choisir &raquo;Électronique&raquo; comme type de médium, &raquo;Article&raquo; comme format et &raquo;Allemand&raquo; comme langue. Cela réduit alors le nombre de titres trouvés à environ 3000.</p>
+
+                        <h3>Rechercher selon le contenu</h3>
+                        <h4>Classification RelBib</h4>
+                        <p>Si vous cliquez sur &raquo;Recherche avancée&raquo;, vous y trouverez, entre autres, les classifications IxTheo. Vous pouvez choisir les facettes correspondantes par un simple clic de la souris. Il est possible de choisir un bloc de plusieurs facettes en tenant la touche majuscule appuyée (sur Windows) tout en cliquant sur les éléments au début et à la fin du bloc. Pour choisir plusieurs facettes séparément, il suffit de tenir la touche contrôle appuyée en cliquant sur les éléments désirés.</p>
+                        <p>Vous pouvez ensuite amorcer la recherche de classifications IxTheo en appuyant sur le bouton &raquo;Rechercher&raquo;.</p>
+
+                        <h4>Termes de recherche</h4>
+                        <p>Saisissez le terme de recherche dans le champ approprié et utilisez &raquo;Tous les champs&raquo; comme facette de recherche. Le terme saisi est alors recherché dans tous les champs comme le nom l’indique.</p>
+                        <p>Pour une recherche thématique, la facette &raquo;Sujet&raquo; s’avère très utile. Les différents sujets pour un article ou une publication ne sont pas déterminés par un procédé mécanique, mais plutôt à travers une évaluation faite par notre personnel.</p>
+                    </div>
+                </div>
+                <label for="post-1" class="read-more-trigger"></label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-4" style="text-align:justify;">
+    <div class="panel <?= $panelClass; ?>">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <i class="fa fa-list"></i> La Navigation
+            </h4>
+        </div>
+        <div id="<?= $panelId++; ?>" class="panel-collapse ">
+            <div class="panel-body">
+                <input type="checkbox" class="read-more-state" id="post-2" />
+                <div class="read-more-wrap">
+                    <p>Le nouvel IxTheo offre trois façons différentes de naviguer à travers les données :<br/><br/></p>
+                    <div class="read-more-target">
+                        <!-- Needed since otherwise the More-Button gets confused immediately before a heading -->
+                        <div style="height: 0px;">&emsp;</div>
+                        <h3>Naviguer à partir d’un sujet</h3>
+                        <p>Lorsque vous choisissez cette option, vous accédez à un nouveau champ où vous pouvez saisir le terme de recherche qui servira de point de départ à la navigation.</p>
+                        <p>1<sup>er</sup> exemple : saisissez le terme &raquo;Dieu&raquo;. Une liste apparaît alors avec les chaînes de termes contenant le mot &laquo;Dieu&raquo;.</p>
+                        <p>2<sup>e</sup> exemple : saisissez les termes &raquo;Dieu&raquo; et &raquo;Bible&raquo;. Une liste apparaît alors avec les chaînes de termes contenant les mots &raquo;Dieu&raquo; et &raquo;Bible&raquo;.</p>
+                        <p>Si vous changez la langue de la page web à l’anglais, les termes sont traduits automatiquement en anglais si cette traduction est disponible dans le dictionnaire du système.</p>
+
+                        <h3>Naviguer dans le catalogue</h3>
+                        <p>La fonction standard de navigation de l’IxTheo (VuFind) permet la navigation avec des facettes diverses : la classification DDC, la classification IxTheo, le sujet, l’auteur et l’éditeur. À l’étape suivante, vous pouvez affiner la navigation en spécifiant des facettes supplémentaires.</p>
+                        <p>Par exemple, si vous choisissez &laquo;Auteur&raquo;, &raquo;Par classification IxTheo&raquo; puis &raquo;HB Ancien Testament&raquo;, vous obtiendrez une liste d’auteurs ayant publié des œuvres dans le domaine de la recherche vétéro-testamentaire en ordre décroissant du nombre de publications des auteurs en question.</p>
+
+                        <h3>Naviguer dans l’ordre alphabétique</h3>
+                        <p>Cette option vous permet de naviguer à partir d’une lettre de l’alphabet de votre choix. Choisissez d’abord avec quelle facette vous voulez naviguer (soit le sujet, l’auteur, le titre ou la classification DDC), puis saisissez la lettre où la navigation doit commencer.</p>
+                        <p>1<sup>er</sup> exemple : Choisissez &raquo;par Auteur&raquo; et saisissez à partir de &raquo;Z&raquo;. Vous obtiendrez une liste d’auteurs dont le nom commence par la lettre Z.</p>
+                        <p>2<sup>e</sup> exemple : Choisissez &raquo;Par Titre&raquo; et saisissez à partir de &raquo;Tr&raquo;. Vous obtiendrez une liste de titres dont les deux premières lettres sont &raquo;Tr&raquo; .</p>
+                    </div>
+                </div>
+                <label for="post-2" class="read-more-trigger"></label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-4" style="text-align:justify;">
+    <div class="panel <?= $panelClass; ?>">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <i class="fa fa-child"></i> Personnaliser l’utilisation du service
+            </h4>
+        </div>
+        <div id="<?= $panelId++; ?>" class="panel-collapse">
+            <div class="panel-body">
+                <input type="checkbox" class="read-more-state" id="post-3" />
+                <div class="read-more-wrap">
+                    <p>Plusieurs fonctions utiles sont offertes aux détenteurs d’un compte IxTheo. Une fois inscrit, vous pouvez accéder à votre compte en cliquant sur le lien &raquo;Connexion&raquo; au coin supérieur droit. Un clic sur &raquo;Votre compte&raquo; vous amène à la page de gestion de vos données. Vous avez alors accès aux fonctions suivantes :</p>
+                    <div class="read-more-target">
+                        <p>Durch Klick auf „Ihr Konto“ kommen Sie in Ihren personalisierten Bereich. Dort stehen Ihnen u.a.
+                            folgende Funktionen zur Verfügung:</p>
+
+                        <h3>Fonction d’alerte</h3>
+                        <p>Cette fonction vous tient au courant de la publication de nouveaux articles dans les revues et de nouveaux volumes dans les séries de monographies de votre choix.</p>
+                        <p>Pour activer cette fonction pour une publication, vous devez d’abord trouver l’enregistrement pour cette publication, puis cliquer sur le symbole en forme de cloche situé à droite de l’entrée. Vous pouvez gérer vos alertes dans votre compte sous la rubrique &raquo;liste d’alertes&raquo;.</p>
+
+                        <p>1<sup>er</sup> exemple : Afin d’activer la fonction d’alerte pour la revue &raquo;Theologische Quartalschrift&raquo;, saisissez d’abord ce titre ou son abréviation &raquo;ThQ&raquo; dans le champ de recherche. Ensuite, choisissez &raquo;Périodique&raquo; dans la facette &raquo;Format&raquo;. Vous trouverez alors 2 titres : un pour la version imprimée, et un pour la version électronique de cette revue. Dans un cas semblable, il est plus sûr d’activer la fonction pour les deux versions.</p>
+
+                        <p>2<sup>e</sup> exemple : Afin d’activer la fonction pour la série &raquo;Wissenschaftliche Untersuchungen zum Neuen Testament&raquo;, saisissez d’abord ce titre ou son abréviation &raquo;WUNT&raquo; dans le champ de recherche. Vous trouverez alors plusieurs titres. Activez la série en cliquant sur le symbole correspondant en forme de cloche.</p>
+
+                        <p>Éventuellement, nous espérons rendre la sélection de revues et de séries plus facile pour cette fonction. En particulier, nous aimerions offrir l’option de choisir un bloc de revues consacrées à un domaine de recherche quelconque.</p>
+
+                        <h3>Sauvegarder les requêtes de recherche</h3>
+                        <p>Vos requêtes courantes de recherche sont sauvegardées temporairement dans l’historique de recherche. Si vous voulez les conserver plus longtemps, vous pouvez les sauvegarder dans votre compte. Elles demeurent alors à votre disposition, et vous pouvez les amorcer à nouveau par un simple clic. Cela peut valoir la peine pour des requêtes complexes ou pour des sujets qui vous intéressent toujours. Cela vous permet de découvrir les nouvelles parutions sur un sujet ou un domaine de recherche particulier.</p>
+
+                        <h3>Sauvegarder les Favoris</h3>
+                        <p>Vous pouvez sauvegarder les titres qui vous intéressent dans votre compte. Vous y avez alors accès en tout temps sans avoir à les rechercher à nouveau. Vous pouvez les sauvegarder à l’intérieur de listes que vous définissez vous-mêmes, ce qui vous permet de classifier vos titres selon des projets de recherches ou des thèmes précis.</p>
+                        <p>À partir de votre compte, vous pouvez également exporter vos favoris, les envoyer par mail ou les imprimer.</p>
+                    </div>
+                </div>
+                <label for="post-3" class="read-more-trigger"></label>
+            </div>
+        </div>
+    </div>
+</div>
