@@ -178,6 +178,13 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
         return $author_implode(array_map($author_implode, array_map("array_keys", $this->getDeduplicatedAuthors())));
     }
 
+    public function getZDBNumber()
+    {
+        return (isset($this->fields['zdb_number'])) ?
+            $this->fields['zdb_number'] : '';
+
+    }
+     
     public function subscribe($params, $user)
     {
 
