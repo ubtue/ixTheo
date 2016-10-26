@@ -162,7 +162,7 @@ class BrowseController extends AbstractBase
         // Loop through remaining browse options.  All may be individually disabled
         // in config.ini, but if no settings are found, they are assumed to be on.
         $remainingOptions = [
-            'IxTheo-Classification', 'Topic', 'Author', 'Publisher'
+            'IxTheo-Classification', 'RelBib-Classification', 'Topic', 'Author', 'Publisher'
         ];
         foreach ($remainingOptions as $current) {
             $option = strToLower($current);
@@ -450,7 +450,8 @@ class BrowseController extends AbstractBase
             'genre' => 'By Genre',
             'region' => 'By Region',
             'era' => 'By Era',
-            'ixtheo-classification' => 'By IxTheo-Classification'
+            'ixtheo-classification' => 'By IxTheo-Classification',
+            'relbib-classification' => 'By RelBib-Classification'
         ];
 
         return $this->performBrowse('Publisher', $categoryList, true);
@@ -476,6 +477,16 @@ class BrowseController extends AbstractBase
         return $this->performBrowse('IxTheo-Classification', $categoryList, true);
     }
 
+    public function relBibClassificationAction()
+    {
+        $categoryList = [
+            'alphabetical' => 'By Categories',
+        ];
+
+        return $this->performBrowse('RelBib-Classification', $categoryList, true);
+    }
+
+
     /**
      * Browse Author
      *
@@ -491,7 +502,8 @@ class BrowseController extends AbstractBase
             'region' => 'By Region',
             'era' => 'By Era',
             'publisher' => 'By Publisher',
-            'ixtheo-classification' => 'By IxTheo-Classification'
+            'ixtheo-classification' => 'By IxTheo-Classification',
+            'relbib-classification' => 'By RelBib-Classification'
         ];
 
         return $this->performBrowse('Author', $categoryList, false);
@@ -511,7 +523,8 @@ class BrowseController extends AbstractBase
             'era' => 'By Era',
             'author' => 'By Author',
             'publisher' => 'By Publisher',
-            'ixtheo-classification' => 'By IxTheo-Classification'
+            'ixtheo-classification' => 'By IxTheo-Classification',
+            'relbib-classification' => 'By RelBib-Classification'
         ];
 
         return $this->performBrowse('Topic', $categoryList, true);
@@ -530,7 +543,8 @@ class BrowseController extends AbstractBase
             'region' => 'By Region',
             'era' => 'By Era',
             'publisher' => 'By Publisher',
-            'ixtheo-classification' => 'By IxTheo-Classification'
+            'ixtheo-classification' => 'By IxTheo-Classification',
+            'relbib-classification' => 'By RelBib-Classification'
         ];
 
         return $this->performBrowse('Genre', $categoryList, true);
@@ -549,7 +563,8 @@ class BrowseController extends AbstractBase
             'genre' => 'By Genre',
             'era' => 'By Era',
             'publisher' => 'By Publisher',
-            'ixtheo-classification' => 'By IxTheo-Classification'
+            'ixtheo-classification' => 'By IxTheo-Classification',
+            'relbib-classification' => 'By RelBib-Classification'
         ];
 
         return $this->performBrowse('Region', $categoryList, true);
@@ -567,7 +582,8 @@ class BrowseController extends AbstractBase
             'topic' => 'By Topic',
             'genre' => 'By Genre',
             'region' => 'By Region',
-            'ixtheo-classification' => 'By IxTheo-Classification'
+            'ixtheo-classification' => 'By IxTheo-Classification',
+            'relbib-classification' => 'By RelBib-Classification'
         ];
 
         return $this->performBrowse('Era', $categoryList, true);
@@ -632,6 +648,12 @@ class BrowseController extends AbstractBase
             return [
                 'ixtheo_notation_facet', $this->quoteValues(
                     $this->getFacetList('ixtheo_notation_facet', $category)
+                )
+            ];
+        case 'relbib-classification':
+            return [
+                'relbib_notation_facet', $this->quoteValues(
+                    $this->getFacetList('relbib_notation_facet', $category)
                 )
             ];
         }
@@ -738,6 +760,8 @@ class BrowseController extends AbstractBase
             return 'publisher_facet';
         case 'ixtheo-classification':
             return 'ixtheo_notation_facet';
+        case 'relbib-classification':
+            return 'relbib_notation_facet';
         }
         return $action;
     }
@@ -766,10 +790,13 @@ class BrowseController extends AbstractBase
             : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
         // Put numbers in the front for Era since years are important:
-        if ($this->getCurrentAction() === 'IxTheo-Classification') {
+        if ($this->getCurrentAction() === 'IxTheo-Classification' /*|| $this->getCurrentAction() === 'RelBib-Classification'*/) {
             $chars = 'ABCFHKNRSTVXZ';
             $callback = $ixtheo_notation_callback;
-        } else if ($this->getCurrentAction() == 'Era') {
+        } else if ($this->getCurrentAction() === 'RelBib-Classification') {
+            $chars = 'ABKTVXZ';
+            $callback = $ixtheo_notation_callback;
+        }  else if ($this->getCurrentAction() == 'Era') {
             $chars = '0123456789' . $chars;
         } else {
             $chars .= '0123456789';

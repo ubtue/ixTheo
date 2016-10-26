@@ -9,8 +9,16 @@ function isIxTheoNotationSecondList($self) {
   return $self->secondaryParams["query_field"] == "ixtheo_notation_facet";
 }
 
+function isRelBibNotationSecondList($self) {
+  return $self->secondaryParams["query_field"] == "relbib_notation_facet";
+}
+
 function isIxTheoNotationThirdList($self) {
   return $self->currentAction == "IxTheo-Classification";
+}
+
+function isRelBibNotationThirdList($self) {
+  return $self->currentAction == "RelBib-Classification";
 }
 ?>
 
@@ -61,7 +69,7 @@ function isIxTheoNotationThirdList($self) {
         $viewRecord = !empty($this->categoryList) && $this->currentAction != 'Tag' && $this->findby != 'alphabetical';
       ?>
       <a href="<?=$url ?>" class="list-group-item clearfix<? if ($this->query == $secondary['value'].'' || $this->query == $secondary['value'].'*'): ?> active<? endif; ?>">
-        <?$fancy_secondary = isIxTheoNotationSecondList($this) ? $this->transEsc("ixtheo-" . $secondary['displayText']) : $secondary['displayText'];?>
+        <?$fancy_secondary = isIxTheoNotationSecondList($this) || isRelBibNotationSecondList($this) ? $this->transEsc("ixtheo-" . $secondary['displayText']) : $secondary['displayText'];?>
         <?=$this->escapeHtml($fancy_secondary) ?>
         <? if ($this->findby != 'alphabetical' && isset($secondary['count'])): ?>
           <span class="badge"><?=number_format($secondary['count']) ?></span>
@@ -80,7 +88,7 @@ function isIxTheoNotationThirdList($self) {
     <div class="browse list-group col-sm-3" id="list4">
     <? foreach($this->resultList as $result): ?>
       <a class="list-group-item clearfix" href="<?=$SEARCH_BASE ?>?<?=$this->paramTitle ?><?=urlencode($result['value']) ?><? if ($this->searchParams): foreach($this->searchParams as $var=>$val): ?>&<?=$var ?>=<?=urlencode($val) ?><? endforeach;endif; ?>">
-        <?$fancy_result = isIxTheoNotationThirdList($this) ? $this->transEsc("ixtheo-" . $result['displayText']) : $result['displayText'];?>
+        <?$fancy_result = isIxTheoNotationThirdList($this) || isRelBibNotationThirdList($this) ? $this->transEsc("ixtheo-" . $result['displayText']) : $result['displayText'];?>
         <?=$this->escapeHtml($fancy_result)?>
         <span class="badge"><?=number_format($result['count']) ?></span>
       </a>
