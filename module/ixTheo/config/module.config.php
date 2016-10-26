@@ -44,6 +44,7 @@ $recordRoutes = array();
 $dynamicRoutes = array();
 $staticRoutes = array(
     'Browse/IxTheo-Classification',
+    'Browse/RelBib-Classification',
     'Biblerangesearch/Home',
     'Keywordchainsearch/Home',
     'Keywordchainsearch/Results',
