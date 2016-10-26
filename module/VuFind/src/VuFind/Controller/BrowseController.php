@@ -790,7 +790,7 @@ class BrowseController extends AbstractBase
             : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
         // Put numbers in the front for Era since years are important:
-        if ($this->getCurrentAction() === 'IxTheo-Classification' /*|| $this->getCurrentAction() === 'RelBib-Classification'*/) {
+        if ($this->getCurrentAction() === 'IxTheo-Classification') {
             $chars = 'ABCFHKNRSTVXZ';
             $callback = $ixtheo_notation_callback;
         } else if ($this->getCurrentAction() === 'RelBib-Classification') {
