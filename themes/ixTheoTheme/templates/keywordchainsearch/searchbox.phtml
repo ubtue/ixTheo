@@ -22,7 +22,7 @@ $lastLimit = $this->searchMemory()->getLastLimit($this->searchClassId);
       autocomplete="off">
     <div class="input-group">
         <input id="kwc_input" class="searchForm_lookfor form-control search-query" type="text" name="lookfor"
-               value="<?= $this->escapeHtmlAttr($lookfor) ?>"/>
+               value="<?= isset($lookfor) ?  $this->escapeHtmlAttr($lookfor) : ""?>"/>
         <input type="hidden" name="type" value="<?= $this->escapeHtmlAttr('KeywordChainSearch') ?>"/>
 
         <div class="input-group-btn">
