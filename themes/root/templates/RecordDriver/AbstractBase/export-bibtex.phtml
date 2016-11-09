@@ -65,13 +65,15 @@ if (is_array($series)) {
 
 $author = $this->driver->tryMethod('getPrimaryAuthor');
 if (!empty($author)) {
+    $author = $this->driver->stripTrailingDates($author);
     echo "author = {{$author}},\n";
 }
 
 $secondaryAuthors = $this->driver->tryMethod('getSecondaryAuthors');
 if (is_array($secondaryAuthors)) {
-    foreach ($secondaryAuthors as $current) {
-        echo "editor = {{$current}},\n";
+    foreach ($secondaryAuthors as $secondaryAuthor) {
+        $secondaryAuthor = $this->driver->stripTrailingDates($secondaryAuthor);
+        echo "editor = {{$secondaryAuthor}},\n";
     }
 }
 

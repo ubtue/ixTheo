@@ -69,13 +69,15 @@ if (is_array($series)) {
 
 $author = $this->driver->tryMethod('getPrimaryAuthor');
 if (!empty($author)) {
+    $author = $this->driver->stripTrailingDates($author);
     echo 'AU  - ' . "$author\r\n";
 }
 
 $secondaryAuthors = $this->driver->tryMethod('getSecondaryAuthors');
 if (is_array($secondaryAuthors)) {
-    foreach ($secondaryAuthors as $current) {
-        echo 'A2  - ' . "$current\r\n";
+    foreach ($secondaryAuthors as $secondaryAuthor) {
+        $secondaryAuthor = $this->driver->stripTrailingDates($secondaryAuthor);
+        echo 'A2  - ' . "$secondaryAuthor\r\n";
     }
 }
 

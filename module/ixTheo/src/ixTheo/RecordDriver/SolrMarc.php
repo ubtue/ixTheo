@@ -294,4 +294,11 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
 
        return "";
     }
+
+    public function stripTrailingDates($text) {
+        $matches = array();
+        if (!preg_match("/(\\D*)(\\d{4}).*/", $text, $matches))
+            return $text;
+        return rtrim($matches[1]);
+    }
 }
