@@ -73,7 +73,7 @@ $secondaryAuthors = $this->driver->tryMethod('getSecondaryAuthors');
 if (is_array($secondaryAuthors)) {
     foreach ($secondaryAuthors as $secondaryAuthor) {
         $secondaryAuthor = $this->driver->stripTrailingDates($secondaryAuthor);
-        echo "editor = {{$current}},\n";
+        echo "editor = {{$secondaryAuthor}},\n";
     }
 }
 
