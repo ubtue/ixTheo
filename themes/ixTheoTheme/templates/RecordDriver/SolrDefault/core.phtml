@@ -217,10 +217,11 @@
           <th><?=$this->transEsc('Reviewed')?>: </th>
           <td>
             <? foreach ($reviews as $id => $title): ?>
+	      <? if (empty($title[0])): $reviewer = ""; else: $reviewer = " (".$this->escapeHtml($title[0]).")"; endif; ?>
 	      <? if ($id != "000000000"): ?>
-                <a href="<?=$id?>"><?=$this->escapeHtml($title[1])?> (<?=$this->escapeHtml($title[0])?>)</a>
+                <a href="<?=$id?>"><?=$this->escapeHtml($title[1]) . $reviewer?></a>
 	      <? else: ?>
-	        <?=$this->escapeHtml($title[1] . " (" . $title[0]) . ")"?>
+	        <?=$this->escapeHtml($title[1]) . $reviewer?>
 	      <? endif; ?>
               <br/>
             <? endforeach; ?>
