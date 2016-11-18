@@ -82,7 +82,7 @@
               <? if(!empty($superior_ppn)): ?>
                 <?=$this->transEsc('in')?>:
                 <? $journal_issue_display = preg_replace('/(\d+)(\()/','$1 $2', implode($journal_issue,  ", ")) ?>
-                <a href="Results?lookfor=id%3A<?=$superior_ppn?>"><?=$journal_issue_display ?></a>
+                <a href="<?=$this->url('record', array('id' => $superior_ppn)) ?>"><?=$journal_issue_display ?></a>
               <? else: ?>
                 <? implode($journal_issue, " ") ?>
               <? endif; ?>
