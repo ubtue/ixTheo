@@ -15,13 +15,15 @@ if (is_array($formats) && !empty($formats)) {
 
 $author = $this->driver->tryMethod('getPrimaryAuthor');
 if (!empty($author)) {
+    $author = $this->driver->stripTrailingDates($author);
     echo "%A $author\n";
 }
 
 $secondaryAuthors = $this->driver->tryMethod('getSecondaryAuthors');
 if (is_array($secondaryAuthors)) {
-    foreach ($secondaryAuthors as $current) {
-        echo "%E $current\n";
+    foreach ($secondaryAuthors as $secondaryAuthor) {
+        $secondaryAuthor = $this->driver->stripTrailingDates($secondaryAuthor);
+        echo "%E $secondaryAuthor\n";
     }
 }
 
