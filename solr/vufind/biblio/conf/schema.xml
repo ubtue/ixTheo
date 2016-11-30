@@ -274,10 +274,10 @@
    <field name="container_ids_and_titles" type="string" indexed="true" stored="true" multiValued="true"/>
 
    <!-- Miscellaneous -->
-   <field name="issue" type="string" indexed="false" stored="true" multiValued="false"/>
-   <field name="pages" type="string" indexed="false" stored="true" multiValued="false"/>
-   <field name="volume" type="string" indexed="false" stored="true" multiValued="false"/>
-   <field name="year" type="string" indexed="false" stored="true" multiValued="false"/>
+   <field name="issue" type="string" indexed="true" stored="true" multiValued="false"/>
+   <field name="pages" type="string" indexed="true" stored="true" multiValued="false"/>
+   <field name="volume" type="string" indexed="true" stored="true" multiValued="false"/>
+   <field name="year" type="string" indexed="true" stored="true" multiValued="false"/>
    <field name="mediatype" type="string" indexed="true" stored="true" multiValued="false"/>
    <field name="zdb_number" type="string" indexed="true" stored="true" multiValued="false"/>
  </fields>
