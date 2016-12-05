@@ -48,10 +48,33 @@
 <div class="col-md-12" style="text-align:justify;">
     <h2>Chers usagers de la RelBib,</h2>
     <div class="post">
-        <p>nous sommes heureux de vous présenter la version alpha de la nouvelle Relbib.</p>
-        <p>La nouvelle RelBib est une bibliographie exhaustive des sciences des religions. On peut maintenant y faire des recherches non seulement sur des articles, mais également sur des monographies, des banques de données et des liens Internet. Il inclut aussi les données de certaines revues de critique choisies. Lorsque les licences le permettent, il est possible d’accéder directement au texte complet des articles, des critiques et des livres concernés.</p>
-        <p>La nouvelle RelBib est un service à libre accès et gratuit offert à la communauté mondiale de recherche. L'éditeur de la Relbib est la bibliothèque de l’Université de Tübingen (Universitätsbibliothek Tübingen).</p>
-        <p>Nous regrettons que certaines erreurs soient toujours présentes dans cette version préliminaire. Nous vous souhaitons une expérience agréable d’utilisation de la RelBib et serions reconnaissants pour tout commentaire nous aidant à l’améliorer.</p>
+    <p> Nous sommes heureux de vous présenter la « Bibliographie des Sciences des Religions » (« RelBib »). Il s’agit de la version alpha d’une banque de 
+        données exhaustive gérée par le « Service spécialisé d’Information sur les Sciences des Religions » (« Fachinformationsdienst Religionswissenschaft ») 
+        de la bibliothèque centrale de l’Université de Tübingen.
+    </p>
+    <p>
+        La banque de données contient présentement  <b><? include(dirname(__DIR__) . '/includes/relbib_journals_total.txt')?></b>
+        revues de sciences des religions générales ou comparées, de l’histoire des religions et de quelques autres domaines des sciences 
+        culturelles. Nous cataloguons présentement le contenu des articles de 
+        <b><?include(dirname(__DIR__) . '/includes/relbib_journals_evaluated.txt')?></b>
+        de ces publications. Nous augmentons graduellement le nombre de revues traitées ainsi ; notre but est de cataloguer la grande majorité des 
+        revues au niveau des articles afin de faciliter la recherche au point de vue du contenu. De plus, la banque de données contient des 
+        références à des monographies sur les sciences des religions.
+    </p>
+    <p>
+        Grâce au lien « Disponibilité », il est possible de savoir rapidement si une revue, un article ou un livre est disponible. Lorsque la licence le permet, 
+        il est possible d’accéder directement aux textes dans leur version électronique.
+    </p>
+    <p>
+        RelBib est un service à libre accès gratuitement offert à la communauté mondiale de recherche en sciences des religions. L’éditeur de RelBib est 
+        la bibliothèque de l’Université de Tübingen. RelBib est conçu en collaboration avec « IxTheo », la banque de données théologique, qui est développée 
+        et gérée par le Service spécialisé d’Information sur la Théologie. Cette collaboration permet de créer des synergies facilitant la recherche et 
+        l’utilisation de contenus théologiques en supplément.
+    </p>
+    <p>
+        Dans une version alpha, il subsiste parfois des problèmes. Nous vous remercions de votre compréhension et nous espérons que vous nous ferez part 
+        de vos suggestions. Nous vous souhaitons beaucoup de plaisir à découvrir RelBib !
+    </p>
     </div>
 </div>
 <?
@@ -60,6 +83,26 @@ $panelClass = "panel-default";
 $panelWidth = "col-md-6";
 ?>
 <h2 class="col-md-12 panel-group">Découvrir la RelBib</h2>
+<div class="col-md-12" style="text-align:justify">
+    <div class="post">
+    <p>
+        Vous pouvez amorcer une recherche sur tous les titres catalogués dans RelBib en appuyant sur le bouton « Rechercher » sans spécifier de terme. 
+        Vous verrez alors le nombre de titres disponibles à ce jour, et le titre le plus récent apparaîtra en haut. Vous pouvez ensuite affiner la 
+        recherche selon certains critères en choisissant les facettes correspondantes.
+    </p>
+    <p>
+        Par exemple, si vous choisissez « Livre » comme Format, vous obtiendrez une liste des monographies dans le domaine des sciences des religions 
+        cataloguées dans notre système. En sélectionnant « Électronique » comme type de médium, vous verrez les livres accessibles par voie électronique.
+    </p>
+    <p>
+       Les revues présentement cataloguées dans RelBib (avec des informations sur l’état actuel de leur traitement) ont été rassemblées dans une liste 
+       par ordre alphabétique.
+    </p>
+    <p>
+       Pour des informations supplémentaires sur l’utilisation de RelBib, veuillez consulter les liens suivants :
+    </p>
+    </div>
+</div>
 <div class="col-md-4" style="text-align:justify;">
     <div class="panel <?= $panelClass; ?>">
         <div class="panel-heading">

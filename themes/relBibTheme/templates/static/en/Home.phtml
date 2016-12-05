@@ -39,12 +39,26 @@
 <div class="col-md-12" style="text-align:justify;">
     <h2>Dear users of RelBib</h2>
     <div class="post">
-        <p>we are pleased to present to you the alpha version of the new IxTheo.</p>
-        <p>RelBib is a comprehensive bibliography for theology and religious studies. It is now possible to search not only for articles,
-            but also for monographs, databases and relevant Internet  links. A selection of review journals is now also included.
-            When the relevant licenses permit it, it is possible to access directly the complete text of the articles, reviews and books.</p>
-        <p>RelBib is a free and open access service to the worldwide scholarly community. The editor of the RelBib are the Universitätsbibliothek Tübingen
-            (library of the university of Tübingen)</p>
+        <p>we are pleased to present to you the alpha version of the ‘Religious Studies Bibliography’ (RelBib), a comprehensive 
+           bibliography of general and comparative Religious Studies published by the “Specialized Information Service on Religious Studies”
+           (‘Fachinformationsdienst Religionswissenschaft’) of the central library of the University of Tübingen.
+        </p>
+        <p>
+          As of now, the data base contains <b><? include(dirname(__DIR__) . '/includes/relbib_journals_total.txt')?></b> periodicals of 
+          ‘Religious Studies’, ‘Comparative Religious History’ and cultural studies. So far, 
+          <b><?include(dirname(__DIR__) . '/includes/relbib_journals_evaluated.txt')?></b> of these periodicals are being continuously 
+          monitored for articles which are entered into the system. We aim to increase this number in the near future until the articles 
+          of most of the periodicals can be searched for in the database. RelBib also includes books and digital material. 
+        </p>
+        <p>
+          Using the button “Check Availability”, you can find out whether and where an article, periodical or book is available to use or download. 
+          Links to e-books, e-journals or other online resources are being provided and can be accessed directly if the publishers’ licenses permit it.
+        </p>
+        <p>
+          RelBib remains a free and open access service to the worldwide scholarly community. The editor of RelBib is the ‘Universitätsbibliothek Tübingen’ 
+          (central library of the University of Tübingen). RelBib is being produced in close cooperation with ‘IxTheo’, the Bibliography for Theology. 
+          This connection and cooperation allows you to switch from RelBib to IxTheo whenever you wish to widen your search to the fields covered by IxTheo.
+        </p>
         <p>We apologize in advance for any errors which might come up at this early stage of development. We wish you an enjoyable experience as you explore 
            RelBib and we would be glad to get your feedback!</p>
     </div>
@@ -55,6 +69,24 @@ $panelClass = "panel-default";
 $panelWidth = "col-md-6";
 ?>
 <h2 class="col-md-12 panel-group">Discover RelBib</h2>
+<div class="col-md-12" style="text-align:justify">
+    <div class="post">
+    <p>
+    You will find the full number – daily updated –of RelBib’s contents if you click on “Search” without any additional entry. You may narrow down the 
+    search according to certain criteria by selecting the corresponding facets. 
+    </p>
+    <p>
+    For example, when clicking on "Format" "Book", you will be shown all the books included so far in RelBib; a further click on "media type" "Electronic" shows 
+    you all of RelBib’s e-books.
+    </p>
+    <p>
+    From the alphabetical list of RelBib’s periodicals, you can quickly access the journals you are most interested in and find out about their status of processing.
+    </p>
+    <p>
+    You can find more information on using RelBib under
+    </p>
+    </div>
+</div>
 <div class="col-md-4" style="text-align:justify;">
     <div class="panel <?= $panelClass; ?>">
         <div class="panel-heading">
