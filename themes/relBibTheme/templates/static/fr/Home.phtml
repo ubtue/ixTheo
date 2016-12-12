@@ -84,26 +84,6 @@ $panelClass = "panel-default";
 $panelWidth = "col-md-6";
 ?>
 <h2 class="col-md-12 panel-group">Découvrir la RelBib</h2>
-<div class="col-md-12" style="text-align:justify">
-    <div class="post">
-    <p>
-        Vous pouvez amorcer une recherche sur tous les titres catalogués dans RelBib en appuyant sur le bouton « Rechercher » sans spécifier de terme. 
-        Vous verrez alors le nombre de titres disponibles à ce jour, et le titre le plus récent apparaîtra en haut. Vous pouvez ensuite affiner la 
-        recherche selon certains critères en choisissant les facettes correspondantes.
-    </p>
-    <p>
-        Par exemple, si vous choisissez « Livre » comme Format, vous obtiendrez une liste des monographies dans le domaine des sciences des religions 
-        cataloguées dans notre système. En sélectionnant « Électronique » comme type de médium, vous verrez les livres accessibles par voie électronique.
-    </p>
-    <p>
-       Les revues présentement cataloguées dans RelBib (avec des informations sur l’état actuel de leur traitement) ont été rassemblées dans une liste 
-       par ordre alphabétique.
-    </p>
-    <p>
-       Pour des informations supplémentaires sur l’utilisation de RelBib, veuillez consulter les liens suivants :
-    </p>
-    </div>
-</div>
 <div class="col-md-4" style="text-align:justify;">
     <div class="panel <?= $panelClass; ?>">
         <div class="panel-heading">
@@ -115,12 +95,21 @@ $panelWidth = "col-md-6";
             <div class="panel-body">
                 <input type="checkbox" class="read-more-state" id="post-1" />
                 <div class="read-more-wrap">
-                    <p>Vous pouvez amorcer une recherche sur tous les titres catalogués dans l’IxTheo en appuyant sur le bouton &raquo;Rechercher&raquo;. Vous trouverez alors plus de 1,6 millions de titres.</p>
+                    <p>Vous pouvez amorcer une recherche sur tous les titres catalogués dans RelBib en appuyant sur le bouton &raquo;Recherche&raquo; sans spécifier de terme.
+                    </p>
                     <div class="read-more-target">
-                        <p>Vous pouvez ensuite affiner la recherche selon certains critères en choisissant les facettes correspondantes. Par exemple, vous pouvez choisir &raquo;Électronique&raquo; comme type de médium, &raquo;Article&raquo; comme format et &raquo;Allemand&raquo; comme langue. Cela réduit alors le nombre de titres trouvés à environ 3000.</p>
+                        <p>Vous verrez alors le nombre de titres disponibles à ce jour, et le titre le plus récent apparaîtra en haut. Vous pouvez ensuite affiner la
+                           recherche selon certains critères en choisissant les facettes correspondantes.
+                        </p>
+                        <p>Par exemple, si vous choisissez <em>Livre</em> comme <strong>Format</strong>, vous obtiendrez une liste des monographies dans le domaine des sciences des religions
+                           cataloguées dans notre système. En sélectionnant <em>Électronique</em> comme <strong>Type de médium</strong>, vous verrez les livres accessibles par voie électronique.
+                        </p>
+                        <p>Les revues présentement cataloguées dans RelBib (avec des informations sur l’état actuel de leur traitement) ont été rassemblées dans une liste
+                           par ordre alphabétique.
+                        </p>
 
-                        <h3>Rechercher selon le contenu</h3>
-                        <h4>Classification RelBib</h4>
+			<h3>Rechercher selon le contenu</h3>
+			<h4>Classification RelBib</h4>
                         <p>Si vous cliquez sur &raquo;Recherche avancée&raquo;, vous y trouverez, entre autres, les classifications IxTheo. Vous pouvez choisir les facettes correspondantes par un simple clic de la souris. Il est possible de choisir un bloc de plusieurs facettes en tenant la touche majuscule appuyée (sur Windows) tout en cliquant sur les éléments au début et à la fin du bloc. Pour choisir plusieurs facettes séparément, il suffit de tenir la touche contrôle appuyée en cliquant sur les éléments désirés.</p>
                         <p>Vous pouvez ensuite amorcer la recherche de classifications IxTheo en appuyant sur le bouton &raquo;Rechercher&raquo;.</p>
 
