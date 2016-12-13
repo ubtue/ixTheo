@@ -59,4 +59,6 @@ TuelibSolrmarcMixin.jar
 FacetPrefixSortComponent.jar
 /vendor
 composer.lock
+composer.phar
 import/solrmarc.log
+node_modules
