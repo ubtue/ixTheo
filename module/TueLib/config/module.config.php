@@ -4,8 +4,7 @@ namespace TueLib\Module\Configuration;
 $config = array(
     'controllers' => array(
         'invokables' => array(
-            'proxy' => 'TueLib\Controller\ProxyController',
-            'ajax' => 'TueLib\Controller\AjaxController',
+            'proxy' => 'TueLib\Controller\ProxyController'
         ),
     ),
     'router' => array(
