@@ -173,7 +173,9 @@ JS;
         <?=$this->layout()->content ?>
       </div>
     </div>
-    <?=$this->render('feedback/feedback.phtml')?>
+    <div style="position: fixed; bottom: 0; right: 0;padding: 8px 0px">
+      <a href="/Feedback/home" data-lightbox style="padding: 10px 20px; border:1px solid darkgray; border-radius: 2px;"><?=$this->transEsc("Feedback");?></a>
+    </div>
     <footer class="hidden-print">
       <div class="container">
         <?=$this->render('footer.phtml')?>

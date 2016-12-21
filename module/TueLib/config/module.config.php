@@ -19,19 +19,9 @@ $config = array(
                         'action'     => 'Load',
                     )
                 )
-            ),
-            'proxy-feedback' => array(
-               'type' => 'Zend\Mvc\Router\Http\Literal',
-                'options' => array(
-                   'route'    => '/Ajax/Feedback',
-                   'defaults' => array(
-                      'controller' => 'Ajax',
-                      'action'     => 'Feedback',
-                )
             )
-         )
-      )
-   )
+        )
+    )
 );
 
 return $config;
