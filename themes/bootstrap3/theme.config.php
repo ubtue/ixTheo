@@ -20,7 +20,6 @@ return array(
         'autocomplete.js',
         'common.js',
         'lightbox.js',
-        'vendor/jquery.feedback_me.js'
     ),
     'less' => array(
         'active' => false,
