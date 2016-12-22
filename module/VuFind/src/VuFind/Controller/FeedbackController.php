@@ -62,8 +62,9 @@ class FeedbackController extends AbstractBase
             $config = $this->getServiceLocator()->get('VuFind\Config')
                 ->get('config');
             $feedback = isset($config->Feedback) ? $config->Feedback : null;
-            $recipient_email = isset($feedback->recipient_email)
-                ? $feedback->recipient_email : null;
+            $site = isset($config->Site) ? $config->Site : null;
+            $recipient_email = isset($site->email)
+                ? $site->email : null;
             $recipient_name = isset($feedback->recipient_name)
                 ? $feedback->recipient_name : 'Your Library';
             $email_subject = isset($feedback->email_subject)
