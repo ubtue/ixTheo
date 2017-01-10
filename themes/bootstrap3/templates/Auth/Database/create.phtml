@@ -84,6 +84,7 @@ $titles = VuFind\Auth\Database::$titles;
                placeholder="<?= $this->transEsc('Last Name') ?>" class="form-control col-md-4"/>
     </div>
 </div>
+<? if ($this->only_additional_information): ?>
 <div class="form-group">
     <label class="col-sm-4 control-label" for="account_email"><?= $this->transEsc('Email') ?>:</label>
     <div class="col-md-8">
@@ -92,6 +93,7 @@ $titles = VuFind\Auth\Database::$titles;
                placeholder="<?= $this->transEsc('Email') ?>" class="form-control"/>
     </div>
 </div>
+<? endif; ?>
 <div class="form-group">
     <label class="col-sm-4 control-label" for="account_institution"><?= $this->transEsc('Institution') ?>:</label>
     <div class="col-md-8">
