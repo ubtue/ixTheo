@@ -301,4 +301,24 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
             return $text;
         return rtrim($matches[1]);
     }
+
+
+    /**
+     * Get the full title of the record.
+     *
+     * @return string
+     */
+
+    public function getTitle()
+    {
+        $title = $this->getShortTitle();
+        $subtitle = $this->getSubtitle();
+        $titleSection = $this->getTitleSection();
+        if (!empty($subtitle)) { 
+            $separator = preg_match("/^[\\s=]+/", $subtitle) ? " " : " : ";
+            $title .= $separator . $subtitle; }
+        if (!empty($titleSection)) { $title .= ' / ' . $titleSection; }
+        return $title;
+    }
+
 }
