@@ -10,5 +10,10 @@ $this->layout()->breadcrumbs = '<li><a href="' . $this->url('myresearch-home') .
 
 <form method="post" name="accountForm" id="accountForm" class="form-horizontal" data-toggle="validator" role="form">
     <?=$this->context($this)->renderInContext('Auth/Database/create.phtml', ['only_additional_information' => true]);?>
-    <input class="btn btn-primary" name="submit" value="Abschicken" type="submit">
+    <div class="form-group">
+        <div class="col-sm-4 control-label"></div>
+        <div class="col-md-4">
+            <input class="btn btn-primary" name="submit" value="Abschicken" type="submit">
+        </div>
+    </div>
 </form>

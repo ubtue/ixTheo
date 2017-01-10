@@ -104,7 +104,11 @@ class MyResearchController extends \VuFind\Controller\MyResearchController
             return $this->forceLogin();
         }
         $table = $this->getTable('IxTheoUser');
-        $ixTheoUser = $table->get($user->id);;
+        $ixTheoUser = $table->get($user->id);
+        if(!isset($ixTheoUser) || !$ixTheoUser) {
+            $ixTheoUser = $table->getNew($user->id);
+            $ixTheoUser->save();
+        }
 
         if ($this->getRequest()->getPost("submit")) {
             $this->updateProfile($this->getRequest(), $user, $ixTheoUser);
@@ -118,14 +122,14 @@ class MyResearchController extends \VuFind\Controller\MyResearchController
 
     private function updateProfile($request, $user, $ixTheoUser) {
         $params = [
-            'firstname' => '', 'lastname' => '',
+            'firstname' => '', 'lastname' => '', 'email' => '',
             'title' => '', 'institution' => '', 'country' => '',
             'language' => '', 'sex' => ''
         ];
         foreach ($params as $param => $default) {
             $params[$param] = $request->getPost()->get($param, $default);
         }
-        $this->getAuthManager()->getAuth()->createOrUpdateIxTheoUser($params, $user, $ixTheoUser);
+        $this->getAuthManager()->getAuth()->updateIxTheoUser($params, $user, $ixTheoUser);
     }
 
     private function mergePostDataWithUserData($post, $user, $ixTheoUser) {
