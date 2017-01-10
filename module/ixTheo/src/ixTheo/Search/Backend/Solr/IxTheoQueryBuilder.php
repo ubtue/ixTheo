@@ -51,7 +51,7 @@ class IxTheoQueryBuilder extends QueryBuilder
     {
         if (empty($bibleReferences)) {
             // if no bible references were found for given query, search for a range which doesn't exist to get no result.
-            $bibleReferences = ["9999999_9999999"];
+            $bibleReferences = ["99999999_99999999"];
         }
         $searchString = "{!bibleRangeParser}" . str_replace(":", "_", implode(',', $bibleReferences));
         return $searchString;
