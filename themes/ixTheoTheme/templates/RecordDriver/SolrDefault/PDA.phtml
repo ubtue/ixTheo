@@ -1,4 +1,4 @@
-<? $formats = $this->driver->getFormats(); if (!empty($formats) && (in_array("Book", $formats))): ?>
+<? $formats = $this->driver->getFormats(); if (!empty($formats) && (in_array("Book", $formats)) && $this->driver->isPotentiallyPDA()): ?>
   <? // We do not use the getCleanISBN-function since it converts ISBN down to ISBN 10 ?>
   <? // and we miss matches in GVI ?>
   <? $isbns = $this->driver->tryMethod('getISBNs'); ?>
@@ -13,7 +13,6 @@
   <script type="text/javascript" language="javascript">
       // Suppress entire field if no isbn is present
       var isbn = <?=$isbn?>;
-//      var server_address = "<?=$_SERVER['REMOTE_ADDR']?>";
       if (isbn == 0) {
         $("#pda_row").remove();
       }
