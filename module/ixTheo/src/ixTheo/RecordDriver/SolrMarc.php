@@ -321,4 +321,14 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
         return $title;
     }
 
+    /** Check whether a record is potentially available for PDA
+     *
+     * @return bool
+     */
+
+    public function isPotentiallyPDA()
+    {
+        return $this->fields['is_potentially_pda'];
+    }
+
 }
