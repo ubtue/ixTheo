@@ -258,7 +258,7 @@ class Factory
             $siteId = $config->Piwik->site_id ?: $siteId;
         }
         if ($siteId == -1) {
-            return new Piwik("", null, false);
+            return new Piwik("", null, false, null, null);
         }
         $customVars = isset($config->Piwik->custom_variables)
             ? $config->Piwik->custom_variables
