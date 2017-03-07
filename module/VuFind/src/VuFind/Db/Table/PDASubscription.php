@@ -25,28 +25,29 @@ class PDASubscription extends Gateway implements \VuFind\Db\Table\DbTableAwareIn
         parent::__construct('ixtheo_pda_subscriptions', 'VuFind\Db\Row\PDASubscription');
     }
 
-    public function getNew($userId, $isbn, $title, $author, $year) {
+    public function getNew($userId, $ppn, $title, $author, $year, $isbn) {
         $row = $this->createRow();
         $row->id = $userId;
         $row->book_title = $title ?: "";
         $row->book_author = $author ?: "";
         $row->book_year = $year ?: "";
-        $row->book_control_number = $isbn;
+        $row->book_ppn = $ppn ?: "";
+        $row->book_isbn = $isbn ?: "";
         return $row;
     }
 
-    public function findExisting($userId, $isbn) {
-        return $this->select(['id' => $userId, 'book_control_number' => $isbn])->current();
+    public function findExisting($userId, $ppn) {
+        return $this->select(['id' => $userId, 'book_ppn' => $ppn])->current();
     }
 
-    public function subscribe($userId, $isbn, $title, $author, $year) {
-        $row = $this->getNew($userId, $isbn, $title, $author, $year);
+    public function subscribe($userId, $ppn, $title, $author, $year, $isbn) {
+        $row = $this->getNew($userId, $ppn, $title, $author, $year, $isbn);
         $row->save();
         return $row->id;
     }
 
     public function unsubscribe($userId, $recordId) {
-        return $this->delete(['id' => $userId, 'book_control_number' => $recordId]);
+        return $this->delete(['id' => $userId, 'book_ppn' => $recordId]);
     }
 
     public function getAll($userId, $sort) {

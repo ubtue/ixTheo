@@ -66,7 +66,7 @@ class Results extends BaseResults
         $recordsToRequest = [];
         foreach ($list as $row) {
             $recordsToRequest[] = [
-                'id' => $row->book_control_number,
+                'id' => $row->book_ppn,
                 'source' => 'Solr'
             ];
         }

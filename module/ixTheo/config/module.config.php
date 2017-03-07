@@ -37,7 +37,7 @@ $config = array(
     'controller_plugins' => [
         'invokables' => [
             'subscriptions' => 'VuFind\Controller\Plugin\Subscriptions',
-            'pdasubscriptions' => 'ixTheo\Controller\Plugin\PDASubscriptions',
+            'pdasubscriptions' => 'VuFind\Controller\Plugin\PDASubscriptions',
         ]
     ],
 );
@@ -56,7 +56,6 @@ $staticRoutes = array(
     'MyResearch/DeleteSubscription',
     'MyResearch/PDASubscriptions',
     'MyResearch/DeletePDASubscription'
-
 );
 
 $config['router']['routes']['static-page'] = [
