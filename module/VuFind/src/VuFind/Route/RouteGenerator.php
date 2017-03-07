@@ -62,7 +62,7 @@ class RouteGenerator
                 'Email', 'SMS', 'Cite', 'Export', 'RDF', 'Hold', 'BlockedHold',
                 'Home', 'StorageRetrievalRequest', 'AjaxTab',
                 'BlockedStorageRetrievalRequest', 'ILLRequest', 'BlockedILLRequest',
-                'PDF', 'Subscribe'
+                'PDF', 'Subscribe', 'PDASubscribe'
             ];
         } else {
             $this->nonTabRecordActions = $nonTabRecordActions;

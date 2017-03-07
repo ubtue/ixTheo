@@ -12,6 +12,7 @@ $config = array(
             'search_results' => [
                 'factories' => [
                     'subscriptions' => 'VuFind\Search\Results\Factory::getSubscriptions',
+                    'pdasubscriptions' => 'VuFind\Search\Results\Factory::getPDASubscriptions'
                 ],
             ],
             'search_backend' => [
@@ -36,6 +37,7 @@ $config = array(
     'controller_plugins' => [
         'invokables' => [
             'subscriptions' => 'VuFind\Controller\Plugin\Subscriptions',
+            'pdasubscriptions' => 'ixTheo\Controller\Plugin\PDASubscriptions',
         ]
     ],
 );
@@ -52,6 +54,9 @@ $staticRoutes = array(
     'Pipeline/Home',
     'MyResearch/Subscriptions',
     'MyResearch/DeleteSubscription',
+    'MyResearch/PDASubscriptions',
+    'MyResearch/DeletePDASubscription'
+
 );
 
 $config['router']['routes']['static-page'] = [

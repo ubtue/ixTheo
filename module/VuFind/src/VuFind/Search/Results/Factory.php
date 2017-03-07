@@ -93,4 +93,22 @@ class Factory
         $init->initialize($obj, $sm);
         return $obj;
     }
+
+
+    /**
+     * Factory for PDA-Subscriptions results object.
+     *
+     * @param ServiceManager $sm Service manager.
+     *
+     * @return Subscriptions
+     */
+    public static function getPDASubscriptions(ServiceManager $sm)
+    {
+        $factory = new PluginFactory();
+        $obj = $factory->createServiceWithName($sm, 'pdasubscriptions', 'PDASubscriptions');
+        $init = new \ZfcRbac\Initializer\AuthorizationServiceInitializer();
+        $init->initialize($obj, $sm);
+        return $obj;
+    }
+
 }
