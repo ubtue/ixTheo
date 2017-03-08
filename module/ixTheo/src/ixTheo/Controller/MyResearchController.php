@@ -6,7 +6,6 @@ use VuFind\Search\RecommendListener,
 
 class MyResearchController extends \VuFind\Controller\MyResearchController
 {
-
     function pdasubscriptionsAction() {
         // Fail if lists are disabled:
         if (!$this->listsEnabled()) {
@@ -68,7 +67,6 @@ class MyResearchController extends \VuFind\Controller\MyResearchController
             }
             throw $e;
         }
-
     }
 
     function subscriptionsAction()

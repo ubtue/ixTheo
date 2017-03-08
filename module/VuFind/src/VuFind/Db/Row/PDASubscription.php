@@ -7,6 +7,8 @@ namespace VuFind\Db\Row;
  * @category VuFind
  * @package  Db_Row
  * @author   Demian Katz <demian.katz@villanova.edu>
+ * @author   Oliver Obenland <oliver.obenland@uni-tuebingen.de>
+ * @author   Johannes Riedl <johannes.riedl@uni-tuebingen.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */

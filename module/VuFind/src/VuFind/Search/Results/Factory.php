@@ -110,5 +110,4 @@ class Factory
         $init->initialize($obj, $sm);
         return $obj;
     }
-
 }

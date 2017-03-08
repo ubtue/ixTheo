@@ -7,16 +7,14 @@ class RecordController extends \VuFind\Controller\RecordController
 
     function processSubscribe()
     {
-        if (!($user = $this->getUser())) {
+        if (!($user = $this->getUser()))
             return $this->forceLogin();
         }
         $post = $this->getRequest()->getPost()->toArray();
-        var_dump($post);
         $results = $this->loadRecord()->subscribe($post, $user);
 
-        if ($results == null) {
+        if ($results == null) 
             return $this->createViewModel();
-        }
 
         $this->flashMessenger()->addMessage("Success", 'success');
         return $this->redirectToRecord();
@@ -66,13 +64,10 @@ class RecordController extends \VuFind\Controller\RecordController
             return $this->forceLogin();
         }
         $post = $this->getRequest()->getPost()->toArray();
-        var_dump($post);
         $results = $this->loadRecord()->pdasubscribe($post, $user);
-
         if ($results == null) {
             return $this->createViewModel();
         }
-
         $this->flashMessenger()->addMessage("Success", 'success');
         return $this->redirectToRecord();
     }
@@ -86,7 +81,6 @@ class RecordController extends \VuFind\Controller\RecordController
         }
         $post = $this->getRequest()->getPost()->toArray();
         $this->loadRecord()->unsubscribe($post, $user);
-
         $this->flashMessenger()->addMessage("Success", 'success');
         return $this->redirectToRecord();
     }

@@ -75,7 +75,7 @@ class PDASubscription extends Gateway implements \VuFind\Db\Table\DbTableAwareIn
     {
         // Apply sorting, if necessary:
         $legalSorts = [
-            'book_title', 'book_title desc', 'book_author', 'book_author desc', 'book_year', '_year desc'
+            'book_title', 'book_title desc', 'book_author', 'book_author desc', 'book_year', 'book_year desc'
         ];
         if (!empty($sort) && in_array(strtolower($sort), $legalSorts)) {
             $query->order([$sort]);

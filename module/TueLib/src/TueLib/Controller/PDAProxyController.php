@@ -28,6 +28,7 @@ namespace TueLib\Controller;
 use VuFind\Exception\Forbidden as ForbiddenException;
 use \Exception as Exception;
 use SimpleXMLElement;
+
 /**
  * This controller is a proxy for requests to BSZ based GVI 
  * (= Gemeinsame Verbünde Index) to determine whether a monograph
@@ -48,7 +49,7 @@ class PDAProxyController extends \VuFind\Controller\AbstractBase
         $client->setUri($this->base_url . '?' . $this->base_query . $isbn);
         $response = $client->send();
 
-        if (! $response->isSuccess())
+        if (!$response->isSuccess())
             throw new Exception("HTTP ERROR"); 
 
         // Abort, if general JSON decoding fails
@@ -60,7 +61,7 @@ class PDAProxyController extends \VuFind\Controller\AbstractBase
         // 1.) If we have a match with ILL -> OK
         // 2.) Parse the fullrecord
 
-        if ((! isset($json['facet_counts']['facet_fields']['ill_flag'])) || (! isset($json['facet_counts']['facet_fields']['ill_region'])))
+        if ((!isset($json['facet_counts']['facet_fields']['ill_flag'])) || (!isset($json['facet_counts']['facet_fields']['ill_region'])))
            throw new Exception("JSON FACET FIELDs Missing"); 
 
         // Case 1
@@ -71,12 +72,12 @@ class PDAProxyController extends \VuFind\Controller\AbstractBase
         }
        
         // Case 2
-        if (! isset($json['response']['docs']))
+        if (!isset($json['response']['docs']))
            throw new Exception("JSON DOCS Missing");
 
         $docs = $json['response']['docs'];
         foreach ($docs as $doc) {
-            if (! isset($doc['fullrecord']))
+            if (!isset($doc['fullrecord']))
                continue;
             
             // Remove escaped quotation marks
@@ -86,11 +87,11 @@ class PDAProxyController extends \VuFind\Controller\AbstractBase
             // we have at least 'p' (="nur Papierkopie"), 'c' (="uneingeschränkte Fernleihe), and 'd' (="keine Fernleihe")
             $xml_record = new SimpleXMLElement($fullrecord);
             foreach ($xml_record->record->children() as $datafield) {
-               if ($datafield['tag'] == 924) {
+               if ($datafield['tag'] == "924") {
                    foreach ($datafield->children() as $subfield) {
                        if ($subfield['code'] == 'd') {
                            if ($subfield == 'p' || $subfield == 'c')
-                              return true;
+                              return false;
                        }
                    }
                }

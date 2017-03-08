@@ -10,7 +10,6 @@ use VuFind\Exception\LoginRequired as LoginRequiredException,
  */
 class PDASubscriptions extends AbstractPlugin
 {
-
     /**
      * Delete a group of pda-subscriptions.
      *
