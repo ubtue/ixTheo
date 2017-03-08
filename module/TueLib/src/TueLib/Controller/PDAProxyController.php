@@ -27,6 +27,8 @@ namespace TueLib\Controller;
 
 use VuFind\Exception\Forbidden as ForbiddenException;
 use \Exception as Exception;
+use SimpleXMLElement;
+
 /**
  * This controller is a proxy for requests to BSZ based GVI 
  * (= Gemeinsame Verbünde Index) to determine whether a monograph
@@ -47,11 +49,8 @@ class PDAProxyController extends \VuFind\Controller\AbstractBase
         $client->setUri($this->base_url . '?' . $this->base_query . $isbn);
         $response = $client->send();
 
-
-        // Abort, if we have an HTTP Error
-        if (! $response->isSuccess()){
+        if (!$response->isSuccess())
             throw new Exception("HTTP ERROR"); 
-        }
 
         // Abort, if general JSON decoding fails
         $json = json_decode($response->getBody(), true);
@@ -60,43 +59,46 @@ class PDAProxyController extends \VuFind\Controller\AbstractBase
 
         // We use a several way scheme
         // 1.) If we have a match with ILL -> OK
-        // 2.) If can determine an ILL region take it as heuristics
-        // 3.) Parse the fullrecord
+        // 2.) Parse the fullrecord
 
-        // Abort if we cannot find the appropriate fields
-        if ((! isset($json['facet_counts']['facet_fields']['ill_flag'])) || (! isset($json['facet_counts']['facet_fields']['ill_region']))) {
+        if ((!isset($json['facet_counts']['facet_fields']['ill_flag'])) || (!isset($json['facet_counts']['facet_fields']['ill_region'])))
            throw new Exception("JSON FACET FIELDs Missing"); 
-        }
 
         // Case 1
         $ill_facet = $json['facet_counts']['facet_fields']['ill_flag'];
-        if ($ill_facet['IllFlag.Loan'] != 0 || $ill_facet['IllFlag.Copy'] != 0 || $ill_facet['IllFlag.Ecopy'] != 0)
-              return true;
+        foreach ($ill_facet as $ill_flag => $count) {
+              if (($ill_flag == 'IllFlag.Loan' || $ill_flag == 'IllFlag.Copy' || $ill_flag == 'IllFlag.Ecopy') && $count != 0)
+                 return true;
+        }
        
         // Case 2
-        $ill_region = $json['facet_count']['facet_field']['ill_region'];
+        if (!isset($json['response']['docs']))
+           throw new Exception("JSON DOCS Missing");
 
-        // In how many regions is it available ??
-        $region_values = array_values($ill_region);
-        $total_available = array_reduce($region_values, $this->add);
-
-        // If there are more than 5 available items in all regions 
-        // we simply assume that one of them is for loan
-        if ($total_availble > 5)
-            return true;
-
-        // Case 3
-        //...
- 
+        $docs = $json['response']['docs'];
+        foreach ($docs as $doc) {
+            if (!isset($doc['fullrecord']))
+               continue;
+            
+            // Remove escaped quotation marks
+            $fullrecord = preg_replace('/[\]["]/','"', $doc['fullrecord']);
+            // The "Fernleihindikator" field is 924$d. According to 
+            // https://wiki.dnb.de/download/attachments/83788495/2013-10-13_MARC-Feld_924.pdf?version=1&modificationDate=1381758363000 (17/03/06)
+            // we have at least 'p' (="nur Papierkopie"), 'c' (="uneingeschränkte Fernleihe), and 'd' (="keine Fernleihe")
+            $xml_record = new SimpleXMLElement($fullrecord);
+            foreach ($xml_record->record->children() as $datafield) {
+               if ($datafield['tag'] == "924") {
+                   foreach ($datafield->children() as $subfield) {
+                       if ($subfield['code'] == 'd') {
+                           if ($subfield == 'p' || $subfield == 'c')
+                              return true;
+                       }
+                   }
+               }
+            }
+        }
         return false;
     } 
-
-
-    public function add($carry, $item) {
-         $carry += $item;
-         return $carry;
-
-    }
 
 
     public function loadAction()
@@ -122,11 +124,6 @@ class PDAProxyController extends \VuFind\Controller\AbstractBase
         $response->getHeaders()->addHeaderLine('Content-Type', 'application/json');
         $response->setContent($json);
         return $response;
-
-
-//        $client = $this->getServiceLocator()->get('VuFind\Http')->createClient();
-//        $client->setUri('http://gvi.bsz-bw.de/solr/GVI/select?rows=10&wt=json&facet=true&facet.field=ill_flag&facet.field=ill_region&fl=id&q=isbn:9783540658887');
-
-//        return $client->send();
     }  
+
 }

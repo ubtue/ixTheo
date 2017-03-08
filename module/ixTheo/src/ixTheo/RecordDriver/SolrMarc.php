@@ -215,6 +215,36 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
         return $table->unsubscribe($userId, $recordId);
     }
 
+    public function pdasubscribe($params, $user)
+    {
+
+        if (!$user) {
+            throw new LoginRequiredException('You must be logged in first');
+        }
+
+        $table = $this->getDbTable('PDASubscription');
+        $recordId = $this->getUniqueId();
+        $userId = $user->id;
+
+        if ($table->findExisting($userId, $recordId)) {
+            return "Exists";
+        }
+        return $table->subscribe($userId, $recordId, $this->getTitle(), $this->getAuthorsAsString(), $this->getPublicationDates()[0], $this->getCleanISBN());
+    }
+
+    public function pdaunsubscribe($params, $user)
+    {
+        if (!$user) {
+            throw new LoginRequiredException('You must be logged in first');
+        }
+
+        $table = $this->getDbTable('PDASubscription');
+        $recordId = $this->getUniqueId();
+        $userId = $user->id;
+
+        return $table->unsubscribe($userId, $recordId);
+    }
+
     public function canUseTAD($userId)
     {
         return $this->getDbTable('IxTheoUser')->canUseTAD($userId);
