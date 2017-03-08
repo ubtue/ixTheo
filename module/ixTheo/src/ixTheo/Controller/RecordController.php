@@ -7,7 +7,7 @@ class RecordController extends \VuFind\Controller\RecordController
 
     function processSubscribe()
     {
-        if (!($user = $this->getUser()))
+        if (!($user = $this->getUser())) {
             return $this->forceLogin();
         }
         $post = $this->getRequest()->getPost()->toArray();
