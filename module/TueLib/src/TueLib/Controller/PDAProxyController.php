@@ -91,7 +91,7 @@ class PDAProxyController extends \VuFind\Controller\AbstractBase
                    foreach ($datafield->children() as $subfield) {
                        if ($subfield['code'] == 'd') {
                            if ($subfield == 'p' || $subfield == 'c')
-                              return false;
+                              return true;
                        }
                    }
                }
