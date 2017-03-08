@@ -57,7 +57,6 @@ class RecordController extends \VuFind\Controller\RecordController
         return $this->createViewModel(["subscription" => !($table->findExisting($userId, $recordId)), "infoText" => $infoText]);
     }
 
-
     function processPDASubscribe()
     {
         if (!($user = $this->getUser())) {
@@ -72,8 +71,6 @@ class RecordController extends \VuFind\Controller\RecordController
         return $this->redirectToRecord();
     }
 
-
-
     function processPDAUnsubscribe()
     {
         if (!($user = $this->getUser())) {
@@ -84,7 +81,6 @@ class RecordController extends \VuFind\Controller\RecordController
         $this->flashMessenger()->addMessage("Success", 'success');
         return $this->redirectToRecord();
     }
-
 
     function pdasubscribeAction()
     {
