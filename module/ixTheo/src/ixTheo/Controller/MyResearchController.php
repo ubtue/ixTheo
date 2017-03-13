@@ -3,6 +3,8 @@
 namespace ixTheo\Controller;
 use VuFind\Search\RecommendListener,
     VuFind\Exception\ListPermission as ListPermissionException;
+use Zend\Stdlib\RequestInterface as Request;
+use Zend\Stdlib\ResponseInterface as Response;
 
 class MyResearchController extends \VuFind\Controller\MyResearchController
 {
@@ -207,4 +209,57 @@ class MyResearchController extends \VuFind\Controller\MyResearchController
         }
         return $post;
     }
+
+    /**
+     * Check whether given target would be an action in MyReasearch
+     *
+     * @return mixed
+     */
+
+    protected function isMyResearchTarget($target) {
+        // http://stackoverflow.com/questions/10746695/php-remove-characters-after-last-occurrence-of-a-character-in-a-string (170313)
+        $targetBase = substr($target, 0, strrpos( $target, '/'));
+        $myResearchHome = $this->getServerUrl('myresearch-home');
+        $myResearchBase = substr($myResearchHome, 0, strrpos($myResearchHome, '/'));
+        return $targetBase == $myResearchBase;
+    }
+
+    /**
+     * Logout Action
+     *
+     * @return mixed
+     */
+    public function logoutAction() {
+        $config = $this->getConfig();
+        if (isset($config->Site->logOutRoute)) {
+            $logoutTarget = $this->getServerUrl($config->Site->logOutRoute);
+        } else {
+            $logoutTarget = $this->getRequest()->getServer()->get('HTTP_REFERER');
+            if (empty($logoutTarget)) {
+                $logoutTarget = $this->getServerUrl('home');
+            }
+
+            // If there is an auth_method parameter in the query, we should strip
+            // it out. Otherwise, the user may get stuck in an infinite loop of
+            // logging out and getting logged back in when using environment-based
+            // authentication methods like Shibboleth.
+            $logoutTarget = preg_replace(
+                '/([?&])auth_method=[^&]*&?/', '$1', $logoutTarget
+            );
+            $logoutTarget = rtrim($logoutTarget, '?');
+
+            // Another special case: if logging out will send the user back to
+            // the MyResearch home action, instead send them all the way to
+            // VuFind home. Otherwise, they might get logged back in again,
+            // which is confusing. Even in the best scenario, they'll just end
+            // up on a login screen, which is not helpful.
+            if ($logoutTarget == $this->getServerUrl('myresearch-home') || $this->isMyResearchTarget($logoutTarget)) {
+                $logoutTarget = $this->getServerUrl('home');
+            }
+        }
+
+        return $this->redirect()
+            ->toUrl($this->getAuthManager()->logout($logoutTarget));
+    }
+
 }
