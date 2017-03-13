@@ -260,5 +260,4 @@ class MyResearchController extends \VuFind\Controller\MyResearchController
         return $this->redirect()
             ->toUrl($this->getAuthManager()->logout($logoutTarget));
     }
-
 }
