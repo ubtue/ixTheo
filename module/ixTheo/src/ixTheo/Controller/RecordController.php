@@ -79,8 +79,10 @@ class RecordController extends \VuFind\Controller\RecordController
 
         $this->getUserData($user->id, $userData);
 
-        $recipient_email = "johannes.riedl@uni-tuebingen.de";
-        $recipient_name = "Test";
+        $config = $this->getServiceLocator()->get('VuFind\Config')->get('config');
+        $site = isset($config->Site) ? $config->Site : null;
+        $recipient_email = isset($site->pdaemail) ?  $site->pdaemail : null;
+        $recipient_name = "PDA";
         $sender_email = "ixtheo-noreply@uni-tuebingen.de";
         $sender_name = "PDA Mail Agent";
         $email_subject = "PDA Bestellung";

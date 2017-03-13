@@ -27,7 +27,7 @@
              $("#pda_place_holder").each(function() {
                 if ((received_isbn == isbn) && (pda_status == "OFFER_PDA")) {
                   $(this).replaceWith('<a href=' + '<?=$this->recordLink()->getActionUrl($this->driver, 'PDASubscribe')?>' + '>' 
-                                                 + '<?=$this->transEsc("Can be ordered by PDA")?>' + '</a>');
+                                                 + '<?=$this->transEsc("Trigger PDA Order")?>' + '</a>');
                 }
                 else
                   $("#pda_row").remove();
