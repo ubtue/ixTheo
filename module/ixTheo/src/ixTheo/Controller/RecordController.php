@@ -89,7 +89,7 @@ class RecordController extends \VuFind\Controller\RecordController
                          "Titel:\n" . implode(", ", array_diff_key($data, [0, 1]));
 
         try {
-        $mailer = $this->getServiceLocator()->get('VuFind\Mailer');
+            $mailer = $this->getServiceLocator()->get('VuFind\Mailer');
             $mailer->send(
                  new Address($recipient_email, $recipient_name),
                  new Address($sender_email, $sender_name),
