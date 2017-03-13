@@ -280,7 +280,7 @@ class Record extends AbstractHelper
      *
      * @param \VuFind\Db\Row\UserList $list Currently selected list (null for
      * combined favorites)
-     * @param \VuFind\Db\Row\User     $user Current logged in user (false if none)
+     * @param \VuFind\Db\Row\User     $user Currently logged in user (false if none)
      *
      * @return string
      */
