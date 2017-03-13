@@ -217,7 +217,6 @@ class MyResearchController extends \VuFind\Controller\MyResearchController
      */
 
     protected function isMyResearchTarget($target) {
-        // http://stackoverflow.com/questions/10746695/php-remove-characters-after-last-occurrence-of-a-character-in-a-string (170313)
         $targetBase = substr($target, 0, strrpos( $target, '/'));
         $myResearchHome = $this->getServerUrl('myresearch-home');
         $myResearchBase = substr($myResearchHome, 0, strrpos($myResearchHome, '/'));
