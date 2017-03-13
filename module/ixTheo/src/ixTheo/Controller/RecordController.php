@@ -5,7 +5,6 @@ use Zend\Mail\Address;
 
 class RecordController extends \VuFind\Controller\RecordController
 {
-
     function processSubscribe()
     {
         if (!($user = $this->getUser())) {
@@ -58,9 +57,7 @@ class RecordController extends \VuFind\Controller\RecordController
         return $this->createViewModel(["subscription" => !($table->findExisting($userId, $recordId)), "infoText" => $infoText]);
     }
 
-
     function getUserData($userId, &$userData) {
-
        $userTable = $this->loadRecord()->getDbTable('User');
        $select = $userTable->getSql()->select()->where(['id' => $userId]);
        $userRow = $userTable->selectWith($select)->current();
@@ -74,9 +71,7 @@ class RecordController extends \VuFind\Controller\RecordController
                      $ixtheoUserRow->country ];
     }
 
-
     function sendPDANotificationEmail($post, $user, $data) {
-
         $this->getUserData($user->id, $userData);
 
         $config = $this->getServiceLocator()->get('VuFind\Config')->get('config');
