@@ -82,14 +82,14 @@ class RecordController extends \VuFind\Controller\RecordController
         $recipient_email = "johannes.riedl@uni-tuebingen.de";
         $recipient_name = "Test";
         $sender_email = "ixtheo-noreply@uni-tuebingen.de";
-        $sender_name = "Test sender";
+        $sender_name = "PDA Mail Agent";
         $email_subject = "PDA Bestellung";
         $address_for_dispatch = $post['addressfield'];
         $title = $this->loadRecord()->getDbTable('PDASubscription');
 
         $email_message = "Benutzer:\n" .  implode("\n", $userData) . "\n\n" . 
                          "Versandaddresse:\n" . $address_for_dispatch . "\n\n" .
-                         implode(", ", array_diff_key($data, [0, 1]));
+                         "Titel:\n" . implode(", ", array_diff_key($data, [0, 1]));
 
         try {
         $mailer = $this->getServiceLocator()->get('VuFind\Mailer');
@@ -124,7 +124,7 @@ class RecordController extends \VuFind\Controller\RecordController
             return $this->forceLogin();
         }
         $post = $this->getRequest()->getPost()->toArray();
-        $this->loadRecord()->unsubscribe($post, $user);
+        $this->loadRecord()->pdaunsubscribe($post, $user);
         $this->flashMessenger()->addMessage("Success", 'success');
         return $this->redirectToRecord();
     }

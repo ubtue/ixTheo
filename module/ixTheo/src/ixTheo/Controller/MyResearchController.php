@@ -156,6 +156,25 @@ class MyResearchController extends \VuFind\Controller\MyResearchController
         return true;
     }
 
+
+    function performDeletePDASubscription($id, $deleteSource) {
+        // Force login:
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->forceLogin();
+        }
+
+        // Load/check incoming parameters:
+        if (empty($id)) {
+            throw new \Exception('Cannot delete empty ID!');
+        }
+
+        $table = $this->getTable('PDASubscription');
+        $table->unsubscribe($user->id, $id);
+        return true;
+    }
+
+
     function DeleteSubscriptionAction() {
         var_dump("DeleteSubscriptionAction");
     }
