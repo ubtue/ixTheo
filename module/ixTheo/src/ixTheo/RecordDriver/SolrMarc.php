@@ -215,9 +215,8 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
         return $table->unsubscribe($userId, $recordId);
     }
 
-    public function pdasubscribe($params, $user)
+    public function pdaSubscribe($params, $user, &$data)
     {
-
         if (!$user) {
             throw new LoginRequiredException('You must be logged in first');
         }
@@ -229,10 +228,12 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
         if ($table->findExisting($userId, $recordId)) {
             return "Exists";
         }
-        return $table->subscribe($userId, $recordId, $this->getTitle(), $this->getAuthorsAsString(), $this->getPublicationDates()[0], $this->getCleanISBN());
+
+        $data = [$userId, $recordId, $this->getTitle(), $this->getAuthorsAsString(), $this->getPublicationDates()[0], $this->getISBNs()[0]];
+        return call_user_func_array([$table, "subscribe"], $data);
     }
 
-    public function pdaunsubscribe($params, $user)
+    public function pdaUnsubscribe($params, $user)
     {
         if (!$user) {
             throw new LoginRequiredException('You must be logged in first');

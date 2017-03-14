@@ -1,10 +1,10 @@
 <?php
 
 namespace ixTheo\Controller;
+use Zend\Mail\Address;
 
 class RecordController extends \VuFind\Controller\RecordController
 {
-
     function processSubscribe()
     {
         if (!($user = $this->getUser())) {
@@ -57,16 +57,60 @@ class RecordController extends \VuFind\Controller\RecordController
         return $this->createViewModel(["subscription" => !($table->findExisting($userId, $recordId)), "infoText" => $infoText]);
     }
 
+    function getUserData($userId, &$userData) {
+       $userTable = $this->loadRecord()->getDbTable('User');
+       $select = $userTable->getSql()->select()->where(['id' => $userId]);
+       $userRow = $userTable->selectWith($select)->current();
+
+       $ixtheoUserTable = $this->loadRecord()->getDbTable('IxTheoUser');
+       $ixtheoSelect = $ixtheoUserTable->getSql()->select()->where(['id' => $userId]);
+       $ixtheoUserRow = $ixtheoUserTable->selectWith($ixtheoSelect)->current();
+       $ixtheoUserData = [ $ixtheoUserRow->title != "Other" ? $ixtheoUserRow->title : "", $ixtheoUserRow->country];
+       $userData = [ $ixtheoUserRow->title != "Other" ? $ixtheoUserRow->title . " " : "" . 
+                     $userRow->firstname . " " .  $userRow->lastname, $userRow->email,
+                     $ixtheoUserRow->country ];
+    }
+
+    function sendPDANotificationEmail($post, $user, $data) {
+        $this->getUserData($user->id, $userData);
+
+        $config = $this->getServiceLocator()->get('VuFind\Config')->get('config');
+        $site = isset($config->Site) ? $config->Site : null;
+        $recipient_email = isset($site->pda_email) ?  $site->pda_email : null;
+        $recipient_name = "PDA";
+        $sender_email = isset($site->pda_sender) ? $site->pda_sender : null;
+        $sender_name = isset($site->pda_sender_name) ? $site->pda_sender_name : null;
+        $email_subject = "PDA Bestellung";
+        $address_for_dispatch = $post['addressfield'];
+        $title = $this->loadRecord()->getDbTable('PDASubscription');
+
+        $email_message = "Benutzer:\n" .  implode("\n", $userData) . "\n\n" . 
+                         "Versandaddresse:\n" . $address_for_dispatch . "\n\n" .
+                         "Titel:\n" . implode(", ", array_diff_key($data, [0, 1]));
+
+        try {
+            $mailer = $this->getServiceLocator()->get('VuFind\Mailer');
+            $mailer->send(
+                 new Address($recipient_email, $recipient_name),
+                 new Address($sender_email, $sender_name),
+                 $email_subject, $email_message
+             );
+        } catch (MailException $e) {
+            $this->flashMessenger()->addMessage($e->getMessage(), 'Error sending email');
+        }
+    }
+
     function processPDASubscribe()
     {
         if (!($user = $this->getUser())) {
             return $this->forceLogin();
         }
         $post = $this->getRequest()->getPost()->toArray();
-        $results = $this->loadRecord()->pdasubscribe($post, $user);
+        $results = $this->loadRecord()->pdaSubscribe($post, $user, $data);
         if ($results == null) {
             return $this->createViewModel();
         }
+        $this->sendPDANotificationEmail($post, $user, $data);
         $this->flashMessenger()->addMessage("Success", 'success');
         return $this->redirectToRecord();
     }
@@ -77,7 +121,7 @@ class RecordController extends \VuFind\Controller\RecordController
             return $this->forceLogin();
         }
         $post = $this->getRequest()->getPost()->toArray();
-        $this->loadRecord()->unsubscribe($post, $user);
+        $this->loadRecord()->pdaUnsubscribe($post, $user);
         $this->flashMessenger()->addMessage("Success", 'success');
         return $this->redirectToRecord();
     }
