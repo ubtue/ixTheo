@@ -76,10 +76,10 @@ class RecordController extends \VuFind\Controller\RecordController
 
         $config = $this->getServiceLocator()->get('VuFind\Config')->get('config');
         $site = isset($config->Site) ? $config->Site : null;
-        $recipient_email = isset($site->pdaemail) ?  $site->pdaemail : null;
+        $recipient_email = isset($site->pda_email) ?  $site->pda_email : null;
         $recipient_name = "PDA";
-        $sender_email = "ixtheo-noreply@uni-tuebingen.de";
-        $sender_name = "PDA Mail Agent";
+        $sender_email = isset($site->pda_sender) ? $site->pda_sender : null;
+        $sender_name = isset($site->pda_sender_name) ? $site->pda_sender_name : null;
         $email_subject = "PDA Bestellung";
         $address_for_dispatch = $post['addressfield'];
         $title = $this->loadRecord()->getDbTable('PDASubscription');
@@ -106,7 +106,7 @@ class RecordController extends \VuFind\Controller\RecordController
             return $this->forceLogin();
         }
         $post = $this->getRequest()->getPost()->toArray();
-        $results = $this->loadRecord()->pdasubscribe($post, $user, $data);
+        $results = $this->loadRecord()->pdaSubscribe($post, $user, $data);
         if ($results == null) {
             return $this->createViewModel();
         }
@@ -121,7 +121,7 @@ class RecordController extends \VuFind\Controller\RecordController
             return $this->forceLogin();
         }
         $post = $this->getRequest()->getPost()->toArray();
-        $this->loadRecord()->pdaunsubscribe($post, $user);
+        $this->loadRecord()->pdaUnsubscribe($post, $user);
         $this->flashMessenger()->addMessage("Success", 'success');
         return $this->redirectToRecord();
     }
