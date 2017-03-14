@@ -54,6 +54,7 @@ class RecordController extends \VuFind\Controller\RecordController
             'action' => 'staticPage',
             'page' => 'SubscriptionInfoText'
         ));
+
         return $this->createViewModel(["subscription" => !($table->findExisting($userId, $recordId)), "infoText" => $infoText]);
     }
 
@@ -148,6 +149,11 @@ class RecordController extends \VuFind\Controller\RecordController
             'action' => 'staticPage',
             'page' => 'PDASubscriptionInfoText'
         ));
-        return $this->createViewModel(["pdasubscription" => !($table->findExisting($userId, $recordId)), "infoText" => $infoText]);
+        $fields = $driver->fields;
+        $bookDescription = $driver->getAuthorsAsString() . ": " .
+                           $driver->getTitle() .  ($driver->getYear() != "" ? "(" . $driver->getYear() . ")" : "") .
+                           ", ISBN: " . $driver->getISBNs()[0];
+        return $this->createViewModel(["pdasubscription" => !($table->findExisting($userId, $recordId)), "infoText" => $infoText,
+                                       "bookDescription" => $bookDescription]);
     }
 }

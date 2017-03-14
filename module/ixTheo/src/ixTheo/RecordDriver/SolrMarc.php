@@ -166,7 +166,7 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
              $this->fields['mediatype'] : '';
     }
 
-    private function getAuthorsAsString() {
+    public function getAuthorsAsString() {
         $author_implode = function ($array) {
                 if (is_null($array)) {
                     return null;
