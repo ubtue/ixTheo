@@ -138,7 +138,7 @@ class RecordController extends \VuFind\Controller\RecordController
     function getPDAInstitutionRecipientData() {
         $config = $this->getServiceLocator()->get('VuFind\Config')->get('config');
         $site = isset($config->Site) ? $config->Site : null;
-        $email = isset($site->pda_email) ?  $site->pda_email : null;
+        $email = isset($site->pda_email) ? $site->pda_email : null;
         $name = "UB Tübingen PDA";
         return ['email' => $email, 'name' => $name];
     }
