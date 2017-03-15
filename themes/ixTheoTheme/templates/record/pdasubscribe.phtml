@@ -3,7 +3,7 @@
     <?=$this->render($this->infoText);?>
     <h4><?=$this->bookDescription;?></h4>
     <textarea style="resize: none" name="addressfield" autofocus="true"  form="edit-save-form" rows="5" cols="30" 
-              required="true" placeholder="<?=$this->transEsc('Please enter your address here');?>"></textarea>
+              placeholder="<?=$this->transEsc('Please enter your address here');?>"></textarea>
     <p/>
     <form id="edit-save-form" class="form-horizontal" method="post"
           action="<?= $this->recordLink()->getActionUrl($this->driver, 'PDASubscribe') ?>" name="pdasubscribeRecord">
