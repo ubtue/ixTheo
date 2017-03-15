@@ -83,13 +83,13 @@ class RecordController extends \VuFind\Controller\RecordController
     }
 
 
-    function sendPDAEmail($recipient_email, $recipient_name, $sender_email, $sender_name, $email_subject, $email_message) {
+    function sendPDAEmail($recipientEmail, $recipientName, $senderEmail, $senderName, $emailSubject, $emailMessage) {
         try {
             $mailer = $this->getServiceLocator()->get('VuFind\Mailer');
             $mailer->send(
-                 new Address($recipient_email, $recipient_name),
-                 new Address($sender_email, $sender_name),
-                 $email_subject, $email_message
+                 new Address($recipientEmail, $recipientName),
+                 new Address($senderEmail, $senderName),
+                 $emailSubject, $emailMessage
              );
         } catch (MailException $e) {
             $this->flashMessenger()->addMessage($e->getMessage(), 'Error sending email');
@@ -102,12 +102,12 @@ class RecordController extends \VuFind\Controller\RecordController
         $userData = $this->formatUserData($userDataRaw);
         $senderData = $this->getPDASenderData();
         $recipientData = $this->getPDAInstitutionRecipientData();
-        $email_subject = "PDA Bestellung";
-        $address_for_dispatch = $post['addressfield'];
-        $email_message = "Benutzer:\n" .  implode("\n", $userData) . "\n\n" .
-                         "Versandaddresse:\n" . $address_for_dispatch . "\n\n" .
+        $emailSubject = "PDA Bestellung";
+        $addressForDispatch = $post['addressfield'];
+        $emailMessage = "Benutzer:\n" .  implode("\n", $userData) . "\n\n" .
+                         "Versandaddresse:\n" . $addressForDispatch . "\n\n" .
                          "Titel:\n" . $this->getBookInformation();
-        $this->sendPDAEmail($recipientData['email'], $recipientData['name'], $senderData['email'], $senderData['name'], $email_subject, $email_message);
+        $this->sendPDAEmail($recipientData['email'], $recipientData['name'], $senderData['email'], $senderData['name'], $emailSubject, $emailMessage);
     }
 
 
@@ -144,24 +144,14 @@ class RecordController extends \VuFind\Controller\RecordController
         $userDataRaw = $this->getUserData($user->id);
         $userData = $this->formatUserData($userDataRaw);
         $senderData = $this->getPDASenderData();
-        $recipient_email = $userData[1];
-        $recipient_name = $userData[0];
-        $current_lang = $this->serviceLocator->get('Vufind\Translator')->getLocale();
-        $email_subject = "Ihre PDA Bestellung";
-
-/*        $infoText = $this->render($this->forward()->dispatch('StaticPage', array(
-            'action' => 'staticPage',
-            'page' => 'PDASubscriptionInfoText'
-        )));*/
-/*        $postal_address = $this->transEsc("You provided the following address") . ":\n" . $post['addressfield'] . "\n\n";
-        $userDataText =  $this->transEsc("The personal information about you is") . ":\n" . implode("\n", $userData) . "\n\n";
-        $bookInformation = $this->transEsc("Book Information") . ":\n" . implode(", ", array_diff_key($data, [0, 1])) . "\n\n";*/
-
-        $postal_address = "You provided the following address" . ":\n" . $post['addressfield'] . "\n\n";
+        $recipientEmail = $userData[1];
+        $recipientName = $userData[0];
+        $emailSubject = "Ihre PDA Bestellung";
+        $postalAddress = "You provided the following address" . ":\n" . $post['addressfield'] . "\n\n";
         $userDataText =  "The personal information about you is" . ":\n" . implode("\n", $userData) . "\n\n";
         $bookInformation = "Book Information" . ":\n" . $this->getBookInformation() . "\n\n";
-        $email_message = $userDataText . $postal_address . $bookInformation;
-        $this->sendPDAEmail($recipient_email, $recipient_name, $senderData['email'], $senderData['name'], $email_subject, $email_message); 
+        $emailMessage = $userDataText . $postalAddress . $bookInformation;
+        $this->sendPDAEmail($recipientEmail, $recipientName, $senderData['email'], $senderData['name'], $emailSubject, $emailMessage); 
     }
 
 
@@ -169,11 +159,11 @@ class RecordController extends \VuFind\Controller\RecordController
         $userDataRaw = $this->getUserData($user->id);
         $userData = $this->formatUserData($userDataRaw);
         $senderData = $this->getPDASenderData();
-        $email_subject = "Abbestellung PDA-Auftrag";
+        $emailSubject = "PDA Abbestellung";
         $recipientData = $this->getPDAInstitutionRecipientData();
-        $email_message = "Abbestellung: " . $this->getBookInformation() . "\n\n" .
+        $emailMessage = "Abbestellung: " . $this->getBookInformation() . "\n\n" .
                          "für: " . $userData[0] . "(" . $userData[1] . ")";
-        $this->sendPDAEmail($recipientData['email'], $recipientData['name'], $senderData['email'], $senderData['name'], $email_subject, $email_message);
+        $this->sendPDAEmail($recipientData['email'], $recipientData['name'], $senderData['email'], $senderData['name'], $emailSubject, $emailMessage);
     }
 
 
@@ -181,11 +171,11 @@ class RecordController extends \VuFind\Controller\RecordController
         $userDataRaw = $this->getUserData($user->id);
         $userData = $this->formatUserData($userDataRaw);
         $senderData = $this->getPDASenderData();
-        $email_subject = "Abbestellung Ihres PDA-Auftrags";
-        $recipient_name = $userData[0];
-        $recipient_email = $userData[1];
-        $email_message = "Unsubscribe: " . $this->getBookInformation();
-        $this->sendPDAEmail($recipient_email, $recipient_name, $senderData['email'], $senderData['name'], $email_subject, $email_message);
+        $emailSubject = "Abbestellung Ihres PDA-Auftrags";
+        $recipientName = $userData[0];
+        $recipientEmail = $userData[1];
+        $emailMessage = "Unsubscribe: " . $this->getBookInformation();
+        $this->sendPDAEmail($recipientEmail, $recipientName, $senderData['email'], $senderData['name'], $emailSubject, $emailMessage);
     }
 
 
