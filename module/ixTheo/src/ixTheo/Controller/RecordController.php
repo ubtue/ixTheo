@@ -83,6 +83,10 @@ class RecordController extends \VuFind\Controller\RecordController
     }
 
 
+    /*
+     * Generic Mail send function
+     */
+
     function sendPDAEmail($recipientEmail, $recipientName, $senderEmail, $senderName, $emailSubject, $emailMessage) {
         try {
             $mailer = $this->getServiceLocator()->get('VuFind\Mailer');
@@ -96,6 +100,10 @@ class RecordController extends \VuFind\Controller\RecordController
         }
     }
 
+
+    /*
+     * Send notification to library
+     */
 
     function sendPDANotificationEmail($post, $user, $data) {
         $userDataRaw = $this->getUserData($user->id);
@@ -122,6 +130,10 @@ class RecordController extends \VuFind\Controller\RecordController
     }
 
 
+    /*
+     * Get sender Mail addresses from site configuration
+     */
+
     function getPDASenderData() {
         $config = $this->getServiceLocator()->get('VuFind\Config')->get('config');
         $site = isset($config->Site) ? $config->Site : null;
@@ -146,16 +158,27 @@ class RecordController extends \VuFind\Controller\RecordController
         $senderData = $this->getPDASenderData();
         $recipientEmail = $userData[1];
         $recipientName = $userData[0];
-        $emailSubject = "Ihre PDA Bestellung";
-        $postalAddress = "You provided the following address" . ":\n" . $post['addressfield'] . "\n\n";
-        $userDataText =  "The personal information about you is" . ":\n" . implode("\n", $userData) . "\n\n";
-        $bookInformation = "Book Information" . ":\n" . $this->getBookInformation() . "\n\n";
-        $emailMessage = $userDataText . $postalAddress . $bookInformation;
+        $emailSubject = $this->translate("Your PDA Order");
+        $postalAddress = $this->translate("You provided the following address") . ":\n" . $post['addressfield'] . "\n\n";
+        $bookInformation = $this->translate("Book Information") . ":\n" . $this->getBookInformation() . "\n\n";
+        $opening = $this->translate("Dear") . " " . $userData[0] . ",\n\n" . $this->translate("you triggered a PDA order") . ".\n";
+        $closing = $this->translate("Kind Regards") . "\n\n" . $this->translate("Your IxTheo Team");
+        $renderer = $this->getViewRenderer();
+        $infoText = $renderer->render($this->forward()->dispatch('StaticPage', array(
+            'action' => 'staticPage',
+            'page' => 'PDASubscriptionMailInfoText'
+        )));
+        $emailMessage = $opening . $userDataText . $bookInformation . $postalAddress . $infoText . "\n\n" . $closing;
+
         $this->sendPDAEmail($recipientEmail, $recipientName, $senderData['email'], $senderData['name'], $emailSubject, $emailMessage); 
     }
 
 
-    function SendPDAUnsubscribeEmail($user) {
+    /*
+     * Send unsubscribe notification to library
+     */
+
+    function sendPDAUnsubscribeEmail($user) {
         $userDataRaw = $this->getUserData($user->id);
         $userData = $this->formatUserData($userDataRaw);
         $senderData = $this->getPDASenderData();
@@ -167,14 +190,20 @@ class RecordController extends \VuFind\Controller\RecordController
     }
 
 
-    function SendPDAUserUnsubscribeEmail($user) {
+    /*
+     * Send unsubscribe notification to user
+     */
+
+    function sendPDAUserUnsubscribeEmail($user) {
         $userDataRaw = $this->getUserData($user->id);
         $userData = $this->formatUserData($userDataRaw);
         $senderData = $this->getPDASenderData();
-        $emailSubject = "Abbestellung Ihres PDA-Auftrags";
+        $emailSubject = $this->translate("Cancellation of your PDA Order");
         $recipientName = $userData[0];
         $recipientEmail = $userData[1];
-        $emailMessage = "Unsubscribe: " . $this->getBookInformation();
+        $opening = $this->translate("Dear") . " " . $userData[0] . ",\n\n" . $this->translate("you cancelled a PDA order") . ":\n";
+        $closing = $this->translate("Kind Regards") . "\n\n" .  $this->translate("Your IxTheo Team"); 
+        $emailMessage = $opening .  $this->getBookInformation() . "\n\n" . $closing;
         $this->sendPDAEmail($recipientEmail, $recipientName, $senderData['email'], $senderData['name'], $emailSubject, $emailMessage);
     }
 
