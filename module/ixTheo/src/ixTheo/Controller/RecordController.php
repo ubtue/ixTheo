@@ -82,11 +82,9 @@ class RecordController extends \VuFind\Controller\RecordController
               ];
     }
 
-
     /*
      * Generic Mail send function
      */
-
     function sendEmail($recipientEmail, $recipientName, $senderEmail, $senderName, $emailSubject, $emailMessage) {
         try {
             $mailer = $this->getServiceLocator()->get('VuFind\Mailer');
@@ -100,11 +98,9 @@ class RecordController extends \VuFind\Controller\RecordController
         }
     }
 
-
     /*
      * Send notification to library
      */
-
     function sendPDANotificationEmail($post, $user, $data) {
         $userDataRaw = $this->getUserData($user->id);
         $userData = $this->formatUserData($userDataRaw);
@@ -118,7 +114,6 @@ class RecordController extends \VuFind\Controller\RecordController
         $this->sendEmail($recipientData['email'], $recipientData['name'], $senderData['email'], $senderData['name'], $emailSubject, $emailMessage);
     }
 
-
     function getBookInformation() {
         $driver = $this->loadRecord();
         $year = $driver->getPublicationDates()[0];
@@ -129,11 +124,9 @@ class RecordController extends \VuFind\Controller\RecordController
                ($isbn != "" ? "ISBN: " . $isbn : "");
     }
 
-
     /*
      * Get sender Mail addresses from site configuration
      */
-
     function getPDASenderData() {
         $config = $this->getServiceLocator()->get('VuFind\Config')->get('config');
         $site = isset($config->Site) ? $config->Site : null;
@@ -150,7 +143,6 @@ class RecordController extends \VuFind\Controller\RecordController
         $name = "UB Tübingen PDA";
         return ['email' => $email, 'name' => $name];
     }
-
 
     function sendPDAUserNotificationEmail($post, $user, $data) {
         $userDataRaw = $this->getUserData($user->id);
@@ -173,11 +165,9 @@ class RecordController extends \VuFind\Controller\RecordController
         $this->sendEmail($recipientEmail, $recipientName, $senderData['email'], $senderData['name'], $emailSubject, $emailMessage); 
     }
 
-
     /*
      * Send unsubscribe notification to library
      */
-
     function sendPDAUnsubscribeEmail($user) {
         $userDataRaw = $this->getUserData($user->id);
         $userData = $this->formatUserData($userDataRaw);
@@ -189,11 +179,9 @@ class RecordController extends \VuFind\Controller\RecordController
         $this->sendEmail($recipientData['email'], $recipientData['name'], $senderData['email'], $senderData['name'], $emailSubject, $emailMessage);
     }
 
-
     /*
      * Send unsubscribe notification to user
      */
-
     function sendPDAUserUnsubscribeEmail($user) {
         $userDataRaw = $this->getUserData($user->id);
         $userData = $this->formatUserData($userDataRaw);
@@ -206,7 +194,6 @@ class RecordController extends \VuFind\Controller\RecordController
         $emailMessage = $opening .  $this->getBookInformation() . "\n\n" . $closing;
         $this->sendEmail($recipientEmail, $recipientName, $senderData['email'], $senderData['name'], $emailSubject, $emailMessage);
     }
-
 
     function processPDASubscribe()
     {
@@ -223,7 +210,6 @@ class RecordController extends \VuFind\Controller\RecordController
         $this->flashMessenger()->addMessage("Success", 'success');
         return $this->redirectToRecord();
     }
-
 
     function processPDAUnsubscribe()
     {
