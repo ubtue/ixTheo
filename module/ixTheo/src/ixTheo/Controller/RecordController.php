@@ -109,8 +109,8 @@ class RecordController extends \VuFind\Controller\RecordController
         $emailSubject = "PDA Bestellung";
         $addressForDispatch = $post['addressfield'];
         $emailMessage = "Benutzer:\n" .  implode("\n", $userData) . "\n\n" .
-                         "Versandaddresse:\n" . $addressForDispatch . "\n\n" .
-                         "Titel:\n" . $this->getBookInformation();
+                        "Versandaddresse:\n" . $addressForDispatch . "\n\n" .
+                        "Titel:\n" . $this->getBookInformation();
         $this->sendEmail($recipientData['email'], $recipientData['name'], $senderData['email'], $senderData['name'], $emailSubject, $emailMessage);
     }
 
