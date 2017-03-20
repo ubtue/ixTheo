@@ -186,6 +186,9 @@ class Database extends AbstractBase
         $ixTheoUser->country = in_array($params['country'], Database::$countries) ? $params['country'] : $ixTheoUser->country;
         $ixTheoUser->language = $params['language'];
         $ixTheoUser->save();
+
+        // Update the TAD access flag:
+        exec("/usr/local/bin/set_tad_access_flag.sh " . $user->id);
     }
 
     /**

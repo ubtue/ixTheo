@@ -171,7 +171,7 @@ class RecordController extends \VuFind\Controller\RecordController
             'action' => 'staticPage',
             'page' => 'PDASubscriptionMailInfoText'
         )));
-        $emailMessage = $opening . $userDataText . $bookInformation . $postalAddress . $infoText . "\n\n" . $this->getPDAClosing($userType);
+        $emailMessage = $opening . $bookInformation . $postalAddress . $infoText . "\n\n" . $this->getPDAClosing($userType);
         $this->sendEmail($recipientEmail, $recipientName, $senderData['email'], $senderData['name'], $emailSubject, $emailMessage); 
     }
 
