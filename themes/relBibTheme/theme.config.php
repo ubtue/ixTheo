@@ -1,6 +1,6 @@
 <?php
 return array(
-    'extends' => 'bootstrap3',
+    'extends' => 'ixTheoTheme',
     'css' => array(
         'compiled.css'
     ),
