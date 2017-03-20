@@ -135,12 +135,6 @@ class MyResearchController extends \VuFind\Controller\MyResearchController
         }
     }
 
-    function confirmDeleteSubscription($deleteId, $deleteSource) {
-        var_dump("confirmDeleteSubscription");
-
-    }
-
-
     function performDeleteSubscription($id, $deleteSource) {
         // Force login:
         $user = $this->getUser();
@@ -158,7 +152,6 @@ class MyResearchController extends \VuFind\Controller\MyResearchController
         return true;
     }
 
-
     function performDeletePDASubscription($id, $deleteSource) {
         // Force login:
         $user = $this->getUser();
@@ -175,7 +168,6 @@ class MyResearchController extends \VuFind\Controller\MyResearchController
         $table->unsubscribe($user->id, $id);
         return true;
     }
-
 
     public function profileAction($request)
     {
@@ -205,7 +197,7 @@ class MyResearchController extends \VuFind\Controller\MyResearchController
         $params = [
             'firstname' => '', 'lastname' => '', 'email' => '',
             'title' => '', 'institution' => '', 'country' => '',
-            'language' => '', 'sex' => ''
+            'language' => '', 'appellation' => ''
         ];
         foreach ($params as $param => $default) {
             $params[$param] = $request->getPost()->get($param, $default);
@@ -214,7 +206,7 @@ class MyResearchController extends \VuFind\Controller\MyResearchController
     }
 
     private function mergePostDataWithUserData($post, $user, $ixTheoUser) {
-        $fields = ['email', 'username', 'sex', 'title', 'firstname', 'lastname', 'institution', 'country'];
+        $fields = ['email', 'username', 'appellation', 'title', 'firstname', 'lastname', 'institution', 'country'];
         foreach ($fields as $field) {
             if (!$post->$field) {
                 $post->$field = $user->offsetExists($field) ? $user->$field : $ixTheoUser->$field;

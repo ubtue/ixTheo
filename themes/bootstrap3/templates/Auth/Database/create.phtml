@@ -1,6 +1,6 @@
 <?
 $countries = VuFind\Auth\Database::$countries;
-$sexes = VuFind\Auth\Database::$sexes;
+$appellations = VuFind\Auth\Database::$appellations;
 $titles = VuFind\Auth\Database::$titles;
 ?>
 
@@ -55,9 +55,9 @@ $titles = VuFind\Auth\Database::$titles;
     <div class="col-sm-2">
         <select name="sex" class="form-control">
             <option></option>
-            <? foreach ($sexes as $sex): ?>
-                <? $selected = $this->request->get('sex') === $sex ? 'selected' : ''; ?>
-                <option <?= $selected; ?> value="<?= $sex; ?>"><?= $this->transEsc($sex); ?></option>
+            <? foreach ($appellations as $appellation): ?>
+                <? $selected = $this->request->get('appellation') === $sex ? 'selected' : ''; ?>
+                <option <?= $selected; ?> value="<?= $appellation; ?>"><?= $this->transEsc($sex); ?></option>
             <? endforeach; ?>
         </select>
     </div>
