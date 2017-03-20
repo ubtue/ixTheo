@@ -70,7 +70,8 @@ class RecordController extends \VuFind\Controller\RecordController
                      'firstname' => $userRow->firstname,
                      'lastname' =>  $userRow->lastname,
                      'email' => $userRow->email,
-                     'country' => $ixtheoUserRow->country ];
+                     'country' => $ixtheoUserRow->country,
+                     'user_type' => $ixtheoUserRow->user_type ];
        return $userData;
     }
 
@@ -103,14 +104,16 @@ class RecordController extends \VuFind\Controller\RecordController
      */
     function sendPDANotificationEmail($post, $user, $data) {
         $userDataRaw = $this->getUserData($user->id);
+        $userType = $userDataRaw['user_type'];
         $userData = $this->formatUserData($userDataRaw);
-        $senderData = $this->getPDASenderData();
-        $recipientData = $this->getPDAInstitutionRecipientData();
+        $senderData = $this->getPDASenderData($userType);
+        $recipientData = $this->getPDAInstitutionRecipientData($userType);
         $emailSubject = "PDA Bestellung";
         $addressForDispatch = $post['addressfield'];
         $emailMessage = "Benutzer:\n" .  implode("\n", $userData) . "\n\n" .
                         "Versandaddresse:\n" . $addressForDispatch . "\n\n" .
-                        "Titel:\n" . $this->getBookInformation();
+                        "Titel:\n" . $this->getBookInformation() . "\n\n" .
+                        "Benutzer Typ:\n" . $userType;
         $this->sendEmail($recipientData['email'], $recipientData['name'], $senderData['email'], $senderData['name'], $emailSubject, $emailMessage);
     }
 
@@ -127,40 +130,48 @@ class RecordController extends \VuFind\Controller\RecordController
     /*
      * Get sender Mail addresses from site configuration
      */
-    function getPDASenderData() {
+    function getPDASenderData($realm) {
         $config = $this->getServiceLocator()->get('VuFind\Config')->get('config');
         $site = isset($config->Site) ? $config->Site : null;
-        $senderEmail = isset($site->pda_sender) ? $site->pda_sender : null;
-        $senderName = isset($site->pda_sender_name) ? $site->pda_sender_name : null;
+        $pda_sender = 'pda_sender_' . $realm;
+        $pda_sender_name = 'pda_sender_name';
+        $senderEmail = isset($site->$pda_sender) ? $site->$pda_sender : null;
+        $senderName = isset($site->$pda_sender_name) ? $site->$pda_sender_name : null;
         return ['email' => $senderEmail, 'name' => $senderName ];
     }
 
-    function getPDAInstitutionRecipientData() {
+    function getPDAInstitutionRecipientData($realm) {
         $config = $this->getServiceLocator()->get('VuFind\Config')->get('config');
         $site = isset($config->Site) ? $config->Site : null;
-        $email = isset($site->pda_email) ? $site->pda_email : null;
+        $pda_email = 'pda_email_' . $realm;
+        $email = isset($site->$pda_email) ? $site->$pda_email : null;
         $name = "UB Tübingen PDA";
         return ['email' => $email, 'name' => $name];
     }
 
+
+    function getPDAClosing($realm) {
+        $salutation = ($realm === 'relbib') ? $this->translate("Your Relbib Team") : $this->translate("Your IxTheo Team");
+        return $this->translate("Kind Regards") . "\n\n" . $salutation;
+    }
+
     function sendPDAUserNotificationEmail($post, $user, $data) {
         $userDataRaw = $this->getUserData($user->id);
+        $userType = $userDataRaw['user_type'];
         $userData = $this->formatUserData($userDataRaw);
-        $senderData = $this->getPDASenderData();
+        $senderData = $this->getPDASenderData($userType);
         $recipientEmail = $userData[1];
         $recipientName = $userData[0];
         $emailSubject = $this->translate("Your PDA Order");
         $postalAddress = $this->translate("You provided the following address") . ":\n" . $post['addressfield'] . "\n\n";
         $bookInformation = $this->translate("Book Information") . ":\n" . $this->getBookInformation() . "\n\n";
         $opening = $this->translate("Dear") . " " . $userData[0] . ",\n\n" . $this->translate("you triggered a PDA order") . ".\n";
-        $closing = $this->translate("Kind Regards") . "\n\n" . $this->translate("Your IxTheo Team");
         $renderer = $this->getViewRenderer();
         $infoText = $renderer->render($this->forward()->dispatch('StaticPage', array(
             'action' => 'staticPage',
             'page' => 'PDASubscriptionMailInfoText'
         )));
-        $emailMessage = $opening . $userDataText . $bookInformation . $postalAddress . $infoText . "\n\n" . $closing;
-
+        $emailMessage = $opening . $userDataText . $bookInformation . $postalAddress . $infoText . "\n\n" . $this->getPDAClosing($userType);
         $this->sendEmail($recipientEmail, $recipientName, $senderData['email'], $senderData['name'], $emailSubject, $emailMessage); 
     }
 
@@ -169,12 +180,13 @@ class RecordController extends \VuFind\Controller\RecordController
      */
     function sendPDAUnsubscribeEmail($user) {
         $userDataRaw = $this->getUserData($user->id);
+        $userType = $userDataRaw['user_type'];
         $userData = $this->formatUserData($userDataRaw);
-        $senderData = $this->getPDASenderData();
+        $senderData = $this->getPDASenderData($userType);
         $emailSubject = "PDA Abbestellung";
-        $recipientData = $this->getPDAInstitutionRecipientData();
+        $recipientData = $this->getPDAInstitutionRecipientData($userType);
         $emailMessage = "Abbestellung: " . $this->getBookInformation() . "\n\n" .
-                         "für: " . $userData[0] . "(" . $userData[1] . ")";
+                         "für: " . $userData[0] . "(" . $userData[1] . ")" . " [Benutzertyp: " . $userType . "]";
         $this->sendEmail($recipientData['email'], $recipientData['name'], $senderData['email'], $senderData['name'], $emailSubject, $emailMessage);
     }
 
@@ -183,14 +195,14 @@ class RecordController extends \VuFind\Controller\RecordController
      */
     function sendPDAUserUnsubscribeEmail($user) {
         $userDataRaw = $this->getUserData($user->id);
+        $userType = $userDataRaw['user_type'];
         $userData = $this->formatUserData($userDataRaw);
-        $senderData = $this->getPDASenderData();
+        $senderData = $this->getPDASenderData($userType);
         $emailSubject = $this->translate("Cancellation of your PDA Order");
         $recipientName = $userData[0];
         $recipientEmail = $userData[1];
         $opening = $this->translate("Dear") . " " . $userData[0] . ",\n\n" . $this->translate("you cancelled a PDA order") . ":\n";
-        $closing = $this->translate("Kind Regards") . "\n\n" .  $this->translate("Your IxTheo Team"); 
-        $emailMessage = $opening .  $this->getBookInformation() . "\n\n" . $closing;
+        $emailMessage = $opening .  $this->getBookInformation() . "\n\n" . $this->getPDAClosing($userType);
         $this->sendEmail($recipientEmail, $recipientName, $senderData['email'], $senderData['name'], $emailSubject, $emailMessage);
     }
 
