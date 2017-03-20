@@ -3,6 +3,7 @@
 $id = $this->driver->getUniqueId();
 $source = $this->driver->getSourceIdentifier();
 $user_id = $this->user ? $this->user->id : null;
+$is_missing_record = get_class($this->driver) == "VuFind\RecordDriver\Missing";
 ?>
 <div class="row result<? if ($this->driver->supportsAjaxStatus()): ?> ajaxItem<? endif ?>">
     <div class="col-xs-1 left">
@@ -10,12 +11,17 @@ $user_id = $this->user ? $this->user->id : null;
         <input type="hidden" value="<?= $id ?>" class="hiddenId"/>
     </div>
     <div class="col-xs-9 middle">
-        <div class="resultItemLine1">
-            <a href="<?= $this->recordLink()->getUrl($this->driver) ?>">
-                <?= $this->record($this->driver)->getTitleHtml() ?>
-            </a>
-        </div>
-
+        <? if (! $is_missing_record):?> 
+            <div class="resultItemLine1">
+                <a href="<?= $this->recordLink()->getUrl($this->driver) ?>">
+                    <?= $this->record($this->driver)->getTitleHtml() ?>
+                </a>
+            </div>
+        <? else: ?>
+            <div class="text-muted">
+                 <?=$this->record($this->driver)->getTitleHtml()?>
+            </div>
+        <? endif; ?>
         <div class="resultItemLine2">
             <? if ($this->driver->isCollection()): ?>
                 <?= implode('<br>', array_map(array($this, 'escapeHtml'), $this->driver->getSummary())); ?>
