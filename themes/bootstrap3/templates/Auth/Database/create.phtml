@@ -53,11 +53,11 @@ $titles = VuFind\Auth\Database::$titles;
 <div class="form-group">
     <label class="col-sm-4 control-label" for="account_title"><?= $this->transEsc('Title') ?>:</label>
     <div class="col-sm-2">
-        <select name="sex" class="form-control">
+        <select name="appellation" class="form-control">
             <option></option>
             <? foreach ($appellations as $appellation): ?>
-                <? $selected = $this->request->get('appellation') === $sex ? 'selected' : ''; ?>
-                <option <?= $selected; ?> value="<?= $appellation; ?>"><?= $this->transEsc($sex); ?></option>
+                <? $selected = $this->request->get('appellation') === $appellation ? 'selected' : ''; ?>
+                <option <?= $selected; ?> value="<?= $appellation; ?>"><?= $this->transEsc($appellation); ?></option>
             <? endforeach; ?>
         </select>
     </div>
