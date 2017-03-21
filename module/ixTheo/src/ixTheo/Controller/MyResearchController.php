@@ -166,6 +166,9 @@ class MyResearchController extends \VuFind\Controller\MyResearchController
 
         $table = $this->getTable('PDASubscription');
         $table->unsubscribe($user->id, $id);
+        $notifier = $this->PDASubscriptions();
+        $notifier->sendPDAUnsubscribeEmail($user, $id);
+        $notifier->sendPDAUserUnsubscribeEmail($user, $id);
         return true;
     }
 
