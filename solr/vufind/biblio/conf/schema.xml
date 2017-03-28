@@ -274,6 +274,7 @@
    <field name="reviewed_records" type="text" indexed="false" stored="true" multiValued="true"/>
    <field name="superior_ppn" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="recording_date" type="date" indexed="true" stored="true" multiValued="false"/>
+   <field name="last_modification_time" type="date" indexed="true" stored="true" multiValued="false"/>
    <field name="is_religious_studies" type="boolean" indexed="true" stored="true" multiValued="false"/>
    <field name="is_probably_religious_studies" type="boolean" indexed="true" stored="true" multiValued="false"/>
    <field name="is_potentially_pda" type="boolean" indexed="true" stored="true" multiValued="false"/>
