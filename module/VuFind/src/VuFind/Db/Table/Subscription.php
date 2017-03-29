@@ -32,7 +32,7 @@ class Subscription extends Gateway implements \VuFind\Db\Table\DbTableAwareInter
         $row->journal_author = $author ?: "";
         $row->journal_year = $year ?: "";
         $row->journal_control_number = $recordId;
-        $row->last_issue_date = date('Y-m-d\TH:i:s\Z');
+        $row->max_last_modification_time = date('Y-m-d\TH:i:s\Z');
         return $row;
     }
 
