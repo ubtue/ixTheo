@@ -42,9 +42,9 @@
     <h2>Liebe Nutzer von RelBib,</h2>
     <div class="post">
         <p>Wir freuen uns, Ihnen die &sbquo;Religionswissenschaftliche Bibliografie&lsquo;, kurz RelBib, vorstellen zu können. Sie ist die Alpha-Version einer vom Fachinformationsdienst (FID) &sbquo;Religionswissenschaft&lsquo; betreuten umfassenden bibliografischen Datenbank.</p>
-        <p>Die Datenbank enthält derzeit <b><? include(dirname(__DIR__) . '/includes/relbib_journals_total.txt')?></b> Zeitschriften der Allgemeinen und Vergleichenden Religionswissenschaft, der Religionsgeschichte und einiger anderer kulturwissenschaftlicher Fach- und Themengebiete.. Die Anzahl der Zeitschriften, deren Aufsätze in der Datenbank einzeln nachgewiesen werden, beträgt derzeit etwa ein Fünftel. Es werden sukzessive weitere Zeitschriften in die Aufsatzerschließung übernommen.  Aus der alphabetischen <a href="<?='https://'.$_SERVER['SERVER_NAME'] . '/relbib_journals.pdf'?>" target="_blank"><b>Übersicht der Zeitschriften</b></a> können Sie sich über den Stand der Auswertung informieren. Außer Zeitschriften(artikeln) enthält die Datenbank Nachweise zu religionswissenschaftlich relevanten Monografien.</p> 
+        <p>Die Datenbank enthält derzeit <b><? include(dirname(__DIR__) . '/includes/relbib_journals_total.txt')?></b> Zeitschriften der Allgemeinen und Vergleichenden Religionswissenschaft, der Religionsgeschichte und einiger anderer kulturwissenschaftlicher Fach- und Themengebiete. Die Anzahl der Zeitschriften, deren Aufsätze in der Datenbank einzeln nachgewiesen werden, beträgt derzeit etwa ein Fünftel. Es werden sukzessive weitere Zeitschriften in die Aufsatzerschließung übernommen.  Aus der alphabetischen <a href="<?='https://'.$_SERVER['SERVER_NAME'] . '/relbib_journals.pdf'?>" target="_blank"><b>Übersicht der Zeitschriften</b></a> können Sie sich über den Stand der Auswertung informieren. Außer Zeitschriften(artikeln) enthält die Datenbank Nachweise zu religionswissenschaftlich relevanten Monografien.</p> 
         <p>Über den Link &bdquo;Verfügbarkeit&rdquo; kann rasch abgefragt werden, ob und wo eine Zeitschrift, ein Aufsatz oder ein Buch verfügbar ist. Wenn es lizenzrechtlich möglich ist, kann auf elektronisch vorliegende Texte direkt zugegriffen werden.</p>
-        <p>RelBib ist ein kostenloses open access Angebot an die weltweite Fachcommunity der Religionswissenschaft. Herausgeber von RelBib ist die Universitätsbibliothek Tübingen. RelBib entsteht in Zusammenarbeit mit &sbquo;IxTheo&lsquo;, der theologischen Datenbank, die vom FID Theologie entwickelt und betreut wird. Durch die Zusammenarbeit können Synergien genutzt und gewährleistet werden, dass bei Bedarf für eine Recherche auch der theologische Inhalt der Datenbank hinzugeschaltet werden kann. </p>
+        <p>RelBib ist ein kostenloses open access Angebot an die weltweite Fachcommunity der Religionswissenschaft. Herausgeber von RelBib ist die Universitätsbibliothek Tübingen. RelBib entsteht in Zusammenarbeit mit &sbquo;IxTheo&lsquo;, der theologischen Datenbank, die vom FID Theologie entwickelt und betreut wird. Durch die Zusammenarbeit können Synergien genutzt werden. </p>
         <p>Wir bitten um Verständnis, dass in einer Alpha-Version noch nicht alles fehlerfrei funktioniert. Wir wünschen
             Ihnen viel Freude beim Entdecken von RelBib und sind dankbar über Ihr Feedback!</p>
     </div>
@@ -75,11 +75,13 @@ $panelWidth = "col-md-6";
                            Klicken Sie z.B. bei <strong>Medienart</strong> auf <em>Buch</em>, erhalten Sie die derzeit im System befindlichen 
                            Monografien mit einer religionswissenschaftlichen Kennung. Eine weitere Auswahl z.B. unter <strong>Medientyp</strong> 
                            <em>Elektronisch</em> zeigt Ihnen die elektronisch verfügbaren Bücher an.</p>
+                        <p>Auch <em>inhaltlich</em> können Sie den Bestand <em>filtern</em>: Wählen Sie „RelBib Klassifikation“ oder „DDC-Klassifikation“ 
+                           oder den Filter „Thema (Schlagwort)“ und klicken Sie eine oder mehrere für Sie interessante Kategorien an.</p>
     
                         <h3>Einfache Suche</h3>
                         <p>
-                           Wenn Sie nach dem <em>konkreten</em> Titel einer Zeitschrift, eines Buches oder eines Aufsatzes oder nach einem 
-                           <em>bestimmten</em> Autor suchen, geben Sie 1-3 Begriffe im Suchschlitz ein. Die Suche läuft dann über „Alle Felder“. 
+                           Wenn Sie nach dem <strong>konkreten</strong> Titel einer Zeitschrift, eines Buches oder eines Aufsatzes oder nach einem 
+                           <strong>bestimmten</strong> Autor suchen, geben Sie 1-3 Begriffe im Suchschlitz ein. Die Suche läuft dann über „Alle Felder“. 
                            Sollte dies zu unbefriedigendem Ergebnis  führen, können Sie auch die Felder über das Auswahlmenu ändern, also z.B. 
                            nur über das Titelfeld suchen. Falls Sie die ISBN eines Buches oder die ISSN einer Zeitschrift kennen, wählen sie 
                            im Auswahlmenü „ISSN / ISBN“ und geben die entsprechende Nummer ein. So erhalten Sie das Gesuchte ohne weitere Verzögerung.</p>
@@ -96,18 +98,9 @@ $panelWidth = "col-md-6";
                            Mit einer Schlagwortsuche erhalten Sie auch Treffer die nicht unbedingt das von Ihnen eingegebene Wort, sondern u.U. ein 
                            (Quasi-)Synonym oder einen verwandten Begriff enthalten. Weiteres zur Suche nach Schlagwortfolgen siehe unter „Browsing“.</p>
                         <h4>Suche über die RelBib-Klassifikation</h4>
-                        <p>Viele Artikel und Zeitschriften in der Datenbank enthalten eine oder mehrere Notationen einer datenbankeigenen fachlichen Klassifikation.</p>
-                        <p>Möchten Sie schauen, was in Ihrem Spezialgebiet in der Datenbank enthalten ist, lassen Sie eine Suche über eines oder mehrere 
-                           dieser Teilgebiete laufen. Gehen sie hierzu wieder in die „Erweiterte Suche“ und wählen bei „RelBib Notation“ eines oder mehrere 
-                           Gebiete aus. (Für mehrere Gebiete halten Sie die „Strg-Taste" auf Windows Computer oder die „Kommando"-Taste auf Apple Computer). 
-                           Klicken Sie dann auf „Suche“.</p>
-                        <p>Die so erhaltenen Ergebnisse können sie nun mit Hilfe von weiteren Suchbegriffen oder Filtereinstellungen präzisieren.</p>       
-                        <p>Weitere Erklärung zur Nutzung von RelBib erhalten Sie unter
-                           <ul>
-                             <li>Browsen</li>
-                             <li>„Meine RelBib“ (mit personalisierten Services wie Alerting, Favoriten, PDA)</li>   
-                           </ul>
-                        </p>
+                        <p>Gehen sie zu „Erweiterte Suche“ und wählen Sie bei „RelBib Notation“ ein oder mehrere Gebiete aus. Für mehrere Gebiete halten 
+                           Sie bei einer Windows-Tastatur die „Strg-Taste", bei einer Mac-Tastatur die „Kommando"-Taste gedrückt. Klicken Sie dann auf „Suche“</p>
+                        <p>Die so erhaltenen Ergebnisse können sie nun mit Hilfe von weiteren Suchbegriffen oder Filtereinstellungen präzisieren.</p>  
                      </div>
                 </div>
                 <label for="post-1" class="read-more-trigger"></label>
@@ -132,34 +125,36 @@ $panelWidth = "col-md-6";
                     <div class="read-more-target">
                         <!-- Needed since otherwise the More-Button gets confused immediately before a heading -->
                         <div style="height: 0px;">&emsp;</div>
-                        <h3>RelBib-Themen Browsing</h3>
+                        <h3>Thema Browsing</h3>
                         <p>Es öffnet sich ein weiterer Suchschlitz, in den Sie Ihren Suchbegriff eingeben. Er dient als
                             Startpunkt des Browsens.</p>
                         <p>Beispiel 1: geben Sie den Begriff „Islam“ ein. Sie sehen dann eine spezielle Liste mit
-                            Schlagwortfolgen, in denen der Begriff Islam vorkommt.</p>
-                        <p>Beispiel 2: geben den Begriff „Islam“ und „Gott“ ein. Sie sehen dann eine spezielle Liste mit
-                            Schlagwortfolgen, in denen der Begriff „Islam“ und „Gott“ vorkommt.</p>
+                            Schlagwortfolgen, die den Begriff Islam enthalten.</p>
+                        <p>Beispiel 2: geben den Begriff „Islam“ und „Gott“ ein. Nun erscheint eine spezielle Liste mit
+                            Schlagwortfolgen, die beide Begriffe „Islam“ und „Gott“ vorkommt.</p>
                         <p>Wenn Sie rechts oben auf der Website die Sprache auf Englisch ändern, werden die Begriffe im
                             Englischen angezeigt, wenn sie in der Sprachkonkordanz vorhanden sind.</p>
 
-                        <h3>Katalogbrowsen</h3>
+                        <h3>Browsen nach Kategorien („Katalog“ browsen)</h3>
                         <p>Die Standard-Browsing Funktion der Software von RelBib (VuFind) ermöglicht das Browsen in
                             verschiedenen Feldern: DDC-Klassifikation, RelBib-Klassifikation, Thema (Schlagwort), Verfasser
-                            und
-                            Verlag. In einem weiteren Schritt kann hier das Browsing durch andere Felder eingeschränkt werden.</p>
-                        <p>Beispiel: Wählen Sie „Verfasser“, dann „Nach RelBib-Klassifikation“, dann „AA Religionswissenschaft“
-                            aus. Sie sehen dann eine Liste von Autoren, die in diesem Bereich publiziert haben,
-                            sortiert nach Häufigkeit der Titel in RelBib.</p>
+                            und Verlag. In weiteren Schritten kann hier das Browsing durch andere Felder eingeschränkt werden.</p>
+                        <p>Beispiel: Klicken Sie z. B. auf „DDC Klassifikation“, dann auf „200 Religion“, dann 210 „Philosophy and Theory of religion“. 
+                           Im Folgenden werden noch weitere Unterfelder angezeigt, die Sie gegebenenfalls auswählen können. Auf jedem der Felder befindet 
+                           sich jeweils rechts unten ein Button, der die Zahl der Titel, die mit dieser Kategorie verknüpft sind, anzeigt.
+                           Klicken Sie auf „Datensätze ansehen“ und Sie erhalten die Liste der Titel.</p>
 
                         <h3>Alphabetisch browsen</h3>
                         <p>Hier können Sie bestimmen, an welcher Stelle des Alphabets Sie in das Browsing einsteigen wollen.
                             Nach der Auswahl des Browsingaspektes (möglich sind „Thema“, Verfasser, Titel und
                             DDC-Klassifikation) geben Sie den Buchstaben ein, ab dem das Browsing starten soll.</p>
                         <p>Beispiel: Wählen Sie „Nach Thema“ und geben Sie ein: ab „rel“. Es werden dann alle Schlagwörter
-                            aufgelistet, die mit dem Buchstaben Z beginnen.</p>
+                            aufgelistet, die mit dem Buchstaben rel beginnen.</p>
                         <p>Eine solch alphabetisches browsing kann auch hilfreich sein, wenn Sie die Schreibweise eines Autorennamen nicht richtig erinnern. 
-                           Wählen Sie dazu „Nach Verfasser“ und geben Sie ein: ab „Tr“. Es werden dann alle Verfasser aufgelistet, deren Nachnamen mit der 
+                           Beispiel: Wählen Sie dazu „Nach Verfasser“ und geben Sie ein: ab „Tr“. Es werden dann alle Verfasser aufgelistet, deren Nachnamen mit der 
                            Buchstabenfolge Tr beginnen.</p>
+                        <p>Übrigens: Einen Browsing-Button gibt es auch bei jeder Monografie, die mit Schlagwörtern versehen wurde. Klicken Sie auf den Button 
+                           <strong>„B“</strong> links neben den Schlagwörtern und Sie erhalten weitere Titel, die dieselbe Schlagwortfolge aufweisen.</p>
                     </div>
                 </div>
                 <label for="post-2" class="read-more-trigger"></label>
@@ -186,39 +181,29 @@ $panelWidth = "col-md-6";
                         <p>Durch Klick auf „Ihr Konto“ kommen Sie in Ihren personalisierten Bereich. Dort stehen Ihnen u.a.
                             folgende Funktionen zur Verfügung:</p>
 
-                        <h3>Alerting-Funktion</h3>
-                        <p>Die Alerting Funktion unterrichtet Sie über neu erschienene Aufsätze aus Zeitschriften und neu
-                            erschienene Bände in Reihen und Fortsetzungen. Sie können frei entscheiden, in welchen Fällen
-                            Sie
-                            eine Benachrichtigung wünschen.</p>
+                        <h3>Neuerscheinungen abonnieren (Alerting-Funktion)</h3>
+                        <p>Mit dieser Funktion können Sie sich über neu erschienene Aufsätze aus Zeitschriften und neu erschienene Bände in Reihen 
+                           und Fortsetzungen benachrichtigen lassen. Sie entscheiden selbst, in welchen Fällen Sie eine Benachrichtigung wünschen.</p>
                         <p>Um eine Zeitschrift oder eine Reihe für das Alerting auszuwählen, müssen Sie die Gesamtaufnahme
-                            der
-                            Zeitschrift oder Reihe subskribieren. Klicken Sie dazu auf das Symbol "Glocke", die Sie rechts
-                            im
-                            entsprechenden Datensatz sehen. In Ihrem Konto können Sie die Subskriptionen verwalten.</p>
+                           der Zeitschrift oder Reihe subskribieren. Klicken Sie dazu auf das Symbol "Glocke", die Sie rechts
+                           im entsprechenden Datensatz sehen. In Ihrem Konto können Sie die Subskriptionen verwalten.</p>
 
                         <p>Beispiel: Um die „Zeitschrift für Religionswissenschaft“ zu subskribieren, recherchieren Sie nach dem Titel
                             der Reihe. Wählen Sie im Anschluss unter
                             Medienart die Facette Zeitschrift aus. Subskribieren Sie die gewünschte Reihe durch Klick auf das
-                            Symbol „Glocke“</p>
+                            Symbol „Glocke“ (<i class="fa fa-fw fa-bell"></i>).</p>
 
                         <h3>Suchanfragen speichern</h3>
-                        <p>Ihre aktuellen Suchanfragen werden in der Suchhistorie temporär gespeichert. Wenn Sie die
-                            Suchanfragen dauerhaft verwenden wollen, können Sie sie in Ihrem Konto abspeichern. Sie stehen
-                            dann
-                            in Ihrem Konto dauerhaft zur Verfügung und können durch Anklicken erneut ausgeführt werden. Das
-                            lohnt sich für komplexe Abfragen oder für Themen, an denen Sie kontinuierlich interessiert sind.
-                            Auf
-                            diese Weise entdecken Sie leicht die neu erschienene Literatur zu einem bestimmten Thema oder
-                            Themengebiet.</p>
+                        <p>Wenn Sie Ihre Suchanfragen dauerhaft verwenden wollen, können Sie sie in Ihrem Konto abspeichern. Diese haben Sie dann unter 
+                           „Gespeicherte Suche“ in Ihrem Konto jederzeit zur Hand und können sie durch Anklicken erneut ausführen. Das lohnt sich für 
+                           komplexe Abfragen oder für Themen, an denen Sie kontinuierlich interessiert sind. Auf diese Weise entdecken Sie leicht die neu 
+                           erschienene Literatur zu einem bestimmten Thema oder Themengebiet.</p>
 
                         <h3>Favoriten speichern</h3>
-                        <p>Speichern Sie interessante Titel direkt in Ihrem Konto ab. Damit stehen Sie Ihnen dauerhaft zur
-                            Verfügung und Sie müssen nicht viel Zeit mit dem Wiederfinden verwenden. Damit die Favoriten
-                            geordnet werden können, werden Sie in Listen gespeichert, die Sie definieren können. So können
-                            interessante Titel gewissen Forschungsprojekten oder Themen zugeordnet werden.</p>
-                        <p>Aus Ihrem Konto heraus können Sie Favoriten exportieren, per Mail verschicken oder
-                            Ausdrucken.</p>
+                        <p>Speichern Sie interessante Titel direkt in Ihrem Konto ab. Damit stehen diese Ihnen dauerhaft zur Verfügung und Sie müssen 
+                           nicht viel Zeit mit dem Wiederfinden verwenden. Ihre Favoriten können Sie in verschiedenen Listen speichern, die Sie selbst 
+                           definieren. Auf diese Weise lassen sich interessante Titel beispielsweise bestimmten Forschungsprojekten oder Themen zuordnen. 
+                           Diese Listen können Sie aus Ihrem Konto heraus auch exportieren, per Mail verschicken oder ausdrucken.</p>
                     </div>
                 </div>
                 <label for="post-3" class="read-more-trigger"></label>
