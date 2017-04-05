@@ -37,31 +37,23 @@
 </style>
 
 <div class="col-md-12" style="text-align:justify;">
-    <h2>Dear users of RelBib</h2>
     <div class="post">
-        <p>we are pleased to present to you the alpha version of the ‘Religious Studies Bibliography’ (RelBib), a comprehensive 
-           bibliography of general and comparative Religious Studies published by the “Specialized Information Service on Religious Studies”
-           (‘Fachinformationsdienst Religionswissenschaft’) of the central library of the University of Tübingen.
-        </p>
-        <p>
-          As of now, the data base contains <b><? include(dirname(__DIR__) . '/includes/relbib_journals_total.txt')?></b> periodicals of 
-          ‘Religious Studies’, ‘Comparative Religious History’ and cultural studies. So far, 
-          <b><?include(dirname(__DIR__) . '/includes/relbib_journals_evaluated.txt')?></b> of these   
-          <a href="<?='https://'.$_SERVER['SERVER_NAME'] . '/relbib_journals.pdf'?>" target="_blank"><b>periodicals</b></a> are being continuously 
-          monitored for articles which are entered into the system. We aim to increase this number in the near future until the articles 
-          of most of the periodicals can be searched for in the database. RelBib also includes books and digital material. 
-        </p>
-        <p>
-          Using the button “Check Availability”, you can find out whether and where an article, periodical or book is available to use or download. 
-          Links to e-books, e-journals or other online resources are being provided and can be accessed directly if the publishers’ licenses permit it.
-        </p>
-        <p>
-          RelBib remains a free and open access service to the worldwide scholarly community. The editor of RelBib is the ‘Universitätsbibliothek Tübingen’ 
-          (central library of the University of Tübingen). RelBib is being produced in close cooperation with ‘IxTheo’, the Bibliography for Theology. 
-          This connection and cooperation allows you to switch from RelBib to IxTheo whenever you wish to widen your search to the fields covered by IxTheo.
-        </p>
-        <p>We apologize in advance for any errors which might come up at this early stage of development. We wish you an enjoyable experience as you explore 
-           RelBib and we would be glad to get your feedback!</p>
+        <p>We are pleased to present to you the ‘Religious Studies Bibliography’ (RelBib). This is the alpha version of a 
+           comprehensive bibliographical database managed by the Specialized Information Service of Religious Studies 
+           (‘Fachinformationsdienst Religionswissenschaft’) of the central library of the University of Tübingen.</p>
+        <p>As of now, the database contains <b><? include(dirname(__DIR__) . '/includes/relbib_journals_total.txt')?></b> periodicals of 
+           Religious Studies, Comparative Religious History and Cultural Studies.  Information on individual articles is accessible for 
+           about a fifth of these periodicals. Further journals are gradually being integrated into our indexing procedure for 
+           articles. The alphabetical  <a href="<?='https://'.$_SERVER['SERVER_NAME'] . '/relbib_journals.pdf'?>" target="_blank">
+           list of journals</a> gives the latest information on which periodicals are being processed. 
+           Apart from journals and articles, the database also provides information on relevant monographs in the field of Religious Studies. </p>
+        <p>Using the button “Check Availability”, you can quickly find out whether and where an article, periodical or book is available. 
+           Links to online texts can be accessed directly if the publishers’ licenses allow it.</p>
+        <p>RelBib constitutes a free and open access service to the worldwide scholarly community of Religious Studies. The editor of RelBib 
+           is the ‘Universitätsbibliothek Tübingen’ (central library of the University of Tübingen). RelBib is being produced in close 
+           cooperation with ‘IxTheo’, which is being developed and maintained by the Specialized Information Service of Theology. 
+           This cooperation allows you to access the theological contents of the common database.</p>
+        <p>We apologize in advance for any errors which might come up at this early stage of development. We wish you an enjoyable experience as you           explore RelBib and we would be glad to get your feedback!</p>
     </div>
 </div>
 <?
@@ -81,31 +73,28 @@ $panelWidth = "col-md-6";
             <div class="panel-body">
                 <input type="checkbox" class="read-more-state" id="post-1" />
                 <div class="read-more-wrap">
-                    <p> You will find the full number of – daily updated – RelBib’s contents if you click on “Find” without any additional entry.
-                        You may narrow down the search according to certain criteria by selecting the corresponding facets.
-                    </p>
-                    <div class="read-more-target">
-                        <p>For example, when clicking on <strong>Format</strong> <em>Book</em>, you will be shown all the books included so far in RelBib; 
-                           a further click on <strong>Media Type</strong> <em>Electronic</em> shows you all of RelBib’s e-books.
-                        </p>
-                        <p>From the alphabetical list of RelBib’s periodicals, you can quickly access the journals you are most interested in
-                           and find out about their status of processing.
-                        </p>
+                        <p>You will find all the titles catalogued in RelBib if you click on the “Search” button without any additional entry. 
+                           The number of results reflects the status of the database on the day the query was made, 
+                        <div class="read-more-target">
+                           and the most recently published items appear at the top of the list.  
+                           You may narrow down the search according to certain criteria by selecting the corresponding filters.</p>
+                        <p>For example, if you select “Book” under <strong>Format</strong>, you will be shown all the monographs and anthologies in 
+                           Religious Studies in the database. You may reduce this list further by selecting “Electronic” under <strong>Media Type</strong>, 
+                           which shows you all the books accessible by electronic means.</p>                        
+                        <p>You may also restrict your search to specific subjects of interest by looking at the lists of available “RelBib-Classifications”, 
+                           (DDC-)“Classmarks” or “Topics” and selecting one or more of the items displayed.</p>
                         <h3>Search by content</h3>
-                        <h4>RelBib Classification</h4>
-                        <p>
-                            For this purpose, you can use the advanced search by clicking on “Advanced Search” underneath the search field.
-                            There, you will find the RelBib classifications among others. You may select the corresponding classes
-                            by clicking on them. You may also select a range of classes by holding the “shift”-key while clicking
-                            on the start and finishing items of the range. If you want to select several individual classes, just
-                            hold the “Command”-key (on Apple computers) or the “Ctrl”-key (on Windows computers) while clicking on
-                            each item.
-                        </p>
-                        <p>After selecting your options, just click on “Find” to start a search on the IxTheo classifications you selected.</p>
-
                         <h4>Search Terms</h4>
-                        <p>Enter the term in the search field and leave the search category on “All Fields”. IxTheo will then search for the term you entered in all search fields.</p>
-                        <p>To conduct a search by content, you may find the search category “Subject” very useful. In this case, the search is conducted on subject headings assigned by our staff.</p>
+                        <p>Enter a term in the search field and leave the search category on “All Fields”. The system will then search for this term 
+                           in all possible search fields (title, author, etc.).</p>
+                        <p>If the number of results is too large or the results not specific enough, you may specify “Subject” as a search category. 
+                           Subject headings are assigned by our staff. When you search for a specific subject heading, you may get results which do 
+                           not contain the exact term you specified, but a synonymous one or a related term.</p>
+                        <h4>Search using the RelBib-Classifications</h4>
+                        <p>Click on “Advanced Search” (underneath the search field) and select under “RelBib Classification” one or more areas of interest.
+                           If you want to select several individual areas, just hold the “Command”-key (on Apple computers) or the 
+                           “Ctrl”-key (on Windows computers) while clicking on each item, then click on “Find”.</p>
+                        <p>You may use various search terms or filters to narrow down the search.</p>
                     </div>
                 </div>
                 <label for="post-1" class="read-more-trigger"></label>
@@ -124,27 +113,33 @@ $panelWidth = "col-md-6";
             <div class="panel-body">
                 <input type="checkbox" class="read-more-state" id="post-2" />
                 <div class="read-more-wrap">
-                    <p>The new IxTheo offers three different ways to browse. You can access it by clicking on “Browse” in the area below the search box.</p>
+                    <p>RelBib offers different ways to browse. You can access this function by clicking on “Browse” in the area below the search field.</p>
                     <div class="read-more-target">
                         <!-- Needed since otherwise the More-Button gets confused immediately before a heading -->
                         <div style="height: 0px;">&emsp;</div>
-                        <h3>IxTheo - Find Topic</h3>
-                        <p>When you select this option, it opens an additional search field in which you may enter your search term. This term is then used as the starting point of the browsing.</p>
-                        <p>1st example: enter the term “God”. You will then see a list of subject heading strings which contain the word “God”.</p>
-                        <p>2nd example: enter the terms “God” and “Bible”. You will then see a list of subject heading strings which contain the words “God” and “Bible”.</p>
-                        <p>If you change the language of the website to German, the terms are shown in German if they are found in the language concordance.</p>
+                        <h3>Find Topic</h3>
+                        <p>When you select this option, it opens an additional search field in which you may enter your search term. 
+                           This term is then used as the starting point of the browsing.</p>
+                        <p>1st example: enter the term “Islam”. You will then see a list of subject heading strings which contain the word “Islam”.</p>
+                        <p>2nd example: enter the terms “Islam” and “God”. You will then see a list of subject heading strings which contain the words 
+                           “Islam” and “God”.</p>
+                        <p>If you change the language of the website to German (in the upper right corner of the Website), the terms are shown in 
+                           German if they are found in the language concordance.</p>
 
-                        <h3>Browse the Catalogue</h3>
-                        <p>The standard browsing function of the software used by IxTheo (VuFind) makes it possible to browse through various fields: DDC-Classification,
-                            IxTheo-Classification, Topic (subject heading), Author and Publisher. In a further step, you may determine the items you wish to browse by using other fields.</p>
-                        <p>For example, select “Author”, then “By IxTheo-Classification”, then “HB Old Testament”. You will then see a list of authors who have worked in the field
-                            of Old Testament research, sorted according to the number of their works catalogued in the IxTheo.</p>
+                        <h3>Browsing according to categories („Browse the catalogue“)</h3>
+                        <p>The standard browsing function of the software used by RelBib (VuFind) makes it possible to browse through various fields: DDC-Classification (Classmarks), 
+                           RelBib-Classification, Topic (subject heading), Author and Publisher. In a further step, you may filter the items you wish to browse by using other fields.</p>
+                        <p>For example, select “Classmark”, then “200 Religion”, then “210 Philosophy and theory of religion”. Other fields will appear which you may then select. 
+                           On every field, there is a button displaying the number of titles linked to this category.  By clicking on “View Records”, you will get the list of titles.</p>
 
                         <h3>Browse Alphabetically</h3>
-                        <p>With this search option, you can decide at which point in the alphabet you would like to start the search. After you’ve selected the
-                            browsing category (you may select among Topic, Author, Title or DDC-Classification), enter the letter at which you would like to start to browse.</p>
-                        <p>1st example: select “By Author” and enter “Z” next to “starting from”. You will then get a list of all authors whose name starts with the letter “Z”.</p>
-                        <p>2nd example: select “By Title” and enter “Tr” next to “starting from”. You will then get a list of all the titles which start with the letter “Tr”.</p>
+                        <p>With this search option, you can decide at which point in the alphabet you would like to start the search. After you have selected the browsing category, 
+                           enter the letter at which you would like to start to browse.</p>
+                        <p>For example, select “By Topic” and enter “rel” next to “starting from”. You will then get a list of all subject headings starting with “rel”.</p>
+                        <p>This function is also useful when you are not sure how to spell the name of a given author.</p>
+                        <p>For example, select “By Author” and enter “Tr” next to “starting from”. You will then get a list of all authors whose name starts with the letters “Tr”.</p>
+                        <p>By the way, a browsing button is displayed for every monograph which was catalogued with subject headings. Just click on the “B”-button on the left of 
+                           the subject heading string, and you will see other titles which were catalogued with that string.</p>
                     </div>
                 </div>
                 <label for="post-2" class="read-more-trigger"></label>
@@ -156,45 +151,35 @@ $panelWidth = "col-md-6";
     <div class="panel <?= $panelClass; ?>">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <i class="fa fa-child"></i> Personalized searches
+                <i class="fa fa-child"></i>My RelBib
             </h4>
         </div>
         <div id="<?= $panelId++; ?>" class="panel-collapse">
             <div class="panel-body">
                 <input type="checkbox" class="read-more-state" id="post-3" />
                 <div class="read-more-wrap">
-                    <p>Many useful functions are at your disposal when you create a personal account. Once you’ve registered, you may log into your account by clicking
-                        on the link called “Login” on the top right corner.</p>
-                    <div class="read-more-target">
-                    <p>By clicking on “Your account”, you come into your personalized area. You may then use the following functions:</p>
+                    <p>Many useful functions are at your disposal when you create a personal account.</p>
+                    <p>In order to register or log into your account, click on the link called “Login” on the top right corner. 
+                       <div class="read-more-target"><div style="height: 0px;">&emsp;</div>
+                       The first time you try to log in, you will be able to set up your account.</p>
+                                        <p>By clicking on “Your account”, you come into your personalized area. You may then use the following functions:</p>
                         <h3>Alerting function</h3>
                         <p>The alerting function lets you know when new articles from certain journals and new volumes from certain series are available. You may decide in which
                             cases you would like to get a corresponding message.</p>
                         <p>In order to receive such “alerts” for a journal or a series, you must mark the corresponding entry for the journal or series as a whole. You can do this
                             by clicking on the “Bell” symbol which you will find on the right side of the corresponding entry. You can manage the list of publications marked for an
                             alert in your account under the heading “New Issue Alerting”.</p>
-
-                        <p>1st example: in order to get alerts for the Theologische Quartalschrift, search for the title of this journal or enter the abbreviation “ThQ”
-                            in the search field. Then select under “Format” the “Journal” facet. You will get two entries as a result: one for the printed, and one for the
-                            online version of the journal. In this case, it would be preferable to mark both media types for an alert.</p>
-
-                        <p>2nd example: in order to get alerts for the series “Wissenschaftliche Untersuchungen zum Neuen Testament”, search for the title of the series or
-                            enter the abbreviation “WUNT” in the search field. You will then get a list of entries. Mark the series by clicking on the “Bell” symbol.</p>
-
-                        <p>We will try to make the selection of journals and series for the alerting function more user-friendly in the future. We plan to offer the possibility
-                            of marking whole blocks of journals which are catalogued in the IxTheo according to their academic discipline.</p>
+                        <p>For example: in order to get alerts for the “Zeitschrift für Religionswissenschaft”, search for the title of this journal, then select under 
+                           “Format” the “Journal” facet, and click on the “Bell” symbol.</p>
 
                         <h3>Saving search requests</h3>
-                        <p>Your current search requests are temporarily stored in the search history. If you would like to have permanent access to certain search requests,
-                            you can save them permanently in your account. You may then use them again through a simple mouse click. This feature might be useful for complex
-                            requests or for subjects in which you have a continuing interest. In this way, you will find the latest literature on a given subject or area of knowledge.</p>
-
+                        <p>If you would like to have permanent access to certain search requests, you can save them permanently in your account. You will find them under 
+                           “Saved Searches” and may use them again through a simple mouse click. This feature might be useful for complex requests or for subjects 
+                           in which you have a continuing interest. In this way, you will find the latest literature on a given subject or area of knowledge.</p>
                         <h3>Saving favorites</h3>
-                        <p>You can save interesting titles directly in your account  by clicking on the “Asterisk” symbol which you will find on the right side of the corresponding entry.
-                            They are then permanently accessible, and you don’t have to waste any time searching for them again.
-                            In order to sort such “favorites”, they are kept in lists which you define yourself. In this way, you can assign interesting titles to specific research
-                            projects or subjects.</p>
-                        <p>In your account, you can also export your favorites, send them per e-mail or print them.</p>
+                        <p>You can save interesting titles directly in your account. They are then permanently accessible, and you do not have to waste any time searching for them 
+                           again. You may keep your “favorites” in different lists which you define yourself. In this way, you can assign interesting titles to specific 
+                           research projects or subjects. In your account, you can also export your favorites, send them per e-mail or print them.</p>
                     </div>
                 </div>
                 <label for="post-3" class="read-more-trigger"></label>
