@@ -14,7 +14,7 @@
                         <?$first = true;?>
                         <? foreach (explode('/', $current['value']) as $term): ?>
                             <?=$first ? '' : ' / '; $first = false; ?>
-                            <a href="<?= $this->url('keywordchainsearch-results') ?>?lookfor=<?= urlencode('"' . $term . '"') ?>">
+                            <a href="<?= $this->url('keywordchainsearch-results') ?>?lookfor=<?= urlencode('"' . $term . '"') ?>" data-toggle="tooltip" title="<?=$this->transEsc('tooltip_add_remove_with_shift', array(), '')?>">
                                 <span class="kwc_single_term" style="padding:5px;"><?= $this->escapeHtml($term) ?></span></a>
                         <? endforeach; ?>
                     </td>

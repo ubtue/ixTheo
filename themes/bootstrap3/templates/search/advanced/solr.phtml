@@ -11,7 +11,7 @@
           <? $prefix = ($field == 'ixtheo_notation_facet' || $field == 'relbib_notation_facet') ? 'ixtheo-' : ''; ?>
           <div class="col-sm-<?=floor(12/count($this->facetList)) ?>">
             <label for="limit_<?=$this->escapeHtmlAttr(str_replace(' ', '', $field))?>"><?=$this->transEsc($list['label'])?>:</label>
-            <select class="form-control" id="limit_<?=$this->escapeHtmlAttr(str_replace(' ', '', $field))?>" name="filter[]" multiple="multiple" size="10">
+            <select class="form-control" id="limit_<?=$this->escapeHtmlAttr(str_replace(' ', '', $field))?>" name="filter[]" multiple="multiple" size="10" data-toggle="tooltip" title="<?=$this->transEsc('tooltip_multiple_selection_with_strg_shift', array(), '')?>">
               <? if (is_array($this->hierarchicalFacets) && in_array($field, $this->hierarchicalFacets)): ?>
                 <? foreach ($list['list'] as $value): ?>
                   <? $display = str_pad('', 4 * $value['level'] * 6, '&nbsp;', STR_PAD_LEFT) . $this->escapeHtml($value['displayText']); ?>
