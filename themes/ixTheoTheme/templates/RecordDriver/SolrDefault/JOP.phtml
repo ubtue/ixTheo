@@ -6,44 +6,85 @@
         <th>Journals Online &amp; Print:</th>
         <td>
           <?php
-            $genre = in_array('Article', $formats) ? "article" : "journal";
-            $article_information = "";
+            // prepare URL params
+            $genre                  = in_array('Article', $formats) ? "article" : "journal";
+            $url_params             = array('sid'       => 'bib:tueb',
+                                            'issn'      => $issn,
+                                            'genre'     => $genre);
             if ($genre == "article") {
-                $volume = $this->escapeHtml($this->driver->getVolume());
+                $volume             = $this->escapeHtml($this->driver->getVolume());
                 if (!empty($volume))
-                    $article_information .= "&volume=" . $volume;
+                    $url_params['volume']   = $volume;
                 $issue = $this->escapeHtml($this->driver->getIssue());
                 if (!empty($issue))
-                    $article_information .= "&issue=" . str_replace("=", "%20", $issue);
+                    $url_params['issue']    = $issue;
                 $year = $this->escapeHtml($this->driver->getYear());
                 if (!empty($year))
-                    $article_information .= "&date=" . $year;
+                    $url_params['date']     = $year;
                 $pages = $this->escapeHtml(str_replace(" ", "", $this->driver->getPages()));
                 if (!empty($pages))
-                    $article_information .= "&pages=" . $pages;
+                    $url_params['pages']    = $pages;
             }
+            
+            // prepare url_suffix (same for each url)
+            $url_suffix_params = '?';
+            foreach($url_params as $key => $param) {
+                if($url_suffix_params != '?') $url_suffix_params .= '&';
+                $url_suffix_params .= urlencode($key) . '=' . urlencode($param);
+            }
+            
+            // special handling for client ip
+            $client_ip          = $_SERVER['REMOTE_ADDR'];
+            #$client_ip          = '134.2.66.55';                                    // use this if you try to debug on localhost
+            $url_suffix_client  = '&pid=' . urlencode('client_ip=' . $client_ip);
+            
+            $url_suffix_full    = $url_suffix_params . $url_suffix_client;
+            
+            // base URLs
+            $url_html_base      = 'http://services.dnb.de/fize-service/gvr/html-service.htm';
+            $url_img_base       = 'http://services.dnb.de/fize-service/gvr/icon';
+            $url_ajax_base      = 'http://services.dnb.de/fize-service/gvr/full.xml';
+            
+            // full URLs with suffix
+            $url_html           = $url_html_base . $url_suffix_full;
+            $url_img            = $url_img_base . $url_suffix_full;
+            $url_ajax           = $url_ajax_base . $url_suffix_full;
+           
+            // proxy URLs
+            $url_img_proxy      = $this->url('home') . 'proxy/load?url=' . urlencode($url_img);
+            $url_ajax_proxy     = $this->url('home') . 'proxy/load?url=' . urlencode($url_ajax);
+            
+            #print implode('<br/>', array($url_html, $url_img, $url_ajax, $url_img_proxy, $url_ajax_proxy));
+            
+            $part_img   = '<img src="'.$url_img_proxy.'" alt="JOP Icons should be here"/>';
           ?>
-          <div style="color:grey" id="jop_icons"><a href=http://services.dnb.de/fize-service/gvr/html-service.htm?sid=bib:tueb&issn=<?=$this->escapeHtml($issn)?>&genre=<?=$genre?><?=$article_information?>>
-             <img src=<?=$this->url('home') ?>proxy/load?url=http%3A%2F%2Fservices.dnb.de%2Ffize-service%2Fgvr%2Ficon%3Fsid%3Dbib%3Atueb%26issn%3D<?=$this->escapeHtml($issn)?>&genre=<?=$genre?><?=$article_information?>%26pid%3Dclient_ip%253D<?=$_SERVER['REMOTE_ADDR'];?> alt="JOP Icons should be here">
-</a>
-</div>
+          <div style="color:grey" id="jop_icons">
+            <a href="<?=$url_html?> target="_blank">
+                <?=$part_img?>
+            </a>
+          </div>
           <div style="color:grey" id="jop_place_holder"><?=$this->transEsc("Loading")?>...</div>
         </td>
       </tr>
+      
+      
       <script type="text/javascript" language="javascript">
         var genre  = "<?=in_array('Article', $formats)?>" ? "article" : "journal";
         var article_information = "";
         if (genre == "article") {
           article_information = "<?=$article_information?>";
         }
+        
+        // service documentation, see http://www.zeitschriftendatenbank.de/fileadmin/user_upload/ZDB/pdf/services/JOP_Dokumentation_XML-Dienst.pdf
         $.ajax({
           type: "GET",
-          url: "<?=$this->url('home') ?>proxy/load?url=http%3A%2F%2Fservices.dnb.de%2Ffize-service%2Fgvr%2Ffull.xml%3Fsid%3Dbib%3Atueb%26issn%3D<?=$this->escapeHtml($issn)?>%26genre%3D"+genre+article_information+"%26pid%3Dclient_ip%253D<?=$_SERVER['REMOTE_ADDR'];?>",
+          url: "<?=$url_ajax_proxy?>",
           dataType: "xml",
           success: function(xml) {
             $(document).ready(function() {
               var replacement = "";
               var filter = [];
+              
               $(xml).find('Result').each(function(index, value) {
                 var state = $(this).attr("state");
                 if (state >= 0 && state <= 3) {
@@ -71,11 +112,8 @@
                   }
                 }
                 else if (state == 4 || state == 10) {
-                  var access_url = 'http://services.dnb.de/fize-service/gvr/html-service.htm?sid=bib:tueb&issn=' + 
-                                  '<?=$this->escapeHtml($issn)?>' + '&genre=' + '<?=$genre?>' + 
-                                  '<?=$article_information?>';
                   if (replacement == "") {
-                     replacement = '<a href="' + access_url + '">' + '<?=$this->transEsc("Check Availability")?>' + '</a>';
+                     replacement = '<a href="' + '<?=$url_html?>' + '" target="_blank">' + '<?=$part_img?>' + '<?=$this->transEsc("Check Availability")?>' + '</a>';
                      // We get an 1x1 pixel gif from JOP that can be seen as an empty line
                      // => remove it
                      $("#jop_icons").remove();
@@ -102,6 +140,7 @@
             }
           }
         }); // end ajax
+        
       </script>
     <? endif; ?>
   <? endif; ?>
