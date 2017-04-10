@@ -35,7 +35,6 @@
             
             // special handling for client ip
             $client_ip          = $_SERVER['REMOTE_ADDR'];
-            #$client_ip          = '134.2.66.55';                                    // use this if you try to debug on localhost
             $url_suffix_client  = '&pid=' . urlencode('client_ip=' . $client_ip);
             
             $url_suffix_full    = $url_suffix_params . $url_suffix_client;
@@ -53,9 +52,7 @@
             // proxy URLs
             $url_img_proxy      = $this->url('home') . 'proxy/load?url=' . urlencode($url_img);
             $url_ajax_proxy     = $this->url('home') . 'proxy/load?url=' . urlencode($url_ajax);
-            
-            #print implode('<br/>', array($url_html, $url_img, $url_ajax, $url_img_proxy, $url_ajax_proxy));
-            
+                              
             $part_img   = '<img src="'.$url_img_proxy.'" alt="JOP Icons should be here"/>';
           ?>
           <div style="color:grey" id="jop_icons">
