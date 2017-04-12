@@ -795,7 +795,7 @@ class BrowseController extends AbstractBase
             $chars = 'ABCFHKNRSTVXZ';
             $callback = $ixtheo_notation_callback;
         } else if ($this->getCurrentAction() === 'RelBib-Classification') {
-            $chars = 'ABKTVXZ';
+            $chars = 'ABHKNTVXZ';
             $callback = $ixtheo_notation_callback;
         }  else if ($this->getCurrentAction() == 'Era') {
             $chars = '0123456789' . $chars;
