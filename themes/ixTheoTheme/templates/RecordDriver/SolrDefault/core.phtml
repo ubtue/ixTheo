@@ -1,15 +1,15 @@
 <?
-  $user = $this->auth()->isLoggedIn();
-  $loggedin = ($user == true);
+  $user                     = $this->auth()->isLoggedIn();
+  $loggedin                 = ($user == true);
   if ($loggedin) {
-      $user_id = $user->id;
-      $can_use_tad = $this->driver->canUseTAD($user_id);
-      $email = $user->email;
-      $fullname = $user->firstname . ' ' . $user->lastname;
+      $user_id              = $user->id;
+      $can_use_tad          = $this->driver->canUseTAD($user_id, true);
+      $email                = $user->email;
+      $fullname             = $user->firstname . ' ' . $user->lastname;
   } else {
-      $user_id = false;
-      $can_use_tad = false;
-      $email = false;
+      $user_id              = false;
+      $can_use_tad          = false;
+      $email                = false;
   }
 ?>
 
