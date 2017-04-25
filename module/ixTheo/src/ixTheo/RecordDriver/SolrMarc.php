@@ -248,20 +248,14 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
 
     public function canUseTAD($userId)
     {
-        $formats_tad_allowed                = array('Festschrift', 'Article');
-        $keywords_tad_allowed               = array('Konferenzschrift', 'Kongress', 'Aufsatzsammlung');
-        $properties_tad_allowed_children    = array('format' => 'Article');
-        
+        $formats_tad_allowed = array('Article');
         $user_allowed = $this->getDbTable('IxTheoUser')->canUseTAD($userId);
         if(!$user_allowed) {
             return false;
         }
         
-        $tad_formats_allowed  = !empty(array_intersect($formats_tad_allowed, $this->getFormats()));
-        $tad_keywords_allowed = !empty(array_intersect($keywords_tad_allowed, $this->getAllSubjectHeadingsFlat()));
-        $tad_children_allowed = ($this->getChildRecordCountWithProperties($properties_tad_allowed_children) > 0);
-        
-        return ($tad_formats_allowed || $tad_keywords_allowed || $tad_children_allowed);
+        $tad_formats_allowed = !empty(array_intersect($formats_tad_allowed, $this->getFormats()));
+        return ($tad_formats_allowed);
     }
     
     public function getAllSubjectHeadingsFlat()
