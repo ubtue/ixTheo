@@ -69,7 +69,9 @@ function isRelBibNotationThirdList($self) {
         $viewRecord = !empty($this->categoryList) && $this->currentAction != 'Tag' && $this->findby != 'alphabetical';
       ?>
       <a href="<?=$url ?>" class="list-group-item clearfix<? if ($this->query == $secondary['value'].'' || $this->query == $secondary['value'].'*'): ?> active<? endif; ?>">
-        <?$fancy_secondary = isIxTheoNotationSecondList($this) || isRelBibNotationSecondList($this) ? $this->transEsc("ixtheo-" . $secondary['displayText']) : $secondary['displayText'];?>
+        <?$fancy_secondary = isIxTheoNotationSecondList($this) ? $this->transEsc("ixtheo-" . $secondary['displayText']) : 
+                             (isRelBibNotationSecondList($this) ? $this->transEsc("relbib-" . $secondary['displayText']) :
+                             $secondary['displayText']);?>
         <?=$this->escapeHtml($fancy_secondary) ?>
         <? if ($this->findby != 'alphabetical' && isset($secondary['count'])): ?>
           <span class="badge"><?=number_format($secondary['count']) ?></span>
