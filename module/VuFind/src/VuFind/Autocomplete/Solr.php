@@ -172,7 +172,7 @@ class Solr implements AutocompleteInterface
     protected function mungeQuery($query)
     {
         // Modify the query so it makes a nice, truncated autocomplete query:
-        $forbidden = [':', '(', ')', '*', '+', '"', '–'];
+        $forbidden = [':', '(', ')', '*', '+', '"', '–' /* a hyphen, not a minus sign */];
         $query = str_replace($forbidden, " ", $query);
         if (substr($query, -1) != " ") {
             $query .= "*";
