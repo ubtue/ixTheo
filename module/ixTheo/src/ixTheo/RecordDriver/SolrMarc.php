@@ -248,9 +248,53 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
 
     public function canUseTAD($userId)
     {
-        return $this->getDbTable('IxTheoUser')->canUseTAD($userId);
+        $formats_tad_allowed = array('Article');
+        $user_allowed = $this->getDbTable('IxTheoUser')->canUseTAD($userId);
+        if(!$user_allowed) {
+            return false;
+        }
+        
+        $tad_formats_allowed = !empty(array_intersect($formats_tad_allowed, $this->getFormats()));
+        return ($tad_formats_allowed);
+    }
+    
+    public function getAllSubjectHeadingsFlat()
+    {
+        $result     = array();
+        $headings   = $this->getAllSubjectHeadings();
+        foreach($headings as $heading_arr) {
+            $result = array_merge($result, $heading_arr);
+        }
+        return $result;
     }
 
+    /**
+     * @param array $properties  associative array with name => value
+     * @return int
+     */
+    public function getChildRecordCountWithProperties($properties) {
+        // Shortcut: if this record is not the top record, let's not find out the
+        // count. This assumes that contained records cannot contain more records.
+        if (!$this->containerLinking
+            || empty($this->fields['is_hierarchy_id'])
+            || null === $this->searchService
+        ) {
+            return 0;
+        }
+
+        $safeId         = addcslashes($this->fields['is_hierarchy_id'], '"');
+        
+        $query_string   = 'hierarchy_parent_id:"' . $safeId . '"';
+        foreach($properties as $key => $value) {
+            $query_string .= ' AND ' . $key . ':"' . addcslashes($value, '"') . '"';
+        }
+        
+        $query = new \VuFindSearch\Query\Query(
+            $query_string
+        );
+        return $this->searchService->search('Solr', $query, 0, 0)->getTotal();
+    }
+    
     public function getSuperiorRecord() {
        $_773_field = $this->getMarcRecord()->getField("773");
        if (!$_773_field)
