@@ -255,7 +255,7 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
         }
         
         $formats = $this->getFormats();
-        $intersection = array_intersect($formats_tad_allowed,$this->getFormats());
+        $intersection = array_intersect($formats_tad_allowed, $this->getFormats());
         $tad_formats_allowed = !empty($intersection);
 
         return $tad_formats_allowed;
