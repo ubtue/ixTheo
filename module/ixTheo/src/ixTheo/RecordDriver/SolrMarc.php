@@ -254,8 +254,11 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
             return false;
         }
         
-        $tad_formats_allowed = !empty(array_intersect($formats_tad_allowed, $this->getFormats()));
-        return ($tad_formats_allowed);
+        $formats = $this->getFormats();
+        $intersection = array_intersect($formats_tad_allowed,$this->getFormats());
+        $tad_formats_allowed = !empty($intersection);
+
+        return $tad_formats_allowed;
     }
     
     public function getAllSubjectHeadingsFlat()
