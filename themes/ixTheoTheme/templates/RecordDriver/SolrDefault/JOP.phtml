@@ -66,12 +66,6 @@
       
       
       <script type="text/javascript" language="javascript">
-        var genre  = "<?=in_array('Article', $formats)?>" ? "article" : "journal";
-        var article_information = "";
-        if (genre == "article") {
-          article_information = "<?=$article_information?>";
-        }
-        
         // service documentation, see http://www.zeitschriftendatenbank.de/fileadmin/user_upload/ZDB/pdf/services/JOP_Dokumentation_XML-Dienst.pdf
         $.ajax({
           type: "GET",
