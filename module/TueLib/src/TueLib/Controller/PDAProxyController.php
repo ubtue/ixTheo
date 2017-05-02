@@ -67,13 +67,13 @@ class PDAProxyController extends \VuFind\Controller\AbstractBase
             $fullrecord = preg_replace('/[\]["]/','"', $doc['fullrecord']);
             // The "Fernleihindikator" field is 924$d. According to 
             // https://wiki.dnb.de/download/attachments/83788495/2013-10-13_MARC-Feld_924.pdf?version=1&modificationDate=1381758363000 (17/03/06)
-            // we have at least 'p' (="nur Papierkopie"), 'c' (="uneingeschränkte Fernleihe), and 'd' (="keine Fernleihe")
+            // we have at least 'b' (="nur Papierkopie"), 'c' (="uneingeschränkte Fernleihe), and 'd' (="keine Fernleihe")
             $xml_record = new SimpleXMLElement($fullrecord);
             foreach ($xml_record->record->children() as $datafield) {
                if ($datafield['tag'] == "924") {
                    foreach ($datafield->children() as $subfield) {
                        if ($subfield['code'] == 'd') {
-                           if ($subfield == 'p' || $subfield == 'c')
+                           if ($subfield == 'b' || $subfield == 'c')
                               return true;
                        }
                    }
