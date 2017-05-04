@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="vufind2" basedir="." default="main">
+<project name="vufind" basedir="." default="main">
   <property name="tmp" value="/tmp" />
   <property name="package"  value="${phing.project.name}" override="true" />
   <property name="builddir" value="${tmp}/build/${phing.project.name}" override="true" />
@@ -250,9 +250,9 @@
     <exec command="git archive HEAD --format=zip --prefix=vufind-${version}/ -o ${builddir}/packages/vufind-${version}.zip" />
 
     <!-- build the DEB package -->
-    <mkdir dir="${builddir}/export/vufind/usr/local/vufind2" />
-    <exec command="git archive HEAD --format=tar | tar -x -C ${builddir}/export/vufind/usr/local/vufind2" />
-    <move file="${builddir}/export/vufind/usr/local/vufind2/packages/DEBIAN" todir="${builddir}/export/vufind" includeemptydirs="true"/>
+    <mkdir dir="${builddir}/export/vufind/usr/local/vufind" />
+    <exec command="git archive HEAD --format=tar | tar -x -C ${builddir}/export/vufind/usr/local/vufind" />
+    <move file="${builddir}/export/vufind/usr/local/vufind/packages/DEBIAN" todir="${builddir}/export/vufind" includeemptydirs="true"/>
     <exec command="chmod 0775 ${builddir}/export/vufind/DEBIAN/postinst" />
     <exec command="dpkg-deb -b ${builddir}/export/vufind ${builddir}/packages/vufind_${version}.deb" />
 
