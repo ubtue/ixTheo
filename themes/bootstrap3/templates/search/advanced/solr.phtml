@@ -25,14 +25,14 @@
                 $sorted = array();
                 foreach ($list['list'] as $i => $value) {
                   if (!empty($value['displayText'])) {
-                    $sorted[$i] = $value['displayText'];
+                    $sorted[$i] = $this->transEsc($prefix . $value['displayText']);
                   }
                 }
                 natcasesort($sorted);
                 ?>
                 <? foreach ($sorted as $i => $display): ?>
                   <? $value = $list['list'][$i]; ?>
-                  <option value="<?=$this->escapeHtmlAttr(($value['operator'] == 'OR' ? '~' : '') . $field . ':"' . $value['value'] . '"')?>"<?=(isset($value['selected']) && $value['selected'])?' selected="selected"':''?>><?=$this->transEsc($prefix . $display)?></option>
+                  <option value="<?=$this->escapeHtmlAttr(($value['operator'] == 'OR' ? '~' : '') . $field . ':"' . $value['value'] . '"')?>"<?=(isset($value['selected']) && $value['selected'])?' selected="selected"':''?>><?=$display?></option>
                 <? endforeach; ?>
               <? endif; ?>
             </select>
