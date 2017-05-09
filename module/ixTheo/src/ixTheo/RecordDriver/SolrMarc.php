@@ -75,6 +75,31 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
     {
         return isset($this->fields['page_range']) ? $this->fields['page_range'] : '';
     }
+    
+    /**
+     * Returns persistent identifiers as array
+     * e.g. array(  'DOI' => array(<doi1>, <doi2>),
+     *              'URN' => array(<urn1>, <urn2>),);
+     * 
+     * keys like 'DOI' will only exist if at last 1 DOI is available
+     * 
+     * @return array
+     */
+    public function getPersistentIdentifiers() {
+        $result     = array();
+        $rawdata    = isset($this->fields['persistent_identifier']) ? $this->fields['persistent_identifier'] : array();
+        
+        foreach($rawdata as $entry) {
+            $entry_splitted = explode(':', $entry, 2);
+            $result_type    = $entry_splitted[0];
+            $result_value   = $entry_splitted[1];
+            
+            if(!isset($result[$result_type])) $result[$result_type] = array();
+            $result[$result_type][] = $result_value;
+        }
+        
+        return $result;
+    }
 
     /**
      * Return an associative array of all container IDs (parents) mapped to their titles containing the record.

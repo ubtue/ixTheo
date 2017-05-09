@@ -279,6 +279,7 @@
    <field name="is_religious_studies" type="boolean" indexed="true" stored="true" multiValued="false"/>
    <field name="is_probably_religious_studies" type="boolean" indexed="true" stored="true" multiValued="false"/>
    <field name="is_potentially_pda" type="boolean" indexed="true" stored="true" multiValued="false"/>
+   <field name="persistent_identifier" type="string" indexed="true" stored="true" multiValued="true"/> 
    <field name="record_selector" type="string" indexed="true" stored="true" multiValued="true"/>
 
    <!-- Multi-part fields -->
