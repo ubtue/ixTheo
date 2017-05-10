@@ -1,1 +1,1 @@
-/usr/local/vufind2/local/ixTheo/config/vufind/README.txt
+/usr/local/vufind/local/ixTheo/config/vufind/README.txt
