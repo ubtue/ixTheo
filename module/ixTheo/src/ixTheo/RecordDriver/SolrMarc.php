@@ -89,12 +89,13 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
         $result     = array();
         $rawdata    = isset($this->fields['persistent_identifier']) ? $this->fields['persistent_identifier'] : array();
         
-        foreach($rawdata as $entry) {
+        foreach ($rawdata as $entry) {
             $entry_splitted = explode(':', $entry, 2);
             $result_type    = $entry_splitted[0];
             $result_value   = $entry_splitted[1];
             
-            if(!isset($result[$result_type])) $result[$result_type] = array();
+            if (!isset($result[$result_type]))
+                $result[$result_type] = array();
             $result[$result_type][] = $result_value;
         }
         
