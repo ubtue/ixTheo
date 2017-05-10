@@ -78,16 +78,16 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
     
     /**
      * Returns persistent identifiers as array
-     * e.g. array(  'DOI' => array(<doi1>, <doi2>),
-     *              'URN' => array(<urn1>, <urn2>),);
+     * e.g. array('DOI' => array(<doi1>, <doi2>),
+     *            'URN' => array(<urn1>, <urn2>),);
      * 
      * keys like 'DOI' will only exist if at last 1 DOI is available
      * 
      * @return array
      */
     public function getPersistentIdentifiers() {
-        $result     = array();
-        $rawdata    = isset($this->fields['persistent_identifier']) ? $this->fields['persistent_identifier'] : array();
+        $result  = array();
+        $rawdata = isset($this->fields['persistent_identifier']) ? $this->fields['persistent_identifier'] : array();
         
         foreach ($rawdata as $entry) {
             $entry_splitted = explode(':', $entry, 2);
