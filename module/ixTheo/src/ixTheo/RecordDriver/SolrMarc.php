@@ -419,9 +419,18 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc implements ServiceLocatorAw
         $subtitle = $this->getSubtitle();
         $titleSection = $this->getTitleSection();
         if (!empty($subtitle)) { 
-            $separator = preg_match("/^[\\s=]+/", $subtitle) ? " " : " : ";
-            $title .= $separator . $subtitle; }
-        if (!empty($titleSection)) { $title .= ' / ' . $titleSection; }
+            if ($title != '') {
+                $separator = preg_match("/^[\\s=]+/", $subtitle) ? " " : " : ";
+                $title .= $separator;
+            }
+            $title .= $subtitle;
+        }
+        if (!empty($titleSection)) {
+            if ($title != '') {
+                $title .= ' / ';
+            }
+            $title .= $titleSection;
+        }
         return $title;
     }
 
