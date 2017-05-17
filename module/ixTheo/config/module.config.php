@@ -40,6 +40,11 @@ $config = array(
             'pdasubscriptions' => 'VuFind\Controller\Plugin\PDASubscriptions',
         ]
     ],
+    'service_manager' => [
+        'factories' => [
+            'VuFind\Mailer' => 'ixTheo\Mailer\Factory',
+        ],
+    ],
 );
 
 $recordRoutes = array();
