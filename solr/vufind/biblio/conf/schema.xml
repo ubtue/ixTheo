@@ -305,6 +305,7 @@
    <field name="is_probably_religious_studies" type="boolean" indexed="true" stored="true" multiValued="false"/>
    <field name="is_potentially_pda" type="boolean" indexed="true" stored="true" multiValued="false"/>
    <field name="record_selector" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="rs" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="types_and_persistent_identifiers" type="string" indexed="true" stored="true" multiValued="true"/>
 
    <!-- Multi-part fields -->
@@ -396,6 +397,8 @@
  <copyField source="key_word_chain_bag_hant" dest="topic"/>
  <copyField source="key_word_chain_bag_hans" dest="topic"/>
  <copyField source="topic_synonyms" dest="topic"/>
+ <!-- CopyFields for simple field aliases-->
+ <copyField source="record_selector" dest="rs"/>
  <!-- Default Boolean Operator -->
  <solrQueryParser defaultOperator="AND"/>
 </schema>
