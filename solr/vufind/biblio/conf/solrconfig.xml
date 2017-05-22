@@ -715,7 +715,7 @@
   <transformer class="de.uni_tuebingen.ub.ixTheo.MultiLanguageDocTransformerFactory" name="multiLanguageDocTransformer">
     <bool name="enabled">true</bool>
     <str name="fields">topic_standardized,topic_non_standardized</str>
-    <str name="lang_extensions">_de,_en,_fr</str>
+    <str name="lang_extensions">_de,_en,_fr,_it,_es,_hant,_hans</str>
   </transformer>
 
 
