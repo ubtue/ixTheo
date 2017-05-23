@@ -603,6 +603,11 @@ class BrowseController extends AbstractBase
         switch($facet) {
         case 'alphabetical':
             return ['', $this->getAlphabetList()];
+        case 'author':
+            return ['author_facet', $this->quoteValues(
+                        $this->getFacetList('author_facet')
+                    )
+                ];
         case 'dewey':
             return [
                     'dewey-tens', $this->quoteValues(
