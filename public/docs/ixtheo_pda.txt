@@ -1,9 +1,0 @@
-PDA-Bestellung für IxTheo (Stand 21.3.17)
-
-Zu Bestimmung, ob ein Titel für eine PDA-Beschaffung angeboten wird, ist es notwendig, zu bestimmen, ob ein Titel bereits über Fernleihe in Deutschland verfügbar ist. Titel, bei denen das nicht der Fall ist , können für PDA vorgeschlagen werden. Zur Bestimmung kommt folgendes mehrschrittiges Verfahren unter Verwendung des GVI (Gemeinsamer Verbünde Index des BSZ, der verbundsübergreifende Bestandsinformationen liefert) zum Einsatz:
-
-1.) Tägliche Abfrage der PPNs vom GVI (Gemeinsame Verbünde Index in Konstanz) bei denen das IllFlag eine Fernleihbarkeit anzeigt. Dieses ist jedoch nur für SWB-Bestände überhaupt vorhanden und nach Aussagen des BSZ derzeit nur für E-Kopien relevant. Allerdings ergibt sich hier möglicherweise in der Zukunft eine Verbesserung des Datenbasis.
-
-2.) Durch die Pipeline (Aufbereitung und Anreicherung der durch das BSZ zur Verfügung gestellten Daten) werden alle Monographien, die nicht durch 1.) für PDA ausgeschieden werden und ein Erscheinungsdatum ab 2014 haben, als PDA-Kandidaten gekennzeichet.
-
-3.) Beim Aufruf der Volltitelanzeige eines PDA-Kandidaten erfolgt (asynchron über Ajax und ein Proxy-Programm auf dem Server) eine Abfrage beim GVI, bei der auch die vollständigen Datensätze im XML-Format heruntergeladen werden. Hierbei wird dann das MarcFeld 924$d ausgewertet, ob sich der Wert 'p' (="nur Papierkopie") oder 'c' (="uneingeschränkte Fernleihe") findet. In diesem Fall wird davon ausgegangen, dass eine Fernleihbarkeit möglich ist. Sollte dies nicht der Fall sein, wird der Titel für eine PDA-Anschaffung angeboten.
