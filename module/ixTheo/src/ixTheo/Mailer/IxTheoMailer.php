@@ -26,13 +26,18 @@ class IxTheoMailer extends \VuFind\Mailer\Mailer implements ServiceLocatorAwareI
     public function send($to, $from, $subject, $body, $cc = null)
     {
         $config = $this->getServiceLocator()->get('VuFind\Config')->get('config');
-        $email_enquiry = $config->Site->email_enquiry;
+        $email = $config->Site->email;
+        $email_from = $config->Site->email_from;
         
-        if ($email_enquiry != null) {
-            $footer = 'If you have questions regarding this service please contact' . PHP_EOL . $email_enquiry;
+        if ($email != null) {
+            $footer = 'If you have questions regarding this service please contact' . PHP_EOL . $email;
             $body .= PHP_EOL . '--' . PHP_EOL . $footer;
         }
         
+        if ($email_from != null) {
+            $from = $email_from;
+        }
+
         parent::send($to, $from, $subject, $body, $cc);
     }
 }
