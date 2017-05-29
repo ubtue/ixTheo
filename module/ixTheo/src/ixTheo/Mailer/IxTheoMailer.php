@@ -34,7 +34,7 @@ class IxTheoMailer extends \VuFind\Mailer\Mailer implements ServiceLocatorAwareI
             $body .= PHP_EOL . '--' . PHP_EOL . $footer;
         }
         
-        if($email_from != null) {
+        if ($email_from != null) {
             $from = $email_from;
         }
 
