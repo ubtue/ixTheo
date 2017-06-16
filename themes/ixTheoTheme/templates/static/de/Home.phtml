@@ -16,7 +16,6 @@
         max-height: 999em;
     }
 
-
     .read-more-state ~ .read-more-trigger:before {
         content: 'Mehr';
     }
@@ -35,29 +34,68 @@
         border: 1px solid #ddd;
         border-radius: .25em;
     }
+    
+    div.new {
+        float: right;
+        color: red;
+    }
 </style>
-
-
-<div class="col-md-12" style="text-align:justify;">
-    <h2>Liebe Nutzer des Index Theologicus,</h2>
-    <div class="post">
-        <p>wir freuen uns, Ihnen die Alpha-Version des neuen IxTheo vorstellen zu können.</p>
-        <p>Der neue IxTheo ist eine umfassende Bibliographie für Theologie und Religionswissenschaft. Es können nun
-            neben Aufsätzen auch Monographien, Datenbanken und relevante Internetlinks recherchiert werden. Neu ist
-            auch, dass die Daten ausgewählter Rezensionsorgane in den IxTheo einbezogen werden. Wenn es lizenzrechtlich
-            möglich ist, kann direkt auf die Volltexte der Aufsätze, Rezensionen und Bücher zugegriffen werden.</p>
-        <p>Der neue IxTheo bleibt weiterhin ein kostenloses open access Angebot an die weltweite Fachcommunity.
-            Herausgeber des IxTheo sind die Universitätsbibliothek Tübingen sowie die Evangelisch-Theologische Fakultät
-            Tübingen und die Katholisch-Theologische Fakultät Tübingen.</p>
-        <p>Wir bitten um Verständnis, dass in einer Alpha-Version noch nicht alles fehlerfrei funktioniert. Wir wünschen
-            Ihnen viel Freude beim Entdecken des neuen IxTheo und sind dankbar über Ihr Feedback!</p>
-    </div>
-</div>
 <?
 $panelId = 0;
 $panelClass = "panel-default";
 $panelWidth = "col-md-6";
 ?>
+<div class="col-md-6" style="text-align:justify;">
+    <div class="panel <?= $panelClass; ?>">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <i class="fa fa-bell-o"></i> Willkommen!
+            </h4>
+        </div>
+        <div id="<?= $panelId++; ?>" class="panel-collapse">
+            <div class="panel-body">
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
+                <div class="read-more-wrap">
+                    <p>Der neue IxTheo ist eine umfassende Bibliographie für Theologie und Religionswissenschaft. Es können nun
+                            neben Aufsätzen auch Monographien, Datenbanken und relevante Internetlinks recherchiert werden.</p>
+                    <div class="read-more-target">
+                        <p>Neu ist auch, dass die Daten ausgewählter Rezensionsorgane in den IxTheo einbezogen werden. Wenn es lizenzrechtlich
+                            möglich ist, kann direkt auf die Volltexte der Aufsätze, Rezensionen und Bücher zugegriffen werden.</p>
+                        <p>Der neue IxTheo bleibt weiterhin ein kostenloses open access Angebot an die weltweite Fachcommunity.
+                            Herausgeber des IxTheo sind die Universitätsbibliothek Tübingen sowie die Evangelisch-Theologische Fakultät
+                            Tübingen und die Katholisch-Theologische Fakultät Tübingen.</p>
+                        <p>Wir wünschen
+                            Ihnen viel Freude beim Entdecken des neuen IxTheo und sind dankbar über Ihr Feedback!</p>
+                    </div>
+                </div>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6" style="text-align:justify;">
+    <div class="panel <?= $panelClass; ?>">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <i class="fa fa-book"></i> Patron-Driven-Acquisition (PDA) <div class="new">neu</div>
+            </h4>
+        </div>
+        <div id="<?= $panelId++; ?>" class="panel-collapse">
+            <div class="panel-body">
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
+                <div class="read-more-wrap">
+                    <p>Zur überregionalen Versorgung des Spitzenbedarfs an theologischer Literatur in Deutschland wird ein benutzergesteuertes Erwerbungsprogramm (PDA) angeboten.</p>
+                    <div class="read-more-target">
+                        <p>Benötigte Bücher werden bei Bedarf von der UB Tübingen gekauft. </p>
+                        <p>Nutzerinnen / Nutzer können den Kauf von Einzelmonographien, die an ihren Standorten nicht vorhanden bzw. nicht über Fernleihe beschaffbar sind, direkt im IxTheo veranlassen.</p>
+                        <p><a href="docs/ixtheo-pda.pdf" target="_blank">Ausführliche Erklärung zu PDA</a></p>
+                    </div>
+                </div>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
+            </div>
+        </div>
+    </div>
+</div>
 <h2 class="col-md-12 panel-group">IxTheo entdecken</h2>
 <div class="col-md-6" style="text-align:justify;">
     <div class="panel <?= $panelClass; ?>">
@@ -68,7 +106,7 @@ $panelWidth = "col-md-6";
         </div>
         <div id="<?= $panelId++; ?>" class="panel-collapse">
             <div class="panel-body">
-                <input type="checkbox" class="read-more-state" id="post-1" />
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
                 <div class="read-more-wrap">
                     <p>Starten Sie eine Suche über alle im IxTheo enthaltenen Titel, indem Sie auf den Button „Suchen“
                         klicken. Sie erhalten die volle Trefferzahl mit mehr als 1,6 Mio Titeln.</p>
@@ -100,7 +138,7 @@ $panelWidth = "col-md-6";
                             werden intellektuell vergebene Schlagwörter und Schlagwortfolgen durchsucht.</p>
                     </div>
                 </div>
-                <label for="post-1" class="read-more-trigger"></label>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
             </div>
         </div>
     </div>
@@ -114,7 +152,7 @@ $panelWidth = "col-md-6";
         </div>
         <div id="<?= $panelId++; ?>" class="panel-collapse ">
             <div class="panel-body">
-                <input type="checkbox" class="read-more-state" id="post-2" />
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
                 <div class="read-more-wrap">
                     <p>Der neue IxTheo stellt drei verschiedene Arten des Browsens zur Verfügung. Sie finden den
                         Browsing
@@ -152,7 +190,7 @@ $panelWidth = "col-md-6";
                             aufgelistet, die mit der Buchstabenfolge Tr beginnen.</p>
                     </div>
                 </div>
-                <label for="post-2" class="read-more-trigger"></label>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
             </div>
         </div>
     </div>
@@ -166,7 +204,7 @@ $panelWidth = "col-md-6";
         </div>
         <div id="<?= $panelId++; ?>" class="panel-collapse">
             <div class="panel-body">
-                <input type="checkbox" class="read-more-state" id="post-3" />
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
                 <div class="read-more-wrap">
                     <p>Viele nützliche Funktionen stehen Ihnen zur Verfügung, wenn Sie einen persönlichen Account
                         anlegen.
@@ -226,7 +264,7 @@ $panelWidth = "col-md-6";
                             Ausdrucken.</p>
                     </div>
                 </div>
-                <label for="post-3" class="read-more-trigger"></label>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
             </div>
         </div>
     </div>
@@ -240,7 +278,7 @@ $panelWidth = "col-md-6";
         </div>
         <div id="<?= $panelId++; ?>" class="panel-collapse">
             <div class="panel-body">
-                <input type="checkbox" class="read-more-state" id="post-4" />
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
                 <div class="read-more-wrap">
                     <p>Die Bibelstellensuche wurde völlig neu konzipiert und orientiert sich an den Bedürfnissen eines wissenschaftlichen Nutzers.
                         Um die Bibelstellensuche zu aktivieren muss rechts neben dem Suchschlitz der Suchaspekt „Bibelstellen“ ausgewählt werden.
@@ -282,7 +320,7 @@ $panelWidth = "col-md-6";
                             Weiterführende Informationen finden sich <a href=https://github.com/ubtue/ixTheo/wiki/Bibelstellensuche---Technischer-%C3%9Cberblick target="_blank"><b>hier</b></a><p/>
                     </div>
                 </div>
-                <label for="post-4" class="read-more-trigger"></label>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
             </div>
         </div>
     </div>
