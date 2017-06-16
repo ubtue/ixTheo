@@ -174,7 +174,6 @@ class MyResearchController extends \VuFind\Controller\MyResearchController
 
     public function profileAction()
     {
-
         $user = $this->getUser();
         if (!$user) {
             return $this->forceLogin();
