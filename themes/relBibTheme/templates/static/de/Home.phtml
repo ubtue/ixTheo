@@ -35,27 +35,58 @@
         border: 1px solid #ddd;
         border-radius: .25em;
     }
+
+    div.new {
+        float: right;
+        color: red;
+    }
+
 </style>
 
-
-<div class="col-md-12" style="text-align:justify;">
-    <h2>Liebe Nutzer von RelBib,</h2>
-    <div class="post">
-        <p>Wir freuen uns, Ihnen die &sbquo;Religionswissenschaftliche Bibliografie&lsquo;, kurz RelBib, vorstellen zu können. Sie ist die Alpha-Version einer vom Fachinformationsdienst (FID) &sbquo;Religionswissenschaft&lsquo; betreuten umfassenden bibliografischen Datenbank.</p>
-        <p>Die Datenbank enthält derzeit <b><? include(dirname(__DIR__) . '/includes/relbib_journals_total.txt')?></b> Zeitschriften der Allgemeinen und Vergleichenden Religionswissenschaft, der Religionsgeschichte und einiger anderer kulturwissenschaftlicher Fach- und Themengebiete. Die Anzahl der Zeitschriften, deren Aufsätze in der Datenbank einzeln nachgewiesen werden, beträgt derzeit etwa ein Fünftel. Es werden sukzessive weitere Zeitschriften in die Aufsatzerschließung übernommen.  Aus der alphabetischen <a href="<?='https://'.$_SERVER['SERVER_NAME'] . '/relbib_journals.pdf'?>" target="_blank"><b>Übersicht der Zeitschriften</b></a> können Sie sich über den Stand der Auswertung informieren. Außer Zeitschriften(artikeln) enthält die Datenbank Nachweise zu religionswissenschaftlich relevanten Monografien.</p> 
-        <p>Über den Link &bdquo;Verfügbarkeit&rdquo; kann rasch abgefragt werden, ob und wo eine Zeitschrift, ein Aufsatz oder ein Buch verfügbar ist. Wenn es lizenzrechtlich möglich ist, kann auf elektronisch vorliegende Texte direkt zugegriffen werden.</p>
-        <p>RelBib ist ein kostenloses open access Angebot an die weltweite Fachcommunity der Religionswissenschaft. Herausgeber von RelBib ist die Universitätsbibliothek Tübingen. RelBib entsteht in Zusammenarbeit mit <a href="https://ixtheo.de" target="_blank">IxTheo</a>, der theologischen Datenbank, die vom FID Theologie entwickelt und betreut wird. Durch die Zusammenarbeit können Synergien genutzt werden. </p>
-        <p>Wir bitten um Verständnis, dass in einer Alpha-Version noch nicht alles fehlerfrei funktioniert. Wir wünschen
-            Ihnen viel Freude beim Entdecken von RelBib und sind dankbar über Ihr Feedback!</p>
-    </div>
-</div>
 <?
 $panelId = 0;
 $panelClass = "panel-default";
 $panelWidth = "col-md-6";
 ?>
+<div class="col-md-12" style="text-align:justify;">
+    <div class="panel <?= $panelClass; ?>">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <i class="fa fa-bell-o"></i> Willkommen
+            </h4>
+        </div>
+        <div id="<?= $panelId++; ?>" class="panel-collapse">
+            <div class="panel-body">
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
+                <div class="read-more-wrap">
+                   <p>Wir freuen uns, Ihnen die &sbquo;Religionswissenschaftliche Bibliografie&lsquo;, kurz RelBib, vorstellen zu können.
+                      Sie ist die Alpha-Version einer vom Fachinformationsdienst (FID) &sbquo;Religionswissenschaft&lsquo; betreuten umfassenden bibliografischen Datenbank.</p>
+                   <p>Die Datenbank enthält derzeit <b><? include(dirname(__DIR__) . '/includes/relbib_journals_total.txt')?></b> Zeitschriften der Allgemeinen 
+                      und Vergleichenden Religionswissenschaft, der Religionsgeschichte und einiger anderer kulturwissenschaftlicher Fach- und Themengebiete. 
+                      Die Anzahl der Zeitschriften, deren Aufsätze in der Datenbank einzeln nachgewiesen werden, beträgt derzeit etwa ein Fünftel. 
+                      Es werden sukzessive weitere Zeitschriften in die Aufsatzerschließung übernommen.  
+                      Aus der alphabetischen <a href="<?='https://'.$_SERVER['SERVER_NAME'] . '/relbib_journals.pdf'?>" target="_blank"><b>Übersicht der Zeitschriften</b></a> 
+                      können Sie sich über den Stand der Auswertung informieren. Außer Zeitschriften(artikeln) enthält die Datenbank Nachweise zu 
+                      religionswissenschaftlich relevanten Monografien.</p>
+                   <div class="read-more-target">
+                   <p>Über den Link &bdquo;Verfügbarkeit&rdquo; kann rasch abgefragt werden, ob und wo eine Zeitschrift, ein Aufsatz oder ein Buch verfügbar ist.
+                      Wenn es lizenzrechtlich möglich ist, kann auf elektronisch vorliegende Texte direkt zugegriffen werden.</p>
+                   <p>RelBib ist ein kostenloses open access Angebot an die weltweite Fachcommunity der Religionswissenschaft. 
+                      Herausgeber von RelBib ist die Universitätsbibliothek Tübingen.
+                      RelBib entsteht in Zusammenarbeit mit <a href="https://ixtheo.de" target="_blank">IxTheo</a>, der theologischen Datenbank, die vom FID Theologie entwickelt 
+                      und betreut wird. Durch die Zusammenarbeit können Synergien genutzt werden. </p>
+                   <p>Wir bitten um Verständnis, dass in einer Alpha-Version noch nicht alles fehlerfrei funktioniert. Wir wünschen
+                      Ihnen viel Freude beim Entdecken von RelBib und sind dankbar über Ihr Feedback!</p>
+                   </div>
+                </div>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
+            </div>
+        </div>
+    </div>
+</div>
+
 <h2 class="col-md-12 panel-group">RelBib entdecken</h2>
-<div class="col-md-4" style="text-align:justify;">
+<div class="col-md-6" style="text-align:justify;">
     <div class="panel <?= $panelClass; ?>">
         <div class="panel-heading">
             <h4 class="panel-title">
@@ -64,7 +95,7 @@ $panelWidth = "col-md-6";
         </div>
         <div id="<?= $panelId++; ?>" class="panel-collapse">
             <div class="panel-body">
-                <input type="checkbox" class="read-more-state" id="post-1" />
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
                 <div class="read-more-wrap">
                     <p>Die volle Trefferzahl aller derzeit in RelBib vorhandenen Einträge erhalten Sie, 
                        wenn Sie – ohne weitere Eingabe – den Button „Suchen“ klicken. 
@@ -103,12 +134,12 @@ $panelWidth = "col-md-6";
                         <p>Die so erhaltenen Ergebnisse können sie nun mit Hilfe von weiteren Suchbegriffen oder Filtereinstellungen präzisieren.</p>  
                      </div>
                 </div>
-                <label for="post-1" class="read-more-trigger"></label>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
             </div>
         </div>
     </div>
 </div>
-<div class="col-md-4" style="text-align:justify;">
+<div class="col-md-6" style="text-align:justify;">
     <div class="panel <?= $panelClass; ?>">
         <div class="panel-heading">
             <h4 class="panel-title">
@@ -117,7 +148,7 @@ $panelWidth = "col-md-6";
         </div>
         <div id="<?= $panelId++; ?>" class="panel-collapse ">
             <div class="panel-body">
-                <input type="checkbox" class="read-more-state" id="post-2" />
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
                 <div class="read-more-wrap">
                     <p>RelBib stellt drei verschiedene Arten des Browsens zur Verfügung. Sie finden den
                         Browsing
@@ -157,12 +188,12 @@ $panelWidth = "col-md-6";
                            <strong>„B“</strong> links neben den Schlagwörtern und Sie erhalten weitere Titel, die dieselbe Schlagwortfolge aufweisen.</p>
                     </div>
                 </div>
-                <label for="post-2" class="read-more-trigger"></label>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
             </div>
         </div>
     </div>
 </div>
-<div class="col-md-4" style="text-align:justify;">
+<div class="col-md-6" style="text-align:justify;">
     <div class="panel <?= $panelClass; ?>">
         <div class="panel-heading">
             <h4 class="panel-title">
@@ -171,7 +202,7 @@ $panelWidth = "col-md-6";
         </div>
         <div id="<?= $panelId++; ?>" class="panel-collapse">
             <div class="panel-body">
-                <input type="checkbox" class="read-more-state" id="post-3" />
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
                 <div class="read-more-wrap">
                     <p>Viele nützliche Funktionen stehen Ihnen zur Verfügung, wenn Sie einen persönlichen Account
                         anlegen.
@@ -206,8 +237,31 @@ $panelWidth = "col-md-6";
                            Diese Listen können Sie aus Ihrem Konto heraus auch exportieren, per Mail verschicken oder ausdrucken.</p>
                     </div>
                 </div>
-                <label for="post-3" class="read-more-trigger"></label>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
             </div>
         </div>
     </div>
 </div>
+<div class="col-md-6" style="text-align:justify;">
+    <div class="panel <?= $panelClass; ?>">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <i class="fa fa-book"></i> Patron-Driven-Acquisition (PDA) <div class="new">neu</div>
+            </h4>
+        </div>
+        <div id="<?= $panelId++; ?>" class="panel-collapse">
+            <div class="panel-body">
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
+                <div class="read-more-wrap">
+                    <p>Zur überregionalen Versorgung des Spitzenbedarfs an theologischer Literatur in Deutschland wird ein benutzergesteuertes Erwerbungsprogramm (PDA) angeboten.</p>
+                    <div class="read-more-target">
+                        <p>Benötigte Bücher werden bei Bedarf von der UB Tübingen gekauft.</p>
+                        <p>Nutzerinnen / Nutzer können den Kauf von Einzelmonographien, die an ihren Standorten nicht vorhanden bzw. nicht über Fernleihe beschaffbar sind, direkt in RelBib veranlassen.</p>
+                    </div>
+                </div>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
+            </div>
+        </div>
+    </div>
+</div>
+

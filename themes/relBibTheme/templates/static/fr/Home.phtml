@@ -43,48 +43,64 @@
         display: flex;
     }  
 
+    div.new {
+        float: right;
+        color: red;
+    }
 </style>
 
-<div class="col-md-12" style="text-align:justify;">
-    <h2>Chers usagers de la RelBib,</h2>
-    <div class="post">
-    <p> Nous sommes heureux de vous présenter la « Bibliographie des Sciences des Religions » (« RelBib »). Il s’agit de la version alpha d’une banque de 
-        données exhaustive gérée par le « Service spécialisé d’Information sur les Sciences des Religions » (« Fachinformationsdienst Religionswissenschaft ») 
-        de la bibliothèque centrale de l’Université de Tübingen.
-    </p>
-    <p>
-        La banque de données contient présentement  <b><? include(dirname(__DIR__) . '/includes/relbib_journals_total.txt')?></b>
-        revues de sciences des religions générales ou comparées, de l’histoire des religions et de quelques autres domaines des sciences 
-        culturelles. Nous cataloguons présentement le contenu des articles de 
-        <b><?include(dirname(__DIR__) . '/includes/relbib_journals_evaluated.txt')?></b>
-        de ces<a href="<?='https://'.$_SERVER['SERVER_NAME'] . '/relbib_journals.pdf'?>" target="_blank"><b>publications</b></a>. Nous augmentons 
-        graduellement le nombre de revues traitées ainsi ; notre but est de cataloguer la grande majorité des 
-        revues au niveau des articles afin de faciliter la recherche au point de vue du contenu. De plus, la banque de données contient des 
-        références à des monographies sur les sciences des religions.
-    </p>
-    <p>
-        Grâce au lien « Disponibilité », il est possible de savoir rapidement si une revue, un article ou un livre est disponible. Lorsque la licence le permet, 
-        il est possible d’accéder directement aux textes dans leur version électronique.
-    </p>
-    <p>
-        RelBib est un service à libre accès gratuitement offert à la communauté mondiale de recherche en sciences des religions. L’éditeur de RelBib est 
-        la bibliothèque de l’Université de Tübingen. RelBib est conçu en collaboration avec <a href="https://ixtheo.de" target="_blank">IxTheo</a>, la banque de données théologique, qui est développée 
-        et gérée par le Service spécialisé d’Information sur la Théologie. Cette collaboration permet de créer des synergies facilitant la recherche et 
-        l’utilisation de contenus théologiques en supplément.
-    </p>
-    <p>
-        Dans une version alpha, il subsiste parfois des problèmes. Nous vous remercions de votre compréhension et nous espérons que vous nous ferez part 
-        de vos suggestions. Nous vous souhaitons beaucoup de plaisir à découvrir RelBib !
-    </p>
-    </div>
-</div>
 <?
 $panelId = 0;
 $panelClass = "panel-default";
 $panelWidth = "col-md-6";
 ?>
+<div class="col-md-12" style="text-align:justify;">
+    <div class="panel <?= $panelClass; ?>">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <i class="fa fa-bell-o"></i> Bienvenue
+            </h4>
+        </div>
+        <div id="<?= $panelId++; ?>" class="panel-collapse">
+            <div class="panel-body">
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
+                <div class="read-more-wrap">
+                     <p> Nous sommes heureux de vous présenter la « Bibliographie des Sciences des Religions » (« RelBib »). Il s’agit de la version alpha d’une banque de
+                          données exhaustive gérée par le « Service spécialisé d’Information sur les Sciences des Religions » (« Fachinformationsdienst Religionswissenschaft »)
+                          de la bibliothèque centrale de l’Université de Tübingen.
+                      </p>
+                      <p>
+                          La banque de données contient présentement  <b><? include(dirname(__DIR__) . '/includes/relbib_journals_total.txt')?></b>
+                          revues de sciences des religions générales ou comparées, de l’histoire des religions et de quelques autres domaines des sciences
+                          culturelles. Nous cataloguons présentement le contenu des articles de
+                          <b><?include(dirname(__DIR__) . '/includes/relbib_journals_evaluated.txt')?></b>
+                          de ces <a href="<?='https://' . $_SERVER['SERVER_NAME'] . '/relbib_journals.pdf'?>" target="_blank"><b>publications</b></a>. Nous augmentons
+                          graduellement le nombre de revues traitées ainsi ; notre but est de cataloguer la grande majorité des
+                          revues au niveau des articles afin de faciliter la recherche au point de vue du contenu. De plus, la banque de données contient des
+                          références à des monographies sur les sciences des religions.</p>
+                      <div class="read-more-target">
+                      <p> Grâce au lien « Disponibilité », il est possible de savoir rapidement si une revue, un article ou un livre est disponible. Lorsque la licence le permet,
+                          il est possible d’accéder directement aux textes dans leur version électronique.
+                      </p>
+                      <p>
+                          RelBib est un service à libre accès gratuitement offert à la communauté mondiale de recherche en sciences des religions. L’éditeur de RelBib est
+                          la bibliothèque de l’Université de Tübingen. RelBib est conçu en collaboration avec <a href="https://ixtheo.de" target="_blank">IxTheo</a>, 
+                          la banque de données théologique, qui est développée et gérée par le Service spécialisé d’Information sur la Théologie. Cette collaboration permet de créer des 
+                          synergies facilitant la recherche et l’utilisation de contenus théologiques en supplément.
+                      </p>
+                      <p>
+                          Dans une version alpha, il subsiste parfois des problèmes. Nous vous remercions de votre compréhension et nous espérons que vous nous ferez part
+                          de vos suggestions. Nous vous souhaitons beaucoup de plaisir à découvrir RelBib !
+                      </p>
+                      </div>
+                </div>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
+            </div>
+        </div>
+    </div>
+</div>
 <h2 class="col-md-12 panel-group">Découvrir la RelBib</h2>
-<div class="col-md-4" style="text-align:justify;">
+<div class="col-md-6" style="text-align:justify;">
     <div class="panel <?= $panelClass; ?>">
         <div class="panel-heading">
             <h4 class="panel-title">
@@ -93,7 +109,7 @@ $panelWidth = "col-md-6";
         </div>
         <div id="<?= $panelId++; ?>" class="panel-collapse">
             <div class="panel-body">
-                <input type="checkbox" class="read-more-state" id="post-1" />
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
                 <div class="read-more-wrap">
                     <p>Vous pouvez amorcer une recherche sur tous les titres catalogués dans RelBib en appuyant sur le bouton &raquo;Recherche&raquo; sans spécifier de terme.
                     </p>
@@ -118,12 +134,12 @@ $panelWidth = "col-md-6";
                         <p>Pour une recherche thématique, la facette &raquo;Sujet&raquo; s’avère très utile. Les différents sujets pour un article ou une publication ne sont pas déterminés par un procédé mécanique, mais plutôt à travers une évaluation faite par notre personnel.</p>
                     </div>
                 </div>
-                <label for="post-1" class="read-more-trigger"></label>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
             </div>
         </div>
     </div>
 </div>
-<div class="col-md-4" style="text-align:justify;">
+<div class="col-md-6" style="text-align:justify;">
     <div class="panel <?= $panelClass; ?>">
         <div class="panel-heading">
             <h4 class="panel-title">
@@ -132,7 +148,7 @@ $panelWidth = "col-md-6";
         </div>
         <div id="<?= $panelId++; ?>" class="panel-collapse ">
             <div class="panel-body">
-                <input type="checkbox" class="read-more-state" id="post-2" />
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
                 <div class="read-more-wrap">
                     <p>Le nouvel IxTheo offre trois façons différentes de naviguer à travers les données :<br/><br/></p>
                     <div class="read-more-target">
@@ -154,12 +170,12 @@ $panelWidth = "col-md-6";
                         <p>2<sup>e</sup> exemple : Choisissez &raquo;Par Titre&raquo; et saisissez à partir de &raquo;Tr&raquo;. Vous obtiendrez une liste de titres dont les deux premières lettres sont &raquo;Tr&raquo; .</p>
                     </div>
                 </div>
-                <label for="post-2" class="read-more-trigger"></label>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
             </div>
         </div>
     </div>
 </div>
-<div class="col-md-4" style="text-align:justify;">
+<div class="col-md-6" style="text-align:justify;">
     <div class="panel <?= $panelClass; ?>">
         <div class="panel-heading">
             <h4 class="panel-title">
@@ -168,16 +184,15 @@ $panelWidth = "col-md-6";
         </div>
         <div id="<?= $panelId++; ?>" class="panel-collapse">
             <div class="panel-body">
-                <input type="checkbox" class="read-more-state" id="post-3" />
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
                 <div class="read-more-wrap">
                     <p>Plusieurs fonctions utiles sont offertes aux détenteurs d’un compte IxTheo. Une fois inscrit, vous pouvez accéder à votre compte en cliquant sur le lien &raquo;Connexion&raquo; au coin supérieur droit. Un clic sur &raquo;Votre compte&raquo; vous amène à la page de gestion de vos données. Vous avez alors accès aux fonctions suivantes :</p>
                     <div class="read-more-target">
-                        <p>Durch Klick auf „Ihr Konto“ kommen Sie in Ihren personalisierten Bereich. Dort stehen Ihnen u.a.
-                            folgende Funktionen zur Verfügung:</p>
-
                         <h3>Fonction d’alerte</h3>
                         <p>Cette fonction vous tient au courant de la publication de nouveaux articles dans les revues et de nouveaux volumes dans les séries de monographies de votre choix.</p>
-                        <p>Pour activer cette fonction pour une publication, vous devez d’abord trouver l’enregistrement pour cette publication, puis cliquer sur le symbole en forme de cloche situé à droite de l’entrée. Vous pouvez gérer vos alertes dans votre compte sous la rubrique &raquo;liste d’alertes&raquo;.</p>
+                        <p>Pour activer cette fonction pour une publication, vous devez d’abord trouver l’enregistrement pour cette publication, puis cliquer sur le symbole en 
+                           forme de cloche situé à droite de l’entrée. 
+                        Vous pouvez gérer vos alertes dans votre compte sous la rubrique &raquo;liste d’alertes&raquo;.</p>
 
                         <p>1<sup>er</sup> exemple : Afin d’activer la fonction d’alerte pour la revue &raquo;Theologische Quartalschrift&raquo;, saisissez d’abord ce titre ou son abréviation &raquo;ThQ&raquo; dans le champ de recherche. Ensuite, choisissez &raquo;Périodique&raquo; dans la facette &raquo;Format&raquo;. Vous trouverez alors 2 titres : un pour la version imprimée, et un pour la version électronique de cette revue. Dans un cas semblable, il est plus sûr d’activer la fonction pour les deux versions.</p>
 
@@ -193,8 +208,31 @@ $panelWidth = "col-md-6";
                         <p>À partir de votre compte, vous pouvez également exporter vos favoris, les envoyer par mail ou les imprimer.</p>
                     </div>
                 </div>
-                <label for="post-3" class="read-more-trigger"></label>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
             </div>
         </div>
     </div>
 </div>
+<div class="col-md-6" style="text-align:justify;">
+    <div class="panel <?= $panelClass; ?>">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <i class="fa fa-book"></i> Patron-Driven-Acquisition (PDA) <div class="new">nouveau</div>
+            </h4>
+        </div>
+        <div id="<?= $panelId++; ?>" class="panel-collapse">
+            <div class="panel-body">
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
+                <div class="read-more-wrap">
+                    <p>Afin de fournir un accès maximum à la littérature des sciences des religions en Allemagne, nous offrons maintenant un service d’acquisition de livres sur demande (« patron driven acquisition », PDA).</p>
+                    <div class="read-more-target">
+                        <p>Les livres requis sont achetés par la bibliothèque (UB) de l’université de Tübingen.</p>
+                        <p>Les usagers peuvent donc demander directement sur le site web de RelBib l’acquisition de monographies qui ne sont pas disponibles à leur bibliothèque locale, ni accessibles par prêt interbibliothèques.</p>
+                    </div>
+                </div>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
+            </div>
+        </div>
+    </div>
+</div>
+

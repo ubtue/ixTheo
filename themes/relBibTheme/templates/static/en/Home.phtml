@@ -34,35 +34,58 @@
         border: 1px solid #ddd;
         border-radius: .25em;
     }
+
+    div.new {
+        float: right;
+        color: red;
+    }
 </style>
 
-<div class="col-md-12" style="text-align:justify;">
-    <div class="post">
-        <p>We are pleased to present to you the ‘Religious Studies Bibliography’ (RelBib). This is the alpha version of a 
-           comprehensive bibliographical database managed by the Specialized Information Service of Religious Studies 
-           (‘Fachinformationsdienst Religionswissenschaft’) of the central library of the University of Tübingen.</p>
-        <p>As of now, the database contains <b><? include(dirname(__DIR__) . '/includes/relbib_journals_total.txt')?></b> periodicals of 
-           Religious Studies, Comparative Religious History and Cultural Studies.  Information on individual articles is accessible for 
-           about a fifth of these periodicals. Further journals are gradually being integrated into our indexing procedure for 
-           articles. The alphabetical  <a href="<?='https://'.$_SERVER['SERVER_NAME'] . '/relbib_journals.pdf'?>" target="_blank">
-           list of journals</a> gives the latest information on which periodicals are being processed. 
-           Apart from journals and articles, the database also provides information on relevant monographs in the field of Religious Studies. </p>
-        <p>Using the button “Check Availability”, you can quickly find out whether and where an article, periodical or book is available. 
-           Links to online texts can be accessed directly if the publishers’ licenses allow it.</p>
-        <p>RelBib constitutes a free and open access service to the worldwide scholarly community of Religious Studies. The editor of RelBib 
-           is the ‘Universitätsbibliothek Tübingen’ (central library of the University of Tübingen). RelBib is being produced in close 
-           cooperation with <a href="https://ixtheo.de" target="_blank">IxTheo</a>, which is being developed and maintained by the Specialized Information Service of Theology. 
-           This cooperation allows you to access the theological contents of the common database.</p>
-        <p>We apologize in advance for any errors which might come up at this early stage of development. We wish you an enjoyable experience as you           explore RelBib and we would be glad to get your feedback!</p>
-    </div>
-</div>
 <?
 $panelId = 0;
 $panelClass = "panel-default";
 $panelWidth = "col-md-6";
 ?>
+<div class="col-md-12" style="text-align:justify;">
+    <div class="panel <?= $panelClass; ?>">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <i class="fa fa-bell-o"></i> Welcome
+            </h4>
+        </div>
+        <div id="<?= $panelId++; ?>" class="panel-collapse">
+            <div class="panel-body">
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
+                <div class="read-more-wrap">
+                     <p>We are pleased to present to you the ‘Religious Studies Bibliography’ (RelBib). This is the alpha version of a
+                        comprehensive bibliographical database managed by the Specialized Information Service of Religious Studies
+                        (‘Fachinformationsdienst Religionswissenschaft’) of the central library of the University of Tübingen.</p>
+                     <p>As of now, the database contains <b><? include(dirname(__DIR__) . '/includes/relbib_journals_total.txt')?></b> periodicals of
+                        Religious Studies, Comparative Religious History and Cultural Studies.  Information on individual articles is accessible for
+                        about a fifth of these periodicals. Further journals are gradually being integrated into our indexing procedure for
+                        articles. The alphabetical  <a href="<?='https://'.$_SERVER['SERVER_NAME'] . '/relbib_journals.pdf'?>" target="_blank">
+                        list of journals</a> gives the latest information on which periodicals are being processed.
+                        Apart from journals and articles, the database also provides information on relevant monographs in the field of Religious Studies. </p>
+                     <div class="read-more-target">
+                     <p>Using the button “Check Availability”, you can quickly find out whether and where an article, periodical or book is available.
+                        Links to online texts can be accessed directly if the publishers’ licenses allow it.</p>
+                     <p>RelBib constitutes a free and open access service to the worldwide scholarly community of Religious Studies. The editor of RelBib
+                        is the ‘Universitätsbibliothek Tübingen’ (central library of the University of Tübingen). RelBib is being produced in close
+                        cooperation with <a href="https://ixtheo.de" target="_blank">IxTheo</a>, which is being developed and maintained by the Specialized Information 
+                        Service of Theology.
+                        This cooperation allows you to access the theological contents of the common database.</p>
+                     <p>We apologize in advance for any errors which might come up at this early stage of development. We wish you an enjoyable experience as you
+                        explore RelBib and we would be glad to get your feedback!</p>
+                     </div>
+                </div>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
+            </div>
+        </div>
+    </div>
+</div>
+
 <h2 class="col-md-12 panel-group">Discover RelBib</h2>
-<div class="col-md-4" style="text-align:justify;">
+<div class="col-md-6" style="text-align:justify;">
     <div class="panel <?= $panelClass; ?>">
         <div class="panel-heading">
             <h4 class="panel-title">
@@ -71,7 +94,7 @@ $panelWidth = "col-md-6";
         </div>
         <div id="<?= $panelId++; ?>" class="panel-collapse">
             <div class="panel-body">
-                <input type="checkbox" class="read-more-state" id="post-1" />
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
                 <div class="read-more-wrap">
                         <p>You will find all the titles catalogued in RelBib if you click on the “Search” button without any additional entry. 
                            The number of results reflects the status of the database on the day the query was made, 
@@ -97,12 +120,12 @@ $panelWidth = "col-md-6";
                         <p>You may use various search terms or filters to narrow down the search.</p>
                     </div>
                 </div>
-                <label for="post-1" class="read-more-trigger"></label>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
             </div>
         </div>
     </div>
 </div>
-<div class="col-md-4" style="text-align:justify;">
+<div class="col-md-6" style="text-align:justify;">
     <div class="panel <?= $panelClass; ?>">
         <div class="panel-heading">
             <h4 class="panel-title">
@@ -111,9 +134,10 @@ $panelWidth = "col-md-6";
         </div>
         <div id="<?= $panelId++; ?>" class="panel-collapse ">
             <div class="panel-body">
-                <input type="checkbox" class="read-more-state" id="post-2" />
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
                 <div class="read-more-wrap">
                     <p>RelBib offers different ways to browse. You can access this function by clicking on “Browse” in the area below the search field.</p>
+                    <br>
                     <div class="read-more-target">
                         <!-- Needed since otherwise the More-Button gets confused immediately before a heading -->
                         <div style="height: 0px;">&emsp;</div>
@@ -142,12 +166,12 @@ $panelWidth = "col-md-6";
                            the subject heading string, and you will see other titles which were catalogued with that string.</p>
                     </div>
                 </div>
-                <label for="post-2" class="read-more-trigger"></label>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
             </div>
         </div>
     </div>
 </div>
-<div class="col-md-4" style="text-align:justify;">
+<div class="col-md-6" style="text-align:justify;">
     <div class="panel <?= $panelClass; ?>">
         <div class="panel-heading">
             <h4 class="panel-title">
@@ -156,7 +180,7 @@ $panelWidth = "col-md-6";
         </div>
         <div id="<?= $panelId++; ?>" class="panel-collapse">
             <div class="panel-body">
-                <input type="checkbox" class="read-more-state" id="post-3" />
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
                 <div class="read-more-wrap">
                     <p>Many useful functions are at your disposal when you create a personal account.</p>
                     <p>In order to register or log into your account, click on the link called “Login” on the top right corner. 
@@ -182,7 +206,30 @@ $panelWidth = "col-md-6";
                            research projects or subjects. In your account, you can also export your favorites, send them per e-mail or print them.</p>
                     </div>
                 </div>
-                <label for="post-3" class="read-more-trigger"></label>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6" style="text-align:justify;">
+    <div class="panel <?= $panelClass; ?>">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <i class="fa fa-book"></i> Patron-Driven-Acquisition (PDA) <div class="new">new</div>
+            </h4>
+        </div>
+        <div id="<?= $panelId++; ?>" class="panel-collapse ">
+            <div class="panel-body">
+                <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
+                <div class="read-more-wrap">
+                    <p>We are now offering a Patron Driven Acquisition (PDA) system which enables us to respond to special demands for literature of religious science in Germany.</p>
+                    <div class="read-more-target">
+                        <p>When necessary, the required books are purchased by the University Library (UB) in Tübingen.</p>
+                        <p>At the RelBib website, users may directly trigger the purchase of monographs which are not available at their current location and cannot be 
+                           obtained through an inter-library loan.</p>
+                    </div>
+                </div>
+                <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
             </div>
         </div>
     </div>
