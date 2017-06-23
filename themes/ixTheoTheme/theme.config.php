@@ -4,4 +4,7 @@ return array(
     'css' => array(
         'compiled.css'
     ),
+    'js' => array(
+        'ixtheo.js',
+    ),
 );
