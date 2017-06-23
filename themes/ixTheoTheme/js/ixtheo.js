@@ -1,13 +1,12 @@
 // helper function to set focus on a specificed input field id, also sets cursor position to end of field content
-// using combined JS and JQuery... had problems setting cursor position with plain js / getting value length with jquery
 function ixtheoSetFocus(input_id) {
-    input = document.getElementById(input_id);
-    if(input !== null) {
-        input.focus();
-        if(input.value.length > 0) {
-            var input_jq = $('#' + input_id);
-            input_jq[0].setSelectionRange(input.value.length, input.value.length);
-        }
+    var id = '#' + input_id;
+    $(id).focus();
+    if ($(id).length) {
+       // now we are sure that element exists
+       // don't assign input var earlier, JS might crash if element doesnt exist
+       var input = $(id);
+       input[0].setSelectionRange(input.val().length, input.val().length);
     }
 }
 
