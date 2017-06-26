@@ -1,5 +1,5 @@
 // helper function to set focus on a specified input field, also sets cursor position to end of field content
-function ixtheoSetFocus(input_selector) {
+function ubtueSetFocus(input_selector) {
     $(input_selector).focus();
     if ($(input_selector).length) {
        // now we are sure that element exists
@@ -11,7 +11,7 @@ function ixtheoSetFocus(input_selector) {
 
 // function to register onload handler function
 // multiple handlers can be chained, if necessary
-function ixtheoRegisterOnLoad(functionOnLoad) {
+function ubtueRegisterOnLoad(functionOnLoad) {
     if(window.attachEvent) {
         window.attachEvent('onload', functionOnLoad);
     } else {
@@ -28,18 +28,18 @@ function ixtheoRegisterOnLoad(functionOnLoad) {
     }
 }
 
-// onload handler for ixtheo
-function ixtheoOnLoad() {
+// onload handler for ubtue
+function ubtueOnLoad() {
     // advanced search: set focus on first input field of first search group
     if (window.location.href.match(/\/Search\/Advanced/i)) {
-        ixtheoSetFocus('#search_lookfor0_0');
+        ubtueSetFocus('#search_lookfor0_0');
     // keywordchainsearch: set focus on 2nd input field
     } else if (window.location.href.match(/\/Keywordchainsearch\//i)) {
-        ixtheoSetFocus('#kwc_input');
+        ubtueSetFocus('#kwc_input');
     // alphabrowse: set focus on "starting from" edit field
     } else if (window.location.href.match(/\/Alphabrowse\//i)) {
-        ixtheoSetFocus('#alphaBrowseForm_from');
+        ubtueSetFocus('#alphaBrowseForm_from');
     }
 }
 
-ixtheoRegisterOnLoad(ixtheoOnLoad);
+ubtueRegisterOnLoad(ubtueOnLoad);
