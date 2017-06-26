@@ -1,4 +1,4 @@
-// helper function to set focus on a specificed input field, also sets cursor position to end of field content
+// helper function to set focus on a specified input field, also sets cursor position to end of field content
 function ixtheoSetFocus(input_selector) {
     $(input_selector).focus();
     if ($(input_selector).length) {
