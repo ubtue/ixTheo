@@ -1,10 +1,7 @@
 <?php
 return array(
-    'extends' => 'bootstrap3',
+    'extends' => 'ubTueTheme',
     'css' => array(
         'compiled.css'
-    ),
-    'js' => array(
-        'ixtheo.js',
     ),
 );
