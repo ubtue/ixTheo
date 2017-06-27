@@ -1,0 +1,3 @@
+[submodule "themes/ubTueTheme"]
+	path = themes/ubTueTheme
+	url = git@github.com:ubtue/ubTueTheme.git
