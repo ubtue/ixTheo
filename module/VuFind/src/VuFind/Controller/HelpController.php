@@ -55,14 +55,4 @@ class HelpController extends AbstractBase
             ['topic' => $this->params()->fromQuery('topic')]
         );
     }
-
-    public function faqAction(){
-        return $this->createViewModel(
-            ['topics' =>
-                [
-                    "KeineFAQ"
-                ]
-            ]
-        );
-    }
 }

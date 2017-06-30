@@ -11,7 +11,7 @@
     <p>Lorsque vous visitez la première fois la recherche avancée, plusieures
        champs de saisie vous sont présentés. Vous pouvez taper dans chaque
        champ de saisie tous les mots que vous désirez rechercher. Certaines 
-       chaînes de caractères, ou <a class="help-link" href="<?=$this->url('help-home')?>?topic=search">« opérateurs »</a>
+       chaînes de caractères, ou <a href="<?=$this->url('help-home')?>?topic=search">« opérateurs »</a>
        , modifient le comportement VuFind.
     </p>
     <p>Chaque champ est accomapgner par un menu déroulant, avec lequel vous
@@ -65,10 +65,3 @@
     </ul>
   </dd>
 </dl>
-
-<script>
-    $('.help-link').click(function() {
-        var split = this.href.split('=');
-        return Lightbox.get('Help','Home',{topic:split[1]});
-    });
-</script>
