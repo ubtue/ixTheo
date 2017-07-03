@@ -1,3 +1,7 @@
+[submodule "module/TueLib"]
+	path = module/TueLib
+	url = https://github.com/ubtue/TueLib.git
 [submodule "themes/ubTueTheme"]
 	path = themes/ubTueTheme
 	url = https://github.com/ubtue/ubTueTheme.git
+
