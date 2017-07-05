@@ -50,6 +50,7 @@ local.properties
 .loadpath
 .buildpath
 .target
+nbproject
 
 MultiLanguageDocTransformerFactory.jar
 MultiLanguageQueryParser.jar
