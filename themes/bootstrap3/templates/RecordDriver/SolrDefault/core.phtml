@@ -18,7 +18,37 @@
   };
 ?>
 <div class="row" vocab="http://schema.org/" resource="#record" typeof="<?=$this->driver->getSchemaOrgFormats()?> Product">
+  <? $QRCode = $this->record($this->driver)->getQRCode("core");
+     $cover = $this->record($this->driver)->getCover('core', 'medium', $this->record($this->driver)->getThumbnail('large'));
+     $preview = $this->record($this->driver)->getPreviews(); ?>
+  <? if ($QRCode || $cover || $preview): ?>
+  <div class="col-sm-3 img-col">
+    <div class="text-center">
+      <? /* Display thumbnail if appropriate: */ ?>
+      <? if($cover): ?>
+        <?=$cover?>
+      <? endif; ?>
+
+      <? /* Display qrcode if appropriate: */ ?>
+      <? if($QRCode): ?>
+        <span class="hidden-xs">
+          <br/><img alt="<?=$this->transEsc('QR Code')?>" class="qrcode" src="<?=$this->escapeHtmlAttr($QRCode);?>"/>
+        </span>
+      <? endif; ?>
+    </div>
+
+    <? // if you have a preview tab but want to move or remove the preview link
+       // from this area of the record view, this can be split into
+       // getPreviewData() (should stay here) and
+       // getPreviewLink() (can go in your desired tab) ?>
+    <? if ($preview): ?><?=$preview?><? endif; ?>
+  </div>
+
+  <div class="col-sm-9 info-col">
+  <? else: ?>
   <div class="col-sm-12">
+  <? endif; ?>
+
     <h3 property="name"><?=$this->escapeHtml($this->driver->getShortTitle() . ' ' . $this->driver->getSubtitle() . ' ' . $this->driver->getTitleSection())?></h3>
 
     <? $summary = $this->driver->getSummary(); $summary = isset($summary[0]) ? $this->escapeHtml($summary[0]) : false; ?>
@@ -118,8 +148,6 @@
         </tr>
       <? endif; ?>
 
-      <? include(realpath(dirname(__FILE__) . '/JOP.phtml')); ?>
-
       <? $publications = $this->driver->getPublicationDetails(); if (!empty($publications)): ?>
       <tr>
         <th><?=$this->transEsc('Published')?>: </th>
@@ -143,29 +171,6 @@
       <? endif; ?>
 
       <? $edition = $this->driver->getEdition(); if (!empty($edition)): ?>
-      <?/* Display container section if at least one container exists. */?>
-      <? $issue = $this->driver->getIssue(); ?>
-      <? $pages = $this->driver->getPages(); ?>
-      <? $volume = $this->driver->getVolume(); ?>
-      <? $year = $this->driver->getYear(); ?>
-      <? $infos =  array(); ?>
-      <?if (!empty($year)) { $infos[] = $this->transEsc('Year') . ': ' . $this->escapeHtml($year); }?>
-      <?if (!empty($volume)) { $infos[] = $this->transEsc('Volume') . ': ' . $this->escapeHtml($volume); }?>
-      <?if (!empty($issue)) { $infos[] = $this->transEsc('Issue') . ': ' . $this->escapeHtml($issue); }?>
-      <?if (!empty($pages)) { $infos[] = $this->transEsc('Pages') . ': ' . $this->escapeHtml($pages); }?>
-      <? $ids_and_titles = $this->driver->getContainerIDsAndTitles(); if (!empty($ids_and_titles) || !empty($infos)): ?>
-        <tr>
-          <th><?=$this->transEsc('In')?>: </th>
-          <td>
-            <? foreach ($ids_and_titles as $id => $title): ?>
-              <a href="<?=$id?>"><?=$this->escapeHtml($title)?></a>
-              <br/>
-              <?=implode(', ', $infos);?>
-            <? endforeach; ?>
-          </td>
-        </tr>
-      <? endif; ?>
-
       <tr>
         <th><?=$this->transEsc('Edition')?>: </th>
         <td property="bookEdition"><?=$this->escapeHtml($edition)?></td>
