@@ -442,22 +442,22 @@
     <str name="sources">topic,author,title,lcc,dewey,hierarchy</str>
 
     <lst name="topic">
-      <str name="DBpath">${solr.solr.home:./solr}/alphabetical_browse/topic_browse.db</str>
+      <str name="DBpath">${solr.solr.home:./solr}/alphabetical_browse/%filter%/topic_browse.db</str>
       <str name="field">topic_browse</str>
     </lst>
 
     <lst name="author">
-      <str name="DBpath">${solr.solr.home:./solr}/alphabetical_browse/author_browse.db</str>
+      <str name="DBpath">${solr.solr.home:./solr}/alphabetical_browse/%filter%/author_browse.db</str>
       <str name="field">author_browse</str>
     </lst>
 
     <lst name="title">
-      <str name="DBpath">${solr.solr.home:./solr}/alphabetical_browse/title_browse.db</str>
+      <str name="DBpath">${solr.solr.home:./solr}/alphabetical_browse/%filter%/title_browse.db</str>
       <str name="field">title_fullStr</str>
     </lst>
 
     <lst name="lcc">
-      <str name="DBpath">${solr.solr.home:./solr}/alphabetical_browse/lcc_browse.db</str>
+      <str name="DBpath">${solr.solr.home:./solr}/alphabetical_browse/%filter%/lcc_browse.db</str>
       <str name="field">callnumber-raw</str>
       <str name="normalizer">org.vufind.util.LCCallNormalizer</str>
     </lst>

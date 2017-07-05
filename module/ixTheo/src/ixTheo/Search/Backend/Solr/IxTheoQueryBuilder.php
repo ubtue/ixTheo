@@ -53,7 +53,7 @@ class IxTheoQueryBuilder extends QueryBuilder
             // if no bible references were found for given query, search for a range which doesn't exist to get no result.
             $bibleReferences = ["99999999_99999999"];
         }
-        $searchString = "{!bibleRangeParser}" . str_replace(":", "_", implode(',', $bibleReferences));
+        $searchString = "{!bibleRangeParser}" . implode(',', $bibleReferences);
         return $searchString;
     }
 
@@ -62,6 +62,7 @@ class IxTheoQueryBuilder extends QueryBuilder
         setlocale(LC_CTYPE, "de_DE.UTF-8");
         return implode(' ', [
             self::BIBLE_REFERENCE_COMMAND,
+            "--query",
             escapeshellarg($searchQuery),
             self::BIBLE_REFERENCE_COMMAND_PARAMETERS
         ]);
