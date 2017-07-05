@@ -95,5 +95,3 @@ build_browse "topic" "topic_browse" "" "" "is_religious_studies"
 build_browse "author" "author_browse" "" "" "is_religious_studies"
 build_browse "lcc" "callnumber-raw" 1 "-Dbrowse.normalizer=org.vufind.util.LCCallNormalizer" "is_religious_studies"
 build_browse "dewey" "dewey-raw" 1 "-Dbrowse.normalizer=org.vufind.util.DeweyCallNormalizer" "is_religious_studies"
-
-
