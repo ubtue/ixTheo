@@ -1,6 +1,6 @@
 <?php
-namespace VuFind\Db\Table;
-class IxTheoUser extends Gateway implements \VuFind\Db\Table\DbTableAwareInterface
+namespace ixTheo\Db\Table;
+class IxTheoUser extends \VuFind\Db\Table\Gateway implements \VuFind\Db\Table\DbTableAwareInterface
 {
     use \VuFind\Db\Table\DbTableAwareTrait;
 
@@ -8,7 +8,7 @@ class IxTheoUser extends Gateway implements \VuFind\Db\Table\DbTableAwareInterfa
 
     public function __construct()
     {
-        parent::__construct('ixtheo_user', 'VuFind\Db\Row\IxTheoUser');
+        parent::__construct('ixtheo_user', 'ixTheo\Db\Row\IxTheoUser');
     }
 
     public function getNew($userId)
