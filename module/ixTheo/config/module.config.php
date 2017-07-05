@@ -4,6 +4,16 @@ namespace Ixtheo;
 $config = array(
     'vufind' => [
         'plugin_managers' => [
+            'auth' => [
+                'invokables' => [
+                    'database' => 'ixTheo\Auth\Database',
+                ],
+            ],
+            'db_table' => [
+                'invokables' => [
+                    'IxTheoUser' => 'ixTheo\Db\Table\IxTheoUser',
+                ],
+            ],
             'recorddriver' => [
                 'factories' => [
                     'solrmarc' => 'ixTheo\RecordDriver\Factory::getSolrMarc',
