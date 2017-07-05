@@ -1,4 +1,5 @@
 #!/bin/bash
+set -o errexit
 
 #####################################################
 # Build java command
@@ -19,9 +20,6 @@ if [ -z "$SOLR_HOME" ]
 then
   SOLR_HOME="$VUFIND_HOME/solr/vufind"
 fi
-
-set -e
-set -x
 
 cd "`dirname $0`/import"
 CLASSPATH="browse-indexing.jar:${SOLR_HOME}/jars/*:${SOLR_HOME}/../vendor/contrib/analysis-extras/lib/*:${SOLR_HOME}/../vendor/server/solr-webapp/webapp/WEB-INF/lib/*"
