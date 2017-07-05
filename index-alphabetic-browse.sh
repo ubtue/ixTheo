@@ -1,4 +1,5 @@
 #!/bin/bash
+set -o errexit
 
 #####################################################
 # Build java command
@@ -19,9 +20,6 @@ if [ -z "$SOLR_HOME" ]
 then
   SOLR_HOME="$VUFIND_HOME/solr/vufind"
 fi
-
-set -e
-set -x
 
 cd "`dirname $0`/import"
 CLASSPATH="browse-indexing.jar:${SOLR_HOME}/jars/*:${SOLR_HOME}/../vendor/contrib/analysis-extras/lib/*:${SOLR_HOME}/../vendor/server/solr-webapp/webapp/WEB-INF/lib/*"
@@ -64,12 +62,12 @@ function build_browse
     filter=$5
 
     if [ "$skip_authority" = "1" ]; then
-        $JAVA ${extra_jvm_opts} -Dfile.encoding="UTF-8" -Dfield.preferred=heading -Dfield.insteadof=use_for -cp $CLASSPATH PrintBrowseHeadings "$bib_index" "$field" "" "${browse}.tmp"  "$filter"
+        $JAVA ${extra_jvm_opts} -Dfile.encoding="UTF-8" -Dfield.preferred=heading -Dfield.insteadof=use_for -cp $CLASSPATH PrintBrowseHeadings "$bib_index" "$field" "" "${browse}.tmp" "$filter"
     else
         $JAVA ${extra_jvm_opts} -Dfile.encoding="UTF-8" -Dfield.preferred=heading -Dfield.insteadof=use_for -cp $CLASSPATH PrintBrowseHeadings "$bib_index" "$field" "$auth_index" "${browse}.tmp" "$filter"
     fi
 
-    if [[ ! -z $filter  ]]; then
+    if [[ ! -z $filter ]]; then
         out_dir="$index_dir/$filter"
         mkdir -p "$out_dir"
     else
@@ -97,5 +95,3 @@ build_browse "topic" "topic_browse" "" "" "is_religious_studies"
 build_browse "author" "author_browse" "" "" "is_religious_studies"
 build_browse "lcc" "callnumber-raw" 1 "-Dbrowse.normalizer=org.vufind.util.LCCallNormalizer" "is_religious_studies"
 build_browse "dewey" "dewey-raw" 1 "-Dbrowse.normalizer=org.vufind.util.DeweyCallNormalizer" "is_religious_studies"
-
-
