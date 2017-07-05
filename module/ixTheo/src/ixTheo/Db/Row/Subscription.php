@@ -1,5 +1,5 @@
 <?php
-namespace VuFind\Db\Row;
+namespace ixTheo\Db\Row;
 
 /**
  * Row Definition for session
@@ -7,12 +7,10 @@ namespace VuFind\Db\Row;
  * @category VuFind
  * @package  Db_Row
  * @author   Demian Katz <demian.katz@villanova.edu>
- * @author   Oliver Obenland <oliver.obenland@uni-tuebingen.de>
- * @author   Johannes Riedl <johannes.riedl@uni-tuebingen.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org Main Site
  */
-class PDASubscription extends RowGateway
+class Subscription extends \VuFind\Db\Row\RowGateway
 {
     /**
      * Constructor
@@ -21,6 +19,6 @@ class PDASubscription extends RowGateway
      */
     public function __construct($adapter)
     {
-        parent::__construct('id', 'ixtheo_pda_subscriptions', $adapter);
+        parent::__construct('id', 'ixtheo_journal_subscriptions', $adapter);
     }
 }

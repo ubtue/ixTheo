@@ -1,6 +1,6 @@
 <?php
 
-namespace VuFind\Controller\Plugin;
+namespace ixTheo\Controller\Plugin;
 use VuFind\Exception\LoginRequired as LoginRequiredException,
     Zend\Mvc\Controller\Plugin\AbstractPlugin,
     VuFind\Db\Row\User, VuFind\Record\Cache,
@@ -9,7 +9,7 @@ use VuFind\Exception\LoginRequired as LoginRequiredException,
 /**
  * Zend action helper to perform favorites-related actions
  */
-class PDASubscriptions extends AbstractPlugin
+class PDASubscriptions extends \VuFind\Controller\Plugin\AbstractPlugin
 {
     /**
      * Delete a group of pda-subscriptions.
@@ -187,14 +187,14 @@ class PDASubscriptions extends AbstractPlugin
         $emailSubject = $this->controller->translate("Cancellation of your PDA Order");
         $recipientName = $userData[0];
         $recipientEmail = $userData[1];
-        $opening = $this->controller->translate("Dear") . " " . $userData[0] . ",\r\n\r\n" . 
+        $opening = $this->controller->translate("Dear") . " " . $userData[0] . ",\r\n\r\n" .
                    $this->controller->translate("you cancelled a PDA order") . ":\r\n";
         $emailMessage = $opening .  $this->getBookInformation($id) . "\r\n\r\n" . $this->getPDAClosing($userType);
         $this->sendEmail($recipientEmail, $recipientName, $senderData['email'], $senderData['name'], $emailSubject, $emailMessage);
     }
 
     function getPDAClosing($realm) {
-        $salutation = ($realm === 'relbib') ? $this->controller->translate("Your Relbib Team") : 
+        $salutation = ($realm === 'relbib') ? $this->controller->translate("Your Relbib Team") :
                       $this->controller->translate("Your IxTheo Team");
         return $this->controller->translate("Kind Regards") . "\r\n\r\n" . $salutation;
     }

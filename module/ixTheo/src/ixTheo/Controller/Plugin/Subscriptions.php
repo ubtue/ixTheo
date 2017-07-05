@@ -1,6 +1,6 @@
 <?php
 
-namespace VuFind\Controller\Plugin;
+namespace ixTheo\Controller\Plugin;
 use VuFind\Exception\LoginRequired as LoginRequiredException,
     Zend\Mvc\Controller\Plugin\AbstractPlugin,
     VuFind\Db\Row\User, VuFind\Record\Cache;
@@ -8,7 +8,7 @@ use VuFind\Exception\LoginRequired as LoginRequiredException,
 /**
  * Zend action helper to perform favorites-related actions
  */
-class Subscriptions extends AbstractPlugin
+class Subscriptions extends \VuFind\Controller\Plugin\AbstractPlugin
 {
 
     /**

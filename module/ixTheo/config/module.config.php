@@ -1,5 +1,5 @@
 <?php
-namespace Ixtheo;
+namespace Ixtheo\Module\Config;
 
 $config = array(
     'vufind' => [
@@ -12,6 +12,8 @@ $config = array(
             'db_table' => [
                 'invokables' => [
                     'IxTheoUser' => 'ixTheo\Db\Table\IxTheoUser',
+                    'subscription' => 'ixTheo\Db\Table\Subscription',
+                    'pdasubscription' => 'ixTheo\Db\Table\PDASubscription',
                 ],
             ],
             'recorddriver' => [
@@ -21,8 +23,8 @@ $config = array(
             ],
             'search_results' => [
                 'factories' => [
-                    'subscriptions' => 'VuFind\Search\Results\Factory::getSubscriptions',
-                    'pdasubscriptions' => 'VuFind\Search\Results\Factory::getPDASubscriptions'
+                    'subscriptions' => 'ixTheo\Search\Results\Factory::getSubscriptions',
+                    'pdasubscriptions' => 'ixTheo\Search\Results\Factory::getPDASubscriptions'
                 ],
             ],
             'search_backend' => [
@@ -46,8 +48,8 @@ $config = array(
     ],
     'controller_plugins' => [
         'invokables' => [
-            'subscriptions' => 'VuFind\Controller\Plugin\Subscriptions',
-            'pdasubscriptions' => 'VuFind\Controller\Plugin\PDASubscriptions',
+            'subscriptions' => 'ixTheo\Controller\Plugin\Subscriptions',
+            'pdasubscriptions' => 'ixTheo\Controller\Plugin\PDASubscriptions',
         ]
     ],
     'service_manager' => [

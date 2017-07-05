@@ -351,8 +351,6 @@ $config = [
                     'userresource' => 'VuFind\Db\Table\UserResource',
                     'userstats' => 'VuFind\Db\Table\UserStats',
                     'userstatsfields' => 'VuFind\Db\Table\UserStatsFields',
-                    'subscription' => 'VuFind\Db\Table\Subscription',
-                    'pdasubscription' => 'VuFind\Db\Table\PDASubscription',
                 ],
             ],
             'hierarchy_driver' => [

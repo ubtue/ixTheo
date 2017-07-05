@@ -1,9 +1,9 @@
 <?php
-namespace VuFind\Db\Table;
+namespace ixTheo\Db\Table;
 use VuFind\Exception\LoginRequired as LoginRequiredException,
     VuFind\Exception\RecordMissing as RecordMissingException,
     Zend\Db\Sql\Expression;
-class Subscription extends Gateway implements \VuFind\Db\Table\DbTableAwareInterface
+class Subscription extends \VuFind\Db\Table\Gateway implements \VuFind\Db\Table\DbTableAwareInterface
 {
     use \VuFind\Db\Table\DbTableAwareTrait;
 
@@ -22,7 +22,7 @@ class Subscription extends Gateway implements \VuFind\Db\Table\DbTableAwareInter
      */
     public function __construct()
     {
-        parent::__construct('ixtheo_journal_subscriptions', 'VuFind\Db\Row\Subscription');
+        parent::__construct('ixtheo_journal_subscriptions', 'ixTheo\Db\Row\Subscription');
     }
 
     public function getNew($userId, $recordId, $title, $author, $year) {
