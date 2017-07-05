@@ -69,7 +69,7 @@ function build_browse
         $JAVA ${extra_jvm_opts} -Dfile.encoding="UTF-8" -Dfield.preferred=heading -Dfield.insteadof=use_for -cp $CLASSPATH PrintBrowseHeadings "$bib_index" "$field" "$auth_index" "${browse}.tmp" "$filter"
     fi
 
-    if [[ ! -z $filter  ]]; then
+    if [[ ! -z $filter ]]; then
         out_dir="$index_dir/$filter"
         mkdir -p "$out_dir"
     else
