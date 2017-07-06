@@ -36,6 +36,7 @@ $config = array(
     ],
     'controllers' => [
         'factories' => [
+            'browse' => 'ixTheo\Controller\Factory::getBrowseController',
             'record' => 'ixTheo\Controller\Factory::getRecordController',
         ],
         'invokables' => [
