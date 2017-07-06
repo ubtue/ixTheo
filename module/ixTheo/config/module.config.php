@@ -59,9 +59,9 @@ $config = array(
     ],
 );
 
-$recordRoutes = array();
-$dynamicRoutes = array();
-$staticRoutes = array(
+$recordRoutes = [];
+$dynamicRoutes = [];
+$staticRoutes = [
     'Browse/IxTheo-Classification',
     'Browse/RelBib-Classification',
     'Biblerangesearch/Home',
@@ -73,7 +73,7 @@ $staticRoutes = array(
     'MyResearch/DeleteSubscription',
     'MyResearch/PDASubscriptions',
     'MyResearch/DeletePDASubscription'
-);
+];
 
 $config['router']['routes']['static-page'] = [
     'type'    => 'Zend\Mvc\Router\Http\Segment',
