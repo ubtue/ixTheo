@@ -1,4 +1,7 @@
 <?
+// A non-authoritative documentation as to how the Endnote citation format works can be found at
+// http://www.cardiff.ac.uk/insrv/educationandtraining/guides/endnote/endnote_codes.html
+//
 // A driver-specific template may pass in format overrides; check for these before going to the driver itself:
 $formats = isset($this->overrideFormats) ? $this->overrideFormats : $this->driver->tryMethod('getFormats');
 if (is_array($formats) && !empty($formats)) {
@@ -12,13 +15,15 @@ if (is_array($formats) && !empty($formats)) {
 
 $author = $this->driver->tryMethod('getPrimaryAuthor');
 if (!empty($author)) {
+    $author = $this->driver->stripTrailingDates($author);
     echo "%A $author\n";
 }
 
 $secondaryAuthors = $this->driver->tryMethod('getSecondaryAuthors');
 if (is_array($secondaryAuthors)) {
-    foreach ($secondaryAuthors as $current) {
-        echo "%E $current\n";
+    foreach ($secondaryAuthors as $secondaryAuthor) {
+        $secondaryAuthor = $this->driver->stripTrailingDates($secondaryAuthor);
+        echo "%E $secondaryAuthor\n";
     }
 }
 
@@ -80,6 +85,8 @@ $title = rtrim($this->driver->getTitle(), " /");
 echo "%T $title\n";
 
 $journalTitle = $this->driver->tryMethod('getContainerTitle');
+$issue_has_already_been_set = False;
+$pages_have_already_been_set = False;
 if (!empty($journalTitle)) {
     echo "%J $journalTitle\n";
     $volume = $this->driver->tryMethod('getContainerVolume');
@@ -89,6 +96,7 @@ if (!empty($journalTitle)) {
     $number = $this->driver->tryMethod('getContainerIssue');
     if (!empty($number)) {
         echo "%N $number\n";
+        $issue_has_already_been_set = True;
     }
     $page = $this->driver->tryMethod('getContainerStartPage');
     if (!empty($page)) {
@@ -97,6 +105,21 @@ if (!empty($journalTitle)) {
             $page .= '-' . $end;
         }
         echo "%P $page\n";
+        $pages_have_already_been_set = True;
+    }
+}
+
+if (!$issue_has_already_been_set) {
+    $issue = $this->driver->tryMethod('getIssue');
+    if (!empty($issue)) {
+        echo "%N $issue\n";
+    }
+}
+
+if (!$pages_have_already_been_set) {
+    $pages = $this->driver->tryMethod('getPages');
+    if (!empty($pages)) {
+        echo "%P $pages\n";
     }
 }
 

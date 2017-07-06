@@ -7,7 +7,6 @@ if (is_object($marc)) {
 } else {
     $marcPhdField = $marcProceedingsField = false;
 }
-$journalTitle = $this->driver->tryMethod('getContainerTitle');
 $formats = $this->driver->tryMethod('getFormats');
 if ($marcProceedingsField) {
     $format = 'CONF';
@@ -29,32 +28,37 @@ if (!empty($title)) {
     echo 'TI  - ' . "$title\r\n";
 }
 
-if (!empty($journalTitle)) {
-    if (empty($title)) {
-        echo 'TI  - ' . "$journalTitle\r\n";
-    } else {
-        echo 'T2  - ' . "$journalTitle\r\n";
-    }
-    $volume = $this->driver->tryMethod('getContainerVolume');
-    if (!empty($volume)) {
-        echo 'VL  - ' . "$volume\r\n";
-    }
-    $number = $this->driver->tryMethod('getContainerIssue');
-    if (!empty($number)) {
-        echo 'IS  - ' . "$number\r\n";
-    }
-    $start = $this->driver->tryMethod('getContainerStartPage');
-    $end = $this->driver->tryMethod('getContainerEndPage');
-    if (!empty($start)) {
-        // use page range if possible
-        if (!empty($end)) {
-            echo 'EP  - ' . "$end\r\n";
-        } else {
-            // use only start page
-            echo 'SP  - ' . "$start\r\n";
-        }
-    }
+$ids_and_titles = $this->driver->tryMethod('getContainerIdsAndTitles');
+if (!empty($ids_and_titles)) {
+    echo 'T2  - ';
+    $i = 0;
+    foreach ($ids_and_titles as $id => $title):
+        echo $title[0];
+        if (++$i < count($ids_and_titles))
+            echo ", ";
+    endforeach;
+    echo "\r\n";
 }
+
+$issue = $this->driver->tryMethod('getIssue');
+if (!empty($issue)) {
+    echo 'IS  - ' . "$issue\r\n";
+}
+
+$pages = $this->driver->tryMethod('getPages');
+if (!empty($pages)) {
+    $split_pages = split('-', $pages);
+    if (!empty($split_pages[0]))
+        echo 'SP  - ' . trim($split_pages[0]) . "\r\n";
+    if (!empty($split_pages[1]))
+        echo 'EP  - ' . trim($split_pages[1]) . "\r\n";
+}
+
+$volume = $this->driver->tryMethod('getVolume');
+if (!empty($volume)) {
+    echo 'VL  - ' . "$volume\r\n";
+}
+
 
 $series = $this->driver->tryMethod('getSeries');
 if (is_array($series)) {
@@ -65,13 +69,15 @@ if (is_array($series)) {
 
 $author = $this->driver->tryMethod('getPrimaryAuthor');
 if (!empty($author)) {
+    $author = $this->driver->stripTrailingDates($author);
     echo 'AU  - ' . "$author\r\n";
 }
 
 $secondaryAuthors = $this->driver->tryMethod('getSecondaryAuthors');
 if (is_array($secondaryAuthors)) {
-    foreach ($secondaryAuthors as $current) {
-        echo 'A2  - ' . "$current\r\n";
+    foreach ($secondaryAuthors as $secondaryAuthor) {
+        $secondaryAuthor = $this->driver->stripTrailingDates($secondaryAuthor);
+        echo 'A2  - ' . "$secondaryAuthor\r\n";
     }
 }
 
