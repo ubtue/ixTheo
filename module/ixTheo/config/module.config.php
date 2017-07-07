@@ -64,6 +64,7 @@ $recordRoutes = [];
 $dynamicRoutes = [];
 $staticRoutes = [
     'Browse/IxTheo-Classification',
+    'Browse/Publisher',
     'Browse/RelBib-Classification',
     'Biblerangesearch/Home',
     'Keywordchainsearch/Home',
