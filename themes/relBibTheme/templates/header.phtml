@@ -17,6 +17,10 @@
             <li><a href="/Impressum"><?=$this->transEsc('Impressum');?></a></li>
           </ul>
         </li>
+        <li>
+            <a href="/A-Z">RelBib A-Z</a>
+        </li>
+
         <? if ($this->feedback()->tabEnabled()): ?>
           <li>
             <a id="feedbackLink" class="modal-link" href="<?=$this->url('feedback-home') ?>"><i class="fa fa-envelope"></i> <?=$this->transEsc("Feedback")?></a>
