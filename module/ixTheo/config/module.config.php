@@ -1,7 +1,7 @@
 <?php
 namespace Ixtheo\Module\Config;
 
-$config = array(
+$config = [
     'vufind' => [
         'plugin_managers' => [
             'auth' => [
@@ -74,7 +74,7 @@ $config = array(
             'VuFind\Mailer' => 'ixTheo\Mailer\Factory',
         ],
     ],
-);
+];
 
 $recordRoutes = [];
 $dynamicRoutes = [];

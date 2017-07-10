@@ -1,7 +1,12 @@
 <?php
-return array(
+return [
     'extends' => 'ubTueTheme',
-    'css' => array(
+    'css' => [
         'compiled.css'
-    ),
-);
+    ],
+    'helpers' => [
+        'factories' => [
+            'record' => 'ixTheo\View\Helper\Root\Factory::getRecord',
+        ],
+    ],
+];
