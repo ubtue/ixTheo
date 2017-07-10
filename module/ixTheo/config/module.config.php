@@ -33,6 +33,22 @@ $config = array(
                 ],
             ],
         ],
+        'recorddriver_tabs' => [
+            'VuFind\RecordDriver\SolrMarc' => [
+                'tabs' => [
+                    // Disable certain tabs (overwrite value with null)
+                    'Excerpt' => null,
+                    'HierarchyTree' => null,
+                    'Holdings' => null,
+                    'Map' => null,
+                    'Preview' => null,
+                    'Reviews' => null,
+                    'Similar' => null,
+                    'TOC' => null,
+                    'UserComments' => null,
+                ],
+            ],
+        ],
     ],
     'controllers' => [
         'factories' => [
