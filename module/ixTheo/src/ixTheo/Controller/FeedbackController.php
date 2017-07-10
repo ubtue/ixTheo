@@ -1,41 +1,10 @@
 <?php
-/**
- * Feedback Controller
- *
- * PHP version 5
- *
- * @category VuFind
- * @package  Controller
- * @author   Josiah Knoll <jk1135@ship.edu>
- * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
- * @link     https://vufind.org Main Site
- */
-namespace VuFind\Controller;
+
+namespace ixTheo\Controller;
 use Zend\Mail\Address;
 
-/**
- * Feedback Class
- *
- * Controls the Feedback
- *
- * @category VuFind
- * @package  Controller
- * @author   Josiah Knoll <jk1135@ship.edu>
- * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
- * @link     https://vufind.org/wiki/development Wiki
- */
-class FeedbackController extends AbstractBase
+class FeedbackController extends \VuFind\Controller\FeedbackController
 {
-    /**
-     * Display Feedback home form.
-     *
-     * @return \Zend\View\Model\ViewModel
-     */
-    public function homeAction()
-    {
-        return $this->forwardTo('Feedback', 'Email');
-    }
-
     /**
      * Receives input from the user and sends an email to the recipient set in
      * the config.ini
@@ -62,8 +31,9 @@ class FeedbackController extends AbstractBase
             $config = $this->getServiceLocator()->get('VuFind\Config')
                 ->get('config');
             $feedback = isset($config->Feedback) ? $config->Feedback : null;
-            $recipient_email = isset($feedback->recipient_email)
-                ? $feedback->recipient_email : null;
+            $site = isset($config->Site) ? $config->Site : null;
+            $recipient_email = isset($site->email)
+                ? $site->email : null;
             $recipient_name = isset($feedback->recipient_name)
                 ? $feedback->recipient_name : 'Your Library';
             $email_subject = isset($feedback->email_subject)
@@ -81,6 +51,12 @@ class FeedbackController extends AbstractBase
             $email_message = empty($view->name) ? '' : 'Name: ' . $view->name . "\n";
             $email_message .= 'Email: ' . $view->email . "\n";
             $email_message .= 'Comments: ' . $view->comments . "\n\n";
+            $email_message .= "----------------------------------------------------------------------------------------------\n";
+            $email_message .= "Aktuelle Seite: " . $this->getRequest()->getHeaders("Referer")->getUri() . "\n";
+            $email_message .= "Browser:        " . htmlentities($this->getRequest()->getHeaders("User-Agent")->getFieldValue()) . "\n";
+            $email_message .= "Cookies:        " . htmlentities($this->getRequest()->getCookie()->getFieldValue()) . "\n";
+            $email_message .= "----------------------------------------------------------------------------------------------\n\n";
+
 
             // This sets up the email to be sent
             // Attempt to send the email and show an appropriate flash message:

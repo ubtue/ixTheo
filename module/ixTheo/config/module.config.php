@@ -63,6 +63,7 @@ $config = [
         ],
         'invokables' => [
             'BibleRangeSearch' => 'ixTheo\Controller\Search\BibleRangeSearchController',
+            'feedback' => 'ixTheo\Controller\FeedbackController',
             'KeywordChainSearch' => 'ixTheo\Controller\Search\KeywordChainSearchController',
             'Pipeline' => 'ixTheo\Controller\Pipeline',
             'MyResearch' => 'ixTheo\Controller\MyResearchController',
