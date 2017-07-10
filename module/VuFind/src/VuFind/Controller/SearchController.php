@@ -27,7 +27,6 @@
  */
 namespace VuFind\Controller;
 
-use ixTheo\Controller\Search\BibleRangeSearchController;
 use VuFind\Exception\Mail as MailException;
 
 /**
@@ -283,13 +282,12 @@ class SearchController extends AbstractSearch
      */
     public function homeAction()
     {
-        $page = $this->forward()->dispatch('StaticPage', array(
-            'action' => 'staticPage',
-            'page' => 'Home'
-        ));
         return $this->createViewModel(
             [
-                'page' => $page
+                'results' => $this->getHomePageFacets(),
+                'hierarchicalFacets' => $this->getHierarchicalFacets(),
+                'hierarchicalFacetSortOptions'
+                    => $this->getHierarchicalFacetSortSettings()
             ]
         );
     }
@@ -411,6 +409,17 @@ class SearchController extends AbstractSearch
                 'courseList' =>  $catalog->getCourses()
             ]
         );
+    }
+
+    /**
+     * Show facet list for Solr-driven reserves.
+     *
+     * @return mixed
+     */
+    public function reservesfacetlistAction()
+    {
+        $this->searchClassId = 'SolrReserves';
+        return $this->facetListAction();
     }
 
     /**
