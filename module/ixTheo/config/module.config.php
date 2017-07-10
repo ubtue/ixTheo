@@ -116,7 +116,7 @@ $config['router']['routes']['static-page'] = [
     ]
 ];
 
-$routeGenerator = new \VuFind\Route\RouteGenerator();
+$routeGenerator = new \ixTheo\Route\RouteGenerator();
 $routeGenerator->addRecordRoutes($config, $recordRoutes);
 $routeGenerator->addDynamicRoutes($config, $dynamicRoutes);
 $routeGenerator->addStaticRoutes($config, $staticRoutes);
