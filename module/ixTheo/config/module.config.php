@@ -9,6 +9,11 @@ $config = [
                     'database' => 'ixTheo\Auth\Database',
                 ],
             ],
+            'autocomplete' => [
+                'factories' => [
+                    'solr' => 'ixTheo\Autocomplete\Factory::getSolr',
+                ],
+            ],
             'db_table' => [
                 'invokables' => [
                     'IxTheoUser' => 'ixTheo\Db\Table\IxTheoUser',

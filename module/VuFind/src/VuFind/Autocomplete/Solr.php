@@ -172,7 +172,7 @@ class Solr implements AutocompleteInterface
     protected function mungeQuery($query)
     {
         // Modify the query so it makes a nice, truncated autocomplete query:
-        $forbidden = [':', '(', ')', '*', '+', '"', '–' /* a hyphen, not a minus sign */];
+        $forbidden = [':', '(', ')', '*', '+', '"'];
         $query = str_replace($forbidden, " ", $query);
         if (substr($query, -1) != " ") {
             $query .= "*";
@@ -241,7 +241,7 @@ class Solr implements AutocompleteInterface
                         $current[$field], $query, $exact
                     );
                     if ($bestMatch) {
-                        $results[] = $this->mungeQuery($bestMatch);
+                        $results[] = $bestMatch;
                         break;
                     }
                 }
