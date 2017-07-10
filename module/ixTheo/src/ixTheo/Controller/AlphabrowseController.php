@@ -1,47 +1,8 @@
 <?php
-/**
- * AlphaBrowse Module Controller
- *
- * PHP Version 5
- *
- * Copyright (C) Villanova University 2011.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA    02111-1307    USA
- *
- * @category VuFind
- * @package  Controller
- * @author   Mark Triggs <vufind-tech@lists.sourceforge.net>
- * @author   Chris Hallberg <challber@villanova.edu>
- * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
- * @link     https://vufind.org/wiki/indexing:alphabetical_heading_browse Wiki
- */
-namespace VuFind\Controller;
-
+namespace ixTheo\Controller;
 use VuFindSearch\ParamBag;
-/**
- * AlphabrowseController Class
- *
- * Controls the alphabetical browsing feature
- *
- * @category VuFind
- * @package  Controller
- * @author   Mark Triggs <vufind-tech@lists.sourceforge.net>
- * @author   Chris Hallberg <challber@villanova.edu>
- * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
- * @link     https://vufind.org/wiki/indexing:alphabetical_heading_browse Wiki
- */
-class AlphabrowseController extends AbstractBase
+
+class AlphabrowseController extends \VuFind\Controller\AlphabrowseController
 {
     /**
      * Gathers data for the view of the AlphaBrowser and does some initialization
@@ -83,6 +44,7 @@ class AlphabrowseController extends AbstractBase
             ];
         }
 
+
         // Load remaining config parameters
         $rows_before = isset($config->AlphaBrowse->rows_before)
             && is_numeric($config->AlphaBrowse->rows_before)
@@ -113,6 +75,9 @@ class AlphabrowseController extends AbstractBase
             $extraParams->add('extras', $extras[$source]);
         }
 
+        // Set up potential filter from Config
+        $resultFilter = isset($config->AlphaBrowse_Filter->filter) ? $config->AlphaBrowse_Filter->filter : null;
+
         // Create view model:
         $view = $this->createViewModel();
 
@@ -120,7 +85,7 @@ class AlphabrowseController extends AbstractBase
         if ($source && $from !== false) {
             // Load Solr data or die trying:
             $result = $db->alphabeticBrowse(
-                $source, $from, $page, $limit, $extraParams, 0 - $rows_before
+                $source, $from, $page, $limit, $extraParams, 0 - $rows_before, $resultFilter
             );
 
             // No results?    Try the previous page just in case we've gone past
@@ -128,7 +93,7 @@ class AlphabrowseController extends AbstractBase
             if ($result['Browse']['totalCount'] == 0) {
                 $page--;
                 $result = $db->alphabeticBrowse(
-                    $source, $from, $page, $limit, $extraParams, 0
+                    $source, $from, $page, $limit, $extraParams, 0, $resultFilter
                 );
                 if ($highlighting) {
                     $view->highlight_end = true;

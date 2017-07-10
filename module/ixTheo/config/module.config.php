@@ -62,6 +62,7 @@ $config = [
             'record' => 'ixTheo\Controller\Factory::getRecordController',
         ],
         'invokables' => [
+            'alphabrowse' => 'ixTheo\Controller\AlphabrowseController',
             'BibleRangeSearch' => 'ixTheo\Controller\Search\BibleRangeSearchController',
             'feedback' => 'ixTheo\Controller\FeedbackController',
             'KeywordChainSearch' => 'ixTheo\Controller\Search\KeywordChainSearchController',
