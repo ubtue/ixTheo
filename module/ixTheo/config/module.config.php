@@ -18,6 +18,7 @@ $config = [
             ],
             'recorddriver' => [
                 'factories' => [
+                    'solrdefault' => 'ixTheo\RecordDriver\Factory::getSolrDefault',
                     'solrmarc' => 'ixTheo\RecordDriver\Factory::getSolrMarc',
                 ],
             ],

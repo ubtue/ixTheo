@@ -1,12 +1,8 @@
 <?php
 
 namespace ixTheo\RecordDriver;
-use VuFind\Exception\LoginRequired as LoginRequiredException;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
-
-class SolrMarc extends \TueLib\RecordDriver\SolrMarc
+class SolrMarc extends \ixTheo\RecordDriver\SolrDefault
 {
     public function canUseTAD($userId)
     {
@@ -94,25 +90,25 @@ class SolrMarc extends \TueLib\RecordDriver\SolrMarc
      * Returns persistent identifiers as array
      * e.g. array('DOI' => array(<doi1>, <doi2>),
      *            'URN' => array(<urn1>, <urn2>),);
-     * 
+     *
      * keys like 'DOI' will only exist if at last 1 DOI is available
-     * 
+     *
      * @return array
      */
     public function getTypesAndPersistentIdentifiers() {
         $result  = array();
         $rawdata = isset($this->fields['types_and_persistent_identifiers']) ? $this->fields['types_and_persistent_identifiers'] : array();
-        
+
         foreach ($rawdata as $entry) {
             $entry_splitted = explode(':', $entry, 2);
             $result_type    = $entry_splitted[0];
             $result_value   = $entry_splitted[1];
-            
+
             if (!isset($result[$result_type]))
                 $result[$result_type] = array();
             $result[$result_type][] = $result_value;
         }
-        
+
         return $result;
     }
 }
