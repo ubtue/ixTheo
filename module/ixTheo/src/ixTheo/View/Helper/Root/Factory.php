@@ -1,5 +1,6 @@
 <?php
 namespace ixTheo\View\Helper\Root;
+use VuFind\View\Helper\Root\Piwik;
 use Zend\ServiceManager\ServiceManager;
 
 class Factory
