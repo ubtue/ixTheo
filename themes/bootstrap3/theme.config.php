@@ -8,8 +8,6 @@ return array(
         //'bootstrap-custom.css',
         'compiled.css',
         'print.css:print',
-        'vendor/jquery.feedback_me.css',
-        'feedback.css'
     ),
     'js' => array(
         'vendor/base64.js:lt IE 10', // btoa polyfill

@@ -2,7 +2,9 @@
 return [
     'extends' => 'ubTueTheme',
     'css' => [
-        'compiled.css'
+        'compiled.css',
+        'feedback.css',
+        'vendor/jquery.feedback_me.css',
     ],
     'helpers' => [
         'factories' => [
