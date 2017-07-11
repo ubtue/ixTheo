@@ -598,12 +598,8 @@ oclc_num:
 
 Keywordchains:
    DismaxFields:
-      - key_word_chains
       - key_word_chains_sorted
-      - key_word_chain_bag
    QueryFields:
-     key_word_chains:
-       - [onephrase, 1000]
      key_word_chains_sorted:
        - [onephrase, 1000]
    DismaxParams:
