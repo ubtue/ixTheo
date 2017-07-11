@@ -27,15 +27,24 @@ $config = [
                     'solrmarc' => 'ixTheo\RecordDriver\Factory::getSolrMarc',
                 ],
             ],
-            'search_results' => [
-                'factories' => [
-                    'subscriptions' => 'ixTheo\Search\Results\Factory::getSubscriptions',
-                    'pdasubscriptions' => 'ixTheo\Search\Results\Factory::getPDASubscriptions'
-                ],
-            ],
             'search_backend' => [
             	'factories' => [
                     'Solr' => 'ixTheo\Search\Factory\IxTheoSolrDefaultBackendFactory',
+                ],
+            ],
+            'search_options' => [
+                'factories' => [
+                    'KeywordChainSearch' => 'ixTheo\Search\Options\Factory::getKeywordChainSearch',
+                ],
+            ],
+            'search_params' => [
+                'abstract_factories' => ['ixTheo\Search\Params\PluginFactory'],
+            ],
+            'search_results' => [
+                'factories' => [
+                    'KeywordChainSearch' => 'ixTheo\Search\Results\Factory::getKeywordChainSearch',
+                    'pdasubscriptions' => 'ixTheo\Search\Results\Factory::getPDASubscriptions',
+                    'subscriptions' => 'ixTheo\Search\Results\Factory::getSubscriptions',
                 ],
             ],
         ],

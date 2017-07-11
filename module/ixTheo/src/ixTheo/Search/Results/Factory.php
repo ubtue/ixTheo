@@ -1,11 +1,26 @@
 <?php
 
 namespace ixTheo\Search\Results;
-use VuFind\Search\Results\PluginFactory as PluginFactory;
 use Zend\ServiceManager\ServiceManager;
 
 class Factory extends \VuFind\Search\Results\Factory
 {
+    /**
+     * Factory for KeywordChainSearch results object.
+     *
+     * @param ServiceManager $sm Service manager.
+     *
+     * @return Subscriptions
+     */
+    public static function getKeywordChainSearch(ServiceManager $sm)
+    {
+        $factory = new PluginFactory();
+        $obj = $factory->createServiceWithName($sm, 'keywordchainsearch', 'KeywordChainSearch');
+        $init = new \ZfcRbac\Initializer\AuthorizationServiceInitializer();
+        $init->initialize($obj, $sm);
+        return $obj;
+    }
+
     /**
      * Factory for Subscriptions results object.
      *

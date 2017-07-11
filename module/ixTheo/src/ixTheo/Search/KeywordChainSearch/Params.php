@@ -1,5 +1,6 @@
-<?
-namespace VuFind\Search\KeywordChainSearch;
+<?php
+
+namespace ixTheo\Search\KeywordChainSearch;
 
 class Params extends \VuFind\Search\Solr\Params {
     public function __construct($options, \VuFind\Config\PluginManager $configLoader) {
@@ -27,17 +28,17 @@ class Params extends \VuFind\Search\Solr\Params {
     public function getBackendParameters() {
         $backendParams = parent::getBackendParameters();
 
-	// We are either called with a specific chain, thus we have to search 
+	// We are either called with a specific chain, thus we have to search
 	// key_word_chains or we are looking in the flattened bag
         $backendParams->add('qf', 'key_word_chain_bag key_word_chains');
 
-	// Make sure we use edismax, so we can use the 'qf'-parameter 
+	// Make sure we use edismax, so we can use the 'qf'-parameter
 	// and select a default operator
 	$backendParams->add('qt', 'edismax');
 
-	// Make sure we look for the individual terms also	
+	// Make sure we look for the individual terms also
 	$backendParams->add('q.op', 'OR');
-        
+
         // Trigger choosing the appropriate language field on the solr side
         $backendParams->add('defType', 'multiLanguageQueryParser');
 
