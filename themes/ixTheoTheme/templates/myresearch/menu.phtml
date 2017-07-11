@@ -4,6 +4,12 @@
     <a href="<?=$this->url('myresearch-favorites')?>" class="list-group-item<?=$this->active == 'favorites' ? ' active' : ''?>">
       <i class="fa fa-fw fa-star" aria-hidden="true"></i> <?=$this->transEsc('Favorites')?>
     </a>
+    <a href="<?=$this->url('myresearch-subscriptions')?>" class="list-group-item<?=$this->active == 'subscriptions' ? ' active' : ''?>">
+      <i class="fa fa-fw fa-bell"></i> <?=$this->transEsc('Subscriptions')?>
+    </a>
+    <a href="<?=$this->url('myresearch-pdasubscriptions')?>" class="list-group-item<?=$this->active == 'pdasubscriptions' ? ' active' : ''?>">
+      <i class="fa fa-fw fa-book" aria-hidden="true"></i> <?=$this->transEsc('PDA')?>
+    </a>
   <? endif; ?>
   <? if ('ils-none' !== $this->ils()->getOfflineMode()): ?>
     <? if ($this->ils()->checkCapability('getMyTransactions')): ?>
@@ -55,6 +61,9 @@
 </div>
 <? if ($this->auth()->isLoggedIn() && $this->auth()->getManager()->supportsPasswordChange()): ?>
   <h4><?=$this->transEsc('Preferences')?></h4>
+  <a href="<?=$this->url('myresearch-profile')?>" class="list-group-item<?=$this->active == 'profile' ? ' active' : ''?>">
+    <i class="fa fa-fw fa-user"></i> <?=$this->transEsc('Profile')?>
+  </a>
   <div class="list-group">
     <a href="<?=$this->url('myresearch-changepassword') ?>" class="list-group-item<?=$this->active == 'newpassword' ? ' active' : ''?>">
       <i class="fa fa-fw fa-lock" aria-hidden="true"></i> <?=$this->transEsc('Change Password') ?>

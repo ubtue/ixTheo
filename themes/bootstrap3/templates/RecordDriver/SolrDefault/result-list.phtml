@@ -63,22 +63,13 @@
           <? endif; ?>
         </div>
 
-      <? $ids_and_titles_and_volume = $this->driver->getContainerIDsAndTitles(); ?>
-      <? if (!empty($ids_and_titles_and_volume)): ?>
-        <? foreach ($ids_and_titles_and_volume as $id => $title_and_volume): ?>
-          <div>
-            <?=$this->transEsc('In')?>: <a href="/Record/<?=$id?>"><?=$this->escapeHtml(implode(" ", $title_and_volume))?></a>
-          </div>
-        <? endforeach; ?>
-      <? endif; ?>
-
-      <? if(!$this->driver->isCollection()): ?>
-        <? if ($snippet = $this->driver->getHighlightedSnippet()): ?>
-          <? if (!empty($snippet['caption'])): ?>
-            <strong><?=$this->transEsc($snippet['caption']) ?>:</strong>
-          <? endif; ?>
-          <? if (!empty($snippet['snippet'])): ?>
-            <span class="quotestart">&#8220;</span>...<?=$this->highlight($snippet['snippet']) ?>...<span class="quoteend">&#8221;</span><br/>
+        <? if(!$this->driver->isCollection()): ?>
+          <? if ($snippet = $this->driver->getHighlightedSnippet()): ?>
+            <? if (!empty($snippet['caption'])): ?>
+              <strong><?=$this->transEsc($snippet['caption']) ?>:</strong> ';
+            <? endif; ?>
+            <? if (!empty($snippet['snippet'])): ?>
+              <span class="quotestart">&#8220;</span>...<?=$this->highlight($snippet['snippet']) ?>...<span class="quoteend">&#8221;</span><br/>
             <? endif; ?>
           <? endif; ?>
         <? endif; ?>
@@ -146,14 +137,6 @@
             <? endforeach; ?>
           <? endif; ?>
         <? endif; ?>
-      </div>
-      <? $urls_and_material_types = $this->driver->getURLsAndMaterialTypes(); ?>
-      <? if (!empty($urls_and_material_types)): ?>
-        <? foreach ($urls_and_material_types as $url => $material_type): ?>
-	   <a href="<?=$url?>" class="fulltext" target="new"><i class="fa fa-external-link"></i> <?=$this->transEsc($material_type)?></a>
-           <br/>
-        <? endforeach; ?>
-      <? endif; ?>
 
         <?=$this->record($this->driver)->getFormatList() ?>
 
