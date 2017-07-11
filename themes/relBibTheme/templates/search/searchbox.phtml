@@ -46,7 +46,7 @@
       <input class="searchForm_lookfor form-control search-query<? if($this->searchbox()->autocompleteEnabled($this->searchClassId)):?> autocomplete searcher:<?=$this->escapeHtmlAttr($this->searchClassId) ?><? endif ?>" type="text" name="lookfor" value="<?=$this->escapeHtmlAttr($this->lookfor)?>"/>
       <div class="input-group-btn">
         <? if ($handlerCount > 1): ?>
-          <select class="btn btn-default" name="type" data-native-menu="false" style="padding:4px 5px 5px 5px">
+          <select class="btn btn-default searchForm_type" name="type" data-native-menu="false" style="padding:4px 5px 5px 5px">
             <? foreach ($handlers as $handler): ?>
               <option value="<?=$this->escapeHtmlAttr($handler['value'])?>"<?=$handler['selected'] ? ' selected="selected"' : ''?>><?=$handler['indent'] ? '-- ' : ''?><?=$this->transEsc($handler['label'])?></option>
             <? endforeach; ?>
@@ -78,7 +78,11 @@
                   <?=$this->transEsc('Need Help?')?> <span class="caret"></span>
               </a>
               <ul class="dropdown-menu">
-                  <li><a href="<?=$this->url('help-home')?>?topic=search" data-lightbox class="help-link" title="<?=$this->transEsc('Search Tips')?>"><?=$this->transEsc('Search Tips')?></a></li>
+                  <li><a href="<?=$this->url('help-home')?>?topic=generalhints" data-lightbox class="help-link" title="<?=$this->transEsc('General Search Tips')?>"><?=$this->transEsc('General Search Tips')?></a></li>
+                  <li><a href="<?=$this->url('help-home')?>?topic=search" data-lightbox class="help-link" title="<?=$this->transEsc('Search Operators')?>"><?=$this->transEsc('Search Operators')?></a></li>
+                  <li><a href="<?=$this->url('help-home')?>?topic=browse" data-lightbox class="help-link" title="<?=$this->transEsc('Browse Keywordchains')?>"><?=$this->transEsc('Browse Keywordchains')?></a></li>
+                  <li><a href="<?=$this->url('help-home')?>?topic=catbrowse" data-lightbox class="help-link" title="<?=$this->transEsc('Browse by Category')?>"><?=$this->transEsc('Browse by Category')?></a></li>
+                  <li><a href="<?=$this->url('help-home')?>?topic=alphabrowse" data-lightbox class="help-link" title="<?=$this->transEsc('Browse Alphabetically')?>"><?=$this->transEsc('Browse Alphabetically')?></a></li>
               </ul>
           </li>
           <li class="dropdown">
