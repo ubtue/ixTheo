@@ -196,18 +196,21 @@ $panelWidth = "col-md-6";
                         <!-- Needed since otherwise the More-Button gets confused immediately before a heading -->
                         <div style="height: 0px;">&emsp;</div>
                         <h3>Thema Browsen</h3>
-                        <p>Beim „Thema Browsen“ können Sie sich durch Eingabe eines oder mehrerer Suchbegriffe Schlagwörter und normierte Schlagwortfolgen anzeigen 
+                        <p>Beim <a href="<?=$this->url('keywordchainsearch-home')?>" target="_blank"><?=$this->transEsc('Browse Keywordchains')?></a>
+                           können Sie sich durch Eingabe eines oder mehrerer Suchbegriffe Schlagwörter und normierte Schlagwortfolgen anzeigen 
                            lassen, die gegebenen Suchbegriffen „ähnlich“ sind. Dies eignet sich insbesondere, um Hinweise auf thematisch verwandte Schlagwortketten 
                            und dazugehörige Titel zu bekommen. Aus der Volltitelanzeige gelangen Sie über den Button 
                            <span class="iconlabel label label-info">B</span> ebenfalls in den Modus „Thema Browsen“: Auf diese Weise werden Sie zu weiteren Titeln mit 
                            derselben oder einer ähnlichen Schlagwortfolge in der Datenbank geführt.</p>
-                        <h3>Browsen nach Kategorien</h3>
-                        <p>Das „Browsen nach Kategorien“ bietet Ihnen die Möglichkeit, ausgehend von Oberkategorien nach bestimmten Aspekten zu einer Ergebnisemenge zu kommen,
+                        <h3>Browsen / nach Kategorien</h3>
+                        <p>Das <a href="<?=$this->url('browse-home')?>" target="_blank"><?=$this->transEsc('Browse by Category')?></a> bietet Ihnen die Möglichkeit, 
+                           ausgehend von Oberkategorien nach bestimmten Aspekten zu einer Ergebnisemenge zu kommen,
                            ohne dass im Vorfeld Suchbegriffe bekannt sein müssen. Sie wählen Ihren Einstieg aus einem der folgenden Felder aus: DDC,
                            RelBib-Klassifikation, Thema (Schlagwort), Verfasser oder Verlag. Über eine Baumstruktur mit vier Ebenen haben Sie die Möglichkeit, 
                            Ihr Suchergebnis durch Auswahl weiterer Unterfelder einzuschränken.</p>
                         <h3>Alphabetisch Browsen</h3>
-                        <p>Im Modus „Alphabetisch Browsen“ stellt eine umfassende, alphabetisch sortierte Liste der Inhalte der jeweiligen Kategorien zur Verfügung. Dies
+                        <p>Im Modus <a href="<?=$this->url('alphabrowse-home')?>" target="_blank"><?=$this->transEsc('Browse Alphabetically')?></a> stellt eine umfassende, 
+                           alphabetisch sortierte Liste der Inhalte der jeweiligen Kategorien zur Verfügung. Dies
                            ist zu z.B. für eine Überblicksrecherche von Vorteil. So wählen Sie einen der Aspekte Thema, Verfasser, Titel oder DDC aus und können 
                            nach Eingabe eines Wortes oder Wortanfangs bestimmen, an welcher Stelle des Alphabets Sie in das Browsen einsteigen wollen. 
                            Das alphabetische Browsen kann auch dann hilfreich sein, wenn Sie sich bei der Schreibweise eines Autorennamen oder Begriffs nicht 
