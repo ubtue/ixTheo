@@ -30,7 +30,7 @@ $config = [
             ],
             'search_backend' => [
             	'factories' => [
-                    'Solr' => 'ixTheo\Search\Factory\IxTheoSolrDefaultBackendFactory',
+                    'Solr' => 'ixTheo\Search\Factory\SolrDefaultBackendFactory',
                 ],
             ],
             'search_options' => [

@@ -267,16 +267,15 @@ class Backend extends AbstractBackend
      * @return array
      */
     public function alphabeticBrowse($source, $from, $page, $limit = 20,
-        $params = null, $offsetDelta = 0, $filterBy = ""
+        $params = null, $offsetDelta = 0
     ) {
         $params = $params ?: new ParamBag();
         $this->injectResponseWriter($params);
+
         $params->set('from', $from);
         $params->set('offset', ($page * $limit) + $offsetDelta);
         $params->set('rows', $limit);
         $params->set('source', $source);
-        if (!empty($filterBy))
-            $params->set('filterBy', $filterBy);
 
         try {
             $response = $this->connector->query('browse', $params);
