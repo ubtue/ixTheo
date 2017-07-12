@@ -1,8 +1,7 @@
 <?php
-namespace VuFind\Search\PDASubscriptions;
+namespace ixTheo\Search\PDASubscriptions;
 use VuFind\Exception\ListPermission as ListPermissionException,
     VuFind\Search\Base\Results as BaseResults,
-    VuFind\Record\Cache,
     ZfcRbac\Service\AuthorizationServiceAwareInterface,
     ZfcRbac\Service\AuthorizationServiceAwareTrait;
 

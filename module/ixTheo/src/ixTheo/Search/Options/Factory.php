@@ -19,6 +19,19 @@ class Factory extends \VuFind\Search\Options\Factory
     }
 
     /**
+     * Factory for PDASubscriptions results object.
+     *
+     * @param ServiceManager $sm Service manager.
+     *
+     * @return Solr
+     */
+    public static function getPDASubscriptions(ServiceManager $sm)
+    {
+        $config = $sm->getServiceLocator()->get('VuFind\Config');
+        return new \ixTheo\Search\PDASubscriptions\Options($config);
+    }
+
+    /**
      * Factory for Subscriptions results object.
      *
      * @param ServiceManager $sm Service manager.

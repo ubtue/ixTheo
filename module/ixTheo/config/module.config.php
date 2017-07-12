@@ -17,8 +17,9 @@ $config = [
             'db_table' => [
                 'invokables' => [
                     'IxTheoUser' => 'ixTheo\Db\Table\IxTheoUser',
-                    'subscription' => 'ixTheo\Db\Table\Subscription',
                     'pdasubscription' => 'ixTheo\Db\Table\PDASubscription',
+                    'subscription' => 'ixTheo\Db\Table\Subscription',
+
                 ],
             ],
             'recorddriver' => [
@@ -35,6 +36,7 @@ $config = [
             'search_options' => [
                 'factories' => [
                     'KeywordChainSearch' => 'ixTheo\Search\Options\Factory::getKeywordChainSearch',
+                    'PDASubscriptions' => 'ixTheo\Search\Options\Factory::getPDASubscriptions',
                     'Subscriptions' => 'ixTheo\Search\Options\Factory::getSubscriptions',
                 ],
             ],

@@ -1,5 +1,5 @@
 <?php
-namespace VuFind\Search\PDASubscriptions;
+namespace ixTheo\Search\PDASubscriptions;
 
 class Options extends \VuFind\Search\Base\Options
 {
