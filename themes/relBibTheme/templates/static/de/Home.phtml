@@ -105,9 +105,13 @@ $panelWidth = "col-md-6";
                         </p>
                         <p>Bei einigen Filtern ist eine Mehrfachauswahl eingerichtet.</p>
                         <h3>Erweiterte Suche</h3>
-                        <p>
-                           Zur erweiterten Suche gelangen Sie über den Link unterhalb des großen Suchschlitzes. Im Unterschied zur einfachen Suche können Sie in diesem Modus Begriffe gleichzeitig in verschiedenen Feldern suchen und ihre Suche dadurch gezielt eingrenzen. Die Suchfelder lassen sich durch Auswahl einer Suchbedingung in verschiedene Relationen zueinander bringen. Für komplexere Anfragen können Sie auch eine Suche über Suchgruppen durchführen.</p>
-                        <p>Außerdem lässt sich in der erweiterten Suche von vornherein eine Eingrenzung mit Hilfe folgender Facetten vornehmen: RelBib Notation; Medienart; Sprache. Darüber hinaus können auch der Erscheinungszeitraum der gesuchten Literatur sowie die angezeigte Trefferanzahl pro Seite vorab festgelegt werden.</p>  
+                        <p>Zur erweiterten Suche gelangen Sie über den Link unterhalb des großen Suchschlitzes. Im Unterschied zur einfachen Suche können Sie in 
+                           diesem Modus Begriffe gleichzeitig in verschiedenen Feldern suchen und ihre Suche dadurch gezielt eingrenzen. Die Suchfelder lassen sich 
+                           durch Auswahl einer Suchbedingung in verschiedene Relationen zueinander bringen. Für komplexere Anfragen können Sie auch eine Suche 
+                           über Suchgruppen durchführen.</p>
+                        <p>Außerdem lässt sich in der erweiterten Suche von vornherein eine Eingrenzung mit Hilfe folgender Facetten vornehmen: RelBib Notation; 
+                           Medienart; Sprache. Darüber hinaus können auch der Erscheinungszeitraum der gesuchten Literatur sowie die angezeigte Trefferanzahl 
+                           pro Seite vorab festgelegt werden.</p>
                      </div>
                 </div>
                 <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
@@ -126,8 +130,8 @@ $panelWidth = "col-md-6";
             <div class="panel-body">
                 <input type="checkbox" class="read-more-state" id="post-<?= $panelId; ?>" />
                 <div class="read-more-wrap">
-                    <p>Folgende Funktionalitäten von RelBib können Sie ohne persönliches Konto nutzen: Verfügbarkeitsanzeige, Subito, RSS-Feed abonnieren, Zitieren, 
-                       Exportieren, Drucken und Feedback.</p>
+                    <p>Folgende Funktionalitäten von RelBib können Sie ohne persönliches Konto nutzen: Patron-Driven-Acquisiton (PDA), Verfügbarkeitsanzeige,
+                       Subito, RSS-Feed abonnieren, Zitieren, Exportieren, Drucken und Feedback.</p>
                     <div class="read-more-target">
                     <h3>Patron-Driven-Acquisition (PDA)</h3>
                     <p>Zur überregionalen Versorgung des Spitzenbedarfs an religionswissenschaftlicher Fachliteratur in Deutschland bietet RelBib ein
@@ -162,7 +166,7 @@ $panelWidth = "col-md-6";
                        oberhalb der Trefferliste und es öffnet sich das Drucker-Dialogfenster. Auch hier lohnt es sich gegebenenfalls, die angezeigte 
                        Trefferzahl pro Seite im Auswahlmenü zu erhöhen.</p>
                     <h3>Feedback</h3>
-                    <p>Zu guter Letzt wollen wir Ihnen noch eine sehr wichtige Funktion vn RelBib vorstellen: den Feedback-Button am rechten unteren Rand. 
+                    <p>Zu guter Letzt wollen wir Ihnen noch eine sehr wichtige Funktion von RelBib vorstellen: den Feedback-Button am rechten unteren Rand. 
                        Sie haben die Möglichkeit, von jedem Punkt Ihrer Recheche aus uns eine Feedback-E-Mail zu schicken, die die URL der aktuellen Seite enthält. 
                        Im Kommentarfeld können Sie zusätzlich kurz das aufgetretene Problem schildern. Dies erleichtert uns die Fehleranalyse, da wir die 
                        betreffende Suchanfrage sofort rekapitulieren können.</p>
@@ -191,14 +195,26 @@ $panelWidth = "col-md-6";
                        Den Browsing-Modus wählen Sie unterhalb des Suchschlitzes über den Link „Browsen“ aus.</p>
                         <!-- Needed since otherwise the More-Button gets confused immediately before a heading -->
                         <div style="height: 0px;">&emsp;</div>
-                        <h3>Thema Browsing</h3>
-                        <p>Beim „Thema Browsen“ können Sie sich durch Eingabe eines oder mehrerer Suchbegriffe normierte Schlagwortfolgen anzeigen lassen, die diese Suchbegriffe enthalten. Diese Form des Browsens funktioniert daher nur mit Titeln aus der Datenbank, für die normierte Schlagwörter vergeben worden sind. In einer Volltitelanzeige gelangen Sie über den Button <strong>B</strong> ebenfalls in den Modus „Thema Browsen“: Auf diese Weise werden Sie zu weiteren Titeln mit derselben oder einer ähnlichen Schlagwortfolge in der Datenbank geführt.</p>
-
-                        <h3>Browsen nach Kategorien („Katalog“ browsen)</h3>
-                        <p>Das „Browsen nach Kategorien“ bietet eine andere Möglichkeit des Zugriffs. Sie wählen Ihren Einstieg aus einem der folgenden Felder aus: DDC, RelBib-Klassifikation, Thema (Schlagwort), Verfasser oder Verlag. Über eine Baumstruktur mit vier Ebenen haben Sie die Möglichkeit, Ihr Suchergebnis durch Auswahl weiterer Unterfelder einzuschränken.</p>
-
-                        <h3>Alphabetisch browsen</h3>
-                        <p>Im Modus „Alphabetisch Browsen“ wählen Sie einen der Aspekte Thema, Verfasser, Titel oder DDC aus und können nach Eingabe eines Wortes oder Wortanfangs bestimmen, an welcher Stelle des Alphabets Sie in das Browsen einsteigen wollen. Im Unterschied zu „Thema Browsen“ werden bei „Alphabetisch Browsen“ mit thematischem Aspekt auch <strong>nicht</strong> normierte Schlagwörter durchsucht. Das alphabetische Browsen kann auch dann hilfreich sein, wenn Sie sich bei der Schreibweise eines Autorennamen oder Begriffs nicht sicher sind: Hier reicht die Eingabe eines Wortanfangs aus.</p>
+                        <h3>Thema Browsen</h3>
+                        <p>Beim <a href="<?=$this->url('keywordchainsearch-home')?>" target="_blank"><?=$this->transEsc('Browse Keywordchains')?></a>
+                           können Sie sich durch Eingabe eines oder mehrerer Suchbegriffe Schlagwörter und normierte Schlagwortfolgen anzeigen 
+                           lassen, die gegebenen Suchbegriffen „ähnlich“ sind. Dies eignet sich insbesondere, um Hinweise auf thematisch verwandte Schlagwortketten 
+                           und dazugehörige Titel zu bekommen. Aus der Volltitelanzeige gelangen Sie über den Button 
+                           <span class="iconlabel label label-info">B</span> ebenfalls in den Modus „Thema Browsen“: Auf diese Weise werden Sie zu weiteren Titeln mit 
+                           derselben oder einer ähnlichen Schlagwortfolge in der Datenbank geführt.</p>
+                        <h3>Browsen / nach Kategorien</h3>
+                        <p>Das <a href="<?=$this->url('browse-home')?>" target="_blank"><?=$this->transEsc('Browse by Category')?></a> bietet Ihnen die Möglichkeit, 
+                           ausgehend von Oberkategorien nach bestimmten Aspekten zu einer Ergebnisemenge zu kommen,
+                           ohne dass im Vorfeld Suchbegriffe bekannt sein müssen. Sie wählen Ihren Einstieg aus einem der folgenden Felder aus: DDC,
+                           RelBib-Klassifikation, Thema (Schlagwort), Verfasser oder Verlag. Über eine Baumstruktur mit vier Ebenen haben Sie die Möglichkeit, 
+                           Ihr Suchergebnis durch Auswahl weiterer Unterfelder einzuschränken.</p>
+                        <h3>Alphabetisch Browsen</h3>
+                        <p>Im Modus <a href="<?=$this->url('alphabrowse-home')?>" target="_blank"><?=$this->transEsc('Browse Alphabetically')?></a> stellt eine umfassende, 
+                           alphabetisch sortierte Liste der Inhalte der jeweiligen Kategorien zur Verfügung. Dies
+                           ist zu z.B. für eine Überblicksrecherche von Vorteil. So wählen Sie einen der Aspekte Thema, Verfasser, Titel oder DDC aus und können 
+                           nach Eingabe eines Wortes oder Wortanfangs bestimmen, an welcher Stelle des Alphabets Sie in das Browsen einsteigen wollen. 
+                           Das alphabetische Browsen kann auch dann hilfreich sein, wenn Sie sich bei der Schreibweise eines Autorennamen oder Begriffs nicht 
+                           sicher sind: Hier reicht die Eingabe eines Wortanfangs aus.</p>
                     </div>
                 </div>
                 <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
