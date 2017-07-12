@@ -63,6 +63,7 @@ $panelWidth = "col-md-6";
                      <p>Further journals are gradually being integrated into our indexing procedure for articles. The alphabetical 
                          <a href="<?='https://'.$_SERVER['SERVER_NAME'] . '/relbib_docs/relbib_journals.pdf'?>" target="_blank">
                         list of journals</a> gives the latest information on which periodicals are being processed.</p>
+                     <div class="read-more-target">
                      <p>One particular feature of RelBib is the availability display: with that, you can quickly find out whether and where an article, 
                         periodical or book is available. Links to online texts can be accessed directly if the publishers’ licenses allow it.</p>
                      <p>RelBib constitutes a free and open access service to the worldwide scholarly community of Religious Studies. The editor of RelBib is the 
@@ -70,7 +71,6 @@ $panelWidth = "col-md-6";
                         (central library of the University of Tübingen). RelBib is being produced in close cooperation with 
                         <a href="https://ixtheo.de" target="_blank">IxTheo</a> by the Fachinformationsdienst “Religionswissenschaft” 
                         (Specialized Information Service of Religious Studies).</p>
-                     <div class="read-more-target">
                      <p>We apologize in advance for any errors which might come up at this early stage of development. We wish you an enjoyable experience as 
                         you explore RelBib and we would be glad to get your feedback!</p>
                      </div>
@@ -99,7 +99,8 @@ $panelWidth = "col-md-6";
                            possible search fields. The drop-down menu allows you to narrow the search down to one specific category: title, author, call number (DDC), 
                            subject or ISBN / ISSN.</p>
 
-                        <p>You may specify your results by means of the filter settings in the right column of the search result list according to the following criteria:
+                        <p>You may specify your results by means of the filter settings in the right column of the search result list according to the 
+                           following criteria:</p>
                         <ul>
                             <li>time: year of publication</li>
                             <li>medium: open access, mediatype, format</li>
@@ -107,7 +108,6 @@ $panelWidth = "col-md-6";
                             <li>content: topic, genre, era, region</li>
                             <li>form: language, author, publisher</li>
                           </ul>
-                        </p>
                         <p>Some of the filters allow multiple selection.</p>
                         <h3>Advanced Search</h3>
                         <p>You can start an “Advanced Search” if you click on the link underneath the search field. Compared to “Simple Search”, here it is possible to
@@ -192,19 +192,22 @@ $panelWidth = "col-md-6";
                         <!-- Needed since otherwise the More-Button gets confused immediately before a heading -->
                         <div style="height: 0px;">&emsp;</div>
                         <h3>Find Topic</h3>
-                        <p>In this mode you enter one or more terms in an additional search field. What you receive is a list of subject heading strings which 
-                           contain these search terms.</p>
-                        <p>You can switch to this mode from the other way around: Select a specific title which was catalogued with subject headings. 
-                           Just click on the B-button on the left of the subject heading string, and you will see other titles which were catalogued with that string.</p>
+                        <p>The <a href="<?=$this->url('keywordchainsearch-home')?>" target="_blank"><?=$this->transEsc('Browse Keywordchains')?></a> mode is intended to find subjects
+                           and standardized subject groups that are similar to to the terms entered. This is especially useful to obtain subject groups and titles 
+                           that are topically close to your originating search.
+                           You can switch to this mode from the other way around: Select a specific title which was catalogued with subject headings. 
+                           Just click on the <span class="iconlabel label label-info">B</span> button on the left of the subject heading string, and you will 
+                           see other titles which were catalogued with that string.</p>
                         <h3>Browsing by Category</h3>
-                        <p>The standard browsing function of the software used by RelBib (VuFind) makes it possible to browse through various fields: call number 
-                           (DDC classmarks), RelBib classification, topic (subject heading), author and publisher. You are lead through a tree structure and may 
+                        <p>The <a href="<?=$this->url('browse-home')?>" target="_blank"><?=$this->transEsc('Browse by Category')?></a> offers a way to start with some high 
+                           level categories and refine your search to certain aspects without the need to know specific search terms beforehand. Categories provieded are 
+                           call number (DDC classmarks), RelBib classification, topic (subject heading), author and publisher. You are lead through a tree structure and may 
                            filter the items you wish to browse by using other fields.</p>
                         <h3>Browse Alphabetically</h3>
-                        <p>With this browse option, you can decide at which point in the alphabet you would like to step in. It is necessary to choose one of the following 
-                           categories before you enter a word or the beginning of a word: by topic, by author, by title or by call number.</p>
-                        <p>With this browse option, you can decide at which point in the alphabet you would like to step in. It is necessary to choose one of the following 
-                           categories before you enter a word or the beginning of a word: by topic, by author, by title or by call number.</p>
+                        <p>The  <a href="<?=$this->url('alphabrowse-home')?>" target="_blank"><?=$this->transEsc('Browse Alphabetically')?></a> offers a comprehensive
+                           alphabetically sorted list of the contents of the respective categories. This is advantageous for survey research.
+                           You can decide at which point in the alphabet you would like to step in. You can choose from the following aspects:
+                           by topic, by author, by title or by call number. You can decide at which point in the alphabet you would like to step in.</p>
                     </div>
                 </div>
                 <label for="post-<?= $panelId; ?>" class="read-more-trigger"></label>
