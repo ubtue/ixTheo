@@ -13,8 +13,8 @@ class RouteGenerator extends \VuFind\Route\RouteGenerator
     {
         parent::__construct($nonTabRecordActions);
         if (null === $nonTabRecordActions) {
-            $this->nonTabRecordActions[] = ['PDASubscribe'];
-            $this->nonTabRecordActions[] = ['Subscribe'];
+            $this->nonTabRecordActions[] = 'PDASubscribe';
+            $this->nonTabRecordActions[] = 'Subscribe';
         }
     }
 }

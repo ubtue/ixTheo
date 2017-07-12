@@ -1,8 +1,7 @@
 <?php
-namespace VuFind\Search\Subscriptions;
+namespace ixTheo\Search\Subscriptions;
 use VuFind\Exception\ListPermission as ListPermissionException,
     VuFind\Search\Base\Results as BaseResults,
-    VuFind\Record\Cache,
     ZfcRbac\Service\AuthorizationServiceAwareInterface,
     ZfcRbac\Service\AuthorizationServiceAwareTrait;
 

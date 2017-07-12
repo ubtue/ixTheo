@@ -35,6 +35,7 @@ $config = [
             'search_options' => [
                 'factories' => [
                     'KeywordChainSearch' => 'ixTheo\Search\Options\Factory::getKeywordChainSearch',
+                    'Subscriptions' => 'ixTheo\Search\Options\Factory::getSubscriptions',
                 ],
             ],
             'search_params' => [
@@ -44,7 +45,7 @@ $config = [
                 'factories' => [
                     'KeywordChainSearch' => 'ixTheo\Search\Results\Factory::getKeywordChainSearch',
                     'pdasubscriptions' => 'ixTheo\Search\Results\Factory::getPDASubscriptions',
-                    'subscriptions' => 'ixTheo\Search\Results\Factory::getSubscriptions',
+                    'Subscriptions' => 'ixTheo\Search\Results\Factory::getSubscriptions',
                 ],
             ],
         ],
@@ -94,7 +95,11 @@ $config = [
     ],
 ];
 
-$recordRoutes = [];
+$recordRoutes = [
+    // needs to be registered again even if already registered in parent module,
+    // for the nonTabRecordActions added in \ixTheo\Route\RouteGenerator
+    'record' => 'Record',
+];
 $dynamicRoutes = [];
 $staticRoutes = [
     'Browse/IxTheo-Classification',
@@ -104,11 +109,11 @@ $staticRoutes = [
     'Keywordchainsearch/Home',
     'Keywordchainsearch/Results',
     'Keywordchainsearch/Search',
-    'Pipeline/Home',
     'MyResearch/Subscriptions',
     'MyResearch/DeleteSubscription',
     'MyResearch/PDASubscriptions',
-    'MyResearch/DeletePDASubscription'
+    'MyResearch/DeletePDASubscription',
+    'Pipeline/Home',
 ];
 
 $config['router']['routes']['static-page'] = [

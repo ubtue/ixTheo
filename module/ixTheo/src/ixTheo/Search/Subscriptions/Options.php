@@ -1,5 +1,5 @@
 <?php
-namespace VuFind\Search\Subscriptions;
+namespace ixTheo\Search\Subscriptions;
 
 class Options extends \VuFind\Search\Base\Options
 {
