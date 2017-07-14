@@ -1,5 +1,4 @@
 #!/bin/bash
-set -o errexit
 
 #####################################################
 # Build java command
@@ -20,6 +19,9 @@ if [ -z "$SOLR_HOME" ]
 then
   SOLR_HOME="$VUFIND_HOME/solr/vufind"
 fi
+
+set -e
+set -x
 
 cd "`dirname $0`/import"
 CLASSPATH="browse-indexing.jar:${SOLR_HOME}/jars/*:${SOLR_HOME}/../vendor/contrib/analysis-extras/lib/*:${SOLR_HOME}/../vendor/server/solr-webapp/webapp/WEB-INF/lib/*"
@@ -59,19 +61,11 @@ function build_browse
     skip_authority=$3
 
     extra_jvm_opts=$4
-    filter=$5
 
     if [ "$skip_authority" = "1" ]; then
-        $JAVA ${extra_jvm_opts} -Dfile.encoding="UTF-8" -Dfield.preferred=heading -Dfield.insteadof=use_for -cp $CLASSPATH PrintBrowseHeadings "$bib_index" "$field" "" "${browse}.tmp" "$filter"
+        $JAVA ${extra_jvm_opts} -Dfile.encoding="UTF-8" -Dfield.preferred=heading -Dfield.insteadof=use_for -cp $CLASSPATH PrintBrowseHeadings "$bib_index" "$field" "${browse}.tmp"
     else
-        $JAVA ${extra_jvm_opts} -Dfile.encoding="UTF-8" -Dfield.preferred=heading -Dfield.insteadof=use_for -cp $CLASSPATH PrintBrowseHeadings "$bib_index" "$field" "$auth_index" "${browse}.tmp" "$filter"
-    fi
-
-    if [[ ! -z $filter ]]; then
-        out_dir="$index_dir/$filter"
-        mkdir -p "$out_dir"
-    else
-        out_dir="$index_dir"
+        $JAVA ${extra_jvm_opts} -Dfile.encoding="UTF-8" -Dfield.preferred=heading -Dfield.insteadof=use_for -cp $CLASSPATH PrintBrowseHeadings "$bib_index" "$field" "$auth_index" "${browse}.tmp"
     fi
 
     sort -T /var/tmp -u -t$'\1' -k1 "${browse}.tmp" -o "sorted-${browse}.tmp"
@@ -79,8 +73,8 @@ function build_browse
 
     rm -f *.tmp
 
-    mv "${browse}_browse.db" "$out_dir/${browse}_browse.db-updated"
-    touch "$out_dir/${browse}_browse.db-ready"
+    mv "${browse}_browse.db" "$index_dir/${browse}_browse.db-updated"
+    touch "$index_dir/${browse}_browse.db-ready"
 }
 build_browse "hierarchy" "hierarchy_browse"
 build_browse "title" "title_fullStr" 1 "-Dbibleech=StoredFieldLeech -Dsortfield=title_sort -Dvaluefield=title_fullStr"
@@ -88,10 +82,3 @@ build_browse "topic" "topic_browse"
 build_browse "author" "author_browse"
 build_browse "lcc" "callnumber-raw" 1 "-Dbrowse.normalizer=org.vufind.util.LCCallNormalizer"
 build_browse "dewey" "dewey-raw" 1 "-Dbrowse.normalizer=org.vufind.util.DeweyCallNormalizer"
-
-build_browse "hierarchy" "hierarchy_browse" "" "" "is_religious_studies"
-build_browse "title" "title_fullStr" 1 "-Dbibleech=StoredFieldLeech -Dsortfield=title_sort -Dvaluefield=title_fullStr" "is_religious_studies"
-build_browse "topic" "topic_browse" "" "" "is_religious_studies"
-build_browse "author" "author_browse" "" "" "is_religious_studies"
-build_browse "lcc" "callnumber-raw" 1 "-Dbrowse.normalizer=org.vufind.util.LCCallNormalizer" "is_religious_studies"
-build_browse "dewey" "dewey-raw" 1 "-Dbrowse.normalizer=org.vufind.util.DeweyCallNormalizer" "is_religious_studies"
