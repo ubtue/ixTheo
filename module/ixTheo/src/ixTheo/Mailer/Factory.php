@@ -1,10 +1,8 @@
 <?php
 namespace ixTheo\Mailer;
 
-use VuFind\Mailer;
-
 class Factory extends \VuFind\Mailer\Factory {
-    
+
     /**
      * Create service
      *
@@ -18,6 +16,6 @@ class Factory extends \VuFind\Mailer\Factory {
         $config = $sm->get('VuFind\Config')->get('config');
 
         // Create service:
-        return new IxTheoMailer($this->getTransport($config));
+        return new Mailer($this->getTransport($config));
     }
 }

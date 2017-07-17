@@ -1,12 +1,10 @@
 <?php
 namespace ixTheo\Mailer;
 
-use VuFind\Mailer\Mailer;
-
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
-class IxTheoMailer extends \VuFind\Mailer\Mailer implements ServiceLocatorAwareInterface {
+class Mailer extends \VuFind\Mailer\Mailer implements ServiceLocatorAwareInterface {
 
     use ServiceLocatorAwareTrait;
 
