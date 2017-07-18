@@ -12,5 +12,8 @@ return [
             'piwik' => 'ixTheo\View\Helper\Root\Factory::getPiwik',
             'record' => 'ixTheo\View\Helper\Root\Factory::getRecord',
         ],
+        'invokables' => [
+            'browse' => 'ixTheo\View\Helper\Root\Browse',
+        ],
     ],
 ];
