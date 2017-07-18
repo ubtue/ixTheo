@@ -88,10 +88,10 @@ class ResultScroller extends AbstractPlugin
         $this->data->searchId = $searchObject->getSearchId();
         $this->data->page = $searchObject->getParams()->getPage();
         $this->data->limit = $searchObject->getParams()->getLimit();
+        $this->data->sort = $searchObject->getParams()->getSort();
         $this->data->total = $searchObject->getResultTotal();
         $this->data->firstlast = $searchObject->getOptions()
             ->supportsFirstLastNavigation();
-        $this->data->sort = $searchObject->getParams()->getSort();
 
         // save the IDs of records on the current page to the session
         // so we can "slide" from one record to the next/previous records
@@ -525,9 +525,8 @@ class ResultScroller extends AbstractPlugin
      */
     protected function fetchPage($searchObject, $page = null)
     {
-        if (!is_null($page)) {
+        if (null !== $page) {
             $searchObject->getParams()->setPage($page);
-            $searchObject->getParams()->setSort($this->data->sort);
             $searchObject->performAndProcessSearch();
         }
 
@@ -560,6 +559,7 @@ class ResultScroller extends AbstractPlugin
                 // The saved search does not remember its original limit;
                 // we should reapply it from the session data:
                 $search->getParams()->setLimit($this->data->limit);
+                $search->getParams()->setSort($this->data->sort);
                 return $search;
             }
         }

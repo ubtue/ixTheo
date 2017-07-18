@@ -97,11 +97,10 @@ class HelpText extends \Zend\View\Helper\AbstractHelper
      * @param array  $context Variables needed for rendering template; these will
      * be temporarily added to the global view context, then reverted after the
      * template is rendered (default = empty).
-     * @param string $directory the template directory to search in.
      *
      * @return string|bool
      */
-    public function render($name, $context = null, $directory = "HelpTranslations")
+    public function render($name, $context = null)
     {
         // Set up the needed context in the view:
         $this->contextHelper->__invoke($this->getView());
@@ -116,12 +115,12 @@ class HelpText extends \Zend\View\Helper\AbstractHelper
         $this->warnings = [];
 
         $resolver = $this->getView()->resolver();
-        $tpl = "$directory/{$this->language}/{$safe_topic}.phtml";
+        $tpl = "HelpTranslations/{$this->language}/{$safe_topic}.phtml";
         if ($resolver->resolve($tpl)) {
             $html = $this->getView()->render($tpl);
         } else {
             // language missing -- try default language
-            $tplFallback = $directory . '/' . $this->defaultLanguage . '/'
+            $tplFallback = 'HelpTranslations/' . $this->defaultLanguage . '/'
                 . $safe_topic . '.phtml';
             if ($resolver->resolve($tplFallback)) {
                 $html = $this->getView()->render($tplFallback);

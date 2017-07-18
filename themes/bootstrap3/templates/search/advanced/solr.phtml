@@ -1,4 +1,3 @@
-<br/>
 <? if (!empty($this->facetList) || !empty($this->checkboxFacets)): ?>
   <div class="row">
     <fieldset class="col-sm-12">
@@ -8,10 +7,9 @@
       <? endif; ?>
       <div class="row">
         <? foreach ($this->facetList as $field => $list): ?>
-          <? $prefix = ($field == 'ixtheo_notation_facet' || $field == 'relbib_notation_facet') ? 'ixtheo-' : ''; ?>
           <div class="col-sm-<?=floor(12/count($this->facetList)) ?>">
             <label for="limit_<?=$this->escapeHtmlAttr(str_replace(' ', '', $field))?>"><?=$this->transEsc($list['label'])?>:</label>
-            <select class="form-control" id="limit_<?=$this->escapeHtmlAttr(str_replace(' ', '', $field))?>" name="filter[]" multiple="multiple" size="10" data-toggle="tooltip" title="<?=$this->transEsc('tooltip_multiple_selection_with_strg_shift', array(), '')?>">
+            <select class="form-control" id="limit_<?=$this->escapeHtmlAttr(str_replace(' ', '', $field))?>" name="filter[]" multiple="multiple" size="10">
               <? if (is_array($this->hierarchicalFacets) && in_array($field, $this->hierarchicalFacets)): ?>
                 <? foreach ($list['list'] as $value): ?>
                   <? $display = str_pad('', 4 * $value['level'] * 6, '&nbsp;', STR_PAD_LEFT) . $this->escapeHtml($value['displayText']); ?>
@@ -25,14 +23,14 @@
                 $sorted = array();
                 foreach ($list['list'] as $i => $value) {
                   if (!empty($value['displayText'])) {
-                    $sorted[$i] = $this->transEsc($prefix . $value['displayText']);
+                    $sorted[$i] = $value['displayText'];
                   }
                 }
                 natcasesort($sorted);
                 ?>
                 <? foreach ($sorted as $i => $display): ?>
                   <? $value = $list['list'][$i]; ?>
-                  <option value="<?=$this->escapeHtmlAttr(($value['operator'] == 'OR' ? '~' : '') . $field . ':"' . $value['value'] . '"')?>"<?=(isset($value['selected']) && $value['selected'])?' selected="selected"':''?>><?=$display?></option>
+                  <option value="<?=$this->escapeHtmlAttr(($value['operator'] == 'OR' ? '~' : '') . $field . ':"' . $value['value'] . '"')?>"<?=(isset($value['selected']) && $value['selected'])?' selected="selected"':''?>><?=$this->escapeHtml($display)?></option>
                 <? endforeach; ?>
               <? endif; ?>
             </select>
@@ -52,8 +50,6 @@
       <? endforeach; ?>
     </fieldset>
   <? endif; ?>
-  <br/>
-  <?=$this->render('search/advanced/ranges.phtml')?>
   <?=$this->render('search/advanced/limit.phtml')?>
+  <?=$this->render('search/advanced/ranges.phtml')?>
 </div>
-<br/>

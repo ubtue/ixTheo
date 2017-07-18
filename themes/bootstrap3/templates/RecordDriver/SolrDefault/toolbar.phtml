@@ -12,7 +12,9 @@
   <? if (count($this->driver->getCitationFormats()) > 0): ?>
     <li><a class="cite-record" data-lightbox href="<?=$this->recordLink()->getActionUrl($this->driver, 'Cite')?>" rel="nofollow"><i class="fa fa-asterisk" aria-hidden="true"></i> <?=$this->transEsc('Cite this')?></a></li>
   <? endif; ?>
+  <li><a class="sms-record" data-lightbox href="<?=$this->recordLink()->getActionUrl($this->driver, 'SMS')?>" rel="nofollow"><i class="fa fa-mobile" aria-hidden="true"></i> <?=$this->transEsc('Text this')?></a></li>
   <li><a class="mail-record" data-lightbox href="<?=$this->recordLink()->getActionUrl($this->driver, 'Email')?>" rel="nofollow"><i class="fa fa-envelope" aria-hidden="true"></i> <?=$this->transEsc('Email this')?></a></li>
+
   <? $exportFormats = $this->export()->getFormatsForRecord($this->driver); ?>
   <? if(count($exportFormats) > 0): ?>
     <li class="dropdown">
@@ -47,8 +49,5 @@
         </form>
       </noscript>
     </li>
-  <? endif; ?>
-  <? if ($this->driver->isSubscribable()):?>
-  <li><a class="subscribe-record" data-lightbox href="<?=$this->recordLink()->getActionUrl($this->driver, 'Subscribe')?>" rel="nofollow"><i class="fa fa-bell"></i> <?=$this->transEsc('Subscribe')?></a></li>
   <? endif; ?>
 </ul>

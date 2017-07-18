@@ -7,12 +7,13 @@ if (is_object($marc)) {
 } else {
     $marcPhdField = $marcProceedingsField = false;
 }
+$journalTitle = $this->driver->tryMethod('getContainerTitle');
 $formats = $this->driver->tryMethod('getFormats');
 if ($marcProceedingsField) {
     $format = 'proceedings';
 } else if ($marcPhdField) {
     $format = 'phdthesis';
-} else if (is_array($formats) && in_array('Article', $formats)) {
+} else if (!empty($journalTitle) || (is_array($formats) && in_array('Article', $formats))) {
     $format = 'article';
 } else if (is_array($formats) && in_array('Journal', $formats)) {
     $format = 'misc';
@@ -29,31 +30,27 @@ echo $this->driver->getSourceIdentifier() . '-' .  $this->driver->getUniqueId() 
 $title = rtrim($this->driver->getTitle(), " /");
 echo "title = {{$title}},\n";
 
-$ids_and_titles = $this->driver->tryMethod('getContainerIdsAndTitles');
-if (!empty($ids_and_titles)) {
-    echo "journal = {";
-    $i = 0;
-    foreach ($ids_and_titles as $id => $title):
-        echo $title[0];
-        if (++$i < count($ids_and_titles))
-            echo ", ";
-    endforeach;
-    echo "}\n";
-}
-
-$issue = $this->driver->tryMethod('getIssue');
-if (!empty($issue)) {
-    echo "number = {{$issue}}\n";
-}
-
-$pages = $this->driver->tryMethod('getPages');
-if (!empty($pages)) {
-    echo "pages = {{$pages}}\n";
-}
-
-$volume = $this->driver->tryMethod('getVolume');
-if (!empty($volume)) {
-   echo "volume = {{$volume}}\n";
+if (!empty($journalTitle)) {
+    echo "journal = {{$journalTitle}},\n";
+    $volume = $this->driver->tryMethod('getContainerVolume');
+    if (!empty($volume)) {
+        echo "volume = {{$volume}},\n";
+    }
+    $number = $this->driver->tryMethod('getContainerIssue');
+    if (!empty($number)) {
+        echo "number = {{$number}},\n";
+    }
+    $start = $this->driver->tryMethod('getContainerStartPage');
+    $end = $this->driver->tryMethod('getContainerEndPage');
+    if (!empty($start)) {
+        // use page range if possible
+        if (!empty($end)) {
+            echo "pages = {{$start}-{$end}},\n";
+        } else {
+            // use only start page
+            echo "pages = {{$start}},\n";
+        }
+    }
 }
 
 $series = $this->driver->tryMethod('getSeries');
@@ -65,20 +62,15 @@ if (is_array($series)) {
 
 $author = $this->driver->tryMethod('getPrimaryAuthor');
 if (!empty($author)) {
-    $author = $this->driver->stripTrailingDates($author);
     echo "author = {{$author}},\n";
 }
 
 $secondaryAuthors = $this->driver->tryMethod('getSecondaryAuthors');
 if (is_array($secondaryAuthors)) {
-    foreach ($secondaryAuthors as $secondaryAuthor) {
-        $secondaryAuthor = $this->driver->stripTrailingDates($secondaryAuthor);
-        echo "editor = {{$secondaryAuthor}},\n";
+    foreach ($secondaryAuthors as $current) {
+        echo "editor = {{$current}},\n";
     }
 }
-
-
-
 
 $pubPlaces = $this->driver->tryMethod('getPlacesOfPublication');
 $pubDates = $this->driver->tryMethod('getPublicationDates');

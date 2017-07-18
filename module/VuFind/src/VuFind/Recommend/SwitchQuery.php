@@ -269,7 +269,24 @@ class SwitchQuery implements RecommendInterface
         return (strpos($query, '"') === false)
             ? false : trim(str_replace('"', ' ', $query));
     }
-    
+
+    /**
+     * Will adding a wildcard help?
+     *
+     * @param string $query Query to check
+     *
+     * @return string|bool
+     */
+    protected function checkWildcard($query)
+    {
+        $query = trim($query, ' ?~');
+        // Don't pile wildcards on phrases:
+        if (substr($query, -1) == '"') {
+            return false;
+        }
+        return (substr($query, -1) != '*') ? $query . '*' : false;
+    }
+
     /**
      * Broaden search by truncating one character (e.g. call number)
      *

@@ -83,7 +83,6 @@ class AlphabrowseController extends AbstractBase
             ];
         }
 
-
         // Load remaining config parameters
         $rows_before = isset($config->AlphaBrowse->rows_before)
             && is_numeric($config->AlphaBrowse->rows_before)
@@ -114,9 +113,6 @@ class AlphabrowseController extends AbstractBase
             $extraParams->add('extras', $extras[$source]);
         }
 
-        // Set up potential filter from Config
-        $resultFilter = isset($config->AlphaBrowse_Filter->filter) ? $config->AlphaBrowse_Filter->filter : null;
-
         // Create view model:
         $view = $this->createViewModel();
 
@@ -124,7 +120,7 @@ class AlphabrowseController extends AbstractBase
         if ($source && $from !== false) {
             // Load Solr data or die trying:
             $result = $db->alphabeticBrowse(
-                $source, $from, $page, $limit, $extraParams, 0 - $rows_before, $resultFilter
+                $source, $from, $page, $limit, $extraParams, 0 - $rows_before
             );
 
             // No results?    Try the previous page just in case we've gone past
@@ -132,7 +128,7 @@ class AlphabrowseController extends AbstractBase
             if ($result['Browse']['totalCount'] == 0) {
                 $page--;
                 $result = $db->alphabeticBrowse(
-                    $source, $from, $page, $limit, $extraParams, 0, $resultFilter
+                    $source, $from, $page, $limit, $extraParams, 0
                 );
                 if ($highlighting) {
                     $view->highlight_end = true;

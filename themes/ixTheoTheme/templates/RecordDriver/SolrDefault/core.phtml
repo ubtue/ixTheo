@@ -66,7 +66,7 @@
         </td>
       </tr>
       <? endif; ?>
-      
+
       <? if (!empty($prevTitles)): ?>
       <tr>
         <th><?=$this->transEsc('Previous Title')?>: </th>
@@ -140,9 +140,9 @@
           <? endif; ?>
       </tr>
 
-      <? include(realpath(dirname(__FILE__) . '/JOP.phtml')); ?>
+      <?=$this->render('RecordDriver/SolrDefault/JOP.phtml'); ?>
 
-      <? include(realpath(dirname(__FILE__) . '/PDA.phtml')); ?>
+      <?=$this->render('RecordDriver/SolrDefault/PDA.phtml'); ?>
       <?
         $subito_url = $this->driver->getSubitoURL('IXTHEO');
         if (!empty($subito_url)):
@@ -283,7 +283,7 @@
                 <? if (count($parts) > 0):?>
                   <? $i=0 ?>
                   <? foreach ($parts as $part):?>
-                    <a href="<?= $this->record($this->driver)->getLink('subject', $part)?>"><?= $this->escapeHtml($part) ?></a> 
+                    <a href="<?= $this->record($this->driver)->getLink('subject', $part)?>"><?= $this->escapeHtml($part) ?></a>
                   <?= $i++ < count($parts) - 1 ? ' / ' : '' ?>
                   <? endforeach; ?>
                <? endif; ?>
@@ -301,7 +301,7 @@
               <? $parts = explode('|', $current); ?>
               <? $query = '"'. implode('" "', $parts).'"'; ?>
               <a href="<?=$this->url('keywordchainsearch-results')?>?lookfor=<?=urlencode($query)?>" title="<?=$this->transEsc('Browse Keywordchains')?>"><span class="iconlabel label label-info">B</span></a>
-              <? // Make single keywords clickable 
+              <? // Make single keywords clickable
                 foreach ($parts as $part):?>
                   <a href="<?= $this->record($this->driver)->getLink('subject', $part)?>"><?= $this->escapeHtml(str_replace("\\/", "/", $part)) ?></a>
               <? endforeach; ?>

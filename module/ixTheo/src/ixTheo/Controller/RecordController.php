@@ -13,7 +13,7 @@ class RecordController extends \VuFind\Controller\RecordController
         $post = $this->getRequest()->getPost()->toArray();
         $results = $this->loadRecord()->subscribe($post, $user);
 
-        if ($results == null) 
+        if ($results == null)
             return $this->createViewModel();
 
         $this->flashMessenger()->addMessage("Success", 'success');
@@ -40,7 +40,7 @@ class RecordController extends \VuFind\Controller\RecordController
         } else if ($this->params()->fromPost('action') == 'unsubscribe') {
             return $this->processUnsubscribe();
         }
-
+        
         // Retrieve user object and force login if necessary:
         if (!($user = $this->getUser())) {
             return $this->forceLogin();

@@ -27,7 +27,6 @@
  * @link     https://vufind.org/wiki/development:plugins:record_drivers Wiki
  */
 namespace VuFind\RecordDriver;
-
 use VuFindCode\ISBN, VuFind\View\Helper\Root\RecordLink;
 
 /**
@@ -130,16 +129,15 @@ class SolrDefault extends AbstractBase
     /**
      * Constructor
      *
-     * @param \Zend\Config\Config $mainConfig VuFind main configuration (omit for
+     * @param \Zend\Config\Config $mainConfig     VuFind main configuration (omit for
      * built-in defaults)
-     * @param \Zend\Config\Config $recordConfig Record-specific configuration file
+     * @param \Zend\Config\Config $recordConfig   Record-specific configuration file
      * (omit to use $mainConfig as $recordConfig)
      * @param \Zend\Config\Config $searchSettings Search-specific configuration file
      */
     public function __construct($mainConfig = null, $recordConfig = null,
-                                $searchSettings = null
-    )
-    {
+        $searchSettings = null
+    ) {
         // Turn on highlighting/snippets as needed:
         $this->highlight = !isset($searchSettings->General->highlighting)
             ? false : $searchSettings->General->highlighting;
@@ -584,20 +582,6 @@ class SolrDefault extends AbstractBase
     }
 
     /**
-     * Get a highlighted corporation string, if available.
-     *
-     * @return string
-     */
-    public function getHighlightedCorporation(){
-        // Don't check for highlighted values if highlighting is disabled:
-        if (!$this->highlight) {
-            return '';
-        }
-        return (isset($this->highlightDetails['corporation'][0]))
-            ? $this->highlightDetails['corporation'][0] : '';
-    }
-
-    /**
      * Get a string representing the last date that the record was indexed.
      *
      * @return string
@@ -1011,52 +995,6 @@ class SolrDefault extends AbstractBase
     }
 
     /**
-     * Get the issue of the current record.
-     *
-     * @return string
-     */
-    public function getIssue()
-    {
-        return isset($this->fields['issue']) ?
-            $this->fields['issue'] : '';
-    }
-
-    /**
-     * Get the pages of the current record.
-     *
-     * @return string
-     */
-    public function getPages()
-    {
-        return isset($this->fields['pages']) ?
-            $this->fields['pages'] : '';
-    }
-
-    /**
-     * Get the volume of the current record.
-     *
-     * @return string
-     */
-    public function getVolume()
-    {
-        return isset($this->fields['volume']) ?
-            $this->fields['volume'] : '';
-    }
-
-    /**
-     * Get the year of the current record.
-     *
-     * @return string
-     */
-    public function getYear()
-    {
-        return isset($this->fields['year']) ?
-            $this->fields['year'] : '';
-    }
-
-
-
-    /**
      * Get an array of physical descriptions of the item.
      *
      * @return array
@@ -1133,7 +1071,7 @@ class SolrDefault extends AbstractBase
         return isset($this->fields['author_role']) ?
             $this->fields['author_role'] : [];
     }
-    
+
     /**
      * Get credits of people involved in production of the item.
      *
@@ -1194,35 +1132,6 @@ class SolrDefault extends AbstractBase
 
         return $retval;
     }
-
-
-    /**
-     * Get an array of publication detail lines combining information from
-     * getPublicationDates(), getPublishers()
-     *
-     * @return array
-     */
-    public function getPublicationDetailsNoPlaces(){
-
-        $names = $this->getPublishers();
-        $dates = $this->getHumanReadablePublicationDates();
-
-        $i = 0;
-        $retval = [];
-        while (isset($names[$i]) || isset($dates[$i])) {
-            // Build objects to represent each set of data; these will
-            // transform seamlessly into strings in the view layer.
-            $retval[] = new Response\PublicationDetails(
-                isset($names[$i]) ? $names[$i] : '',
-                isset($dates[$i]) ? $dates[$i] : '',
-                null
-            );
-            $i++;
-        }
-
-        return $retval;
-    }
-   
 
     /**
      * Get an array of publication frequency information.
@@ -1293,41 +1202,6 @@ class SolrDefault extends AbstractBase
     }
 
     /**
-     * Get role of secondary authors.
-     *
-     * @return array
-     */
-    public function getSecondaryAuthorsRole()
-    {
-        return isset($this->fields['author2-role']) ?
-            $this->fields['author2-role'] : [];
-    }
-
-    /**
-     * Get secondary author and its role in a '$'-separated string
-     *
-     * @return array
-     */
-    public function getSecondaryAuthorsAndRole(){
-        return isset($this->fields['author2_and_role']) ?
-            $this->fields['author2_and_role'] : [];
-    }
-
-
-
-    /**
-     * Get corporation.
-     *
-     * @return array
-     */
-    public function getCorporation()
-    {
-        return isset($this->fields['corporation']) ?
-            $this->fields['corporation'] : [];
-    }
-
-
-    /**
      * Get an array of all secondary authors roles (complementing
      * getPrimaryAuthorsRoles()).
      *
@@ -1355,27 +1229,6 @@ class SolrDefault extends AbstractBase
         return isset($this->fields['series2']) ?
             $this->fields['series2'] : [];
     }
-
-
-    /**
-     * Return an associative array of all container IDs (parents) mapped to their titles containing the record.
-     *
-     * @return array
-     */
-    public function getContainerIDsAndTitles()
-    {
-        $retval = array();
-        if (isset($this->fields['container_ids_and_titles']) && !empty($this->fields['container_ids_and_titles'])) {
-            foreach ($this->fields['container_ids_and_titles'] as $id_title_and_volume) {
-                $a = explode("#31;", $id_title_and_volume, 3);
-                if (count($a) == 3) {
-                    $retval[$a[0]] = [$a[1], $a[2]];
-                }
-            }
-        }
-        return $retval;
-    }
-
 
     /**
      * Get the short (pre-subtitle) title of the record.
@@ -1471,10 +1324,10 @@ class SolrDefault extends AbstractBase
             return $this->fields['thumbnail'];
         }
         $arr = [
-            'author' => mb_substr($this->getPrimaryAuthor(), 0, 300, 'utf-8'),
+            'author'     => mb_substr($this->getPrimaryAuthor(), 0, 300, 'utf-8'),
             'callnumber' => $this->getCallNumber(),
-            'size' => $size,
-            'title' => mb_substr($this->getTitle(), 0, 300, 'utf-8')
+            'size'       => $size,
+            'title'      => mb_substr($this->getTitle(), 0, 300, 'utf-8')
         ];
         if ($isbn = $this->getCleanISBN()) {
             $arr['isbn'] = $isbn;
@@ -1507,12 +1360,8 @@ class SolrDefault extends AbstractBase
      */
     public function getTitle()
     {
-        $title = $this->getShortTitle();
-        $subtitle = $this->getSubtitle();
-        $titleSection = $this->getTitleSection();
-        if (!empty($subtitle)) { $title .= ' : ' . $subtitle; }
-        if (!empty($titleSection)) { $title .= ' / ' . $titleSection; }
-        return $title;
+        return isset($this->fields['title']) ?
+            $this->fields['title'] : '';
     }
 
     /**
@@ -1625,8 +1474,7 @@ class SolrDefault extends AbstractBase
      */
     public function setHierarchyDriverManager(
         \VuFind\Hierarchy\Driver\PluginManager $pm
-    )
-    {
+    ) {
         $this->hierarchyDriverManager = $pm;
         return $this;
     }
@@ -1675,30 +1523,30 @@ class SolrDefault extends AbstractBase
 
         // Check config setting for what constitutes a collection, act accordingly:
         switch ($hierarchyDriver->getCollectionLinkType()) {
-            case 'All':
-                if (isset($this->fields['hierarchy_parent_title'])
-                    && isset($this->fields['hierarchy_parent_id'])
-                ) {
-                    $titles = $this->fields['hierarchy_parent_title'];
-                    $ids = $this->fields['hierarchy_parent_id'];
-                }
-                break;
-            case 'Top':
-                if (isset($this->fields['hierarchy_top_title'])
-                    && isset($this->fields['hierarchy_top_id'])
-                ) {
-                    foreach ($this->fields['hierarchy_top_id'] as $i => $topId) {
-                        // Don't mark an item as its own parent -- filter out parent
-                        // collections whose IDs match that of the current collection.
-                        if (!$isCollection
-                            || $topId !== $this->fields['is_hierarchy_id']
-                        ) {
-                            $ids[] = $topId;
-                            $titles[] = $this->fields['hierarchy_top_title'][$i];
-                        }
+        case 'All':
+            if (isset($this->fields['hierarchy_parent_title'])
+                && isset($this->fields['hierarchy_parent_id'])
+            ) {
+                $titles = $this->fields['hierarchy_parent_title'];
+                $ids = $this->fields['hierarchy_parent_id'];
+            }
+            break;
+        case 'Top':
+            if (isset($this->fields['hierarchy_top_title'])
+                && isset($this->fields['hierarchy_top_id'])
+            ) {
+                foreach ($this->fields['hierarchy_top_id'] as $i => $topId) {
+                    // Don't mark an item as its own parent -- filter out parent
+                    // collections whose IDs match that of the current collection.
+                    if (!$isCollection
+                        || $topId !== $this->fields['is_hierarchy_id']
+                    ) {
+                        $ids[] = $topId;
+                        $titles[] = $this->fields['hierarchy_top_title'][$i];
                     }
                 }
-                break;
+            }
+            break;
         }
 
         // Map the titles and IDs to a useful format:
@@ -1727,18 +1575,18 @@ class SolrDefault extends AbstractBase
 
         // Check config setting for what constitutes a collection
         switch ($hierarchyDriver->getCollectionLinkType()) {
-            case 'All':
-                return (isset($this->fields['is_hierarchy_id']));
-            case 'Top':
-                return isset($this->fields['is_hierarchy_title'])
+        case 'All':
+            return (isset($this->fields['is_hierarchy_id']));
+        case 'Top':
+            return isset($this->fields['is_hierarchy_title'])
                 && isset($this->fields['is_hierarchy_id'])
                 && in_array(
                     $this->fields['is_hierarchy_id'],
                     $this->fields['hierarchy_top_id']
                 );
-            default:
-                // Default to not be a collection level record
-                return false;
+        default:
+            // Default to not be a collection level record
+            return false;
         }
     }
 
@@ -1798,9 +1646,9 @@ class SolrDefault extends AbstractBase
      * Return an XML representation of the record using the specified format.
      * Return false if the format is unsupported.
      *
-     * @param string $format Name of format to use (corresponds with OAI-PMH
+     * @param string     $format     Name of format to use (corresponds with OAI-PMH
      * metadataPrefix parameter).
-     * @param string $baseUrl Base URL of host containing VuFind (optional;
+     * @param string     $baseUrl    Base URL of host containing VuFind (optional;
      * may be used to inject record URLs into XML when appropriate).
      * @param RecordLink $recordLink Record link helper (optional; may be used to
      * inject record URLs into XML when appropriate).
@@ -1865,19 +1713,6 @@ class SolrDefault extends AbstractBase
     {
         return ['APA', 'Chicago', 'MLA'];
     }
-
-    /**
-     * Get the title of the item that contains this record (i.e. MARC 773s of a
-     * journal).
-     *
-     * @return string
-     */
-    public function getJournalIssue()
-    {
-        return isset($this->fields['journal_issue'])
-            ? $this->fields['journal_issue'] : '';    
-    }
-
 
     /**
      * Get the title of the item that contains this record (i.e. MARC 773s of a
@@ -1984,25 +1819,25 @@ class SolrDefault extends AbstractBase
         $types = [];
         foreach ($this->getFormats() as $format) {
             switch ($format) {
-                case 'Book':
-                case 'eBook':
-                    $types['Book'] = 1;
-                    break;
-                case 'Video':
-                case 'VHS':
-                    $types['Movie'] = 1;
-                    break;
-                case 'Photo':
-                    $types['Photograph'] = 1;
-                    break;
-                case 'Map':
-                    $types['Map'] = 1;
-                    break;
-                case 'Audio':
-                    $types['MusicAlbum'] = 1;
-                    break;
-                default:
-                    $types['CreativeWork'] = 1;
+            case 'Book':
+            case 'eBook':
+                $types['Book'] = 1;
+                break;
+            case 'Video':
+            case 'VHS':
+                $types['Movie'] = 1;
+                break;
+            case 'Photo':
+                $types['Photograph'] = 1;
+                break;
+            case 'Map':
+                $types['Map'] = 1;
+                break;
+            case 'Audio':
+                $types['MusicAlbum'] = 1;
+                break;
+            default:
+                $types['CreativeWork'] = 1;
             }
         }
         return array_keys($types);
@@ -2076,30 +1911,10 @@ class SolrDefault extends AbstractBase
     public function getContainerRecordID()
     {
         return $this->containerLinking
-        && !empty($this->fields['hierarchy_parent_id'])
+            && !empty($this->fields['hierarchy_parent_id'])
             ? $this->fields['hierarchy_parent_id'][0] : '';
     }
 
-    /**
-     * Return an associative array of URL's mapped to their material types.
-     *
-     * @return array
-     */
-    public function getURLsAndMaterialTypes()
-    {
-        $retval = [];
-        if (isset($this->fields['urls_and_material_types']) && !empty($this->fields['urls_and_material_types'])) {
-            foreach ($this->fields['urls_and_material_types'] as $url_and_material_type) {
-                $last_colon_pos = strrpos($url_and_material_type, ":");
-                if ($last_colon_pos) {
-                    $material_type = substr($url_and_material_type, $last_colon_pos + 1);
-                    $retval[substr($url_and_material_type, 0, $last_colon_pos)] = $material_type;
-                }
-            }
-        }
-        return $retval;
-    }
-        
     /**
      * Get the bbox-geo variable.
      *

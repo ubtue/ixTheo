@@ -241,7 +241,7 @@ class Solr implements AutocompleteInterface
                         $current[$field], $query, $exact
                     );
                     if ($bestMatch) {
-                        $results[] = $this->mungeQuery($bestMatch);
+                        $results[] = $bestMatch;
                         break;
                     }
                 }

@@ -62,9 +62,8 @@ class FeedbackController extends AbstractBase
             $config = $this->getServiceLocator()->get('VuFind\Config')
                 ->get('config');
             $feedback = isset($config->Feedback) ? $config->Feedback : null;
-            $site = isset($config->Site) ? $config->Site : null;
-            $recipient_email = isset($site->email)
-                ? $site->email : null;
+            $recipient_email = isset($feedback->recipient_email)
+                ? $feedback->recipient_email : null;
             $recipient_name = isset($feedback->recipient_name)
                 ? $feedback->recipient_name : 'Your Library';
             $email_subject = isset($feedback->email_subject)
@@ -82,12 +81,6 @@ class FeedbackController extends AbstractBase
             $email_message = empty($view->name) ? '' : 'Name: ' . $view->name . "\n";
             $email_message .= 'Email: ' . $view->email . "\n";
             $email_message .= 'Comments: ' . $view->comments . "\n\n";
-            $email_message .= "----------------------------------------------------------------------------------------------\n";
-            $email_message .= "Aktuelle Seite: " . $this->getRequest()->getHeaders("Referer")->getUri() . "\n";
-            $email_message .= "Browser:        " . htmlentities($this->getRequest()->getHeaders("User-Agent")->getFieldValue()) . "\n";
-            $email_message .= "Cookies:        " . htmlentities($this->getRequest()->getCookie()->getFieldValue()) . "\n";
-            $email_message .= "----------------------------------------------------------------------------------------------\n\n";
-
 
             // This sets up the email to be sent
             // Attempt to send the email and show an appropriate flash message:

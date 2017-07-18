@@ -66,8 +66,6 @@ class Browse extends AbstractHelper
             return 'geographic_facet';
         case 'era':
             return 'era_facet';
-        case 'ixtheo-classification':
-            return 'ixtheo_notation_facet';
         }
         if ($backup == null) {
             return $action;
