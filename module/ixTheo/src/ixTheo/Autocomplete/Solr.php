@@ -43,7 +43,7 @@ class Solr extends \VuFind\Autocomplete\Solr
     protected function mungeQuery($query)
     {
         // Modify the query so it makes a nice, truncated autocomplete query:
-        $forbidden = [':', '(', ')', '*', '+', '"', '–' /* a hyphen, not a minus sign */];
+        $forbidden = [':', '(', ')', '*', '+', '"', '–' /* a hyphen, not a minus sign */, '='];
         $query = str_replace($forbidden, " ", $query);
         if (substr($query, -1) != " ") {
             $query .= "*";
