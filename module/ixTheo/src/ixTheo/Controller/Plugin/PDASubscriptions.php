@@ -9,7 +9,7 @@ use VuFind\Exception\LoginRequired as LoginRequiredException,
 /**
  * Zend action helper to perform favorites-related actions
  */
-class PDASubscriptions extends \VuFind\Controller\Plugin\AbstractPlugin
+class PDASubscriptions extends AbstractPlugin
 {
     /**
      * Delete a group of pda-subscriptions.

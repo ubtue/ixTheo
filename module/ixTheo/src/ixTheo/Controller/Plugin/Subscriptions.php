@@ -8,7 +8,7 @@ use VuFind\Exception\LoginRequired as LoginRequiredException,
 /**
  * Zend action helper to perform favorites-related actions
  */
-class Subscriptions extends \VuFind\Controller\Plugin\AbstractPlugin
+class Subscriptions extends AbstractPlugin
 {
 
     /**
