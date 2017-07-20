@@ -147,6 +147,7 @@
         $subito_url = $this->driver->getSubitoURL('IXTHEO');
         if (!empty($subito_url)):
       ?>
+        <tr>
           <th><?=$this->transEsc('Subito Delivery Service');?>: </th>
 	  <td><a target="_blank" href="<?=$subito_url?>"><?=$this->transEsc("Order now");?>.</a></td>
         </tr>
