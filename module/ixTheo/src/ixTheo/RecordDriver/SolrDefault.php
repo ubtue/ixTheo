@@ -137,25 +137,6 @@ class SolrDefault extends \TueLib\RecordDriver\SolrMarc
     }
 
     /**
-     * Return an associative array of all container IDs (parents) mapped to their titles containing the record.
-     *
-     * @return array
-     */
-    public function getContainerIDsAndTitles()
-    {
-        $retval = array();
-        if (isset($this->fields['container_ids_and_titles']) && !empty($this->fields['container_ids_and_titles'])) {
-            foreach ($this->fields['container_ids_and_titles'] as $id_title_and_volume) {
-                $a = explode("#31;", $id_title_and_volume, 3);
-                if (count($a) == 3) {
-                    $retval[$a[0]] = [$a[1], $a[2]];
-                }
-            }
-        }
-        return $retval;
-    }
-
-    /**
      * Get the title of the item that contains this record (i.e. MARC 773s of a
      * journal).
      *
