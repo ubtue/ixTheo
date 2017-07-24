@@ -9,6 +9,12 @@ use Zend\Stdlib\ResponseInterface as Response;
 class MyResearchController extends \VuFind\Controller\MyResearchController
 {
     function pdasubscriptionsAction() {
+
+        $user = $this->getUser();
+        if ($user == false) {
+            return $this->forceLogin();
+        }
+
         // Fail if lists are disabled:
         if (!$this->listsEnabled()) {
             throw new \Exception('Lists disabled');
@@ -71,8 +77,13 @@ class MyResearchController extends \VuFind\Controller\MyResearchController
         }
     }
 
-    function subscriptionsAction()
-    {
+    function subscriptionsAction() {
+
+        $user = $this->getUser();
+        if ($user == false) {
+            return $this->forceLogin();
+        }
+
         // Fail if lists are disabled:
         if (!$this->listsEnabled()) {
             throw new \Exception('Lists disabled');

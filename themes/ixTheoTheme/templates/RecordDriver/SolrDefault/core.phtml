@@ -153,7 +153,7 @@
         </tr>
        <? endif; ?>
 
-      <? if ($can_use_tad && $this->driver->isAvailableInTubingenUniversityLibrary()): ?>
+      <? if ($can_use_tad && $this->driver->workIsTADCandidate()): ?>
         <tr>
           <th>TAD: </th>
           <td><a target="_blank" href="http://biber3.ub.uni-tuebingen.de/tad?ppn=<?=$this->driver->getRecordId()?>&email=<?=$email?>&name=<?=$this->escapeHtml($fullname);?>">Bestellen</a></td>
