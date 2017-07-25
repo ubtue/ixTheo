@@ -23,7 +23,7 @@ class BrowseController extends \VuFind\Controller\BrowseController
             'relbib-classification' => 'By RelBib-Classification',
         ];
 
-        return $this->performBrowse('Author', $categoryList, false);
+        return $this->performBrowse('Author', $categoryList, true);
     }
 
     /**
