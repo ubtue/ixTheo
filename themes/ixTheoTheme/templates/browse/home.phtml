@@ -20,6 +20,11 @@ function isIxTheoNotationThirdList($self) {
 function isRelBibNotationThirdList($self) {
   return $self->currentAction == "RelBib-Classification";
 }
+
+function getRelBibTranslationPrefix($subject) {
+    if (strlen($subject) == 1) return 'relbib';
+    else return 'ixtheo';
+}
 ?>
 
 <? if (!isset($this->currentAction)): ?>
@@ -70,8 +75,8 @@ function isRelBibNotationThirdList($self) {
       ?>
       <a href="<?=$url ?>" class="list-group-item clearfix<? if ($this->query == $secondary['value'].'' || $this->query == $secondary['value'].'*'): ?> active<? endif; ?>">
         <?$fancy_secondary = isIxTheoNotationSecondList($this) ? $this->transEsc("ixtheo-" . $secondary['displayText']) :
-                             (isRelBibNotationSecondList($this) ? $this->transEsc("relbib-" . $secondary['displayText']) :
-                             $secondary['displayText']);?>
+                             isRelBibNotationSecondList($this) ? $this->transEsc(getRelBibTranslationPrefix($secondary['displayText']) . "-" . $secondary['displayText']) :
+                             $secondary['displayText'];?>
         <?=$this->escapeHtml($fancy_secondary) ?>
         <? if ($this->findby != 'alphabetical' && isset($secondary['count'])): ?>
           <span class="badge"><?=number_format($secondary['count']) ?></span>
@@ -90,7 +95,9 @@ function isRelBibNotationThirdList($self) {
     <div class="browse list-group col-sm-3" id="list4">
     <? foreach($this->resultList as $result): ?>
       <a class="list-group-item clearfix" href="<?=$SEARCH_BASE ?>?<?=$this->paramTitle ?><?=urlencode($result['value']) ?><? if ($this->searchParams): foreach($this->searchParams as $var=>$val): ?>&amp;<?=$var ?>=<?=urlencode($val) ?><? endforeach;endif; ?>">
-        <?$fancy_result = isIxTheoNotationThirdList($this) || isRelBibNotationThirdList($this) ? $this->transEsc("ixtheo-" . $result['displayText']) : $result['displayText'];?>
+        <?$fancy_result = isIxTheoNotationThirdList($this) ? $this->transEsc("ixtheo-" . $result['displayText']) :
+                            isRelBibNotationThirdList($this) ? $this->transEsc(getRelBibTranslationPrefix($result['displayText']) . "-" . $result['displayText']) :
+                            $result['displayText'];?>
         <?=$this->escapeHtml($fancy_result)?>
         <span class="badge"><?=number_format($result['count']) ?></span>
       </a>
