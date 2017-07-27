@@ -46,6 +46,10 @@ class SolrMarc extends \ixTheo\RecordDriver\SolrDefault
         return $this->searchService->search('Solr', $query, 0, 0)->getTotal();
     }
 
+    public function getEnclosedTitles() {
+        return $this->getFieldArray('505', ['t']);
+    }
+
     public function getKeyWordChains()
     {
         if (isset($this->fields['key_word_chains'])) {
