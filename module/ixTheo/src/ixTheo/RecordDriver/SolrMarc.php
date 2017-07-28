@@ -47,7 +47,7 @@ class SolrMarc extends \ixTheo\RecordDriver\SolrDefault
     }
 
     public function getEnclosedTitles() {
-        return $this->getFieldArray('505', ['t']);
+        return $this->getFieldsArray([['249', ['a']], ['505', ['t']]], false);
     }
 
     public function getKeyWordChains()
