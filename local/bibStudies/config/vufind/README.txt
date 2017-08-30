@@ -1,0 +1,1 @@
+/usr/local/vufind/local/ixTheo/config/vufind/README.txt
