@@ -5,6 +5,7 @@ TAGS
 *~
 vendor/.git
 local/cache/
+local/bibStudies/cache
 local/ixTheo/cache
 local/relBib/cache
 
