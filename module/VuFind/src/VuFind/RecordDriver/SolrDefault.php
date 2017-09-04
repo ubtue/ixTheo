@@ -469,7 +469,6 @@ class SolrDefault extends AbstractBase
         $dedup_roles($authors['main']);
         $dedup_roles($authors['secondary']);
         $dedup_roles($authors['corporate']);
-print_r($authors['secondary']);
 
         return $authors;
     }

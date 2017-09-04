@@ -105,24 +105,72 @@ class SolrDefault extends \TueLib\RecordDriver\SolrMarc
     }
 
     /**
-     * Get role of secondary authors.
+     * Get an array of all secondary authors (complementing getPrimaryAuthors()).
      *
      * @return array
      */
-    public function getSecondaryAuthorsRole()
+    public function getSecondaryAuthors()
     {
-        return isset($this->fields['author2-role']) ?
-            $this->fields['author2-role'] : [];
+        if (!isset($this->fields['author2_and_role']))
+            return [];
+
+        $authors = array();
+        foreach ($this->fields['author2_and_role'] as $author_and_roles) {
+            $parts = explode('$', $author_and_roles);
+            $authors[] = $parts[0];
+        }
+
+        return $authors;
     }
 
     /**
-     * Get secondary author and its role in a '$'-separated string
+     * Get an array of all secondary authors roles (complementing
+     * getPrimaryAuthorsRoles()).
      *
      * @return array
      */
-    public function getSecondaryAuthorsAndRole(){
-        return isset($this->fields['author2_and_role']) ?
-            $this->fields['author2_and_role'] : [];
+    public function getSecondaryAuthorsRoles()
+    {
+        if (!isset($this->fields['author2_and_role']))
+            return [];
+
+        $roles = array();
+        foreach ($this->fields['author2_and_role'] as $author_and_roles) {
+            $parts = explode('$', $author_and_roles);
+            $roles[] = array_slice($parts, 1);
+        }
+
+        return $roles;
+    }
+
+    /**
+     * Helper function to restructure author arrays including relators
+     *
+     * @param array $authors Array of authors
+     * @param array $roles   Array with relators of authors
+     *
+     * @return array
+     */
+    protected function getAuthorRolesArray($authors = [], $roles = [])
+    {
+        $authorRolesArray = [];
+
+        if (!empty($authors)) {
+            foreach ($authors as $index => $author) {
+                if (!isset($authorRolesArray[$author])) {
+                    $authorRolesArray[$author] = [];
+                }
+                if (isset($roles[$index]) && !empty($roles[$index])
+                ) {
+                    if (is_array($roles[$index]))
+                        $authorRolesArray[$author] = $roles[$index];
+                    else
+                        $authorRolesArray[$author][] = $roles[$index];
+                }
+            }
+        }
+
+        return $authorRolesArray;
     }
 
     /**
