@@ -188,6 +188,13 @@
    <field name="title_keywords" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_unstemmed" type="textProper" indexed="true" stored="false" multiValued="true"/>
    <field name="topic_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_facet_de" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_facet_en" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_facet_fr" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_facet_it" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_facet_es" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_facet_hant" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_facet_hans" type="textFacet" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_browse" type="string" indexed="true" stored="false" multiValued="true"/>
    <field name="author_browse" type="string" indexed="true" stored="false" multiValued="true"/>
    <field name="genre" type="text" indexed="true" stored="true" multiValued="true"/>
