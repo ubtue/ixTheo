@@ -160,8 +160,7 @@ class SolrDefault extends \TueLib\RecordDriver\SolrMarc
                 if (!isset($authorRolesArray[$author])) {
                     $authorRolesArray[$author] = [];
                 }
-                if (isset($roles[$index]) && !empty($roles[$index])
-                ) {
+                if (isset($roles[$index]) && !empty($roles[$index])) {
                     if (is_array($roles[$index]))
                         $authorRolesArray[$author] = $roles[$index];
                     else
