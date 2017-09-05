@@ -5,7 +5,7 @@ use ixTheo\Search\Backend\Solr\Backend;
 use ixTheo\Search\Backend\Solr\QueryBuilder;
 use VuFindSearch\Backend\Solr\Connector;
 use VuFindSearch\Backend\Solr\HandlerMap;
-use VuFindSearch\Backend\Solr\LuceneSyntaxHelper;
+use ixTheo\Search\Backend\Solr\LuceneSyntaxHelper;
 use VuFindSearch\Backend\Solr\Response\Json\RecordCollectionFactory;
 
 class SolrDefaultBackendFactory extends \VuFind\Search\Factory\SolrDefaultBackendFactory
