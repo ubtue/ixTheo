@@ -358,12 +358,9 @@ class BrowseController extends \VuFind\Controller\BrowseController
      * @return array           Array indexed by value with text of displayText and
      * count
      */
-
-    protected function getFacetList($facet, $category = null,
-        $sort = 'count', $query = '[* TO *]'
-    ) {
-        $results = $this->getServiceLocator()
-            ->get('VuFind\SearchResultsPluginManager')->get('Solr');
+    protected function getFacetList($facet, $category = null, $sort = 'count', $query = '[* TO *]')
+    {
+        $results = $this->getServiceLocator()->get('VuFind\SearchResultsPluginManager')->get('Solr');
         $params = $results->getParams();
         $params->addFacet($facet);
         if ($category != null) {
@@ -397,8 +394,4 @@ class BrowseController extends \VuFind\Controller\BrowseController
         } else
             return [];
     }
-
-
-
-
 }
