@@ -105,6 +105,16 @@ class SolrDefault extends \TueLib\RecordDriver\SolrMarc
     }
 
     /**
+     * Get secondary author and its role in a '$'-separated string
+     *
+     * @return array
+     */
+    public function getSecondaryAuthorsAndRole(){
+        return isset($this->fields['author2_and_role']) ?
+            $this->fields['author2_and_role'] : [];
+     }
+
+    /**
      * Get an array of all secondary authors (complementing getPrimaryAuthors()).
      *
      * @return array
