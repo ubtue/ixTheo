@@ -346,4 +346,52 @@ class BrowseController extends \VuFind\Controller\BrowseController
 
         return $this->performBrowse('Topic', $categoryList, true);
     }
+
+   /**
+     * Get a list of items from a facet.
+     *
+     * @param string $facet    which facet we're searching in
+     * @param string $category which subfacet the search applies to
+     * @param string $sort     how are we ranking these? || 'index'
+     * @param string $query    is there a specific query? No = wildcard
+     *
+     * @return array           Array indexed by value with text of displayText and
+     * count
+     */
+    protected function getFacetList($facet, $category = null, $sort = 'count', $query = '[* TO *]')
+    {
+        $results = $this->getServiceLocator()->get('VuFind\SearchResultsPluginManager')->get('Solr');
+        $params = $results->getParams();
+        $params->addFacet($facet);
+        if ($category != null) {
+            $query = $category . ':' . $query;
+        } else {
+            $query = $facet . ':' . $query;
+        }
+        $params->setOverrideQuery('{!multiLanguageQueryParser}' . $query);
+        $params->getOptions()->disableHighlighting();
+        $params->getOptions()->spellcheckEnabled(false);
+        // Get limit from config
+        $params->setFacetLimit($this->config->Browse->result_limit);
+        $params->setLimit(0);
+        // Facet prefix
+        if ($this->params()->fromQuery('facet_prefix')) {
+            $params->setFacetPrefix($this->params()->fromQuery('facet_prefix'));
+        }
+        $params->setFacetSort($sort);
+        $result = $results->getFacetList();
+        if (isset($result[$facet])) {
+            // Sort facets alphabetically if configured to do so:
+            if (isset($this->config->Browse->alphabetical_order)
+                && $this->config->Browse->alphabetical_order
+            ) {
+                $callback = function ($a, $b) {
+                    return strcoll($a['displayText'], $b['displayText']);
+                };
+                usort($result[$facet]['list'], $callback);
+            }
+            return $result[$facet]['list'];
+        } else
+            return [];
+    }
 }

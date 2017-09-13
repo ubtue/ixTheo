@@ -23,7 +23,7 @@
           <?=implode('<br>', array_map(array($this, 'escapeHtml'), $this->driver->getSummary())); ?>
         <? else: ?>
           <? // Handle displaying of author according to rule 3 of issue 131 ?>
-          <? $primaryAuthor = $this->driver->getPrimaryAuthor(); ?> 
+          <? $primaryAuthor = $this->driver->getPrimaryAuthor(); ?>
           <? $otherAuthors = $this->driver->getSecondaryAuthors(); ?>
           <? if (!empty($primaryAuthor) || !empty($otherAuthors)): ?>
             <?=$this->transEsc('by')?>
@@ -47,11 +47,11 @@
                 <a href="<?=$this->record($this->driver)->getLink('author', $author)?>"><?
                   /* Highlight author */
                   echo $this->escapeHtml($author);
-                ?></a> 
+                ?></a>
                 <? foreach ($otherAuthorsAndRoles as $author_and_role): ?>
                    <? $author_and_role_splitted = preg_split('/\$/', $author_and_role) ?>
                    <? if ($author_and_role_splitted[0] == preg_replace('/(\s*)(\d+)(\s*)-?(\d*)(\s*)/', '',  $author)): ?>
-                     <? echo '(' . $author_and_role_splitted[1] . ')' ?>
+                     <? echo '(' . $this->transEsc('CreatorRoles::' . $author_and_role_splitted[1]) . ')' ?>
                    <? endif; ?>
                 <? endforeach ?>
                 <? if (!($author == end($otherAuthors))): ?>
@@ -60,7 +60,7 @@
               <? endforeach; ?>
             <? endif; ?>
           <? else: ?>
-            <? // Handle corporation information... ?>   
+            <? // Handle corporation information... ?>
             <? $corporation = implode($this->driver->getCorporation(), " ") ?>
             <? if (!empty($corporation)): ?>
                <a href="<?=$this->record($this->driver)->getLink('author', $corporation)?>"><?
