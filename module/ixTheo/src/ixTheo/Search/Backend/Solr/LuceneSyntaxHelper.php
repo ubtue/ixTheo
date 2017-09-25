@@ -1,12 +1,7 @@
 <?php
 
 /**
- * Lucene query syntax helper class.
- *
- * PHP version 5
- *
- * Copyright (C) Villanova University 2010.
- * Copyright (C) The National Library of Finland 2016.
+ * Lucene query syntax helper class with support for multiLangugagePArserr
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2,
@@ -21,12 +16,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * @category VuFind
+ * @category IxTheo
  * @package  Search
  * @author   Andrew S. Nagy <vufind-tech@lists.sourceforge.net>
  * @author   David Maus <maus@hab.de>
  * @author   Demian Katz <demian.katz@villanova.edu>
  * @author   Ere Maijala <ere.maijala@helsinki.fi>
+ * @author   Johannes Riedl <johannes.riedl@uni-tuebingen.de>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     https://vufind.org
  */
@@ -35,7 +31,7 @@ namespace ixTheo\Search\Backend\Solr;
 /**
  * Lucene query syntax helper class.
  *
- * @category VuFind
+ * @category IxTheo
  * @package  Search
  * @author   Andrew S. Nagy <vufind-tech@lists.sourceforge.net>
  * @author   David Maus <maus@hab.de>
@@ -54,7 +50,8 @@ class LuceneSyntaxHelper extends \VuFindSearch\Backend\Solr\LuceneSyntaxHelper
 
 
     /**
-     * Extract search terms from a query string for spell checking.
+     * Extract search terms from a query string for spell checking
+     * but do not remove local params
      *
      * This will only handle the most often used simple cases.
      *
