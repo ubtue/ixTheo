@@ -218,7 +218,6 @@ JS;
                 <?$fancy_result = isIxTheoNotation($this, $title) ?
                     getIxTheoNotationForTrans($this, $thisFacet['displayText']) : $thisFacet['displayText'];?>
                 <?=$this->transEsc($fancy_result)?>
-
               </a>
             <? else: ?>
               <? $addURL = $this->currentPath().$results->getUrlQuery()->addFacet($title, $thisFacet['value'], $thisFacet['operator']); ?>
