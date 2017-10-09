@@ -64,7 +64,8 @@ class Citation extends \VuFind\View\Helper\Root\Citation
         if (is_array($secondary) && !empty($secondary)) {
             $authors = array_unique(array_merge($authors, $secondary));
         }
-
+        // Remove biographical information like year of birth and death for citation
+        $authors = array_map(function ($author) { return preg_replace('/\s*\d{4}[\s-]*(\d{4})?/', '', $author); }, $authors);
         // Get best available title details:
         $title = $driver->tryMethod('getShortTitle');
         $subtitle = $driver->tryMethod('getSubtitle');
