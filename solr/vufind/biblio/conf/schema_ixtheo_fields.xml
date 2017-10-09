@@ -97,6 +97,28 @@
     <field name="types_and_persistent_identifiers" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="zdb_number" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="topic_all" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="genre_facet_de" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+    <field name="genre_facet_en" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+    <field name="genre_facet_fr" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+    <field name="genre_facet_it" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+    <field name="genre_facet_es" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+    <field name="genre_facet_hant" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+    <field name="genre_facet_hans" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+    <field name="geographic_facet_de" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+    <field name="geographic_facet_en" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+    <field name="geographic_facet_fr" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+    <field name="geographic_facet_it" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+    <field name="geographic_facet_es" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+    <field name="geographic_facet_hant" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+    <field name="geographic_facet_hans" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+    <field name="era_facet_de" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+    <field name="era_facet_en" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+    <field name="era_facet_fr" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+    <field name="era_facet_it" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+    <field name="era_facet_es" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+    <field name="era_facet_hant" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+    <field name="era_facet_hans" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+
 
     <copyField source="ixtheo_notation" dest="ixtheo_notation_facet"/>
     <copyField source="key_word_chain_bag_de" dest="topic_all"/>
