@@ -154,6 +154,13 @@ class Citation extends \VuFind\View\Helper\Root\Citation
                $apa['doi'] = $doi;
 
             }
+            $urls =  $this->driver->tryMethod('getUrls');
+            if (!empty($urls)) {
+                // Choose first available URL
+                $url = $urls[0]['url'];
+                if (!empty($url))
+                    $apa['url'] = $url;
+            }
             return $partial('Citation/apa-article.phtml', $apa);
         }
     }
@@ -271,6 +278,23 @@ class Citation extends \VuFind\View\Helper\Root\Citation
             $mla['pageRange'] = $this->getPageRange();
             $mla['journal'] =  $this->capitalizeTitle($this->details['journal']);
             $mla['numberAndDate'] = $this->getMLANumberAndDate($volNumSeparator, $useYearBrackets);
+            if ($doi = $this->driver->tryMethod('getCleanDOI'))
+               $mla['doi'] = $doi;
+
+            $urls =  $this->driver->tryMethod('getUrls');
+            if (!empty($urls)) {
+                // Choose first available URL
+                $url = $urls[0]['url'];
+                if (!empty($url))
+                    $mla['url'] = $url;
+            }
+
+            $formatter = new \IntlDateFormatter($this->driver->getServiceLocator()->get('VuFind\Translator')->getLocale(),
+                             \IntlDateFormatter::SHORT, \IntlDateFormatter::NONE);
+            if ($formatter === null)
+                 throw new InvalidConfigException(intl_get_error_message());
+            $mla['localizedDate'] = $formatter->format(new \DateTime());
+
             return $partial('Citation/mla-article.phtml', $mla);
         }
     }

@@ -5,4 +5,9 @@
 <? if (!empty($this->volume)): ?><?=$this->escapeHtml($this->volume)?><? endif; ?></span><? if (!empty($this->issue)): ?>(<?=$this->escapeHtml($this->issue)?>)<? endif; ?>
 <? if (!empty($this->volume) || !empty($this->issue)): ?>, <? endif; ?>
 <? if (!empty($this->pageRange) && empty($this->journal)) echo strstr($this->pageRange, '-') ? 'pp. ' : 'p. '; ?>
-<?=$this->escapeHtml($this->pageRange)?>. <? if (isset($this->doi)): ?>doi:<?=$this->escapeHtml($this->doi)?><? endif; ?>
+<?=$this->escapeHtml($this->pageRange)?>.
+<? if (isset($this->doi)): ?>doi:<?=$this->escapeHtml($this->doi)?><? endif; ?>
+<? if (empty($this->doi) && isset($this->url)): ?>
+    <?=$this->transEsc("Retrieved from");?>  
+    <?=$this->escapeHtml($this->url);?>
+<? endif; ?>
