@@ -7,6 +7,6 @@
 <? if (isset($this->doi)): ?>doi:<?=$this->escapeHtml($this->doi)?><? endif; ?>
 <? if (!isset($this->doi) && isset($this->url)): ?> 
     <?=$this->escapeHtml($this->url);?>
-    <?=$this->transEsc("Accessed");?>
-    <?=$this->localizedDate?>
+    (<?=$this->transEsc("accessed");?>
+    <?=$this->localizedDate?>).
 <? endif; ?>
