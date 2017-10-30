@@ -218,7 +218,7 @@ class Citation extends \VuFind\View\Helper\Root\Citation
     }
 
 
-    protected function getMLANumberAndDate($volNumSeparator = '.', $useYearBrackets = false)
+    protected function getMLANumberAndDate($volNumSeparator = '.', $useYearBrackets = false, $volPrefix = ', vol.')
     {
         $vol = $this->driver->tryMethod('getVolume');
         $num = $this->driver->tryMethod('getIssue');
@@ -246,7 +246,7 @@ class Citation extends \VuFind\View\Helper\Root\Citation
             // period; otherwise just use the one that is set.
             $volNum = (!empty($vol) && !empty($num))
                 ? $vol . $volNumSeparator . $num : $vol . $num;
-            return $volNum . ($useYearBrackets ?  ' (' . $year . ')' : ', ' . $year);
+            return $volPrefix . $volNum . ($useYearBrackets ?  ' (' . $year . ')' : ', ' . $year);
         } else {
             // Right now, we'll assume if day == 1, this is a monthly publication;
             // that's probably going to result in some bad citations, but it's the
@@ -258,7 +258,8 @@ class Citation extends \VuFind\View\Helper\Root\Citation
     }
 
 
-    public function getCitationMLA($etAlThreshold = 4, $volNumSeparator = '.', $useYearBrackets = false)
+    public function getCitationMLA($etAlThreshold = 4, $volNumSeparator = '.', $useYearBrackets = false,
+                                   $yearPageSeparator = ', ', $volPrefix = ', vol. ', $usePagePrefix = true)
     {
         $mla = [
             'title' => $this->getMLATitle(),
@@ -277,7 +278,7 @@ class Citation extends \VuFind\View\Helper\Root\Citation
             // Add other journal-specific details:
             $mla['pageRange'] = $this->getPageRange();
             $mla['journal'] =  $this->capitalizeTitle($this->details['journal']);
-            $mla['numberAndDate'] = $this->getMLANumberAndDate($volNumSeparator, $useYearBrackets);
+            $mla['numberAndDate'] = $this->getMLANumberAndDate($volNumSeparator, $useYearBrackets, $volPrefix);
             if ($doi = $this->driver->tryMethod('getCleanDOI'))
                $mla['doi'] = $doi;
 
@@ -294,6 +295,8 @@ class Citation extends \VuFind\View\Helper\Root\Citation
             if ($formatter === null)
                  throw new InvalidConfigException(intl_get_error_message());
             $mla['localizedDate'] = $formatter->format(new \DateTime());
+            $mla['yearPageSeparator'] = $yearPageSeparator;
+            $mla['usePagePrefix'] = $usePagePrefix;
 
             return $partial('Citation/mla-article.phtml', $mla);
         }
@@ -302,6 +305,6 @@ class Citation extends \VuFind\View\Helper\Root\Citation
 
     public function getCitationChicago()
     {
-        return $this->getCitationMLA(9, ', no. ', true);
+        return $this->getCitationMLA(9, ', no. ', true, ': ', ' ', false);
     }
 }
