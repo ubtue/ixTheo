@@ -224,23 +224,27 @@ class SolrDefault extends \TueLib\RecordDriver\SolrMarc
         return $retval;
     }
 
-    private static function HasChapter(int $code) {
-        return (intdiv($code, 1000) % 1000) != 0;
+    private static function IntDiv($numerator, $denominator) {
+        return (int)($numerator / $denominator);
     }
 
-    private static function HasVerse(int $code) {
-        return ($code % 1000) != 0;
+    private static function HasChapter($code) {
+        return ($code % 1000000 != 999999) && ((self::IntDiv($code, 1000) % 1000) != 0);
     }
 
-    private static function GetBookCode(int $code) {
-        return intdiv($code, 1000000);
+    private static function HasVerse($code) {
+        return ($code % 1000000 != 999999) && (($code % 1000) != 0);
     }
 
-    private static function GetChapter(int $code) {
-        return intdiv($code, 1000) % 1000;
+    private static function GetBookCode($code) {
+        return self::IntDiv($code, 1000000);
     }
 
-    private static function GetVerse(int $code) {
+    private static function GetChapter($code) {
+        return self::IntDiv($code, 1000) % 1000;
+    }
+
+    private static function GetVerse($code) {
         return $code % 1000;
     }
 
@@ -329,36 +333,37 @@ class SolrDefault extends \TueLib\RecordDriver\SolrMarc
         85 => "",
     );
 
-    private static function DecodeBookCode(int $book_code, string $separator) {
-        global $codes_to_book_abbrevs;
-    
-        $book_code_as_string = $codes_to_book_abbrevs[GetBookCode($book_code)];
-        if (!HasChapter($book_code))
+    private static function DecodeBookCode($book_code, $separator) {
+        $book_code_as_string = self::$codes_to_book_abbrevs[self::GetBookCode($book_code)];
+        if (!self::HasChapter($book_code))
             return $book_code_as_string;
-        $book_code_as_string .= " " . strval(GetChapter($book_code));
-        if (!HasVerse($book_code))
+        $book_code_as_string .= " " . strval(self::GetChapter($book_code));
+        if (!self::HasVerse($book_code))
             return $book_code_as_string;
-        return $book_code_as_string . $separator . strval(GetVerse($book_code));
+        return $book_code_as_string . $separator . strval(self::GetVerse($book_code));
     }
 
-    private static function BibleRangeToDisplayString(string $bible_range, string $language_code) {
-        global $codes_to_book_abbrevs;
-
+    private static function BibleRangeToDisplayString($bible_range, $language_code) {
         $separator = (substr($language_code, 0, 2) == "de") ? "." : ":"; 
         $code1 = (int)substr($bible_range, 0, 8);
         $code2 = (int)substr($bible_range, 9, 8);
 
-        if ($code1 == $code2)
-            return DecodeBookCode($code1, $separator);
-        if (GetBookCode($code1) != GetBookCode($code2))
-            return DecodeBookCode($code1, $separator) . " – " . DecodeBookCode($code2, $separator);
+        if ($code1 + 999999 == $code2)
+            return self::DecodeBookCode($code1, $separator);
+        if (self::GetBookCode($code1) != self::GetBookCode($code2))
+            return self::DecodeBookCode($code1, $separator) . " – " . self::DecodeBookCode($code2, $separator);
 
-        $codes_as_string = $codes_to_book_abbrevs[GetBookCode($code1)] . " ";
-        $chapter1 = GetChapter($code1);
-        $chapter2 = GetChapter($code2);
+        $codes_as_string = self::$codes_to_book_abbrevs[self::GetBookCode($code1)] . " ";
+        $chapter1 = self::GetChapter($code1);
+        $chapter2 = self::GetChapter($code2);
         if ($chapter1 == $chapter2) {
             $codes_as_string .= strval($chapter1) . $separator;
-            return $codes_as_string . strval(GetVerse($code1)) . "–" . strval(GetVerse($code2));
+            $verse1 = self::GetVerse($code1);
+            $verse2 = self::GetVerse($code2);
+            if ($verse1 == $verse2)
+                return $codes_as_string . strval($verse1);
+            else
+                return $codes_as_string . strval($verse1) . "–" . strval($verse2);
         }
         return $codes_as_string . strval($chapter1) . "–" . strval($chapter2);
     }
@@ -372,7 +377,7 @@ class SolrDefault extends \TueLib\RecordDriver\SolrMarc
         foreach (explode(',', $this->fields['bible_ranges']) as $bible_range) {
             if (!empty($bible_references))
                 $bible_references .= ", ";
-            $bible_references .= BibleRangeToDisplayString($bible_range, $language_code);
+            $bible_references .= self::BibleRangeToDisplayString($bible_range, $language_code);
         }
         return $bible_references;
     }
